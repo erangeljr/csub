@@ -1,0 +1,133 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 321 - Lab 1</title>
+</head>
+
+<body>
+<h2>Lab 1 - Review of Assembly </h2>
+The purpose of this lab is to review how to create MIPS assembly code with the 
+SPIM simulator.
+<p>
+As a reminder from the syllabus, labs are due at Noon on Wednesday. You may
+work in groups of 1 to 3 students on this lab. Turn in one assignment per 
+group, making sure to put the name of ALL group members in the Notes section
+of Moodle (or as a separate file uploaded for the assignment).
+
+<h3>Part 1: Using SPIM on Sleipnir</h3>
+<b>Resources</b>
+<ul>
+<li>Appendix A of the book
+<li>Reference card in book
+<li><a href="http://www.cs.csubak.edu/~donna/cs224/doc/spim-quick-guide.txt">CMPS 224 quick reference guide to SPIM</a>
+<li><a href="http://www.cs.csubak.edu/~donna/cs224/lab02.php">CMPS 224 Lab 2</a>
+</ul>
+<p>
+SPIM is a MIPS simulator that can be run in either interactive or 
+non-interactive mode. In interactive mode, SPIM allows you to step through your
+assembly code and observe the contents of the register file as the code
+executes. In non-interactive mode, SPIM will execute your code as a regular
+executable. 
+<p>
+<b>Interactive Mode</b><p>
+To enter SPIM, give the following command:
+<pre>        $ spim </pre>
+This will enter the SPIM prompt, where you can give SPIM commands. For example,
+you can read a file containing MIPS assembly called "test.s" and run it with
+the following two commands:
+<pre>
+        spim&gt; read "test.s"
+        spim&gt; run 
+</pre>
+When you are done with SPIM, you can return to the Sleipnir prompt with:
+<pre>
+        spim&gt; exit
+</pre>
+
+<b>Non-interactive Mode</b><p>
+To just run your code, or display any errors found in your code, you can issue
+the following non-interactive SPIM command:
+<pre>        $ spim -f test.s </pre>
+
+<h3>Part 2: Lab Assignment</h3>
+The assignment is to create a MIPS program that can add 5 and 15 together and
+display the output. Build off the following program (also available as
+<a href="main.s">main.s</a>) and the 
+<a href="print.s">print.s</a> program from CMPS 224:
+<pre>
+# A simple "Hello world" program
+
+	.text
+	.globl	main
+	.ent	main
+main:
+	la	$a0,format1  # Load address of format string into $a0
+	jal	printf       # Call printf
+
+  la  $a0,format2  # load address of format string #2 into $a0
+  li  $a1,50       # test %d format - load 50 into $a1
+  jal printf       # call printf
+
+	li	$v0,10       # 10 is the code for exiting
+	syscall          # Execute the exit system call
+
+	.end	main
+
+	.data
+format1: .asciiz "Hello world.\n"
+format2: .asciiz "Register $a1 holds: %d\n"  
+format3: .asciiz "%d plus %d is %d\n"
+</pre>
+There are several important MIPS assembly instructions in this code snippet.
+<p>
+<table border=1>
+<tr>
+<th>Instruction</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>la &lt;destination&gt;,&lt;label&gt;</td>
+<td>Load address (I type) - find the address of labeled data and load it into the destination register. </td>
+</tr>
+<tr>
+<td nowrap>li &lt;destination&gt;,&lt;immediate&gt;</td>
+<td>Load immediate (I type) - store a constant value into a register</td>
+</tr>
+<tr>
+<td>jal &lt;procedure&gt;</td>
+<td>Jump and link (J type) - Switch context to a named procedure. The printf procedure exists in the print.s file.
+It expect the format string to be in $a0, the first variable in the format 
+string (optional) to be in $a1, the second variable in the format string 
+(optional) to be in $a2, and the third variable in the format string 
+(optional) to be in $a3</td>
+</tr>
+<tr>
+<td>syscall</td>
+<td>Execute the system call indicated by the value in register $v0. The value
+of 10 is the code for exiting the program. </td>
+</tr>
+</table>
+<p>
+You can run this code with the following:
+<pre>
+     $ spim
+     spim&gt; read "print.s"
+     spim&gt; read "main.s"
+     spim&gt; run
+</pre>
+<p>
+Modify main.s to add the MIPS assembly instructions to load 5 and 15 to 
+registers (the li instruction), add the two registers together to get the 
+result, and call the printf function with the third format string.
+<p>
+Upload the modified main.s and a list with the names of the members of your
+group to Moodle to submit the assignment. If you finish in the lab on Tuesday,
+you can also show me your code to get credit for the group (please still have
+your group members' names in the code as it'll be quicker for me to look 
+everyone up on Moodle that way).
+
+</body>
+</html>
