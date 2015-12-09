@@ -1,0 +1,133 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 321 - Lab 7</title>
+</head>
+
+<body>
+<h2>Lab 7 - Branch Prediction</h2>
+Due: Wednesday at noon
+<p>
+The purpose of this lab is to profile the behavior of branches for
+both loops and if-else statements and to see how accurate the basic branch
+prediction schemes will be for the code.
+<p>
+You may work in groups on this lab. Make sure all lab partner names
+are on the writeup and have one lab partner submit the writeup via
+Moodle. Those not submitting the writeup via Moodle should put the
+name of their lab partners in the Notes section of the assignment 
+on Moodle.
+<p>
+Consider the following C++ main() function, which contains both a
+loop and an if-else statement:
+<pre>
+int main()
+{
+  int balance, payment;
+
+  cout &lt;&lt; "Enter loan balance: ";
+  cin &gt;&gt; balance;
+  cout &lt;&lt; endl;
+
+  while(balance &gt; 0)
+  {
+    int minp;              // Local to the while loop
+
+    // Typecast the result to int to avoid compiler warnings.
+    minp = int(balance * 0.04);
+
+    cout &lt;&lt; "Balance is $" &lt;&lt; balance &lt;&lt; ". Minimum payment is $" &lt;&lt; minp &lt;&lt; ".\n";
+    cout &lt;&lt; "Enter payment amount: ";
+    cin &gt;&gt; payment;
+
+    // Verify the payment is &gt;= min payment and payment is &lt;= new balance
+    if(payment &gt;= minp && payment &lt;= balance)
+    {
+      balance -= payment;
+    }
+    else {
+      cout &lt;&lt; "Incorrect payment. Minimum is $" &lt;&lt; minp 
+           &lt;&lt; " and maximum is $" &lt;&lt; balance &lt;&lt; "." &lt;&lt; endl;
+    }
+    cout &lt;&lt; endl;
+  }  // end of the while loop
+
+  cout &lt;&lt; "Loan is paid off.\n";
+
+  return 0;
+}
+</pre>
+The basic structure of the MIPS assembly for this loop would be the following:
+<pre>
+       # Read the loan balance into register $s1
+
+Loop:  beq $s1, $zero, Exit
+
+       # Calculate the minimum payment into register $t1
+       # Print current balance and minimum payment information
+       # Read the user payment input into register $s2
+
+       slt $t0, $s2, $t1   # See if payment is less than minimum
+       sgt $t2, $s2, $s1   # See if payment is greater than balance
+       or  $t3, $t0, $t2   
+
+       bne $t3, $zero, Else
+       sub $s1, $s1, $s2   # Apply payment to balance - the if statement
+       j Loop
+
+Else:  # Print error message
+       j Loop
+
+Exit:  # Print "Loan is paid off"
+</pre>
+<p>
+Assume that the user entered the following input while running the above code 
+(user input is in <font color="blue">BLUE</font> font):
+<pre>
+Enter loan balance: <font color="blue">500</font>
+
+Balance is $500. Minimum payment is $20.
+Enter payment amount: <font color="blue">50</font>
+
+Balance is $450. Minimum payment is $18.
+Enter payment amount: <font color="blue">5</font>
+Incorrect payment. Minimum is $18 and maximum is $450.
+
+Balance is $450. Minimum payment is $18.
+Enter payment amount: <font color="blue">100</font>
+
+Balance is $350. Minimum payment is $14.
+Enter payment amount: <font color="blue">500</font>
+Incorrect payment. Minimum is $14 and maximum is $350.
+
+Balance is $350. Minimum payment is $14.
+Enter payment amount: <font color="blue">350</font>
+
+Loan is paid off.
+</pre>
+<h4>Lab Writeup</h4>
+<ol>
+<li>Profile the two branch statements in the MIPS code in terms of whether the 
+branch was "taken" (T) or "not taken" (N) each time the branch instruction
+was encountered while the user was running the program. Each branch will have
+its own profile.
+<li>For each branch, calculate the number of correct guesses and the number of
+incorrect guesses for the following branch prediction schemes:
+<ol type=a>
+<li>Assume not taken
+<li>2 bit predictor initialized to weakly predict not taken (each branch has
+its own predictor)
+</ol>
+<li>Assuming the correct branch target is calculated in the ID stage, how many
+<strike>stalls</strike> instruction flushes would each of the branch prediction schemes in Question 2 cause for this
+code?
+<li>How would your answer to the prior three questions change if you had a 
+particularly stubborn user who kept giving <strike>a payment amount either less than
+the maximum or greater than the balance</strike> an invalid payment? a valid payment?
+</ol>
+Submit your writeup via Moodle.
+</body>
+</html>
