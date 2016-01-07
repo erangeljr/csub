@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0050)http://www.cs.csub.edu/~melissa/cs321-w15/hw4.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 321 - Homework 4</title>
+</head>
+
+<body>
+<h2>Homework 4 - Chapter 4</h2>
+Due: Friday February 20, 2015 by 11:59pm PST
+<p>
+<b>NOTE:</b>The last day to turn this assignment in late is Saturday February
+21, 2015 by 11:59pm PST so the solutions can be posted to study before 
+Midterm 2.
+</p><p>
+</p><ol>
+<li>(2 pts) What is a data hazard in the pipelined datapath? What is a control 
+    hazard in the pipelined datapath? How can each hazard be handled?
+</li><li>(2 pts) The performance of the pipeline is affected by the time it takes to
+    access memory, since the length of each stage is constrained by this time.
+    Discuss how data hazard resolution (both forwarding and stalling) would be
+    affected if the memory access stage were split into two stages. In other
+    words, our pipeline would now be IF ID EX MEM1 MEM2 WB. Describe the new
+    forwarding logic and hazard detection logic that would be needed.
+</li><li>(4 pts) In the following MIPS assembly code, identify all the hazards
+    that are present. Show where nop(s) would have to be inserted to deal
+    with the hazard(s), assuming that data forwarding is available and that
+    branch decisions are made in the EX stage.
+    <pre>    Loop: beq  $t5, $a1, Exit      # if t5 == a1, exit loop
+          lw   $t0, 0($a0)         # Load fib(n-2)
+          lw   $t1, 4($a0)         # Load fib(n-1)
+          add  $t2, $t0, $t1       # Calculate fib(n)
+          sw   $t2, 8($a0)         # Store fib(n)
+          add  $a0, $a0, $s1       # s1 contains 4
+          add  $t5, $t5, $s2       # s2 contains 1
+          j    Loop
+    Exit:
+    </pre>
+</li><li>(2 pts) Show how to reorder the instructions from the previous question 
+    to minimize the number of stalls due to data hazards.
+</li><li>(6pts) The following code is being executed through the pipelined datapath
+    from Figure 4.60, which has the implementation of the hazard detection
+    unit and the forwarding unit to resolve data hazards.
+    <pre>       lw  $t4, 100($t2)
+       sub $t6, $t4, $t3
+       add $t2, $t3, $t5
+    </pre>
+    Do NOT reorder the code to answer this question. 
+    <ol type="a">
+    <li>Draw a diagram that shows how these instructions would be pipelined, 
+        including all stalls (similar to Figure 4.31 or 4.59 in both the 4th 
+        and 5th editions of the book).
+    </li><li>Show how the hazard detection unit would detect that the load word 
+        instruction is causing the data hazard (i.e. indicate what logic
+        it would use to see that a stall is needed). Show what control lines
+        it would set to initiate the stall.
+    </li><li>Show how the forwarding unit would detect (i.e. what logic would it
+        use to see there was a hazard) and resolve (i.e. what control lines
+        would it set) the data hazard in the EX stage for the subtraction 
+        command.
+    </li></ol>
+</li><li>(4pts) The book describes a method to reduce the delay caused by branch 
+    decisions by moving the branch comparison and branch target calculation
+    up to the ID stage. One issue with this method is data hazards caused by
+    previous commands, e.g. the values being compared by the branch may not
+    be available in the ID stage if they are still being calculated in other
+    portions of the pipeline. 
+    <ol type="a">
+    <li>For the following code, would a stall still be needed to deal with 
+        the data hazards? Justify your answer by explaining why a stall is 
+        needed or why no stall is needed.
+        <pre>        Loop:  lw  $t1, 0($s0)
+               add $v0, $v0, $t1
+               add $s0, $s0, $s2
+               slt $t0, $s0, $s1
+               beq $t0, $s3, Loop
+        </pre>
+    </li><li>Write the logic to detect these data hazards. Use the logic from
+        the forwarding unit as a guide. Your algorithm should check the 
+        values in the storage register of the previous instruction to see
+        if it generates a result that the branch will need to use when
+        comparing the two registers.
+    </li></ol>
+</li></ol>
+
+
+
+</body></html>
