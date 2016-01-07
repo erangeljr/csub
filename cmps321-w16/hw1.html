@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0050)http://www.cs.csub.edu/~melissa/cs321-w15/hw1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 321 - Homework 1</title>
+</head>
+
+<body>
+<h2>Homework 1 - Chapters 1, 2, 5</h2>
+Due: Friday January 16, 2015 by 11:59pm PST
+<ol>
+<li>(2 pts) Translate the following C/C++ loop into assembly. Give JUST the
+instructions associated with this loop, not a full MIPS assembly program. 
+Assume the base address of the array <code>a</code> is already stored in 
+register <code>s2</code>, the variable <code>i</code> is already stored in 
+register <code>s1</code>, and the variable <code>size</code> is already stored 
+in register <code>s3</code>.
+<pre>    for(i = 0; i &lt; size; i++)
+    {
+      a[i] = i + 5;
+    }
+    i = 0;
+</pre>
+</li><li>(4 pts) Translate the MIPS assembly you created in your answer to Question
+1 into binary instructions. You may use any address you like for the immediate
+portion of the branch instruction.
+</li><li>(2 pts) Translate the following MIPS assembly snippet back into a C/C++
+loop:
+<pre>      move  $v0, $zero      # initialize v0 to 0
+      move  $t0, $zero      # initialize t0 to 0
+Loop: beq   $t0, $s0, Exit  # if t0 == s0, go to Exit
+      sll   $t1, $t0, 2     # t1 = t0 * 4
+      add   $t1, $t1, $s2   # t1 = s2 + (t0 * 4)
+      lw    $t2, 0($t1)     # bring element in from memory
+      add   $v0, $v0, $t2   # v0 += t2
+      sw    $t2, 0($t1)     # send updated value back to memory
+      addi  $t0, $t0, 1     # increment t0
+      j     Loop
+Exit: 
+</pre>
+</li><li>(2 pts) What would be the human-readable MIPS instruction represented by
+the binary string 
+<pre>    1000 1101 0010 1000 0000 0100 1011 0000
+</pre>
+</li><li>(2 pts) Convert the decimal number 1054 to binary and hexidecimal.
+</li><li>(2 pts) Consider a matrix (2D array) implemented in C or C++. One may 
+traverse the matrix either row by row or column by column. Which of these two 
+traversal methods is more well-suited for a cache which takes advantage of 
+spatial locality? Justify your answer by describing how the 2D array would be 
+arranged in main memory.
+</li><li>(2 pts) What is the motivation behind using multiple levels of caches with 
+different sizes and addressing modes (e.g. a level 1 cache with 16 direct 
+mapped blocks and a level 2 cache with 64 2-way set associative blocks)? 
+</li><li>(4 pts) You are evaluating a cache design for the instruction cache. This
+design is 16 block direct mapped with one instruction per block. One 
+instruction is stored into the cache for each cache miss.
+<p>
+The cache row address and tag for this cache will be calculated as follows:
+</p><pre>           31 ... 6|5 ... 2|1 0 
+           --------------------
+          |  Tag   |  Row  |0 0|  instruction address
+           --------------------
+                            /|\
+                             |
+                           ignore these bits (byte offset)
+</pre>
+The instructions being executed are:
+<pre>    Address    Instruction
+    =======    ============================
+    4000d      Loop:   beq $s0, $zero, Exit   # immediate = 6, offset to Exit
+    4004d              add $t0, $s0, $s2      # compute read address
+    4008d              add $t1, $s0, $s3      # compute write address
+    4012d              lw $t2, 0($t0)         # read data
+    4016d              sw $t2, 0($t1)         # write data
+    4020d              sub $s0, $s0, $s1      # subtract offset
+    4024d              j Loop                 # immediate = 1000 which is 4000/4
+    4028d      Exit:
+</pre>
+Fill in the following cache table and state how many cache misses this design
+has. Assume that the code starts executing at the Loop: tag, that is executes
+for EXACTLY two interations, and that the cache is empty at the start.
+<p>
+</p><table border="">
+<caption><b>Direct Mapped Cache - 1 instruction per block</b></caption>
+<colgroup>
+  <col width="95">
+  <col width="0*">
+  <col width="350">
+  <col width="450">
+</colgroup>
+<tbody><tr>
+<th>Row (4 bits)</th>
+<th>Valid?</th>
+<th>Tag (26 bits)</th>
+<th>Data (1 instruction)</th>
+</tr>
+<tr>
+<td>0000 (0)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>0001 (1)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>0010 (2)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>0011 (3)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>0100 (4)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>0101 (5)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>0110 (6)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>0111 (7)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>1000 (8)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>1001 (9)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>1010 (10)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>1011 (11)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>1100 (12)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>1101 (13)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>1110 (14)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>1111 (15)</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody></table>
+
+
+
+</li></ol></body></html>
