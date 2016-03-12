@@ -1,0 +1,164 @@
+ <html>
+ <body> <pre>
+          **********************************************
+          *  REGULAR LANGUAGES AND REGULAR EXPRESSIONS * 
+          **********************************************
+ 
+ A language is a set that can be informally described through examples, e.g. 
+ "The orange cat jumped over the fence." and "The hat is red." are sentences 
+ in the set of sentences in the English language. The set of a language 
+ (which could be infinite) can be more precisely described by set-builder 
+ notation. 
+ 
+ Set builder notation is used here to describe the language of regular 
+ expressions (regexes). The purpose is to show that regexes are regular
+ languages. An important property of a regular language is that it can be 
+ scanned for validity from left to right without backtracking.
+ 
+ Def. Let A be an alphabet. The class R of regular languages over A, and the 
+ corresponding regular expressions are defined by:
+ 
+ 1.  &Phi; (phi) or {} (the empty-set) is a regular language expression and the 
+     corresponding regular expression is {}. This trivial case says that an 
+     empty set of strings is regular.
+ 
+ 2.  {&lambda;} is a regular language, and the corresponding regular expression 
+     is &lambda; (lambda), where lambda is the empty string. The empty string 
+     &lambda; is not the same as the empty language {}. This trivial case says
+     that a set containing the empty string is regular.
+ 
+ 3.  For each 'a' in A, {a} is a regular language, and 'a' is the corresponding 
+     regular expression.       
+            
+ 4.  If L1 and L2 are regular languages and r1 and r2 are the corresponding 
+     regular expressions, then
+     (a) L1 | L2 (set union - sometimes denoted by +) is a regular language 
+         with the regular expression (r1 | r2). Reads L1 or L2.
+     (b) L1L2 is a regular language with the regular expression (r1r2). This
+         is string concatenation.
+     (c) L1* is a regular language with the regular expression (r1*), where
+         * means L1 concatenated 0 or more times.
+     (d) L1^n is a regular language with L1 concatenated n times.
+ 
+ A new regex can be formed by applying the operators * and | to a regex. A
+ new regex can be formed by applying concatenation to two existing regexes.
+  
+ Examples.
+ 
+ Let A = {a,b}
+  
+  ((a|b)*|(ab|bb))     # denotes all possible strings over A including lambda
+  
+         {lambda,b,bb,ab,abb,bab,bbb,abab,...}
+ 
+  (a|b)*(ab)            # denotes all strings over A that end with ab
+ 
+         {ab,bab,aab,abab, ... }
+ 
+  (a|b)^2|(ab)*         # denotes the union of all strings over A of length 
+                        #  2 with all strings over A of 0 or more 'ab's
+ 
+         {aa,bb,ab,ba,aaab,bbab,abab,baab,...}
+ 
+  a(a|b)*b|b(a|b)*a     # denotes all strings over A whose first and last
+                        # symbols differ.
+ 
+          {ab,ba,aab,abb,baa,bba,...}
+ 
+ 
+  (ab|b)*(b|ab)^2       # denotes all strings over A that are the concatenation
+                        #  of ab and b with strings formed by two concatenations
+                        #  of b and ab
+ 
+ 
+          {bb,abab,bbb,babab,abbb,ababab,abbb,...}
+ 
+ 
+ There is a precedence hierarchy for operators in a regex that does not 
+ contain parentheses.
+ 
+  regular expression operator hierarchy
+  -------------------------------------
+  parentheses
+  Kleene star *
+  concatenation
+  union | 
+ 
+ Example of applying hierarchy for regular expressions
+   b|cb   =  b|(cb)    { concatenation has higher priority }
+   b|ab*  =  b|a(b*)   { Kleene star has priority over concatenation } 
+ 
+ EXAMPLE.
+   (0|1)*00(0|1)*         # denotes all strings containing substring 00
+ 
+  ((01|1)*)(0|lambda)     # denotes all strings without substring 00
+ 
+ Note that there is no clear relationship between the regular expression
+ for a language and a regular expression for its complement.
+ 
+ EXAMPLE
+  Identifiers: A string of letters and/or digits beginning with letter.
+ 
+     letter(letter|digit)* where letter = a|b|c...|z|A|B|C...|Z and
+     digit = 0|1|2..|9
+ 
+  Integers:
+     ('+' + '-' + lambda)(digit)(digit)*
+ 
+  Reals:
+   ('+'|'-'|lambda)digit digit* (lambda | '.' digit digit*) ((lambda)|
+      ('E' (lambda | '+' | '-') digit digit* ) 
+ 
+ EXAMPLE
+   (a|bc)*(c|lambda) = {lambda, a, c, aa, ac, bc, ...}
+  L=the set of all strings of a or bc, with an optional c at the end.
+ 
+ 
+ EXAMPLE: Let L be the language of the following regular expression.  
+   c*(b|(ac*))*
+ 
+   Is cba in L?  yes
+   Is ccbaac in L?  yes
+   Is cbc in L?  no, we can't get a second c without an a.
+   Is acabacc in L?  yes
+   Is bbaaacc in L?  yes
+ 
+ EX:  Given a finite language, find a regular expression.
+   L = {a, bcc, acb}
+   reg. expr: a|bcc|acb
+ 
+   Clearly, there is a reg. expr. for any finite language.
+   That regex is created by the union of all the elements of L.
+   Thus, any finite language is regular.
+ 
+ EX:
+   A = {a,b}    L = {w : w = (a^n)(b^n) , 0<=n<=3 }
+ 
+   ab|aabb + aaabbb is a regular expression for L.
+   This language is regular because it is finite.
+ 
+ HOWEVER:
+   A = {a,b}    L = {w : w = (a^n)(b^n) , 0<=n }
+ 
+   a*b*  does NOT work, because it includes aab (among others)
+   (ab)* does NOT work, because it includes abababab...
+   There is no regular expression for this language. 
+ 
+ EX: L = the set of all palindromes over {a,b}
+ 
+    For example:
+      a
+      abba
+      bab
+      bb
+ 
+   We cannot write a regular expression for this language. Why? Informally,
+   because as we scan from left to right, the test for validity of the 
+   string depends on something yet to come.
+ 
+   We could write a regular expression for a *finite* set of palindrones, but 
+   not for the set of all palindromes.
+ 
+ </pre>
+ </body>
+ </html>

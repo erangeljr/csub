@@ -1,0 +1,604 @@
+
+<html> <body>
+<h2>Programming Language Concepts I</h2>
+
+<h3>The Lexicon </h3>
+
+ The lexicon of
+ a programming language defines the valid components of that language.
+ An analogy is to the dictionary of the English language. A valid 
+ sentence can contain only words and symbols found in 
+ the dictionary. A lexicon is does not specify syntax (how those
+ words and symbols are put together).
+ The compiler specifies the lexicon by defining the rules
+ for valid user-defined 
+ names & identifiers, valid data types and literals, and
+ the set of keywords, operators and symbols.
+<p> 
+
+<h4>Names, Identifiers & Variables </h4>
+
+o a name is a reference to some component of the language; an 
+ identifier is a user-defined name (these two words are often used
+ interchangeably); variables typically are identifiers that
+ have a memory address; all languages
+ specify a syntax for identifiers. <a href="http://docs.oracle.com/javase/specs/jls/se8/html/jls-3.html#jls-3.8">(Java identifiers)</a> 
+<p/>
+o naming rules enforced by the compiler are
+  not to be confused with <a href="http://java.sun.com/docs/codeconv/html/CodeConventions.doc8.html#367">naming conventions.</a>
+<p/>
+o identifier syntax is often specified by a regular expression; this is Ada's: 
+<pre>     [a-zA-Z]([a-zA-Z0-9_][a-zA-Z0-9])*{_[a-zA-Z0-9]}  </pre>
+ 
+meaning: An identifier must start with a letter and be followed by zero 
+ or more letters, digits or underscores. An underscore cannot be the final 
+ symbol. An underscore cannot be followed by another underscore.
+<p>
+o names in most high-level languages are case-sensitive - Ada is not
+
+<h4>Keywords, Operators & Symbols</h4>
+<p>
+The lexicon of a high-level language consists of:
+<p>
+o a finite set of keywords {if, else, return...}  <br/>
+o a finite set of operators {+,-,%, /,*, . . .} <br/>
+o a finite set of special symbols {;,',",.,/*, . . .} <br/>
+o a specification for constants or literals {1.23, 77, 'a', "Hello", . . .}
+<p/>
+The lexicon for most modern languages is a superset of the
+ <a href="http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Developer/books/CLanguageRef/sgi_html/ch03.html">C lexicon</a>. 
+<p>
+<h4>Variables </h4>
+  
+A variable name is an identifier that is 
+ an abstraction of a memory cell and is characterized by five attributes:
+<p>
+<ol>
+<li> Name - not all variables have them (examples : dynamic memory variables 
+    in the heap are referenced by pointers only  )
+      Two variables using the same name must have different addresses (e.g. 
+      variables in different program blocks or scopes) but two variables
+      with different names may point to the same address (aliasing).
+<p>
+<li> Type - determines the range of values of variables and the set of 
+    operations that are defined for values of that type; in the case of 
+    floating point, type also determines the precision
+<p>
+<li> Address - the memory address with which the variable
+    is associated (the lvalue)
+   A variable may have different addresses at different times during 
+    execution (e.g. local variables inside functions)
+
+A variable of the same name may have different addresses in the same
+ compilation unit or other context; what the compiler does to fix this problem
+ is called 
+ <a href="http://en.wikipedia.org/wiki/Name_mangling">name mangling</a>.
+ (<a href="./examples/week01/binding.s">see gcc example</a>).
+ <p>
+   <li> Lifetime - The type of address binding determines the lifetime 
+   of a variable (the 
+   time during which it is bound to a particular memory cell);
+  storage type determines lifetime ; scope and lifetime are related but
+  not synonymous;
+        - <a href="./Manpages/linkage_storage.txt">C/C++ linkage</a>
+   - ( static variables in C/C++ have limited  
+    scope  but have program lifetime; i.e. the second time you call
+ a function and access a static variable declared in that function you
+ are not creating a new variable location ) 
+<p>
+  <li> Value - the contents of the location by which the variable is associated.
+<p>
+  <li> Scope - The range of statements over which a variable is visible; e.g.
+      visibility; May be static or dynamic
+</ol>
+
+<h4>Binding </h4>
+
+ Binding is the association of one thing with another thing ; e.g.,
+  a variable with its attributes or an operator and a symbol.
+<p>
+   The binding time is the time at which a binding takes place.
+<p>
+   <b>Possible Binding Times: </b>
+<p>
+     o Language design time --  bind operator symbols to operations;
+     e.g. '+' is bound to the addition operation
+<p>
+     o Language implementation time-- bind floating point type to a 
+     representation <a href="http://en.wikipedia.org/wiki/IEEE_floating-point_standard">(see IEEE 754 standard)</a>
+<p>
+     o Compile time - ex. bind a variable to a type in C or Java by the compiler - this is static binding
+<p>
+     o Link time -- resolve external symbol references; ex. bind a variable to
+     an address across multiple compilation units ( such as .o files ) ;
+    external linkage (see <a href="./doc/ld-manpage.txt">ld manpage</a>)
+   by the linker is static binding ; 
+   Example <a href="/~donna/cs350/Code/C/file1.c">file1.c</a> and
+    <a href="/~donna/cs350/Code/C/file2.c">file2.c</a> and
+<p>
+<p>
+     o Load time -- bind a FORTRAN 77 variable to a memory cell; bind shared 
+     objects libraries to an executable before runtime <br>
+ (see <a href="./doc/loader-manpage.txt">DEC Unix loader</a>) - this is also static binding
+
+<p>
+     o Runtime -- bind a nonstatic local variable to a memory cell ; bind a 
+     method to a class object via polymorphism in C++  - this is dynamic binding
+<p>
+     A binding is static if it first occurs before run time and remains 
+     unchanged throughout program execution (can be performed by compiler,
+     linker or loader).
+<p>
+
+     A binding is dynamic if it first occurs during execution or can change 
+     during execution of the program
+</pre>
+<h4>Type Binding </h4>
+<p>
+ Type binding the process of binding a variable with a type.  Possible
+  questions:  1) how is a type specified? 2) when does the binding
+  take place? 3) can binding change dynamically?
+<P>
+ If static, the type may be specified by either an explicit or an implicit 
+ declaration 
+<P>
+     An explicit declaration is a program statement used for declaring the 
+     types of variables; advantage: improves reliability
+<P>
+
+     An implicit declaration is a default mechanism for specifying types of 
+     variables (the first appearance of the variable in the program);
+     Advantage: writability; Disadvantage: reduces reliability <br>
+
+<P>
+     FORTRAN, PL/I, BASIC, and Perl provide implicit declarations;
+     <a href="/~donna/cs350/Code/Perl/test.pl.txt">(see Perl example)</a>
+<P>
+<p>
+ Type Inferencing :  Types are determined by the
+ compiler from the context of the reference .
+  Used by functional languages: ML, Miranda, and Haskell.
+<P>
+   <a href="http://c2.com/cgi/wiki?DynamicTyping">Dynamic Type Binding</a> is typing that occurs at runtime (JavaScript and PHP)
+
+<P>
+    A language that uses dynamic typing is not "typeless" 
+<p>
+    Dynamic typing is not the same as "weak typing"
+
+<p>
+   A language is dynamically typed if most variables in 
+   that language are dynamically typed. A "language" is dynamically
+ typed - not a program
+<P>
+    How the assignment statement behaves (in imperative languages)
+ indicates whether that language is dynamically typed; e.g., JavaScript    <pre>     
+    list = [2, 4.33, 6, 8];
+    list = 17.3;
+    list = "hello";
+</pre>
+    <a href="http://www.cs.csubak.edu/~donna/cs350/Code/JavaScript/test.html">run JavaScript example</a>
+<p> 
+    Advantage: flexibility (generic program units)
+    Disadvantages: 
+    High cost (dynamic type checking and interpretation)
+    Type error detection by the compiler is difficult
+
+<P>
+<P>
+  <a href="http://en.wikipedia.org/wiki/Duck_typing">Duck Typing</a> 
+  - "If it walks like a duck, quacks like a duck, ... ." Duck typing is a form of dynamic typing. 
+ Duck typing is used by Perl, Javascript, Python, and other scripting
+ languages.
+
+<p>
+<h3>Storage Binding 
+</h3>
+<p>
+   Storage binding of a variable is the binding of a variable name to
+   a memory address
+<p>
+   The type of storage binding determines the lifetime of a variable;
+   the lifetime of a variable is the time during which it is bound to a 
+   particular memory cell
+<P>
+   Storage binding begins with memory allocation - getting a cell from 
+   some pool of available cells
+<p>
+   Storage binding ends with deallocation - putting a cell back into the pool
+
+<P>
+  <b>Categories of Variables by Storage Binding</b> 
+
+<P>
+  (1)  Static--bound to memory cells before execution begins and remains 
+       bound to the same memory cell throughout execution, e.g., all 
+       FORTRAN 77 variables, C static and extern variables and C++ static 
+       members in a C++ class 
+<P>
+
+       Advantages: efficiency (direct addressing), history-sensitive subprogram 
+       support
+       Disadvantage: lack of flexibility  (no recursion)
+
+<P>
+  (2)  Stack-dynamic--Storage bindings are created for variables when their 
+       declaration statements are executed at runtime.
+
+       If scalar, all attributes except address are statically bound
+
+       Ex: local variables in C functions and C++/Java methods
+           return values, arguments pass by value 
+
+<P>
+       Advantage: allows recursion; conserves storage
+<p>
+       Disadvantages: Overhead of allocation and deallocation;
+        Subprograms cannot be history sensitive;
+       Inefficient references (indirect addressing)
+<P>
+
+  (3) Explicit heap-dynamic -- Allocated and deallocated explicitly by the 
+      programmer, occurs during execution
+<p>
+      Referenced only through pointers or references, e.g. dynamic objects in 
+      C++ (via new and delete), all objects in Java
+<p>
+      Advantage: provides for dynamic storage management
+      Disadvantage: inefficient and unreliable
+<p>
+  (4) Implicit heap-dynamic--Allocation and deallocation caused by assignment 
+      statements
+<p>
+   
+      all variables in APL; all strings and arrays in Perl and JavaScript
+      Advantage: flexibility
+      Disadvantages -- Inefficient, because all attributes are dynamic
+ and loss of error detection; <a href="/~donna/cs350/Code/Perl/test.pl.txt">(see Perl example)</a>
+
+<p>
+* "Explicit stack dynamic" does not make sense
+<p>
+<h3>Type Checking </h3>
+<p>
+   ensuring that the operands of an operator 
+   are of compatible types
+<p>
+
+   ensuring that the arguments in a subprogram call are compatible with
+    the parameters of the subprogram definition
+
+<p>
+   ensuring that the lvalue and the rvalue of an assignment statement
+   are compatible
+<p>
+
+   A compatible type is one that is either legal for the operator, or is 
+   allowed under language rules to be implicitly converted, by compiler-
+   generated code, to a legal type
+
+<p>
+  automatic conversion is called a coercion <a href="/~donna/cs350/Code/C/types.c">(see C example)</a>
+
+<p>
+   C++ example of  both implicit (automatic) and explicit type casting
+   (<a href="/~donna/cs350/Code/C++/bear.cpp">bear example</a>)
+<p>
+* A type error is the application of an operator to an operand of an 
+   inappropriate type; whether 'const' qualifier (or similar keyword) is
+   enforced by the compiler is an issue ; <a href="/~donna/cs350/Code/C++/bear.cpp">C++
+   enforces const</a> ; <a href="/~donna/cs350/Code/C/types.c">C does not</a>
+<p>
+
+   If all type bindings are static, nearly all type checking can be static
+<p>
+
+   If type bindings are dynamic, type checking must be dynamic
+<p>
+   
+<h3>Strong Typing </h3>
+<p>
+Rule of thumb: the more strongly typed a language is - the more secure
+ that language is!
+<p>
+ <i>A programming language is strongly typed if type errors are always 
+ detected (few or no implicit coercions )</i>
+<p>
+  most strongly typed languages are static typed  but not always 
+   -  ML is strongly typed but also employs dynamic typing
+  
+<p>
+   Advantage of strong typing: improves reliability - detects of the misuses 
+   of variables that result in type errors
+<p>
+   Coercion weakens strong typing; Ada is more strongly typed than C - there
+   is no implicit coercion: int i, int j; float x = i / j;  
+<p>
+    C/C++ is NOT strongly typed 
+ ( parameter type checking can be avoided or completely
+ ignored <a href="/~donna/cs350/Code/C/pointers.c">( see use of void * ); </a> ; unions are not type checked 
+
+<p>
+   Ada is the most strongly typed language (and the most secure language);
+    C# is almost fully strongly typed ;
+   Java is more strongly typed than C/C++ ( Java has half the 
+     assignment coercions of C++ but its strong 
+       typing is still far less than Ada ) ; no surprise- C/C++ is at the
+ bottom
+<p>
+<b>Name Type Compatibility  : </b> 
+   two variables have compatible types if 
+   they are in either the same declaration or in declarations that use the 
+   same type name
+<p>
+
+   Easy to implement but highly restrictive:
+   Subranges of integer types are not compatible with integer types
+   Formal parameters must be the same type as their corresponding actual 
+   parameters (Pascal)
+
+<p>
+<b>Structure Type Compatibility : </b> 
+   two variables have compatible types 
+   if their types have identical structures; flexible, but harder to implement
+; Ada supports assignment of all like structures 
+<p>
+   Design issues:
+   Are two record types compatible if they are structurally the same but use 
+   different field names?
+<p>
+
+   Are two array types compatible if they are the same except that the 
+   subscripts are different? (e.g. [1..10] and [0..9]) - yes in Ada
+<p>
+
+  In C, enumeration types are compatible if spelling differs but 
+   structure is the same <a href="/~donna/cs350/Code/C/types.c">(see C example)</a>
+<p>
+   With structural type compatibility, you cannot differentiate between types 
+   of the same structure (e.g. different units of speed, both float)
+<p>
+<h4>Scope </h4>
+
+   The scope of a variable is the range of statements over which it is visible
+<p>
+   The nonlocal variables of a program unit are those that are visible but not 
+   declared there
+<p>
+   The scope rules of a language determine how references to names are 
+   associated with variables
+<p>
+   Scope ruling are either dynamically or statically determined
+<P>
+
+   <u>Static Scope</u>
+<p>
+   Based on program text ; Ada uses static scoping rules and supports nested
+   subroutines; <a href="ada.txt">(see Ada example)</a>
+
+<p>
+  The binding of a name reference to a variable address is done by compiler,
+   linker or loader before runtime based on scoping rules; in C/C++ the
+   compiler handles compilation unit scope (internal linkage), the
+   linker handles program global scope (external linkage), and the loader
+   handles references to external system libraries.
+
+<p>
+   Search process: search declarations, first locally, then in increasingly 
+   larger enclosing scopes, until one is found for the given name
+   Example <a href="/~donna/cs350/Code/C/file1.c">file1.c</a> and
+    <a href="/~donna/cs350/Code/C/file2.c">file2.c</a> and
+<p>
+   
+
+   Enclosing static scopes (to a specific scope) are called its static 
+   ancestors; the nearest static ancestor is called a static parent
+
+<p>
+   Variables can be hidden from a unit by having a "closer" variable with the 
+   same name
+
+<p>
+  In addition to compilation unit scope and global scope, C++ and Ada 
+  have package (Ada) and class (C++) scope:
+      In Ada:  'unit.name';  In C++: 'class_name::name'
+     <a href="/~donna/cs350/Code/C++/bear.cpp">(see C++ example)</a> 
+
+<p> Blocks are a common method of creating static scopes inside 
+ program units--<a href="scope.cpp">(see C++ example)</a>
+
+<p>
+ C/C++/Java are static scoped languages; nested functions are supported in 
+ GNU C but not ANSI C <a href="/~donna/cs350/Code/C/types.c">(see C example)</a>
+<p>
+   Evaluation of Static Scoping:
+   
+<p>
+   Suppose the spec is changed so that D must now access some data in B
+
+<p>
+   Solutions:
+<p>
+   Put D in B (but then C can no longer call it and D cannot access A's 
+   variables)
+<p>
+   Move the data from B that D needs to MAIN (but then all procedures can 
+   access them)
+<p>
+   Same problem for procedure access
+<p>
+   Overall: static scoping often encourages or forces the use of global variables
+<p>
+
+   <u>Dynamic Scope</u>
+<p>
+   Based on calling sequences of program units, not their textual layout 
+   (temporal versus spatial)
+<p>
+
+   Assume MAIN calls A and B, A calls C and D, D calls E, B calls E 
+   Runtime stack:
+<pre>
+                            E
+             C         D    D     D                      E 
+        A    A    A    A    A     A     A          B     B     B 
+   MAIN MAIN MAIN MAIN MAIN MAIN  MAIN  MAIN MAIN  MAIN  MAIN  MAIN
+</pre>
+   References to variables are connected to declarations by searching back 
+   through the chain of subprogram calls that forced execution to this point
+   based on program text <a href="ada.txt">(see Ada example)</a>
+ <p>  
+   Advantage: convenience
+   Disadvantage: poor readability
+
+<p>
+<u>Referencing Environments</u>
+<p>
+   The referencing environment of a statement is the collection of all names 
+   that are visible in the statement
+<p>
+
+   In a static-scoped language, it is the local variables plus all of the 
+   visible variables in all of the enclosing scopes 
+<p>
+  
+   A subprogram is active if its execution has begun but has not yet terminated
+
+<p>
+   In a dynamic-scoped language, the referencing environment is the local 
+   variables plus all visible variables in all active subprograms
+
+<p>
+<u>Named Constants</u>
+<p>
+
+   a named constant is not a literal (a literal has no memory associated
+ with it); a named constant is a variable bound to a value once when it is 
+   bound to storage; improves readability and modifiability ;
+    used to parameterize programs
+<p>
+
+   the binding of values to named constants can be either static (called 
+   manifest constants) or dynamic
+<p>
+
+   the binding of a variable to a value at the time it is bound to storage is 
+   called initialization; binding can be static or dynamic: 
+   the value of a dynamic named constant is set once at runtime. Ex. <pre>
+
+   const static int result = 2 * width + 1;   // width not known at compile time
+
+  </pre>
+
+<p>
+  C# has static named variables ( keyword const ) and dynamic named constants
+ ( keyword readonly )
+
+<H3>Terminology </h3>
+
+ The terms <u>name</u> and <u>identifier</u> are generally
+ interchangeable. 
+ An "identifier" is a name for a user-defined entity -- 
+ a variable, a function, a label, a constant, etc. --
+ 
+  or a predefined entity that comes with the language  --
+  environment variables, system calls, library functions, etc.
+ The keywords and reserved words of a language, which
+ name the  statement constructs and basic data types, cannot be
+  used as an identifier name.
+<p>
+The terms <u>keyword</u> and <u>reserved word</u> are interchangeable in 
+ most languages. In C/C++/Java, the terms 'reserved word' and 'keyword' 
+mean the same thing. In Fortran, a keyword is a word that is special only 
+ in certain contexts. E.g.,<pre> 
+   -Real VarName  (data type followed by a name, therefore Real is keyword)</pre>
+ Whereas, in Fortran and Ada
+ a reserved word (while, do, for, break) is a special
+ word that cannot be used as a user-defined name. 
+<p>
+All identifiers are associated with a <u>type</u>. For example,
+  a variable identifier may be a single-entity scalar type 
+ (int, float, double), a  derived type (arrays, structures, 
+ unions), an object type, an enumerated type, a function type, etc. 
+ A function type has
+  variable types associated
+ with the return value and parameter(s).
+ The type of the identifier determines its scope, lifetime, type checking, 
+ initialization, and type compatibility. For example, 
+ a C function type has global scope and external linkage, has 
+ a lifetime of that of the executable, and has
+ strict type checking that is controlled by function prototypes
+ at compilation time.
+<p> 
+* <u>Primitive data types</u> refer to the scalar and derived 
+  data types that come with the language. The implementation of
+ those types is compiler specific. <a href="http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Developer/books/CLanguageRef/sgi_html/apa.html">ANSI C primitive data types</a> include int, float, double, pointer, unsigned int, array, etc.
+ A type is also categorized as an integral or a non-integral. Integral
+ types are scalars that have discrete values (int, unsigned int, 
+ char, enum, bool)
+
+ Perl includes all the usual primitives as C and also
+ a string as a scalar type and 
+  an <a href="http://en.wikipedia.org/wiki/Associative_array">associative array</a>
+ as a primitive data type. A language will generally include,
+ by default, the capability
+ to display the values of all primitive scalar datatypes.
+ C's <a href="http://www.cplusplus.com/reference/clibrary/cstdio/printf.html">
+ printf</a> is one of the more powerful tools for displaying the value of
+ primitive types.
+<p>
+A <u>literal</u> is the source code representation of the value
+ of a primitive data type. A literal has a type, but does not have a 
+ memory address. This C++ code provides examples of literals:<pre>
+  
+    void test(char * str){
+        str[0] = 'a';   // seg fault core dump
+    } 
+    int x = 5;  // '5' is a literal for an int data type with value 5
+    test("hello"); // 'hello' is a string literal
+    bool flag = false; // 'false' is a boolean literal in C++ </pre> 
+    
+<p>
+<u>Camel Notation</u>: OutofBoundsError. Camel notation can improve 
+ readability if used consistently (getName, getPhone, getAddress, etc.)
+ and if the notation is intuitive and easy to remember.
+ Otherwise, camel notation degrades readability and writeability.
+<p>
+The term <u><a href="http://h30097.www3.hp.com/docs/base_doc/DOCUMENTATION/V40D_HTML/AQTLTBTE/DOCU_026.HTM#lvalues_sec">lvalue</a></u> historically refers to
+  the "left-hand" side
+ of an assignment statement. The term <u>
+<a href="http://h30097.www3.hp.com/docs/base_doc/DOCUMENTATION/V40D_HTML/AQTLTBTE/DOCU_026.HTM#lvalues_sec">rvalue"</a></u> historically
+ refers to the "right-hand" side of
+ an assignment statement. In an extension of the original definition,
+ rvalues and lvalues do not need to
+ be part of an assignment statement, but reflect whether or
+ not the expression or variable is bound to a memory address or to a value.
+  An rvalue is bound to a value and an lvalue is
+  is bound to a memory address.
+ Thus, a statement that expects an lvalue requires a variable that is
+ associated with a memory address. An rvalue does not
+ require storage space. An rvalue is  either a literal or the value of 
+ an expression. The error "unmodifiable lvalue" means that the
+ the statement needs a variable bound to a 
+ memory address but instead has encountered a variable that either is not
+ an lvalue or is an lvalue that cannot be modified. For example, 
+ this code will not compile<pre>
+   const int y = 5; 
+   int x = 5;
+   if ( x > 3)    // x is an lvalue and '3' is an rvalue 
+      x++;        
+   y = y + 1;     // y is an unmodifiable lvalue  
+ </pre>   
+<p>
+    <u>Aliases</u> are two or more variable names that access the same 
+ memory location. Aliases are created via pointers, reference variables, 
+ C and C++ unions. Aliases are harmful to readability 
+ (readers must remember all of them), maintainability and security.
+<p>
+The <u>runtime stack</u> (or just stack) is a portion of memory allocated
+ to a process during execution that is used strictly for everything
+ necessary to implement a procedure call (the code return address, the value of
+ arguments passed in, and the value of local variables).
+<p>
+</body>
+</html>

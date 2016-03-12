@@ -1,0 +1,12 @@
+# generated with flag -fdump-tree-gimple-raw
+main ()
+gimple_bind <
+  int D.1708;
+  extern int write ();
+
+  gimple_call <write, NULL, 1, "hello world\n", 12>
+  gimple_assign <integer_cst, D.1708, 0, NULL>
+  gimple_return <D.1708>
+>
+
+
