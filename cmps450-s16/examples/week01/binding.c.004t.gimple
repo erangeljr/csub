@@ -1,0 +1,38 @@
+main ()
+{
+  int D.1715;
+  int mainX;
+  char mainStr[33];
+
+  try
+    {
+      mainX = 55;
+      {
+        static int myStatic = 44;
+
+
+      }
+      mainStr = "a";
+      mainStr[0] = 98;
+      D.1715 = 0;
+      return D.1715;
+    }
+  finally
+    {
+      mainStr = {CLOBBER};
+    }
+}
+
+
+funcA (int num)
+{
+  int D.1718;
+  int x;
+
+  x = 66;
+  x = x + 99;
+  D.1718 = 0;
+  return D.1718;
+}
+
+
