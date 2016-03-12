@@ -27,16 +27,16 @@ You do not need to submit your work for the exercises below. You should
  complete them if you are not already familiar with regular expressions.
  For submission you will write a rather complex regex and insert it
  into a perl script that I provide.
- Copy the perl script <a href="./lab01_files/lab01">lab01</a> and 
- <a href="./lab01_files/data">data file</a> into your directory:
- <pre>   $ cp /home/fac/donna/public_html/cs450/lab01_files/lab01 . 
-   $ cp /home/fac/donna/public_html/cs450/lab01_files/data . 
+ Copy the perl script <a href="./lab01/lab01">lab01</a> and 
+ <a href="./lab01/data">data file</a> into your directory:
+ <pre>   $ cp /home/fac/donna/public_html/cs450/lab01/lab01 . 
+   $ cp /home/fac/donna/public_html/cs450/lab01/data . 
 </pre>
  The lab01 script needs to be executed so make sure you 
  put 700 permissions on the file.
  Your job is to replace the existing regex in the perl script with another
  regex that will display the first 6 lines
- of <a href="./lab01_files/data">data</a> and none of the remaining 
+ of <a href="./lab01/data">data</a> and none of the remaining 
  lines. Make your regex as simple as possible. For credit your
  regex CANNOT contain actual words.
 <p> Submit your script as an attachment to <code> donna@cs.csub.edu </code>
@@ -49,7 +49,7 @@ escaping it:  <pre>
     64,79s/\v.*(it|ing|the).*/DONE/  </pre>
 When you have tested your regex in vim, hit ESC u to undelete. You can also 
  use this tool: <a href="http://www.rubular.com">www.rubular.com</a>.
-Use <a href="./lab01_files/lab01.txt">this file</a> to test your solutions.
+Use <a href="./lab01/lab01.txt">this file</a> to test your solutions.
 <pre>
 01. Write the shortest possible RE that matches all items (the entire string) 
     in the first set but none in the second set. It is possible to use no more 
