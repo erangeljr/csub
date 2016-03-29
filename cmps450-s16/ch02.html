@@ -1,0 +1,158 @@
+<html> <body style="margin: 20px;">
+<h3>CMPS 450 Lecture Notes </h3>
+<h2> Syntax Directed Translation </h2>
+
+ This chapter provides a bird's eye view of the components of a 
+ compiler front end (details are covered in later chapters). 
+ To demonstrate the process of designing and
+ building a compiler front-end, 
+ the authors construct a syntax-directed translator (in Java) for
+ converting arithmetic expressions into postfix form. Each component 
+ is covered in more detail in subsequent chapters.
+ <p>
+  Compiler design may be the area of computer science
+  where theory has the strongest impact on practice.
+  The underlying theory for the design of a compiler front end 
+  is that of formal grammars. You need to be familiar with
+   context-free grammars, attribute grammars and regular grammars. 
+<p>
+ If you understand everything in <a href="http://www.cs.csub.edu/~donna/cs350/example03b.txt">this file</a> you are in good shape - AGs and parsing will be
+ covered in more detail later. 
+
+<h4> Ch.2.2 "Context-Free Grammars"</h4>
+
+  Chapter 02 introduces context-free grammars.
+  You can review the CMPS 350 lecture  on
+ <a href="/~donna/cs350/ch03a_notes.html">CFGs</a> 
+  and corresponding 
+ <a href="/~donna/cs350/hw03.html"> homework </a>.
+ 
+ <h4> Ch.2.3 "Syntax-Directed Translation"</h4>
+
+  This section introduces 
+  attribute grammars (Aho et. al doesn't use the term
+   attribute grammars but
+   attribute grammars are, in fact, the basis for the 
+    syntax-directed definitions in this chapter
+  (Sections 2.3.2 - 2.3.3). Since the authors only briefly cover attribute
+  grammars here -- AGs are covered in more depth in Chapter 5 -- we
+   will spend little time as well.
+  However, you should review the CMPS 350 lecture  on
+  <a href="/~donna/cs350/ch03b_notes.html">attribute grammars </a> and 
+   review the 
+   <a href="/~donna/cs350/hw04.html"> CMPS 350 homework</a> (Questions #1 - #14
+    cover AGs) <p>
+
+<p>
+<h4> Ch.2.4 "Parsing Methodologies"</h4>
+
+<b>Terminology</b>
+<p>
+
+In computer science, <u>parsing</u> means to take a string of terminals
+ (terminal symbols)
+ in a language (a sentence) and validate whether that sentence
+ follows the rules of the BNF/attribute grammar defining
+ that language. 
+  Parsing is either top-down (root of parse tree 
+ constructed first) or bottom-up (leaf nodes of parse tree constructed first).
+ The goal in parsing 
+  is syntax analysis -- i.e., to determine whether
+  a given string of terminals meets the contraints of the grammar
+  -- and static semantics analysis.
+  Static semantics refers to the context sensitive elements 
+   as defined by attribute grammars.
+   <p>
+   <u>Lookahead symbol</u> is the current symbol being scanned; i.e., the
+    leftmost terminal of the input string.
+    <p>
+ <p>
+ <u>Top-down Parsing</u> 
+ is a preorder (VLR) construction of the parse tree.
+  This corresponds to a leftmost derivation.
+  If you have constructed a parse tree you have performed top-down parsing.
+
+   <p>
+   <u>Recursive Descent Parsing</u> is a top-down parsing methodology
+    in which the syntax analyzer is 
+   based directly on the BNF grammar describing the language (i.e.,
+   the syntax of the language). An alternative to recursive descent is to
+    use a parsing table to implement the BNF rules. Both are LL algorithms
+     (the first 'el' means left-to-right scan and the second 'el' means
+     leftmost derivation). 
+
+     <p>
+
+      <p>
+      <u>Predictive parsing</u> (covered in depth in chapter 4) is a form
+      of recursive descent in which the lookahead symbol unambiguously 
+      determines the flow from LHS to RHS of the BNF rules.  Without
+       predictive parsing, top-down algorithm may involve backtracing
+        if the incorrect rule is selected.
+
+	<p>
+	<u>LL(1)</u> refers to a class of grammars to which LL parsing   can
+	 be applied. The '1' means using one input symbol
+	  of lookahead at each step to make parsing decisions. LL(1)
+	  grammars are parsed with
+	   a left-to-right scan, a leftmost derivation and one
+	   lookahead symbol. The major problem with LL(1) grammars is left
+	    recursion.  
+  <p>
+  Yacc (Yet Another Compiler Compiler) is a parser that reads an input
+  file and generates an LR parser for it. ( a C
+   program named y.tab.c ). Bison is a modernized
+   yacc (input files should be upwardly compatible). 
+     Yacc produces an LR(1) parser.
+   Yacc 
+    <a href="http://dinosaur.compilertools.net/yacc/index.html">man page</a>
+   <p>
+
+
+ <p>
+<h4> Ch.2.5 "Implementing a Translator for Simple Expressions"</h4>
+
+ Some things you need to know from this section:
+  An abstract syntax tree (AST) is a parse tree where the interior
+   nodes are programming constructs rather than nonterminals.
+ The interior nodes in a parse tree are nonterminals.
+
+
+<h4> Ch.2.6 "Lexical Analysis"</h4>
+
+A lexical analyzer (also called a scanner) reads the source input one character
+at a time and produces a stream of tokens classified by token type. Each 
+ token is a terminal
+ symbol in the grammar and has 
+ associated attribute values. Tokens with their associated attributes
+ are expressed as  tuples enclosed in angles brackets; e.g.  
+ &lt;identifier, "number"> is an identifier token of type number.
+<p>
+ The lex compiler tool is covered in this week's lab.
+
+
+<h4> Ch.2.7 "Symbol Table"</h4>
+
+Either the scanner or the parser must create an entry in the symbol table
+ for each identifiers in the program. 
+ The scanner creates the entry in the symbol table for the current
+token if it can. The parser must do so in cases where 
+ the scanner is not smart enough to so so - such as
+ those that involve scope. 
+  Details of symbol table management in later chapters. 
+
+
+<h4> Ch.2.8 "Intermediate Code Generation"</h4>
+
+The result of syntax analysis is intermediate code - some
+representation of the source code - generally an abstract syntax tree or
+ sequence of instructions such as 3-address code (TAC). Unfortunately,
+ there is no universal intermediate code for compilers. The point
+ is that intermediate code is still platform independent but it can
+ more easily be translated into assembly than the source.
+ <p>
+
+
+ 
+</body>
+</html>

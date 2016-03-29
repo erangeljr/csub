@@ -1,0 +1,425 @@
+<html> <head> <style type=text/css> 
+DIV.ans { margin: 3px 0px 10px 3px; padding: 4px; border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #777;
+ background-color: #DEE; padding-right: 5px; height: 50px; width: 600px; }
+DIV.box { position: relative; float: left; margin: 0px 0px 2px 0px; 
+ padding: 4px; # border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #19193A;
+ background-color: #eee; padding-right: 0px; width: 450px; height: 60px; }
+h5 { background-color: yellow; width: 300px;}
+td{padding: 6px;}
+</STYLE> </head> 
+<body style="margin: 10px 70px 25px 25px;" >
+<h2> CMPS 450 Lecture Notes - Chapter 3.6 - 3.7 "Finite-State Automata"</h2>
+<b>resources:</b><br>
+<a href="http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Developer/books/CLanguageRef/sgi_html/index.html">ANSI C Language Reference</a><br>
+<a href="http://www.jflap.org/tutorial/">JFLAP tutorial</a> </br>
+<a href="./Material/JFLAP_Thin.jar">jflap jar</a> </br>
+<a href="http://math.hws.edu/FoundationsOfComputation/">Foundations of Computing</a> 
+
+<h4>REGULAR EXPRESSIONS & FINITE-STATE AUTOMATA  </h4> 
+
+The process by which a scanner recognizes valid sentences in a regular language
+is formalized by the theory of finite-state automata. The 
+word <i>automata</i> is from the Greek word for "self-acting." (Automata is
+ plural, automaton is singular.)
+<p>
+
+ Notation: By default JFLAP uses &lambda; (lambda)
+ to denote the empty string. The text uses &epsilon;. 
+ JFLAP also uses '+' to denote '|' the OR operator. 
+ <p> 
+ Progressing through a transition diagram from state to state is theoretically
+ described by finite-state automata (FA). An FA returns "Yes" if the string is 
+ in the language and "No" otherwise. Like transition diagrams, FAs have edges 
+ and states. The complete description for finite automata is shown below.
+
+<pre><tt>
+ A Finite Automaton M is a 5-tuple &lt;S, A, s0, F, t> where 
+  	S = finite set of states
+  	A = finite set of input alphabet (the terminal alphabet)
+  	s0= start state
+  	F = set of final states, where F is a subset of S
+  	t = transition function </tt></pre>
+
+<h4>  DFAs and NFAs </h4> 
+
+ Deterministic Finite-
+  state Automata (DFAs) and Non-deterministic Finite-state Automata (NFAs)
+ differ by mapping function.
+  DFAs do not allow multiple edges leaving a particular state to have the same 
+  label and do not allow &lambda; as an edge label. NFAs have no restriction on
+  edge labels and allow &lambda; as a possible transition label. 
+ Since &lambda; is the 
+  empty string, a transition can be made from one state to another on no input. 
+  Automata that accept &lambda;-transitions and multiple edges with the 
+ same input 
+  are non-deterministic (NFA); 
+ i.e., you cannot predict the exact path an automaton 
+  might take by looking at the transition function. Automata 
+ without &lambda;-transitions 
+  or multiple edges with the same input are deterministic (DFA). 
+ <p>
+  The transition function for a DFA returns, for each state in S and each 
+  symbol in A, a single next state.
+
+   <pre> t = S x A -> S  // DFA transition function returns single state</pre>
+
+  The transition function t for an NFA returns, for each state in S and each 
+  symbol in A including &lambda;, a set of next states from S.
+
+<pre>   t = S x {A U &lambda;} -> {f | f &isin; S}  // NFA transition function
+                                         // returns s set of states </pre>
+
+  A string is accepted by DFA M if the set of states returned by t* contains at
+  least one accepting state. 
+ <p> 
+  If no transition is specified for a (state, symbol) pair then the FA is 
+  incompletely specified. The &Oslash; (null) state entered in the table
+  in this case. A string is rejected if it reaches a state where 
+  there is no transition for the next symbol. 
+<p>
+  L(M) is the language accepted by automaton M.
+<pre>
+*----------------------------------------------*
+|  Example of a DFA: Newspaper Vending Machine |
+*----------------------------------------------*
+
+  The control device for a newspaper vending machine keeps track of the amount 
+  of money (nickels, dimes, quarters) entered, and opens the door only if the 
+  amount is at least 25 cents.
+  
+  The amount entered is the state of the machine. We move to a new state if 
+  another coin is entered by following a transition function. 
+  
+  Transition table t for newspaper vending machine:
+  
+  	  | n   d   q
+  	--+-----------
+  	 0| 5   10  25
+  	 5| 10  15  25
+  	10| 15  20  25
+  	15| 20  25  25
+  	20| 25  25  25
+  	25| 25  25  25
+
+  If we are in state 10 and a nickel is entered, we transition to state 15. 
+  
+  If a quarter is entered from state 10, we move to state 25. In shorthand 
+  string notation, ndq denotes entering a nickel, a dime, and a quarter in 
+  that order. This automaton accepts all input strings that end up in the
+  final state 25. For example, we accept dnd but reject the string dnn.
+  
+  This automaton M is defined as
+  	A = { n, d, q } 
+  	S = { 0, 5, 10, 15, 20, 25 }  
+  	s0= 0 
+  	F = { 25 } 
+  	t = S x A -> S    // defined by the above transition table
+ 
+  A sequence of states is called a path: 0, 5, 25 
+
+  The language defined (or accepted) by automaton M, denoted by L(M), is the 
+  set of all strings that label some path from s0 to a final state in F.
+
+      L(M) =  {  q, nq, dq, ndd, ddn, dnd, .... }
+
+  ,-----------------------,
+  | A FORMALISM FOR L(M)  |
+  '-----------------------'
+
+  We can recursively describe L(M) with a function.
+
+  Let function t* be an extension of function t in order to accept all possible
+  input strings rather than a single character:
+
+       t* : S x A* -> Q  (Given a state and a string, outputs a new state)
+ 
+  A* is the Kleene-closure of the terminal alphabet A. Then t* fully describes 
+  L(M):
+
+      L(M) = { w : t*(0,w) &isin; F }
+
+  A definition for t*(q,w). 
+  If w == &lambda; then t* = q
+  If w is a single character then t*(q, w) = t(q,w)
+  If w is a string then let w = va, where a is the last character, v is 
+  everything before it. Then t* is recursively defined as:
+
+        t* (q, w) = d* (q, va) =  d(d*(q,v),a) 
+  
+   // t* algorithm in C 
+   state tstar( state q, string v)
+   {
+      if ( v == &lambda;)
+        return q;
+  
+      char a = lastsymbol(string);     // returns the last symbol in a string
+      string u = allbutlastsymbol(v);  // does just what you think it does 
+      state r = tstar(q,u);            // r is the state u takes us to
+      return( t(r,a));                 // the transition from QxA -> Q
+   }
+  
+  TSTAR EXAMPLE
+        |a b       { The states are 0 and 1. The input symbols are a and b. }
+      --+---         F = { 1 }. 
+      0 |0 1
+      1 |0 1 
+  
+  Notation: [current state, remaining string]
+  
+      [0,aba] -> [0,ba] -> [1,a] -> [0, &lambda;]
+
+  aba is not accepted since input is exhausted and we are not in a final state.
+  
+          L(M) = {w in A* | w ends in b}
+
+  Note: The number of states in a path is |w| + 1. Thus, if the length of the 
+  string is at least the number of states, a state must be repeated i.e. the 
+  path must have a loop.
+  
+  EXAMPLE
+        |a b      F = { 3 }
+      --+---
+      0 |2 1
+      1 |1 1     Note that state 1 is a trap state.
+      2 |3 2 
+      3 |3 2 
+  
+  L(M) = a ( a | b )* a, the set of all strings that start and end with a.         
+  Computation for aaba:
+  [0,aaba] -> [2, aba] -> [3,ba] -> [2,a] -> [3,&lambda;] accepted
+  
+  EXAMPLE
+        |a b      F = { 2 }
+      --+---
+      0 |0 1
+      1 |0 2   
+      2 |2 2 
+  
+  L(M) = the set of all strings that contain the substring bb. The RE is: 
+  
+        (a|b)*bb(a|b)*         
+ 
+  ,-----------------,
+  | L(M) COMPLEMENT |
+  '-----------------'
+
+  We can construct an FA for the complement language L' by simply interchanging 
+  accepting and non-accepting states. If we change F to F = {0,1}, the language
+  is the set of all strings which do not contain bb.
+  
+  This method works in general. We can always transform an FA for a language L 
+  into an FA for L'.  </tt></pre>
+
+<h3> Ch.3.7 "Regular Expressions and Finite Automata"</h3>
+
+The abstract machine that accepts or rejects an input string is modeled on 
+ automata, thus we now consider how to convert an RE into an automaton.
+  Drawing the transition diagram based on the RE is relatively easy 
+ in simple cases. The RE below is easily represented by a DFA.
+<pre>      a*ba*b  </pre>
+<img src="./Material/dfa-1.png" height="200px;" width="350px;">
+</pre><br/>
+ Slightly more complex REs are difficult to depict with DFAs but
+ fairly easy to  depict by NFAs. For example, this regex
+ <pre> (a|b)*abb </pre>
+ is easily described by this NFA:
+<br/>
+<img src="./Images/dragon1.png" align="top"><br/>
+ The Transition Table for (a|b)*abb is shown below.
+<p>
+<table border=1>
+<tr> <td><b>State</b></td>
+<td><b>a</b></td>
+<td><b>b</b></td>
+<td><b>&epsilon;</b></td>
+</tr>
+<tr><td>q0</td><td>{q0,q1}</td><td>{q0}</td><td>&Oslash;</td></tr>
+<tr><td>q1</td><td>&Oslash;</td><td>{q2}</td><td>&Oslash;
+</td></tr>
+<tr><td>q2</td><td>&Oslash;</td><td>{q3}</td><td>&Oslash;
+</td></tr>
+</table> Accepting State = q3
+<p>
+ The problem with the above NFA is that when the scanner encounters
+ an 'a' from q0 does it stay in q0 or move to q1? Such non-determinism
+ works for humans but not for computer algorithms. Machine 
+ implementation must ultimately
+ be deterministic.  The question is how to convert a DFA into
+ an NFA. It turns out that
+ all NFAs can be converted into equivalent  DFAs and, importantly,
+ with roughly the same number of states.
+
+<h4>Subset Construction Algorithm for NFA to DFA </h4>
+
+ Let N be a DFA.
+ The algorithm requires these operations, where 'e' denotes &epsilon;
+ (the empty string), s 
+ is a single state in N and T is a set of states in N: 
+<pre>
+  OPERATION     DESCRIPTION
+  e-closure(s)  Set of NFA states reachable from NFA state s on e-transitions 
+                alone
+
+  e-closure(T)  Set of NFA states reachable from some NFA state s in set T 
+                on e-transitions alone; this is the union of all e-closure(s) 
+                operations
+
+  move(T,a)     Set of NFA states to which there is a transition on input
+                symbol 'a' from some state s in T.  </pre>
+
+<h4>The On-the-fly Subset Construction Algorithm for Simulating an NFA </h4>
+
+The On-the-fly algorithm constructs the NFA by applying subset
+ construction to the DFA dynamically.
+
+
+<h4>The McNaughton-Yamada-Thompson Algorithm to Convert RE to NFA </h4>
+
+This is Algorithm 3.23 in the text.<pre>
+Input: regex r over alphabet Sigma (&Sigma;)
+Output: NFA N accepting L(r), with new start state i and new final state [f].
+</pre>
+
+Method: Parse r into subexpressions. Apply conversion rules to each
+ subtree of the parse tree. Then construct 
+larger NFAs by combining the NFAs of all the subtrees.
+<p>
+The validity of this approach is shown with structural induction using 
+the atomic rules (Rule 1 and Rule 2) as a basis.
+<pre>
+Notation: Let s,t be regexes; then s0, t0 are the respective start states 
+and [s] and [t] are the respective accepting (final) states.
+
+N(r) is the NFA accepting r; N(r) is defined by a transition table.
+
+                                  &lambda;
+RULE 1.  if r = &lambda; then N(r) =  i [f]     
+                                                            a 
+RULE 2. if r = some terminal symbol 'a' in &Sigma; then N(r) = i [f] 
+
+RULE 3. Union Operator. If r = s|t, then N(r) accepts either L(s) or L(t). Use
+&lambda; transitions to combine N(s) and N(t). Then N(s|t) is defined by all 
+transitions for N(s) and N(t) combined by the following transitions: 
+
+                 &lambda;
+            i   {s0,t0}
+           [s]  [f]
+           [t]  [f]
+
+RULE 3. Concatenation Operator. If r = st, then N(r) accepts input accepted
+by N(t) followed by input accepted by N(s). This is accomplished by assigning 
+i = s0, [f] = [t] and by merging all accepting states for N(s) with the
+start states of N(t). Concatentation does not require any new transitions.
+
+RULE 4. * (Kleene closure) Operator. If r = s* then N(r) consists of new states
+i and [f], one &lambda; transition from i to [f], two &lambda; transitions from i to s0 and 
+[s] to [f] to bracket N(s), and one &lambda; transition from [s] back to s0. The four 
+new transitions added to N(s) are: <pre>
+
+                     &lambda;
+               [i]  [f]    // transition for s^0 
+                i   s0     // this transition ensures a single start state 
+               [s]  [f]    // this transition ensures a single final state
+               [s]  s0
+
+Note: the goal is to create an NFA with a single start and a single final state.
+
+RULE 5. Parentheses Operator. If r = (s) then L(r) = L(s), thus N(s) = N(r).
+
+,---------------------,
+| Example. (a|b)*abb  |
+'---------------------'
+
+Step 1. Construct the expression tree.
+
+                            r_11
+                           /    \
+                         r_9     r_10
+                       /    \      |
+                     r_7    r_8    b      
+                    /  \     |
+                  r_5   r_6  b
+                 /  \    |
+                r_4  *   a
+              /  /  \
+            (   r_3  )
+               / \ \
+            r_1  |  r_2
+             |       |
+             a       b
+
+Step 2. Apply rules to regexes starting with tree leaves (atomic rules). The 
+NFA will be constructed in a depth-first left to right traversal or the 
+expression tree. The first partial NFA constructed is for r_1 and the last 
+is r_11. Summary:
+
+   For regex:     Apply:
+   r_1  a         Rule 1. construct NFA for terminal a
+   r_2  b         Rule 1. construct NFA for terminal b
+   r_3 a | b      Rule 3. combine r_1 and r_2 and assign new start state i
+   r_4 (r_3)      Rule 5. since r_4 = r_3 skip
+   r_5 (a | b)*   Rule 4. &lambda; everywhere and assign new start and end state
+   r_6  a         Rule 1. construct NFA for 'a' (can't reuse NFA from r_1)
+   r_7 (a | b)*a  Rule 3. merge tail of r_5 NFA with head of r_6 NFA
+   r_8 b          Rule 1. construct new NFA for terminal b
+   r_9 (a|b)*ab   Rule 4. merge tail of r_7 with head of r_8           
+   r_10 b         Rule 1. new NFA for terminal b
+   r_11 (a|b)*aab Rule 3. merge tail of r_9 with head of r_10   </pre>
+</pre>
+The start state for the NFA comes from r_5, the final state from r_10.
+The transaction diagram for the NFA constructed from (a|b)*abb using the 
+ M-Y-T algorithm is shown below (generated by JFLAP with the epsilon
+ transitions between the final abb removed). <br/>
+<img src="./Images/dragonNFA.png" height=190px width=620px>
+<br>
+Applying Subset Construction to the NFA will give you  this DFA:
+<p>
+<table border=1 style="padding:4px;">
+<tr>
+<td>NFA States </td> <td>DFA State</td><td>a</td><td>b</td>
+</tr>
+
+<tr>
+<td>{q0,q1,q2,q4,q7} </td>      <td>D0</td> <td>D1</td> <td>D2</td>
+</tr>
+
+<tr>
+<td>{q1,q2,q3,q4,q6,q7,q8} </td> <td>D1</td> <td>D1</td> <td>D3</td>
+</tr>
+
+<tr>
+<td>{q1,q2,q4,q5,q6,q7} </td>    <td>D2</td> <td>D1</td> <td>D2</td>
+</tr>
+
+<tr>
+<td>{q1,q2,q4,q5,q6,q7,q9} </td> <td>D3</td> <td>D1</td> <td>D4</td>
+</tr>
+
+<tr>
+<td>{q1,q2,q4,q5,q6,q7,q10} </td> <td>D4</td> <td>D1</td> <td>D2</td>
+</tr>
+
+</table>
+<br>
+The accepting state is the only state that holds q10, which is D4.
+ (You stop constructing new D-states until no new D-states result.)
+<p>
+Corresponding Graph generated by JFLAP 
+<p>
+ Note: q0=D0, q1=D1, q2=D2, q3=D3, q4=D4.
+ The subsets do not correspond to the table above because the extra
+ lamdba transitions were not removed from the NFA before applying subset
+ construction. The resulting NFA is correct.<p>
+<img src="./Images/dragonDFA.png" height=350px  width=750px>
+
+<h4> Ch.3.8 "Designing a Lexical-Analyzer Generator"</h4>
+
+Covered in lab 4.
+
+<h4> Ch.3.9 "Optimization of DFA-Based Pattern Matchers"</h4>
+Not covered
+
+</body>
+</html>
