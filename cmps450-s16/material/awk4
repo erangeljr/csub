@@ -1,0 +1,7 @@
+# parse some stuff out of ps -ef output
+# NF is the number of fields in the record
+
+# Usage: awk -f awk4 psout
+
+BEGIN { print "Find students logged today and running sshd\n "; }
+ $3 >= 30000 && $5 ~/^[0-9]/ && $8 ~/sshd/

@@ -1,0 +1,9 @@
+# awk -f awk1 data
+
+
+BEGIN {print "Name\tDesignation\tDepartment\tSalary\n";}
+
+{print $3,"\t",$2,"\t",$4,"\t",$NF;}
+
+END{print "Report Generated\n----------------";
+}

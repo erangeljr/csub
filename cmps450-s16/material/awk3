@@ -1,0 +1,17 @@
+# awk -f awk3 countries
+BEGIN{
+    print "Country    Density ";
+    print "-------------------" ;
+    total = 0;
+}
+# NR is number of records which is the same as the line number
+{ if ( NR != 1) 
+   {   
+        den= $2 / $3;
+        printf ("%-10s %0.4f\n",$1, den);
+        total += NF   
+   }
+}
+END { printf("total fields: %d\n", total) }
+# note: this RE can also be used to eliminate line #1 of the datafile:
+# /[0-9]/

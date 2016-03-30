@@ -1,0 +1,215 @@
+ *****************************
+ *     FINITE AUTOMATA       *
+ *****************************
+
+     Finite state machines with output 
+  
+    1 Mealy Machines: transition output (output during transition)
+    2 Moore Machines: state output (output when you get to a state)
+  
+  
+  EXAMPLE:
+    Adder 
+  
+            | (0,0)   (0,1)   (1,0)   (1,1)   
+    --------+-------------------------------
+    No Carry| NC/0    NC/1     NC/1    C/0
+       Carry| NC/1     C/0      C/0    C/1
+  
+     i.e. If we are in state NC and the input is (0,0), we stay in NC and 
+          output 0. 
+          The string consists of pairs and is processed from least to most
+          significant digit pair. After the last pair, if we are in the carry
+          state, we append a 1 to the output string.
+  
+  
+  
+  EXAMPLE:
+    FA for L={w in {0,1}* : 001 is a substring of w}
+  
+           |   0     1
+     ------+-------------
+         0 |   1     0   
+         1 |   2     0    
+         2 |   2     3 
+         3 |   3     3 
+  
+    For w = 10100  path = 0, 0, 1, 0, 1, 2    rejected
+    For w = 10010  path = 0, 0, 1, 2, 3, 3    accepted
+  
+    If we replace A by A', then the new machine accepts the complement.
+  
+  
+  EXAMPLE:
+    L={ab,aabb,aaabbb}={a^i b^i : 1<=i<=3}
+      | a  b
+     -+------          A = { 6 }
+     0| 1  ?
+     1| 2  6
+     2| 3  5
+     3| ?  4
+     4| ?  5
+     5| ?  6
+     6| ?  ?  
+  
+  What about {a^i b^i : 1<=i} ?  ( There is no limit to the i )
+    Can't be recognized by DFA.  (Not regular)
+  
+  EXAMPLE: Pascal Reals (The usual definition is that a real constant 
+                         must have a . or an E or both. Integers not accepted)
+   
+      | dig sig  .  E   where dig=any digit, sig=arithmetic sign (+,-)
+     -+----------------
+     0|  2   1               
+     1|  2           
+     2|  2       3  5
+     3|  4                   A = { 4, 7 }   
+     4|  4          5
+     5|  7   6       
+     6|  7  
+     7|  7       
+  
+  
+  Rejected   Accepted
+     7.        3.4
+     E42      +2.6
+     +        -7.3
+     ++6       7.4E7
+     +-7       +7.26E-3
+               -8.3E+12
+  
+  Note : Float constants in C are of one of the following forms:       
+         ( Here ip is integer part, fp is fractional part, ep is exponent part )
+         ip.fp ep     e.g. 6.24E+9
+         ip.fp        e.g. 3.14
+         ip.          e.g. 7.
+           .fp        e.g.  .32
+           .fp ep     e.g. .16E-5
+         ip ep        e.g. 4E12
+  
+  
+  
+            Distinguishing Strings With Respect to a Language
+  
+  Example: 
+    If we look back at the FA which accepts strings which have 001 as
+    as substring, we see that the 4 states can be thought of as
+    (0) no progress so far
+    (1) one 0 has been encountered
+    (2) 00 has been encountered
+    (3) 001 has been encountered ( accept )
+  
+    As we scan a string, if 00 is a prefix, we have progressed farther
+    than if 10 is a prefix. We will say that these two strings are
+    distinguishable because, if the rest of the string is 1, we will
+    accept in one case, and reject in the other. Our FA must have 
+    enough states so that the distinguishable strings will lead us to 
+    different states. In this case, we say that the string consisting
+    of 1 distinguishes 00 from 10.
+  
+  We can use this idea to classify strings with respect to a language:
+  
+  Definition 3.5:  (Re-phrased) Two strings x and y are indistinguishable
+  with respect to L if appending any string z to x and y produces a pair
+  of strings that are either both in L or both not in L. If there is any 
+  string z such that exactly one of xz and yz is in L, then x and y are
+  distinguishable with respect to L.
+  
+  
+  Given two string u and v, if uz is in L and vz isnotin L, or if
+  uz isnotin L and vz isin L, we say that z is a distinguishing string
+  for u,v.  Thus, strings u and v are indistinguishable with respect
+  to L if there is no distinguishing string. 
+  
+  Note that the definition implies that, if x isis L and y isnotin L,
+  then x and y are distinguishable. ( Let z = lambda )
+  
+  Also note that all strings which are not prefixes of strings in L are 
+  indistinguishable. i.e. If x and y are not prefixes of strings
+  in L, then xz and yz are both not in L for any z.
+  These strings are strings that lead us to a trap state in a FA.
+  
+  Referring to the example above, the following are indistinguishable
+  with respect to the language:
+  (1) lambda, 1, 11, 101
+  
+  Also the following are all indistinguishable:
+  (2) 00, 100, 0100, 110100
+  
+  Note that any string starting with 1 will distinguish any string in (1)
+  from any string in (2).
+  
+  Example: Let L = { a^n b^n : n >= 0 }
+  Then a^i is distinguishable from a^j if i differs from j.
+  
+  
+  The next theorem  connects the number of states in a FA to the number of
+  mutually distinguishable strings in the corresponding language.
+  
+  Theorem 3.2: If L has n mutually distinguishable strings, then a finite
+  automata recognizing L must have at least n states.
+  
+  The idea of the proof is that distinguishable strings must lead us
+  to distinct states. If x and y lead us to the same state, then, clearly,
+  xz and yz will lead us to the same state.
+  
+  It follows immediately that a language that contains infinitely many
+  mutually indistinguishable strings can't be represented by a finite
+  state machine.
+  
+  
+  In theorem 3.4 we assume the as yet unproved  assertion that
+  regular languages are exactly those languages that can be recognized by
+  finite automata. Theorem 3.4 could be re-stated without this assumption
+  as follows:
+  
+  Theorem 3.4 :  Let M1 and M2 be FA whose languages are L1 and L2.
+  Then we can construct machines M3, M4, M5, and M6 such that:
+  L(M3) = L1 + L2
+  L(M4) = L1 * L2
+  L(M5) = L1 - L2
+  L(M6) = L1'
+  
+  To construct M6, we simply change A1 to Q1 - A1.
+  
+  To construct M3, M4, and M5, we use Q1XQ2 as our state set, define
+  transitions from state pair to state pair in the obvious way, and 
+  define the set of accepting states to be
+  
+  {(p,q) : p isin A1 or q isin A2 }  for M3,
+  {(p,q) : p isin A1 and q isin A2 } for M4,
+  {(p,q) : p isin A1 and q isnotin A2 } for M5.
+  
+  Example:
+  
+  M1:
+  
+            |   a   b    A1 = { 0 }
+         --------------
+          0 |   1   0
+          1 |   0   1
+  
+  M2:
+            |   a   b    A2 = { 2 }
+         --------------
+          0 |   0   1
+          1 |   0   2
+          2 |   2   2
+  
+  
+  
+  Let M have states labeled by Q1XQ2:
+  
+            |   a        b   
+         ---------------------
+        0,0 |  1,0     0,1
+        0,1 |  0,0     1,1
+        0,2 |  1,2     0,2
+        1,0 |  0,0     1,1
+        1,1 |  0,0     1,2
+        1,2 |  0,2     1,2
+  
+  For L1 + L2, A = {(0,0),(0,1),(0,2),(1,2)}
+  For L1 * L2, A = {(0,2)}
+  For L1 - L2, A = {(0,0), (0,1)}
+  

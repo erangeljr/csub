@@ -1,0 +1,508 @@
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  0 Feb24 ?        00:00:44 init [2]         
+root         2     0  0 Feb24 ?        00:00:00 [kthreadd]
+root         3     2  0 Feb24 ?        00:00:00 [migration/0]
+root         4     2  0 Feb24 ?        00:00:56 [ksoftirqd/0]
+root         5     2  0 Feb24 ?        00:00:00 [watchdog/0]
+root         6     2  0 Feb24 ?        00:00:00 [migration/1]
+root         7     2  0 Feb24 ?        00:00:12 [ksoftirqd/1]
+root         8     2  0 Feb24 ?        00:00:00 [watchdog/1]
+root         9     2  0 Feb24 ?        00:00:00 [migration/2]
+root        10     2  0 Feb24 ?        00:00:08 [ksoftirqd/2]
+root        11     2  0 Feb24 ?        00:00:00 [watchdog/2]
+root        12     2  0 Feb24 ?        00:00:00 [migration/3]
+root        13     2  0 Feb24 ?        00:00:08 [ksoftirqd/3]
+root        14     2  0 Feb24 ?        00:00:00 [watchdog/3]
+root        15     2  0 Feb24 ?        00:00:02 [migration/4]
+root        16     2  0 Feb24 ?        00:00:27 [ksoftirqd/4]
+root        17     2  0 Feb24 ?        00:00:00 [watchdog/4]
+root        18     2  0 Feb24 ?        00:00:03 [migration/5]
+root        19     2  0 Feb24 ?        00:00:18 [ksoftirqd/5]
+root        20     2  0 Feb24 ?        00:00:00 [watchdog/5]
+root        21     2  0 Feb24 ?        00:00:02 [migration/6]
+root        22     2  0 Feb24 ?        00:00:10 [ksoftirqd/6]
+root        23     2  0 Feb24 ?        00:00:00 [watchdog/6]
+root        24     2  0 Feb24 ?        00:00:03 [migration/7]
+root        25     2  0 Feb24 ?        00:00:10 [ksoftirqd/7]
+root        26     2  0 Feb24 ?        00:00:00 [watchdog/7]
+root        27     2  0 Feb24 ?        00:02:29 [events/0]
+root        28     2  0 Feb24 ?        00:00:24 [events/1]
+root        29     2  0 Feb24 ?        00:00:20 [events/2]
+root        30     2  0 Feb24 ?        00:00:59 [events/3]
+root        31     2  0 Feb24 ?        00:01:21 [events/4]
+root        32     2  0 Feb24 ?        00:00:45 [events/5]
+root        33     2  0 Feb24 ?        00:00:19 [events/6]
+root        34     2  0 Feb24 ?        00:00:19 [events/7]
+root        35     2  0 Feb24 ?        00:00:00 [cpuset]
+root        36     2  0 Feb24 ?        00:00:00 [khelper]
+root        37     2  0 Feb24 ?        00:00:00 [netns]
+root        38     2  0 Feb24 ?        00:00:00 [async/mgr]
+root        39     2  0 Feb24 ?        00:00:00 [pm]
+root        40     2  0 Feb24 ?        00:14:39 [sync_supers]
+root        41     2  0 Feb24 ?        00:00:03 [bdi-default]
+root        42     2  0 Feb24 ?        00:00:00 [kintegrityd/0]
+root        43     2  0 Feb24 ?        00:00:00 [kintegrityd/1]
+root        44     2  0 Feb24 ?        00:00:00 [kintegrityd/2]
+root        45     2  0 Feb24 ?        00:00:00 [kintegrityd/3]
+root        46     2  0 Feb24 ?        00:00:00 [kintegrityd/4]
+root        47     2  0 Feb24 ?        00:00:00 [kintegrityd/5]
+root        48     2  0 Feb24 ?        00:00:00 [kintegrityd/6]
+root        49     2  0 Feb24 ?        00:00:00 [kintegrityd/7]
+root        50     2  0 Feb24 ?        00:00:03 [kblockd/0]
+root        51     2  0 Feb24 ?        00:00:01 [kblockd/1]
+root        52     2  0 Feb24 ?        00:00:00 [kblockd/2]
+root        53     2  0 Feb24 ?        00:00:00 [kblockd/3]
+root        54     2  0 Feb24 ?        00:00:01 [kblockd/4]
+root        55     2  0 Feb24 ?        00:00:00 [kblockd/5]
+root        56     2  0 Feb24 ?        00:00:00 [kblockd/6]
+root        57     2  0 Feb24 ?        00:00:00 [kblockd/7]
+root        58     2  0 Feb24 ?        00:00:00 [kacpid]
+root        59     2  0 Feb24 ?        00:00:00 [kacpi_notify]
+root        60     2  0 Feb24 ?        00:00:00 [kacpi_hotplug]
+root        61     2  0 Feb24 ?        00:00:00 [kseriod]
+root        70     2  0 Feb24 ?        00:00:00 [kondemand/0]
+root        71     2  0 Feb24 ?        00:00:00 [kondemand/1]
+root        72     2  0 Feb24 ?        00:00:00 [kondemand/2]
+root        73     2  0 Feb24 ?        00:00:00 [kondemand/3]
+root        74     2  0 Feb24 ?        00:00:00 [kondemand/4]
+root        75     2  0 Feb24 ?        00:00:00 [kondemand/5]
+root        76     2  0 Feb24 ?        00:00:00 [kondemand/6]
+root        77     2  0 Feb24 ?        00:00:00 [kondemand/7]
+root       125     2  0 Feb24 ?        00:00:02 [khungtaskd]
+root       126     2  0 Feb24 ?        00:02:47 [kswapd0]
+root       127     2  0 Feb24 ?        00:02:52 [kswapd1]
+root       128     2  0 Feb24 ?        00:02:57 [kswapd2]
+root       129     2  0 Feb24 ?        00:02:59 [kswapd3]
+root       130     2  0 Feb24 ?        00:00:00 [ksmd]
+root       131     2  0 Feb24 ?        00:00:00 [aio/0]
+root       132     2  0 Feb24 ?        00:00:00 [aio/1]
+root       133     2  0 Feb24 ?        00:00:00 [aio/2]
+root       134     2  0 Feb24 ?        00:00:00 [aio/3]
+root       135     2  0 Feb24 ?        00:00:00 [aio/4]
+root       136     2  0 Feb24 ?        00:00:00 [aio/5]
+root       137     2  0 Feb24 ?        00:00:00 [aio/6]
+root       138     2  0 Feb24 ?        00:00:00 [aio/7]
+root       139     2  0 Feb24 ?        00:00:00 [crypto/0]
+root       140     2  0 Feb24 ?        00:00:00 [crypto/1]
+root       141     2  0 Feb24 ?        00:00:00 [crypto/2]
+root       142     2  0 Feb24 ?        00:00:00 [crypto/3]
+root       143     2  0 Feb24 ?        00:00:00 [crypto/4]
+root       144     2  0 Feb24 ?        00:00:00 [crypto/5]
+root       145     2  0 Feb24 ?        00:00:00 [crypto/6]
+root       146     2  0 Feb24 ?        00:00:00 [crypto/7]
+root       352     2  0 Feb24 ?        00:00:00 [ata/0]
+root       354     2  0 Feb24 ?        00:00:00 [ata/1]
+root       356     2  0 Feb24 ?        00:00:00 [ata/2]
+root       357     2  0 Feb24 ?        00:00:00 [ata/3]
+root       359     2  0 Feb24 ?        00:00:00 [ata/4]
+root       361     2  0 Feb24 ?        00:00:00 [ata/5]
+root       363     2  0 Feb24 ?        00:00:00 [ata/6]
+root       364     2  0 Feb24 ?        00:00:00 [ata/7]
+root       365     2  0 Feb24 ?        00:00:00 [ata_aux]
+root       370     2  0 Feb24 ?        00:00:00 [ksuspend_usbd]
+root       371     2  0 Feb24 ?        00:00:00 [khubd]
+root       389     2  0 Feb24 ?        00:00:10 [mpt_poll_0]
+root       391     2  0 Feb24 ?        00:00:00 [mpt/0]
+root       392     2  0 Feb24 ?        00:00:00 [scsi_eh_0]
+root       394     2  0 Feb24 ?        00:00:08 [mpt_poll_1]
+root       395     2  0 Feb24 ?        00:00:00 [mpt/1]
+root       398     2  0 Feb24 ?        00:00:00 [scsi_eh_1]
+root       399     2  0 Feb24 ?        00:00:00 [scsi_eh_2]
+root       431     2  0 Feb24 ?        00:00:00 [scsi_eh_3]
+root       435     2  0 Feb24 ?        00:00:00 [usbhid_resumer]
+root       443     2  0 Feb24 ?        00:00:00 [scsi_eh_4]
+root       444     2  0 Feb24 ?        00:00:00 [usb-storage]
+root       446     2  0 Feb24 ?        00:00:00 [scsi_eh_5]
+root       447     2  0 Feb24 ?        00:00:00 [usb-storage]
+root       498     2  0 Feb24 ?        00:00:00 [scsi_eh_6]
+root       538     2  0 Feb24 ?        00:00:00 [kstriped]
+root       541     2  0 Feb24 ?        00:00:00 [kdmflush]
+root       548     2  0 Feb24 ?        00:00:00 [kdmflush]
+root       562     2  0 Feb24 ?        00:00:01 [kjournald]
+root       617     1  0 Feb24 ?        00:00:00 udevd --daemon
+root       879     2  0 Feb24 ?        00:00:00 [kpsmoused]
+root      1027     2  0 Feb24 ?        00:00:23 [edac-poller]
+root      1049     2  0 Feb24 ?        00:00:00 [radeon/0]
+root      1050     2  0 Feb24 ?        00:00:00 [radeon/1]
+root      1051     2  0 Feb24 ?        00:00:00 [radeon/2]
+root      1052     2  0 Feb24 ?        00:00:00 [radeon/3]
+root      1053     2  0 Feb24 ?        00:00:00 [radeon/4]
+root      1054     2  0 Feb24 ?        00:00:00 [radeon/5]
+root      1055     2  0 Feb24 ?        00:00:00 [radeon/6]
+root      1056     2  0 Feb24 ?        00:00:00 [radeon/7]
+root      1057     2  0 Feb24 ?        00:00:00 [ttm_swap]
+root      1274     2  0 Feb24 ?        00:00:00 [kdmflush]
+root      1282     2  0 Feb24 ?        00:00:00 [kdmflush]
+root      1290     2  0 Feb24 ?        00:00:00 [kdmflush]
+root      1298     2  0 Feb24 ?        00:00:00 [kdmflush]
+root      1312     2  0 Feb24 ?        00:00:00 [kdmflush]
+root      1320     2  0 Feb24 ?        00:00:00 [kdmflush]
+root      1328     2  0 Feb24 ?        00:00:00 [kdmflush]
+root      1336     2  0 Feb24 ?        00:00:00 [kdmflush]
+root      1344     2  0 Feb24 ?        00:00:00 [kdmflush]
+root      1352     2  0 Feb24 ?        00:00:00 [kdmflush]
+root      1390     2  0 Feb24 ?        00:00:41 [flush-254:4]
+root      1493     2  0 Feb24 ?        00:00:14 [flush-254:10]
+donna     1632     1  0 Mar07 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img-Attach0-59267.htm' ; rm -f /tmp/img-Attach0-59267.htm) &?
+donna     1633  1632  0 Mar07 ?        00:00:00 /usr/bin/www-browser /tmp/img-Attach0-59267.htm
+bind      1691     1  0 Mar22 ?        00:12:25 /usr/sbin/named -u bind -t /var/lib/named
+root      1734     2  0 Feb24 ?        00:01:06 [flush-254:8]
+pgomez    1747     1  0 Apr03 ?        00:00:00 pine
+root      2529     2  0 Feb24 ?        00:00:00 [kjournald]
+root      2530     2  0 Feb24 ?        00:00:00 [kjournald]
+root      2531     2  0 Feb24 ?        00:00:00 [kjournald]
+root      2532     2  0 Feb24 ?        00:00:36 [kjournald]
+root      2533     2  0 Feb24 ?        00:00:03 [kjournald]
+root      2534     2  0 Feb24 ?        00:02:52 [kjournald]
+root      2537     2  0 Feb24 ?        00:02:57 [reiserfs/0]
+root      2538     2  0 Feb24 ?        00:00:27 [reiserfs/1]
+root      2539     2  0 Feb24 ?        00:00:38 [reiserfs/2]
+root      2540     2  0 Feb24 ?        00:00:51 [reiserfs/3]
+root      2541     2  0 Feb24 ?        00:00:27 [reiserfs/4]
+root      2542     2  0 Feb24 ?        00:00:18 [reiserfs/5]
+root      2543     2  0 Feb24 ?        00:00:23 [reiserfs/6]
+root      2544     2  0 Feb24 ?        00:00:32 [reiserfs/7]
+root      2637     2  0 Feb24 ?        00:00:25 [bond0]
+daemon    2717     1  0 Feb24 ?        00:00:00 /sbin/portmap
+root      2906     1  0 Feb24 ?        00:01:23 /sbin/syslogd -a /var/lib/named/dev/log
+root      2915     1  0 Feb24 ?        00:00:00 /sbin/klogd -x
+107       2934     1  0 Feb24 ?        00:00:16 /usr/bin/dbus-daemon --system
+avahi     2945     1  0 Feb24 ?        00:00:09 avahi-daemon: running [sleipnir.local]
+avahi     2946  2945  0 Feb24 ?        00:00:00 avahi-daemon: chroot helper
+root      2980     1  0 Feb24 ?        00:00:05 /usr/sbin/sshd
+root      3126  2980  0 Apr01 ?        00:00:00 sshd: marc [priv]
+marc      3131  3126  0 Apr01 ?        00:00:15 sshd: marc@pts/4 
+marc      3132  3131  0 Apr01 pts/4    00:00:00 -bash
+root      3210     1  0 Feb24 ?        00:05:38 /usr/sbin/spamd --create-prefs --max-children 5 --helper-home-dir -d --pidfile=/var/run/spamd.pid
+100       3474     1  0 Feb24 ?        00:00:27 /usr/sbin/exim4 -bd -q30m
+greylist  3485     1  0 Feb24 ?        00:16:48 /usr/bin/python /usr/sbin/greylistd
+list      3494     1  0 Feb24 ?        00:00:00 /usr/bin/python /usr/lib/mailman/bin/mailmanctl -s -q start
+list      3495  3494  0 Feb24 ?        00:03:29 /usr/bin/python /var/lib/mailman/bin/qrunner --runner=ArchRunner:0:1 -s
+list      3496  3494  0 Feb24 ?        00:03:41 /usr/bin/python /var/lib/mailman/bin/qrunner --runner=BounceRunner:0:1 -s
+list      3497  3494  0 Feb24 ?        00:03:27 /usr/bin/python /var/lib/mailman/bin/qrunner --runner=CommandRunner:0:1 -s
+list      3498  3494  0 Feb24 ?        00:03:36 /usr/bin/python /var/lib/mailman/bin/qrunner --runner=IncomingRunner:0:1 -s
+list      3499  3494  0 Feb24 ?        00:03:16 /usr/bin/python /var/lib/mailman/bin/qrunner --runner=NewsRunner:0:1 -s
+list      3500  3494  0 Feb24 ?        00:05:16 /usr/bin/python /var/lib/mailman/bin/qrunner --runner=OutgoingRunner:0:1 -s
+list      3501  3494  0 Feb24 ?        00:03:48 /usr/bin/python /var/lib/mailman/bin/qrunner --runner=VirginRunner:0:1 -s
+list      3502  3494  0 Feb24 ?        00:00:00 /usr/bin/python /var/lib/mailman/bin/qrunner --runner=RetryRunner:0:1 -s
+root      3521     1  0 Feb24 ?        00:00:00 /usr/sbin/inetd
+snmp      3533     1  0 Feb24 ?        00:11:43 /usr/sbin/snmpd -Lsd -Lf /dev/null -u snmp -g snmp -I -smux -p /var/run/snmpd.pid
+root      3537     1  0 Feb24 ?        00:02:35 /usr/sbin/vnstatd -d
+root      3547     1  0 Feb24 ?        00:00:03 /usr/sbin/vsftpd
+root      3553     1  0 Feb24 ?        00:00:00 /usr/sbin/famd -T 0
+ntp       3567     1  0 Feb24 ?        00:01:14 /usr/sbin/ntpd -p /var/run/ntpd.pid -g -u 104:104
+root      3580     1  0 Feb24 ?        00:15:13 /sbin/apcupsd
+root      3607     1  0 Feb24 ?        00:00:08 /usr/sbin/cupsd -C /etc/cups/cupsd.conf
+daemon    3932     1  0 Feb24 ?        00:00:00 /usr/sbin/atd
+root      3985     1  0 Feb24 ?        00:00:21 /usr/sbin/cron
+root      4042     1  0 Feb24 ?        00:03:28 /usr/sbin/console-kit-daemon --no-daemon
+jduplain  4235     1  0 Mar06 ?        00:00:00 ./a.out
+matlab    4646     1  0 Feb24 ?        00:00:00 su matlab -c umask 022; /var/tmp/lm_TMW.ld -z  -c /var/tmp/lm_TMW.dat | sh -c 'while read line; do echo "$line" >> /var/tmp/lm_TMW.log; done'
+matlab    4655  4646  0 Feb24 ?        00:00:00 bash -c umask 022; /var/tmp/lm_TMW.ld -z  -c /var/tmp/lm_TMW.dat | sh -c 'while read line; do echo "$line" >> /var/tmp/lm_TMW.log; done'
+matlab    4656  4655  0 Feb24 ?        00:00:31 /var/tmp/lm_TMW.ld -z -c /var/tmp/lm_TMW.dat
+matlab    4657  4655  0 Feb24 ?        00:00:00 sh -c while read line; do echo "$line" >> /var/tmp/lm_TMW.log; done
+matlab    4658  4656  0 Feb24 ?        00:01:56 MLM -T 136.168.201.100 11.4 3 -c /var/tmp/lm_TMW.dat --lmgrd_start 4f4833be
+jduplain  5244     1  0 Mar06 ?        00:00:00 ./a.out
+bacula    5276     1  0 Feb24 ?        03:51:12 /usr/sbin/bacula-sd -c /etc/bacula/bacula-sd.conf -u bacula -g tape
+root      5341     1  0 Feb24 ?        00:49:42 /usr/sbin/bacula-fd -c /etc/bacula/bacula-fd.conf
+bacula    5354     1  0 Feb24 ?        00:02:13 /usr/sbin/bacula-dir -c /etc/bacula/bacula-dir.conf -u bacula -g bacula
+tomcat    5377     1  0 Feb24 ?        00:13:27 /usr/lib/jvm/java-6-sun//bin/java -Djava.util.logging.config.file=/usr/local/tomcat-5.5/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.endorsed.dirs=/usr/local/tomcat-5.5/common/endorsed -classpath /usr/local/tomcat-5.5/bin/bootstrap.jar -Dcatalina.base=/usr/local/tomcat-5.5 -Dcatalina.home=/usr/local/tomcat-5.5 -Djava.io.tmpdir=/usr/local/tomcat-5.5/temp org.apache.catalina.startup.Bootstrap start
+root      5566     1  0 Feb24 tty1     00:00:00 /sbin/getty 38400 tty1
+root      5567     1  0 Feb24 tty2     00:00:00 /sbin/getty 38400 tty2
+root      5568     1  0 Feb24 tty3     00:00:00 /sbin/getty 38400 tty3
+root      5569     1  0 Feb24 tty4     00:00:00 /sbin/getty 38400 tty4
+root      5570     1  0 Feb24 tty5     00:00:00 /sbin/getty 38400 tty5
+root      5571     1  0 Feb24 tty6     00:00:00 /sbin/getty 38400 tty6
+root      5572     1  0 Feb24 ?        00:00:13 runsvdir -P /etc/service log: ...........................................................................................................................................................................................................................................................................................................................................................................................................
+root      5573  5572  0 Feb24 ?        00:00:00 runsv git-daemon
+gitlog    5589  5573  0 Feb24 ?        00:00:00 svlogd -tt /var/log/git-daemon
+120       5590  5573  0 Feb24 ?        00:00:00 /usr/lib/git-core/git-daemon --verbose --reuseaddr --base-path=/var/cache /var/cache/git
+rdomingu  5733     1  0 Mar20 ?        00:00:00 pine
+root      5742  3210  0 Apr02 ?        00:02:08 spamd child
+marc      6484     1  0 Apr01 ?        00:00:00 dbus-launch --autolaunch 27873d3a091f06a8cbc0c600483f37e1 --binary-syntax --close-stderr
+marc      6485     1  0 Apr01 ?        00:00:00 /usr/bin/dbus-daemon --fork --print-pid 5 --print-address 7 --session
+root      7055  2980  0 Apr03 ?        00:00:00 sshd: donna [priv]
+donna     7066  7055  0 Apr03 ?        00:00:00 sshd: donna@pts/12
+donna     7067  7066  0 Apr03 pts/12   00:00:00 -bash
+orcad     7542     1  0 Feb27 ?        00:00:25 /usr/local/OrCAD/lmgrd -c /usr/local/OrCAD/license.dat -l /tmp/lm_orcad.log
+orcad     7543  7542  0 Feb27 ?        00:01:54 cdslmd -T sleipnir 11.10 3 -c /usr/local/OrCAD/license.dat --lmgrd_start 4f4c19c5
+hwang     7771     1  0 Feb28 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--92746.htm' ; rm -f /tmp/img--92746.htm) &?
+hwang     7772  7771  0 Feb28 ?        00:00:00 /usr/bin/www-browser /tmp/img--92746.htm
+hwang     7776     1  0 Feb28 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--15534.htm' ; rm -f /tmp/img--15534.htm) &?
+hwang     7777  7776  0 Feb28 ?        00:00:00 /usr/bin/www-browser /tmp/img--15534.htm
+hwang     7781     1  0 Feb28 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--76818.htm' ; rm -f /tmp/img--76818.htm) &?
+hwang     7782  7781  0 Feb28 ?        00:00:00 /usr/bin/www-browser /tmp/img--76818.htm
+hwang     7789     1  0 Feb28 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--86150.htm' ; rm -f /tmp/img--86150.htm) &?
+hwang     7790  7789  0 Feb28 ?        00:00:00 /usr/bin/www-browser /tmp/img--86150.htm
+donna     8906     1  0 Mar12 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--21679.htm' ; rm -f /tmp/img--21679.htm) &?
+donna     8907  8906  0 Mar12 ?        00:00:00 /usr/bin/www-browser /tmp/img--21679.htm
+lmedina  10444     1  0 Feb28 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--46126.htm' ; rm -f /tmp/img--46126.htm) &?
+lmedina  10445 10444  0 Feb28 ?        00:00:00 /usr/bin/www-browser /tmp/img--46126.htm
+lmedina  10454     1  0 Feb28 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--41930.htm' ; rm -f /tmp/img--41930.htm) &?
+lmedina  10455 10454  0 Feb28 ?        00:00:00 /usr/bin/www-browser /tmp/img--41930.htm
+klee     11636     1  0 Mar20 ?        00:00:00 SCREEN
+klee     11637 11636  0 Mar20 pts/21   00:00:00 -/bin/bash
+root     11912     2  0 07:48 ?        00:00:00 [flush-254:3]
+rdomingu 12378     1  0 07:58 ?        00:00:00 pine
+klee     12799     1  0 Mar20 ?        00:00:00 SCREEN
+klee     12800 12799  0 Mar20 pts/30   00:00:00 -/bin/bash
+root     12812  3210  0 08:02 ?        00:00:23 spamd child
+root     13053   617  0 Mar01 ?        00:00:00 udevd --daemon
+root     13054   617  0 Mar01 ?        00:00:00 udevd --daemon
+root     13059     2  0 Mar01 ?        00:00:00 [xfs_mru_cache]
+root     13060     2  0 Mar01 ?        00:00:00 [xfslogd/0]
+root     13061     2  0 Mar01 ?        00:00:00 [xfslogd/1]
+root     13062     2  0 Mar01 ?        00:00:00 [xfslogd/2]
+root     13063     2  0 Mar01 ?        00:00:00 [xfslogd/3]
+root     13064     2  0 Mar01 ?        00:00:00 [xfslogd/4]
+root     13065     2  0 Mar01 ?        00:00:00 [xfslogd/5]
+root     13066     2  0 Mar01 ?        00:00:00 [xfslogd/6]
+root     13067     2  0 Mar01 ?        00:00:00 [xfslogd/7]
+root     13068     2  0 Mar01 ?        00:00:00 [xfsdatad/0]
+root     13069     2  0 Mar01 ?        00:00:00 [xfsdatad/1]
+root     13070     2  0 Mar01 ?        00:00:00 [xfsdatad/2]
+root     13071     2  0 Mar01 ?        00:00:00 [xfsdatad/3]
+root     13072     2  0 Mar01 ?        00:00:00 [xfsdatad/4]
+root     13073     2  0 Mar01 ?        00:00:00 [xfsdatad/5]
+root     13074     2  0 Mar01 ?        00:00:00 [xfsdatad/6]
+root     13075     2  0 Mar01 ?        00:00:00 [xfsdatad/7]
+root     13076     2  0 Mar01 ?        00:00:00 [xfsconvertd/0]
+root     13077     2  0 Mar01 ?        00:00:00 [xfsconvertd/1]
+root     13078     2  0 Mar01 ?        00:00:00 [xfsconvertd/2]
+root     13079     2  0 Mar01 ?        00:00:00 [xfsconvertd/3]
+root     13080     2  0 Mar01 ?        00:00:00 [xfsconvertd/4]
+root     13081     2  0 Mar01 ?        00:00:00 [xfsconvertd/5]
+root     13082     2  0 Mar01 ?        00:00:00 [xfsconvertd/6]
+root     13083     2  0 Mar01 ?        00:00:00 [xfsconvertd/7]
+root     13086     2  0 Mar01 ?        00:00:00 [jfsIO]
+root     13087     2  0 Mar01 ?        00:00:00 [jfsCommit]
+root     13088     2  0 Mar01 ?        00:00:00 [jfsCommit]
+root     13089     2  0 Mar01 ?        00:00:00 [jfsCommit]
+root     13090     2  0 Mar01 ?        00:00:00 [jfsCommit]
+root     13091     2  0 Mar01 ?        00:00:00 [jfsCommit]
+root     13092     2  0 Mar01 ?        00:00:00 [jfsCommit]
+root     13093     2  0 Mar01 ?        00:00:00 [jfsCommit]
+root     13094     2  0 Mar01 ?        00:00:00 [jfsCommit]
+root     13095     2  0 Mar01 ?        00:00:00 [jfsSync]
+cs224    13755     1  0 Mar06 ?        00:29:59 /usr/lib/openoffice/program/soffice.bin Robert Swanson CS224 HW8.odt -splash-pipe=5
+root     14103     2  0 08:28 ?        00:00:00 [flush-254:2]
+marc     14392  3132  0 08:34 pts/4    00:00:00 xterm -geometry 80x50 -ls
+marc     14394 14392  0 08:34 pts/10   00:00:00 -bash
+marc     14479 14394  0 08:35 pts/10   00:00:00 /usr/bin/ksh
+statd    14508     1  0 Mar01 ?        00:00:00 /sbin/rpc.statd
+marc     15124  3132  0 08:47 pts/4    00:00:00 xterm -geometry 80x50 -ls
+marc     15126 15124  0 08:47 pts/19   00:00:00 -bash
+marc     15148 15126  0 08:47 pts/19   00:00:00 /usr/bin/ksh
+ghefley  15265     1  0 Mar05 ?        00:00:00 ./a.out
+ghefley  15282     1  0 Mar05 ?        00:00:00 ./a.out
+ghefley  15386     1  0 Mar05 ?        00:00:00 ./a.out
+root     15460     1  0 Mar14 ?        00:00:00 /bin/sh /usr/bin/mysqld_safe
+ghefley  15474     1  0 Mar05 ?        00:00:00 ./a.out
+ghefley  15584     1  0 Mar05 ?        00:00:00 ./a.out
+mysql    15590 15460  0 Mar14 ?        01:47:59 /usr/sbin/mysqld --basedir=/usr --datadir=/var/svcs/mysql --user=mysql --pid-file=/var/run/mysqld/mysqld.pid --socket=/var/run/mysqld/mysqld.sock --port=3306
+root     15591 15460  0 Mar14 ?        00:00:00 logger -t mysqld -p daemon.error
+ghefley  15648     1  0 Mar05 ?        00:00:00 ./a.out
+marc     15904     1  0 Feb27 ?        00:00:00 /usr/bin/dbus-daemon --fork --print-pid 5 --print-address 7 --session
+root     18491     1  1 Apr01 ?        00:55:18 python /usr/sbin/denyhosts --daemon --purge --config=/etc/denyhosts.conf --config=/etc/denyhosts.conf
+jwebb    19542     1  0 Mar30 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--62940.htm' ; rm -f /tmp/img--62940.htm) &?
+jwebb    19543 19542  0 Mar30 ?        00:00:00 /usr/bin/www-browser /tmp/img--62940.htm
+root     20937  2980  0 Mar22 ?        00:00:00 sshd: melissa [priv]
+melissa  20942 20937  0 Mar22 ?        00:00:08 sshd: melissa@pts/5
+melissa  20943 20942  0 Mar22 pts/5    00:00:00 -bash
+root     21085  2980  0 Apr02 ?        00:00:00 sshd: melissa [priv]
+melissa  21090 21085  0 Apr02 ?        00:00:00 sshd: melissa@pts/18
+melissa  21091 21090  0 Apr02 pts/18   00:00:00 -bash
+root     22168  2980  0 Mar28 ?        00:00:00 sshd: steve [priv]
+steve    22179 22168  0 Mar28 ?        00:00:00 sshd: steve@pts/6
+steve    22180 22179  0 Mar28 pts/6    00:00:00 -bash
+root     23091  2980  0 10:21 ?        00:00:00 sshd: steve [priv]
+steve    23098 23091  0 10:21 ?        00:00:00 sshd: steve@pts/13
+steve    23099 23098  0 10:21 pts/13   00:00:00 -bash
+steve    23613 23099  0 10:28 pts/13   00:00:00 alpine
+root     23996  2980  0 10:34 ?        00:00:00 sshd: lcaracci [priv]
+lcaracci 24006 23996  0 10:34 ?        00:00:00 sshd: lcaracci@pts/16
+lcaracci 24007 24006  0 10:34 pts/16   00:00:00 -bash
+root     24592  2980  0 10:43 ?        00:00:00 sshd: lcaracci [priv]
+lcaracci 24597 24592  0 10:43 ?        00:00:00 sshd: lcaracci@pts/22
+lcaracci 24598 24597  0 10:43 pts/22   00:00:00 -bash
+zspell   24851     1  0 Feb28 ?        00:00:00 ./dotprod
+zspell   25020     1  0 Feb28 ?        00:00:00 ./dotprod
+root     25035  2980  0 10:48 ?        00:00:00 sshd: mworthin [priv]
+mworthin 25056 25035  0 10:48 ?        00:00:00 sshd: mworthin@pts/23
+mworthin 25057 25056  0 10:48 pts/23   00:00:00 -bash
+root     25117  2980  0 10:49 ?        00:00:00 sshd: mworthin [priv]
+mworthin 25123 25117  0 10:49 ?        00:00:00 sshd: mworthin@pts/24
+mworthin 25124 25123  0 10:49 pts/24   00:00:00 -bash
+root     25368  2980  0 10:52 ?        00:00:00 sshd: rdomingu [priv]
+rdomingu 25376 25368  0 10:52 ?        00:00:00 sshd: rdomingu@pts/14
+rdomingu 25377 25376  0 10:52 pts/14   00:00:00 -bash
+zspell   25570     1  0 Feb28 ?        00:00:00 ./dotprod
+root     25761  2980  0 10:57 ?        00:00:00 sshd: hwang [priv]
+hwang    25775 25761  0 10:57 ?        00:00:00 sshd: hwang@pts/25
+hwang    25776 25775  0 10:57 pts/25   00:00:00 -bash
+root     25808  2980  0 10:57 ?        00:00:00 sshd: cpascua [priv]
+cpascua  25815 25808  0 10:57 ?        00:00:00 sshd: cpascua@pts/15
+cpascua  25816 25815  0 10:57 pts/15   00:00:00 -bash
+zspell   25821     1  0 Feb28 ?        00:00:00 ./dotprod
+root     25936  2980  0 10:58 ?        00:00:00 sshd: pauyon [priv]
+pauyon   25944 25936  0 10:58 ?        00:00:00 sshd: pauyon@pts/28
+pauyon   25945 25944  0 10:58 pts/28   00:00:00 -bash
+zspell   26019     1  0 Feb28 ?        00:00:00 ./dotprod
+donna    26026     1  0 Mar04 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--19549.htm' ; rm -f /tmp/img--19549.htm) &?
+donna    26027 26026  0 Mar04 ?        00:00:00 /usr/bin/www-browser /tmp/img--19549.htm
+salkadas 26048     1  0 Mar01 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--67434.htm' ; rm -f /tmp/img--67434.htm) &?
+salkadas 26049 26048  0 Mar01 ?        00:00:00 /usr/bin/www-browser /tmp/img--67434.htm
+lcaracci 26081 24598  0 10:59 pts/22   00:00:00 vi week1.java
+salkadas 26118     1  0 Mar01 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--36166.htm' ; rm -f /tmp/img--36166.htm) &?
+salkadas 26119 26118  0 Mar01 ?        00:00:00 /usr/bin/www-browser /tmp/img--36166.htm
+salkadas 26127     1  0 Mar01 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--46658.htm' ; rm -f /tmp/img--46658.htm) &?
+salkadas 26128 26127  0 Mar01 ?        00:00:00 /usr/bin/www-browser /tmp/img--46658.htm
+salkadas 26140     1  0 Mar01 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img--49662.htm' ; rm -f /tmp/img--49662.htm) &?
+salkadas 26141 26140  0 Mar01 ?        00:00:00 /usr/bin/www-browser /tmp/img--49662.htm
+zspell   26198     1  0 Feb28 ?        00:00:00 ./dotprod
+root     26211  2980  0 11:00 ?        00:00:00 sshd: chernand [priv]
+chernand 26219 26211  0 11:00 ?        00:00:00 sshd: chernand@pts/26
+chernand 26220 26219  0 11:00 pts/26   00:00:00 -bash
+root     26242  2980  0 11:00 ?        00:00:00 sshd: cpascua [priv]
+cpascua  26247 26242  0 11:00 ?        00:00:00 sshd: cpascua@pts/29
+cpascua  26248 26247  0 11:00 pts/29   00:00:00 -bash
+mworthin 26277 25124  0 11:00 pts/24   00:00:00 vim Student.java
+root     26291  2980  0 11:00 ?        00:00:00 sshd: bwilson [priv]
+bwilson  26299 26291  0 11:01 ?        00:00:00 sshd: bwilson@pts/31
+bwilson  26300 26299  0 11:01 pts/31   00:00:00 -bash
+root     26329  2980  0 11:01 ?        00:00:00 sshd: klee [priv]
+klee     26345 26329  0 11:01 ?        00:00:00 sshd: klee@pts/32
+klee     26346 26345  0 11:01 pts/32   00:00:00 -bash
+root     26370  2980  0 11:01 ?        00:00:00 sshd: klee [priv]
+klee     26377 26370  0 11:01 ?        00:00:00 sshd: klee@pts/33
+klee     26378 26377  0 11:01 pts/33   00:00:00 -bash
+root     26514  2980  0 11:04 ?        00:00:00 sshd: mworthin [priv]
+mworthin 26521 26514  0 11:04 ?        00:00:00 sshd: mworthin@pts/34
+mworthin 26522 26521  0 11:04 pts/34   00:00:00 -bash
+root     26555  2980  0 11:04 ?        00:00:00 sshd: glencion [priv]
+glencion 26563 26555  0 11:04 ?        00:00:00 sshd: glencion@pts/36
+glencion 26564 26563  0 11:04 pts/36   00:00:00 -bash
+root     26714  2980  0 11:07 ?        00:00:00 sshd: bwilson [priv]
+bwilson  26720 26714  0 11:07 ?        00:00:00 sshd: bwilson@pts/27
+bwilson  26721 26720  0 11:07 pts/27   00:00:00 -bash
+root     26833  2980  0 11:09 ?        00:00:00 sshd: tkong [priv]
+tkong    26838 26833  0 11:09 ?        00:00:00 sshd: tkong@pts/37
+tkong    26839 26838  0 11:09 pts/37   00:00:00 -bash
+rdomingu 27056     1  0 Mar28 ?        00:00:00 pine
+root     27576     1  0 Apr03 ?        00:00:03 /usr/sbin/apache2 -k start
+pauyon   27590 25945  0 11:18 pts/28   00:00:00 ./a.out
+root     27856  2980  0 11:20 ?        00:00:00 sshd: rmurray [priv]
+rmurray  27871 27856  0 11:20 ?        00:00:00 sshd: rmurray@pts/20
+rmurray  27872 27871  0 11:20 pts/20   00:00:00 -bash
+root     27929  2980  0 11:20 ?        00:00:00 sshd: zspell [priv]
+zspell   27935 27929  0 11:20 ?        00:00:00 sshd: zspell@pts/39
+zspell   27936 27935  0 11:20 pts/39   00:00:00 -bash
+root     27965  2980  0 11:20 ?        00:00:00 sshd: jyero [priv]
+jyero    27978 27965  0 11:21 ?        00:00:00 sshd: jyero@pts/41
+jyero    27979 27978  0 11:21 pts/41   00:00:00 -bash
+root     28108  2980  0 11:22 ?        00:00:00 sshd: tkong [priv]
+tkong    28115 28108  0 11:22 ?        00:00:00 sshd: tkong@pts/42
+tkong    28116 28115  0 11:22 pts/42   00:00:00 -bash
+pauyon   28149 25945  0 11:23 pts/28   00:00:00 ./a.out
+pauyon   28161 25945  0 11:23 pts/28   00:00:00 ./a.out
+root     28259  2980  0 11:24 ?        00:00:00 sshd: sjohnston [priv]
+10801    28271 28259  0 11:24 ?        00:00:00 sshd: sjohnston@pts/44
+10801    28272 28271  0 11:24 pts/44   00:00:00 -bash
+root     28359  2980  0 11:25 ?        00:00:00 sshd: bwilson [priv]
+bwilson  28364 28359  0 11:25 ?        00:00:00 sshd: bwilson@pts/45
+bwilson  28365 28364  0 11:25 pts/45   00:00:00 -bash
+bwilson  28431 28365  0 11:25 pts/45   00:00:00 vi Names.java
+root     28534  2980  0 11:27 ?        00:00:00 sshd: zspell [priv]
+zspell   28551 28534  0 11:27 ?        00:00:00 sshd: zspell@pts/47
+zspell   28552 28551  0 11:27 pts/47   00:00:00 -bash
+root     28881  2980  0 11:30 ?        00:00:00 sshd: lniu [priv]
+lniu     28889 28881  0 11:30 ?        00:00:00 sshd: lniu@pts/49
+lniu     28890 28889  0 11:30 pts/49   00:00:00 -bash
+melissa  28924 29835  0 11:31 pts/7    00:00:00 pine
+root     29223  2980  0 11:35 ?        00:00:00 sshd: aramirezflores [priv]
+10863    29229 29223  0 11:35 ?        00:00:00 sshd: aramirezflores@pts/43
+10863    29230 29229  0 11:35 pts/43   00:00:00 -bash
+root     29402  2980  0 11:37 ?        00:00:00 sshd: lareval2 [priv]
+lareval2 29410 29402  0 11:37 ?        00:00:00 sshd: lareval2@pts/50
+lareval2 29411 29410  0 11:37 pts/50   00:00:00 -bash
+www-data 29493 27576  0 11:38 ?        00:00:02 /usr/sbin/apache2 -k start
+www-data 29498 27576  0 11:38 ?        00:00:01 /usr/sbin/apache2 -k start
+bwilson  29513 26300  0 11:38 pts/31   00:00:00 vi Student.java
+jtalaman 29517     1  0 Mar05 ?        00:00:00 sh -c (/usr/bin/sensible-browser '/tmp/img-Attach0-96706.htm' ; rm -f /tmp/img-Attach0-96706.htm) &?
+jtalaman 29518 29517  0 Mar05 ?        00:00:00 /usr/bin/www-browser /tmp/img-Attach0-96706.htm
+cpascua  29520 26248  0 11:38 pts/29   00:00:00 vi Member.java
+lniu     29595 28890  0 11:39 pts/49   00:00:00 pico index.php
+cpascua  29603 25816  0 11:39 pts/15   00:00:00 vi Member.java
+root     29604  2980  0 11:39 ?        00:00:00 sshd: hsandova [priv]
+hsandova 29695 29604  0 11:40 ?        00:00:00 sshd: hsandova@pts/51
+hsandova 29696 29695  0 11:40 pts/51   00:00:00 -bash
+rdomingu 29770 25377  0 11:40 pts/14   00:00:00 vi List.java
+www-data 29794 27576  0 11:41 ?        00:00:02 /usr/sbin/apache2 -k start
+melissa  29833 20943  0 Apr01 pts/5    00:00:00 screen
+melissa  29834 29833  0 Apr01 ?        00:00:01 SCREEN
+melissa  29835 29834  0 Apr01 pts/7    00:00:00 -/bin/bash
+hsandova 29836 29696  0 11:41 pts/51   00:00:00 ./hw6_2
+lareval2 29886 29411  0 11:42 pts/50   00:00:00 vi lab1_2.cpp
+hwang    29895 25776  0 11:42 pts/25   00:00:00 vim List.java
+bwilson  29901 26721  0 11:42 pts/27   00:00:00 vi list.java
+pauyon   29903 25945  0 11:42 pts/28   00:00:00 vi List.java
+zspell   29916 27936  0 11:42 pts/39   00:00:00 vim List.java
+lcaracci 29920 24007  0 11:42 pts/16   00:00:00 vi List.java
+chernand 29921 26220  0 11:42 pts/26   00:00:00 vim List.java
+klee     29929 26346  0 11:42 pts/32   00:00:00 vi KLee_finalcs350q3.cpp
+klee     29946 26378  0 11:43 pts/33   00:00:00 vi linkedlist.java
+tkong    29947 26839  0 11:43 pts/37   00:00:00 vim 1.java
+mworthin 29952 25057  0 11:43 pts/23   00:00:00 vim List.java
+glencion 29967 26564  0 11:43 pts/36   00:00:00 vi List.java
+hsandova 30001 29696  0 11:44 pts/51   00:00:00 ./hwEC
+jyero    30008 27979  0 11:44 pts/41   00:00:00 vim List.java
+root     30009  2980  0 11:44 ?        00:00:00 sshd: jduplain [priv]
+jduplain 30014 30009  0 11:44 ?        00:00:00 sshd: jduplain@pts/11
+jduplain 30015 30014  0 11:44 pts/11   00:00:00 -bash
+jduplain 30030 30015  0 11:44 pts/11   00:00:00 vim LinkList.java
+rmurray  30031 27872  0 11:44 pts/20   00:00:00 vim ListExample.java
+root     30113  2980  0 11:45 ?        00:00:00 sshd: bmanson [priv]
+bmanson  30122 30113  0 11:45 ?        00:00:00 sshd: bmanson@pts/38
+bmanson  30123 30122  0 11:45 pts/38   00:00:00 -bash
+www-data 30194 27576  0 11:46 ?        00:00:02 /usr/sbin/apache2 -k start
+root     30249  2980  0 11:47 ?        00:00:00 sshd: glencion [priv]
+glencion 30269 30249  0 11:47 ?        00:00:00 sshd: glencion@pts/52
+glencion 30270 30269  0 11:47 pts/52   00:00:00 -bash
+rdomingu 30291     1  0 Mar28 ?        00:00:00 pine
+tkong    30299 28116  0 11:47 pts/42   00:00:00 vim MyList.java
+glencion 30346 30270  0 11:48 pts/52   00:00:00 vi List1.java
+zspell   30408 28552  0 11:49 pts/47   00:00:00 vim List.java
+root     30417  2980  0 11:49 ?        00:00:00 sshd: bmanson [priv]
+bmanson  30423 30417  0 11:49 ?        00:00:00 sshd: bmanson@pts/53
+bmanson  30424 30423  0 11:49 pts/53   00:00:00 -bash
+hsandova 30450 29696  0 11:49 pts/51   00:00:00 vi hwEC.cpp
+bmanson  30459 30424  0 11:49 pts/53   00:00:00 vi nov1611.cpp
+root     30606  2980  0 11:50 ?        00:00:00 sshd: hsandova [priv]
+hsandova 30611 30606  0 11:50 ?        00:00:00 sshd: hsandova@pts/54
+hsandova 30612 30611  0 11:50 pts/54   00:00:00 -bash
+hsandova 30653 30612  0 11:51 pts/54   00:00:00 vi hw1.cpp
+bmanson  30659 30123  0 11:51 pts/38   00:00:00 vi hw01.cpp
+root     30760  2980  0 11:52 ?        00:00:00 sshd: bmanson [priv]
+bmanson  30766 30760  0 11:52 ?        00:00:00 sshd: bmanson@pts/57
+bmanson  30767 30766  0 11:52 pts/57   00:00:00 -bash
+root     30848  2980  0 11:53 ?        00:00:00 sshd: donna [priv]
+donna    30878 30848  0 11:54 ?        00:00:00 sshd: donna@pts/56
+donna    30879 30878  0 11:54 pts/56   00:00:00 -bash
+root     30938  2980  0 11:54 ?        00:00:00 sshd: nlunkim [priv]
+nlunkim  30946 30938  0 11:54 ?        00:00:00 sshd: nlunkim@pts/46
+nlunkim  30947 30946  0 11:54 pts/46   00:00:00 -bash
+root     31081  2980  0 11:55 ?        00:00:00 sshd: dmendoza [priv]
+dmendoza 31086 31081  0 11:55 ?        00:00:00 sshd: dmendoza@pts/48
+dmendoza 31087 31086  0 11:55 pts/48   00:00:00 -bash
+dmendoza 31288 31087  0 11:59 pts/48   00:00:00 vi problem4.cpp
+root     31387     2  0 12:00 ?        00:00:00 [flush-254:7]
+root     31405     2  0 12:00 ?        00:00:00 [flush-254:0]
+www-data 31415 27576  0 12:00 ?        00:00:00 /usr/sbin/apache2 -k start
+bmanson  31442 30767  0 12:01 pts/57   00:00:00 vi string_map.h
+www-data 31491 27576  0 12:03 ?        00:00:00 /usr/sbin/apache2 -k start
+www-data 31499 27576  0 12:03 ?        00:00:00 /usr/sbin/apache2 -k start
+www-data 31501 27576  0 12:03 ?        00:00:00 /usr/sbin/apache2 -k start
+www-data 31502 27576  0 12:03 ?        00:00:00 /usr/sbin/apache2 -k start
+www-data 31503 27576  0 12:03 ?        00:00:00 /usr/sbin/apache2 -k start
+donna    31551 30879  0 12:04 pts/56   00:00:00 ps -ef
+jrios    32519     1  0 Mar12 ?        00:00:00 pine

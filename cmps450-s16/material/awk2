@@ -1,0 +1,8 @@
+# print no of employees in tech dept
+# ~ means apply the RE to the field
+
+BEGIN { count=0;}
+$4 ~/Technology/ 
+{ count++; 
+}
+END { print "Number of employees in Technology Dept =",count;}
