@@ -1,0 +1,506 @@
+<HTML> <HEAD> <TITLE>CMPS 450: HW 03</TITLE>
+<style type=text/css> 
+DIV.ans {
+ margin: 3px 0px 10px 3px; padding: 4px; border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #777;
+ background-color: #DEE; padding-right: 5px; height: 50px; width: 850px; }
+
+DIV.box { position: relative; float: left; margin: 0px 0px 2px 0px; 
+ padding: 4px; # border: 1px dashed black; font-family: helvetica; 
+ font-size: 10pt; font-weight: 500; color: #19193A; background-color: #eee; 
+ padding-right: 0px; width: 450px; height: 60px; }
+h5 { background-color: yellow; width: 300px;}
+BODY { margin: 10px 10px 20px 20px; font-family: helvetica; background-color: white;
+  color: 19193A; font-size: 10pt; font-weight: 500;} </STYLE> </HEAD>
+<BODY">
+<DIV style="width:800px;">
+ <h3>CMPS 450 - HW 03 - Lexical Analysis, Ch 3.1 - 3.5</h3>
+
+  Do not submit anything for the homework. Homework is 
+  designed for self-evaluation on the reading material. It will be
+  assumed that you know this material as you construct 
+ your compiler and before your take-home final exam.
+
+<p>
+<b>resources:</b><br>
+<a href="/~donna/cs450/ch03a_notes.html">450 week 03 lecture notes</a><br>
+<a href="http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Developer/books/CLanguageRef/sgi_html/index.html">ansi C ref</a>
+<p/>
+01. One job of a scanner is to catch errors related to lexemes before 
+    passing a token off to the parser. How many errors can the scanner 
+    catch in the following C code? Name the error. What errors can the
+    scanner not catch? See <a href="http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Developer/books/CLanguageRef/sgi_html/index.html">ansi C ref</a> for lexical and syntax rules.
+<pre>
+        /* sample C program /* a nested comment */  */
+        whille ( go =! stop ( 
+             8result =  0xffg ** result . </pre>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q1Area');
+myArea.innerHTML=
+'The scanner can catch 4 lexical violations.<br/>\
+The scanner will catch the illegal nested comment since its job is to remove \
+ whitespace. <br/>\
+The scanner will catch =! as an illegal name since an identifer cannot start \
+ with = and =! is not a valid operator in the language.<br/>\
+The scanner will catch 8result as an illegal name. <br/>\
+The scanner will catch 0xffg as illegal numeric constant. <br/>\
+What the scanner will not catch: <br/>\
+o The illegally nested comment must be caught be the parser since this\
+ involves syntax.  <br/>\
+o the missing semicolon after result is a syntax issue so must be caught \
+ by the parser.  <br/>\
+o the scanner will pass whille as a valid indentifier - scanners to do not\
+ catch misspellings <br/>\
+o The scanner will pass ** as two multiplication or pointer operators. <br/>\
+In summary, misspellings, typos, repeat characters (whille, =!, 0xffg ), \
+transposed adjacent keys on QWERTY keyboard could be caught \
+by scanner but not worth the expense--scanning already consumes \
+20-30% of compilation time - the general strategy is to let \
+ the parser catch it. '; ">
+<DIV class='ans' id="Q1Area" STYLE="height:320px; background-color:DEE"></DIV>
+02. Categorize and count the lexemes in this valid C code:
+<pre>       int i = '3';
+       *nptr = pow(2,i) + j++;    /* stuff stuff */ </pre>
+     
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q2Area');
+myArea.innerHTML=
+'There are 19 lexemes classified into 7 token types: <br/>\
+1  Comment <br/>\
+5  Identifiers: nptr, pow, i,i,j   <br/>\
+1  Keyword: int     <br/>\
+2  Constants:  2,3    <br/>\
+4  Operators:  =  =  +  ++  <br/>\
+5  Punctuators: ; , ( ) ; <br/>\
+1  Character Constant: `3` <br/>\
+The scanner is not smart enough to know that the second `i` is <br/>\
+a reference to the first `i` - the parser will have to handle this. '; ">
+<DIV class='ans' id="Q2Area" STYLE="height:230px; background-color:DEE"> 
+</DIV>
+03. The 2-buffer algorithm with equal sized buffers and sentinels is shown 
+    below. LexemeBegin points to the first character of the current token. 
+    Forward marks the current character being scanned. Hitting EOF by forward
+    triggers a reload of the relevant buffer or a termination of
+    the scan.
+<pre>       // C lookahead code with sentinels 
+       switch (*forward++) {
+              case eof:
+                   if (forward is at end of first buffer) {
+                          reload second buffer;
+                          forward = beginning of second buffer:
+                   }
+                   else if (forward is at end of 2nd buffer) {
+                          reload first buffer;
+                          forward = beginning of first buffer;
+                  }
+                  else /* eof within a buffer marks end of input */
+                          terminate lexical analysis;
+                  break;
+             default:  /* case for all other characters */
+      } </pre>
+     Assuming both buffers are size 8, what do the buffers look like after 
+     loading the statement below and after the first reload? Show the location
+     of the forward and the lexemeBegin pointers. (The last location in each 
+     buffer holds and EOF flag.)
+
+     <pre>              my_result=(double)(x-y)*5;   </pre>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q3Area');
+myArea.innerHTML='<tt>\
+<pre>EOF denoted by # <br/>\
+     1st load: m y _ r e s u # l t = ( d o u #      <br/>\
+               ^                                         <br/>\
+               lexemeBegin                               <br/>\
+               forward                           <br/>\
+<br/>\
+     2nd load: b l e ) ( x - # l t = ( d o u #    <br/>\
+               ^                       ^              <br/>\
+               forward                 lexemeBegin  </tt>     <p/>\
+'; ">
+<DIV class='ans' id="Q3Area" STYLE="height:250px; background-color:DEE">
+</DIV>
+04. Let language L = {a,b} and language M = {0,1}. What is L U M?  What is L^4?
+    What is LM?  What is L(L U M)? 
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q4Area');
+myArea.innerHTML=
+'L U M = {a,b,0,1}   <br/>\
+L^4 = {all strings of length 4 made up of a and/or b}. The regex for this <br/>\
+language is (a|b){4}. There are 16 different string in L^4.<br/>\
+LM={a0,a1,b0,b1}. regex: (a|b)(0|1). This is a|b concatenated with 0|1.<br/>\
+L(L U M)={aa,ab,a0,a1,ba,bb,b0,b1}. This is all strings in L <br/>\
+ concatenated with all strings in L U M.'; ">
+<DIV class='ans' id="Q4Area" STYLE="height:120px; background-color:DEE">
+</DIV>
+05. Assume a programming language L that 
+    contains (among other things) these 6 items:
+<pre>       Keyword: const, else, if, new, return, void, while
+       Operator: + - * / % == !=  > >= < && || =  ++  --  ;  , .  (  ) [ ] { }
+       Number:    digit { digit }
+       Digit: [0-9]
+       CharConst: 'printableASCIIcharacter'
+       Identifier: strings over {a-z,A-Z}   </pre>
+    What are the tokens of L? How many operator lexemes are there?
+    How does the scanner and the parser use these items? 
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q5Area');
+myArea.innerHTML=
+'A token is a classification of a lexeme. Language L has 6 tokens: \
+ operator, number, digit, charconst and identifier. \
+ Language L has 24 valid operator lexemes. \
+  The scanner uses REs to classify (tokenize) the input (the source) from \
+ a stream of ascii characters into a stream of tokens,\
+ where each token has a name, a type and possibly an associated address. \
+These 6 token types are also the terminals in the grammar \
+ that defines the language. The parser will take the stream of tokens from\
+ the scanner and apply the production rules of the grammar to determine\
+ if the tokens are conform to syntax rules. '; ">
+<DIV class='ans' id="Q5Area" STYLE="height:160px; background-color:DEE"></DIV>
+
+06. In a string of length n, how many proper prefixes are there?
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q6Area');
+myArea.innerHTML=
+'n-1  (n prefixes minus the string itself) ; the prefixes are all strings<br/>\
+ that can be constructed be removing 1 or more characters from the end of <br/>\
+the string; the set of proper prefixes does not include the string itself. '; ">
+<DIV class='ans' id="Q6Area" STYLE="height:120px; background-color:DEE"></DIV>
+
+07. In a string of length n, how many proper suffixes are there?
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q7Area');
+myArea.innerHTML=
+'n-1; this is all strings constructed by removing 1 or characters from \
+the beginning<br/>\ of the string. '; ">
+<DIV class='ans' id="Q7Area" STYLE="height: px; background-color:DEE"></DIV>
+08. In a string of length n, how many proper substrings are there?
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q8Area');
+myArea.innerHTML=
+'A proper substring is a chunk of the string excluding the string itself.<br/>\
+For a string of length n, there are   <br/>\
+     n substrings of size 1 <br/>\
+     n-1 substrings of size 2 <br/>\
+     n-3 substrings of size 3 <br/>\
+       ...  <br/>\
+     2 substrings of size n-1  <br/>\
+     1 substring of size n <br/>\
+This summation is 1 + 2 + 3 + 4 + .... + n = n(n+1)/2 <br/>\
+Final answer is (n(n+1)/2)-1, since you subtract off the string itself '; ">
+<DIV class='ans' id="Q8Area" STYLE="height:210px; background-color:DEE"> </DIV>
+
+09. In a string of length n, how many proper subsequences are there? A
+ proper subsequence is any string constructed of n-1 characters extracted from
+ the string; e.g., subsequences of length 2 from 'help' are 'he' 'hl' 'hp'
+ 'el' 'ep' and 'lp'.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q9Area');
+myArea.innerHTML=
+'2^n -1  (proper subsequences are all subsets except the empty set) '; ">
+<DIV class='ans' id="Q9Area" STYLE="height: px; background-color:DEE"></DIV>
+
+A regular definition is a way of labeling to make regular expressions
+easier to work with; e.g. imagine what this language would be without them: 
+<pre>      {even}    2|4|6|8|10|12|14|16|18|20
+      {odd}     1|3|5|7|9|11|13|15|17|19|21|25
+      {number}  {even}{odd}{even}{odd}
+
+Lex uses regular definitions for this purpose. Use the Lex notation for regular
+definitions in the following questions. Ex:
+     line .*\n     # this RE is a definition for a line
+
+     [0-9]{line}   # this RE uses the definition of a line previously defined 
+
+10. Write a regular definition for C-style comments using Lex notation:
+         /* any printable character and comments cannot be nested */ 
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q10Area');
+myArea.innerHTML=
+'<tt>open \\/\*     <br/>\
+<br/>\
+close \\*\\/    <br/>\
+<br/>\
+printableChar [ -~]   (this is space dash tilde)       <br/>\
+comment {open}{printableChar}*[^/][^*]{close}  </tt>'; ">
+<DIV class='ans' id="Q10Area" STYLE="height:140px; background-color:DEE"></DIV>
+11. Write a regular definition for all strings from { 0, 1, 2 }  with no 
+    repeated digit.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q11Area');
+myArea.innerHTML=
+'This is a permutation. There are 3! = 6 of them. You cannot define a  <br/>\
+permutation with a regex since permutations are not regular languages - <br/>\
+ without simply listing the permutations this is the best you can do : <br/>\
+ perm012  0{perm12}  |  1{perm02}  | 2{perm13}   <br/>\
+ perm12  12 | 21    <br/>\
+ perm02 = 02 or 20      <br/>\
+ perm13 = 13 or 31 '; ">
+<DIV class='ans' id="Q11Area" STYLE="height:140px; background-color:DEE"> 
+</DIV>
+12. Write a regular definition or RE for all strings of 0s and 1s that do not 
+    contain the subsequence 011.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q12Area');
+myArea.innerHTML=
+'/1*0*1?0*/ '; ">
+<DIV class='ans' id="Q12Area" STYLE="height: px; background-color:DEE"> 
+</DIV>
+13. Write a regular definition for all strings of 0s and 1s that do not contain 
+    the substring 011.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q13Area');
+myArea.innerHTML=
+'<tt>      L: 0*1?0*     <br/>\
+      M:  1*0?1?     <br/>\
+      N: (10)* | (01)*   <br/>\
+      X:  {L} | {M} | {N} | {X}   '; ">
+<DIV class='ans' id="Q13Area" STYLE="height:100px; background-color:DEE">
+</DIV>
+14. Write a regular definition for the set of valid Chess moves in Algebraic 
+    Chess Notation which is shown here.
+
+    P: {K, q, R, B, N}  // pieces
+    V: [a-h]      // vertical places
+    H: [1-8]      // horizontal places
+    X: {x}      // capture
+<!-- in the informal notation, such as p-k4 or kbpxqn, as shown below. 
+   From black's viewpoint the chessboard looks like this: 
+    qr1 qn1 qb1 q1 k1 kb1 kn1 kr1 
+    qr2 qn2 qb2 q2 k2 kb2 kn2 kr2 
+    qr3 qn3 qb3 q3 k3 kb3 kn3 kr3 
+    qr4 qn4 qb4 q4 k4 kb4 kn4 kr4 
+    qr5 qn5 qb5 q5 k5 kb5 kn5 kr5 
+    qr6 qn6 qb6 q6 k6 kb6 kn6 kr6 
+    qr7 qn7 qb7 q7 k7 kb7 kn7 kr7 
+    qr8 qn8 qb8 q8 k8 kb8 kn8 kr8 
+    The question in the text used the above - i mmodified it.-->
+    P = { k, q, r, b, n, p}   // pieces: king, queen, rook, bishop, knight, pawn
+    L = [qk][rnb]?[1-8]       // location
+    M = P-L                   // move 
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q14Area');
+myArea.innerHTML=
+' Move: {P}?{V}?{X}?{V}{H}  <br>\
+  The P is optional since lack of such denotes a pawn  <br/>\
+  The V is optional, used only to distinguish identical pieces <br/>\
+  The X denotes capture and is thus optional <br/>\
+  The last V and H are typically required '; ">
+<DIV class='ans' id="Q14Area" STYLE="height:120px; background-color:DEE"> 
+</DIV>
+15. Draw a transition diagram for this regex:  (&epsilon; is the empty string)
+    /((&epsilon;|a)b*)*/   
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q15Area');
+myArea.innerHTML=
+'<tt>L = { e, a, b, aa, bb, ab, ba, ... } All possible strings of a,b  <br/>\
+        &epsilon; a b                 <br/>\
+      0 1 1 &Oslash;          <br/>\
+      1 &Oslash; 0 1       F = {1} '; ">
+<DIV class='ans' id="Q15Area" STYLE="height:100px; background-color:DEE">&nbsp;
+</DIV>
+16. Draw a transition diagram for this regex:
+    /a*ba*ba*ba*/
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q16Area');
+myArea.innerHTML=
+'<tt>L = { all strings of 3 `b`s with zero or more `a`s before and after }   <br/>\
+        a b   <br/>\
+      0 0 1 <br/>\
+      1 1 2   F = {3} <br/>\
+      2 2 3 <br/>\
+      3 3 &Oslash; '; ">
+<DIV class='ans' id="Q16Area" STYLE="height:125px; background-color:DEE"> 
+</DIV>
+17. Write the regex and draw a transition diagram for the language of all
+    strings of lowercase letters that contain the five vowels in order (there
+    can be more than one of each but all must be in order).
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q17Area');
+myArea.innerHTML=
+'C = [b-d,f-h,j-n,p-t,v-z]        <p/>\
+ /C*a?C*e?C*i?C*o?C*u?C*/         <p/>\
+<tt>\  <br/>\
+        C a e i o u              <br/>\
+      0 0 1                          <br/>\
+      1 1   2           F = {5}             <br/>\
+      2 2     3                 <br/>\
+      3 3       4         <br/>\
+      4 3         5 <br/>\
+Blanks are &Oslash;s.'; ">
+<DIV class='ans' id="Q17Area" STYLE="height:250px; background-color:DEE">
+</DIV>
+18. Write the regex and draw a transition diagram for the language of all
+    strings of lowercase letters with all letters in ascending in order.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q18Area');
+myArea.innerHTML=
+'<tt>/a+b+c+d..w+x+y+z+/ <br/>\
+        a b c d e f g ... x y z     <br/>\
+      0 1                      <br/>\
+      1 1 2              <br/>\
+      2   2 3           <br/>\
+      3     3 4           <br/>\
+      4       4 5        <br/>\
+      5         5 6        <br/>\
+        ...                          <br/>\
+     24                    24 25  <br/>\
+     25                       25 '; ">
+<DIV class='ans' id="Q18Area" STYLE="height:250px; background-color:DEE"></DIV>
+</pre>
+The Knuth, Morris, and Pratt algorithm to recognize a single keyword b[1..n] 
+in a text string uses a failure function computed as <pre>
+         t = 0;
+         f(1) = 0;
+         for ( s=1; s < n; s++ ) {
+                   while ( t > 0  &&  b[s+1] !=  b[t+1] ) t = f(t);  // #4
+                   if (b[s+1]  == b[t+1]  ) {
+                         t = t + 1;
+                         f(s + 1) = t;
+                   }
+                   else f(s+1) = 0    
+          }
+
+19. Construct the KMP failure function for the string abbaabb.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q19Area');
+myArea.innerHTML=
+'<tt>\
+       a b b a a b b <br/>\
+    s  1 2 3 4 5 6 7 <br/>\
+  f(s) 0 0 0 1 1 2 3 '; ">
+<DIV class='ans' id="Q19Area" STYLE="height:100px; background-color:DEE">
+</DIV>
+20. Construct the KMP failure function for the string aaaaaa.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q20Area');
+myArea.innerHTML=
+'<tt>\
+       a a a a a a   <br/>\
+   s   1 2 3 4 5 6    <br/>\
+  f(s) 0 1 2 3 4 5 '; ">
+<DIV class='ans' id="Q20Area" STYLE="height:100px; background-color:DEE">
+</DIV>
+21. Explain why the assignment t = f(t) in line 4 of the above algorithm is
+    executed in the worst case n times.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q21Area');
+myArea.innerHTML=
+'The failure function is an DFA where transitions loop back to the end of <br/>\
+the current longest prefix//subfix match. Since state represents a prefix <br/>\
+and each substring is defined only once, t=f(t) can only be executed at <br/>\
+most n times.  '; ">
+<DIV class='ans' id="Q21Area" STYLE="height:100px; background-color:DEE"> 
+</DIV>
+Once the failure function is computed the KMP algorithms tests whether 
+keyword a[1..n] is found in string b[1..m] with this algorithm  
+
+         s = 0
+         for ( i=1; i <= m; i++ ) {
+                   while ( s > 0  &&  a[i] !=  b[s+1] ) s = f(s);  
+                   if (a[i]  == b[s+1] ) s = s + 1;
+                   if ( s == n ) return "yes";
+         }
+         return "no";
+          
+22. Trace the KMP algorithm for keyword ababaa on input abababaab.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q22Area');
+myArea.innerHTML=
+' Step 1. Compute failure function    <tt><br/>\
+       a b a b a a       <br/>\
+    s  1 2 3 4 5 6        <br/>\
+  f(s) 0 0 1 2 3 1        <br/>\
+<br/>\
+KMP is a DFA that accepts the keyword ababaa where the failure function <br/>\
+provides the transitions on invalid input (denoted by ~); i.e. anything <br/>\
+but the desired input.  <br/>\
+   DFA                        DFA with added failure transitions      <br/>\
+    a b                         a b ~ <br/>\
+  0 1                         0 1   0    <br/>\
+  1   2    F = { 6 }          1   2 0 <br/>\
+  2 3                         2 3   0 <br/>\
+  3   4                       3   4 1 <br/>\
+  4 5                         4 5   2 <br/>\
+  5 6                         5 6   3 <br/>\
+  6                           6 1         <= reset DFA for other matches <br/>\
+<br/>\
+ Step 2. Trace the DFA for keyword ababaa on input abababaab.  <br/>\
+     <br/>\
+[0,abababaab]-> [1,bababaab]-> [2,ababaab]-> [3,babaab ]-> [4,abaab]-> <br/>\
+-> [5,baab]* -> [3,aab] -> *-> [1,ab] -> [0,b] -> [0,-] <br/>\
+FAILURE (9 comparisons) '; ">
+<DIV class='ans' id="Q22Area" STYLE="height:500px; background-color:DEE"> 
+</DIV>
+23. Show that the KMP algorithm runs in O(m + n) time, assuming the failure
+    function f is already computed and its values stored in array f[1..n].
+
+    It may help to see the behavior and look for pattern. This is a trace of
+    the DFA for keyword ababaa on input abaababaa.  <tt>
+
+ T =  ababaa
+ [0,abaababaa]                  
+ [1, baababaa] 
+ [2,  aababaa] 
+ [3,   ababaa] 
+ [1,    babaa]
+ [2,     abaa]
+ [3,      baa]
+ [4,       aa]
+ [5,        a]
+ [6,         ]    SUCCESS  - made it to final state in 9 comparisons
+
+       a b a b a a 
+    s  1 2 3 4 5 6 
+  f(s) 0 0 1 2 3 1 
+1        
+abaababaa 
+ababaa    
+ 2         
+abaababaa 
+ababaa    
+  3       
+abaababaa 
+ababaa    
+  1        reposition
+abaababaa 
+  ababaa        
+   0          
+abaababaa 
+   ababaa   
+   1  
+abaababaa 
+   ababaa  
+    2 
+abaababaa 
+   ababaa    
+     3
+abaababaa 
+   ababaa
+      4
+abaababaa 
+   ababaa
+       5 
+abaababaa 
+   ababaa
+        6  <= accept 
+abaababaa 
+   ababaa
+</tt>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q23Area');
+myArea.innerHTML=
+'If you see the pattern you realize that the states are either increasing <br/>\
+(target == input) or repositioning the target upon a failed match.  Why<br/>\
+is this is a O(n) algorithm?<br/>\
+There is one or at most 2 comparisons in the outer loop, thus O(m). The<br/>\
+inner loop represent the times in which a failure transition repositions <br/>\
+the target with the input. Each reposition represents a substring in the <br/>\
+target. There are at most n substrings in the target. The final answer <br/>\
+is O(m + n), which is O(n).'; ">
+<DIV class='ans' id="Q23Area" STYLE="height:200px; background-color:DEE">&nbsp;
+</DIV>
+
+</pre>
+</div>
+</body>
+</html>

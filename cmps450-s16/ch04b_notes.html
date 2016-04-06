@@ -1,0 +1,558 @@
+<html><!-- <link rel="stylesheet" type="text/css" href="./style.css" title="style1"> -->
+<head> <style type=text/css> 
+span {background-color:yellow} pre { line-height:1em;}
+td { cellspacing:0px;padding:4px;border:solid black 1px;} p {line-height:1.3em;}
+DIV.ans { margin: 3px 0px 10px 3px; padding: 4px; border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #777;
+ background-color: #DEE; padding-right: 5px; height: 50px; width: 600px; }
+DIV.box { position: relative; float: left; margin: 0px 0px 2px 0px; 
+ padding: 4px; # border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #19193A;
+ background-color: #eee; padding-right: 0px; width: 450px; height: 60px; }
+h5 { background-color: yellow; width: 300px;}
+i { font-size: 11pt; }
+BODY { margin: 2% 10% 10% 5%; font-family: helvetica; background-color: #eee;
+  color: 19193A; font-size: 11pt; font-weight: 500;}
+</STYLE>
+</head> <body>
+<h4>CMPS 450 Week 6 </h4>
+<h4> Ch 4.4 - 4.6 "Parsing"</h4>
+
+<b>resources:</b><br>
+<a href="http://llvm.org/docs/">llvm compiler infrastructure</a><br/>
+<a href="http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Developer/books/CLanguageRef/sgi_html/index.html">ANSI C Language Reference</a><br>
+<a href="http://www.cs.vu.nl/~dick/PTAPG.html">Parsing Techniques</a> (pdf)
+
+<tt> <p>
+ Syntax analysis occurs during parsing. The parser's job is to
+ determine whether an input stream of terminal tokens
+  meets the specifications of the context free grammar defined by the parser.
+ Parsing can occur top-down or bottom-up. In top-down parsing the root of 
+ parse tree (the
+ starting symbol of the grammar) is constructed first. In bottom-up parsing 
+  the leaf nodes of the parse tree (the terminals)
+ are constructed first. An unambiguous grammar will produce the same 
+ parse tree during bottom-up and top-down parsing although the nodes on
+ the tree will be added in a different order.
+Both forms of parsing use a left-to-right scan of the input stream.
+  The context-sensitive components of a programming language (also
+ called static semantics or attribute grammars)
+ are covered in the next chapter.
+ </p>
+
+<h4> Ch.4.4 "Top-Down Parsing"</h4>
+
+<p>
+  In top-down parsing the leftmost nonterminal of a production rule
+ in the language is always evaluated first.
+  This technique corresponds to a leftmost derivation.
+  When you construct a parse tree starting from the root as the
+ starting symbol and follow a leftmost derivation
+  you are essentially performing top-down parsing.
+  There are two types of top-down parsing algorithms:
+</p>
+  <p>
+  #1. recursive descent parsing (the syntax analyzer is 
+  based directly on the recursive rules in the BNF grammar describing 
+  the language) 
+  The implementation is a series of recursive calls mirroring the BNF rules.
+  Recursive descent can involve
+  backtracking if you pick the wrong rule.
+</p>
+<p>
+  #2. LL(k) parsing algorithms (the 
+  first 'el' means left-to-right scan and the second 'el' 
+   means leftmost derivation and the 'k' is the number of lookahead
+   symbols). The lookahead symbol is the next token in the input
+ string. 
+	 LL(k) grammars define languages to which LL(k) parsing  can be applied. 
+   The letter 'k'  denotes the number of lookahead symbols needed to
+   prevent backtracking.
+</p>
+<p>
+  Predictive parsing refers to the behavior of LL(k) parsers in
+ in which the 
+   lookahead symbol unambiguously determines the flow from LHS (head)
+ to RHS (body) of 
+   the BNF rules.  Without predictive parsing, top-down algorithm may involve 
+   backtracing if the incorrect rule is selected.
+   An LL(1) parser is a predictive parser that
+   uses one (1) input symbol of 
+   lookahead at each step to make parsing decisions. 
+<p>
+ The big drawback to LL parsing is that left recursive rules 
+   must be removed. Left recursive rules result in infinite recursion.  
+   
+<h4> RECURSIVE DESCENT</h4>
+<pre>Grammar G. &Sigma; = {+, -, *,(,)} 
+      exp &rarr; exp addop term | term
+      addop &rarr; + | -
+      term &rarr; term mulop factor | factor
+      mulop &rarr; *
+      factor &rarr; (exp) | NUM</pre>
+
+  As an example, BNF rule term -> factor can be implemented  with one symbol (token) of lookahead:
+<div style="border: 1px solid black; width:80%;">
+<pre>
+    //  holds next token in input
+    TokenType token;     
+
+    procedure factor  {
+      case token of
+       (: match ( '(' );
+          exp();
+          match( ')' ); 
+       number:
+          match (NUM);
+       else
+          error;
+    }
+
+ // match current token with expectedToken
+ // advance input if OK else return err 
+  match ( TokenType expectedToken ) {
+    if token == expectedToken 
+       then getToken;
+    else 
+       err;
+  }         </pre> </div>
+<p>
+ To avoid infinite recursion you need to eliminate left recursion or
+ replace BNF rule 
+ <pre>         exp &rarr; exp addop term | term  </pre>
+  with an extended BNF (EBNF) rule: 
+  <pre>      exp &rarr; term { addop term } </pre>
+ where the curly braces expresses repetition of zero or more times.
+  You can then safely use the EBNF rule in a top-down parser.
+</p>
+<h4>  Top-Down LL(1) PARSING</h4>
+
+
+ Recursive descent works because the runtime stack handles the
+ BNF recursive definitions.
+ An alternative to recursive calls is to use a parsing table and
+ an explicit stack to implement the BNF rules
+   rather than relying on the runtime stack provided through
+  recursive calls.
+  LL(1) parsing is a top-down methodology that uses an explicit stack
+ to handle the recursive BNF rules.
+ 
+<pre>EXAMPLE.
+             S &rarr; (S)S | e      // language of balanced parentheses </pre>
+<p>
+  Overview. Initially, the input buffer
+ holds the string to be parsed, ending with $:<pre>
+          () $ </pre>
+ The stack starts with symbol '$' to denote the bottom of the stack. 
+ The starting rule is 'S' so push S onto the stack. Read input. 
+ On hitting '(' S evaluates to (S)S. Pop 'S'
+ and push (S)S onto the stack in reverse order. Why reverse? Because you
+ want the leftmost terminal symbol at the top of the stack as you read
+ input.
+  When you hit a 
+  match you pop and advance input. If the top of the stack is a nonterminal
+ and has an epsilon rule, follow the epsilon rule and pop the nonterminal
+  but don't advance input. Continue process until EOF or error.</p> 
+<pre> input: ()$
+
+              (         
+              S  S                
+              )  )  )      
+           S  S  S  S  S  
+stack:     $  $  $  $  $ $
+          -------------------
+input:        (  )       $     Accept!
+           1  2  3  4  5 6 </pre>
+
+<p>
+ The above process is also shown below, where '$' denotes 
+ the stack bottom and EOF, and process begins by pushing
+ the starting symbol onto the stack. Terminals are popped off
+ the stack when the terminal matches input. Nonterminals
+ are popped off the stack by the epsilon rule. This rule is
+ triggered when the other rule that matches input.  </p>
+<pre>
+       Parsing Stack   Input   Action
+     1 $S              ()$     S &rarr; (S)S   <=pop S and push S)S( 
+     2 $S)S(           ()$     match
+     3 $S)S             )$     S&rarr;e
+     4 $S)              )$     match
+     5 $S                $     S&rarr;e
+     6 $                 $     accept </pre>
+<p>
+  LL(1) Parsing Table.<br>
+
+  Assume nonterminal A is at the top of the parsing stack. Upon receiving
+ input a decision needs to be made about what rule to place on the stack.
+  When a token (i.e., a terminal) is at the top of the stack, 
+ no decision is needed. The choices are loaded
+ into a LL(1) parsing table, where M[N,T] is read as the Move on non-terminal
+  N for the token T.</p><pre>
+   ----------+-----------+--------+---------
+    M[N,T]   |   (       |   )    |     EOF 
+    ---------+-----------+--------+---------
+     S       | S &rarr; (S)S  |  S &rarr; e |  S &rarr; &epsilon; 
+    ----------------------------------------</pre>
+ <p>
+ The parsing table describes all actions that can be taken
+as parsing progresses.<p>
+ Another example.
+Terminals '(' and ')' normally surrounding a boolean statement are omitted 
+ since there is no action associated with them. Notation: 'e' is epsilon.
+<pre><tt>        <i>stmt</i> &rarr; <i>if-stmt</i>  | <i>other</i>
+        <i>if-stmt</i> &rarr; <b>if</b> <i>bool</i> <i>stmt</i> <i>else-stmt</i>
+        <i>else-stmt</i> &rarr; <b>else</b> <i>stmt</i> | &epsilon;
+        <i>bool</i> &rarr; <b>0</b> | <b>1 </b></pre>
+Table 1. LL(1) parsing table constructed from the above grammar 
+<p>
+<table style="background-color:EEA;  width:90%; ">
+<tr><td>M[N,T]</td><td><b>if</b> </td> <td><b>else</b></td><td><b>0</b></td>
+ <td><b>1</b> </td><td>  EOF </td>
+</tr>
+<tr>
+<td><i>stmt</i></td> <td><i>stmt &rarr; if-stmt</i> </td>
+<td>&nbsp;</td>   <td>&nbsp;</td>   <td>&nbsp;</td>   <td>&nbsp;</td>   
+</tr>
+<tr>
+<td> <i>if-stmt</i></td>
+<td><i>if-stmt</i> &rarr; <b>if</b> <i>bool stmt else-stmt</i></td>
+<td>&nbsp;</td>   <td>&nbsp;</td>   <td>&nbsp;</td>   <td>&nbsp;</td>   
+</tr>
+<tr>
+<td> <i>else-stmt</i> </td>
+<td>&nbsp;</td>
+<td><i>else-smt</i> &rarr; <b>else</b> <i>stmt</i> <br/>
+ <i>else-stmt</i> &rarr; e    </td>
+<td>&nbsp;</td>   <td>&nbsp;</td>   <td>&nbsp;</td> 
+</tr>
+<td> <i>bool</i>   </td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><i>bool</i>&rarr;0 </td><td><i>bool</i>&rarr;1</td>
+<td>&nbsp;</td>
+</tr> 
+</table>
+<br>
+ The two entries in M[<i>else-stmt</i>,<b>else</b>] correspond to the dangling else ambiguity.
+
+<p>
+<hr>
+<hr>
+ Grammars that are not as simple as the ones above
+  require the computation of lookahead sets called FIRST and FOLLOW in
+ order to construct the parsing table.
+<p>
+The elements in FIRST and FOLLOW are terminals in the language. 
+
+ <p>                       
+<div style="width: 650px; border: 1px solid black; 
+        background-color:EEA;  padding: 3px 10px; margin: 5px;">
+ Notation. For some grammar G: <br>
+ &Sigma; is the set of terminals in G. <br/>
+ N is the set of nonterminals in G. <br/>
+ X is a single grammar symbol from either &Sigma; or N. <br/>
+ A is a single nonterminal grammar symbol. <br/>
+ a denotes a single terminal from &Sigma;  <br/>
+ &alpha; is a string of terminal or nonterminal grammar symbols.<br/>
+ &beta; is a string of terminal or nonterminal grammar symbols.<br/>
+ &epsilon; is the empty string.<br/>
+ $ is the endmarker symbol (not a symbol in the grammar)
+</div>
+
+</p>
+<u>Definitions.</u> <br>
+
+A sentential form is any valid RHS 
+ in a derivation of some input string. Sentential forms
+ can contain terminals or nonterminals. The last sentential
+ form is all terminals since it is the input string itself.
+For example, given grammar
+<pre>        S -> 0Q 
+        Q -> S1 | 1 </pre>
+over the set of binary strings, a leftmost derivation of 0011 is this: <pre>
+          S -> 0Q
+            -> 0S1   // applying Q -> S1 produces sentential form 0S1
+            -> 00Q1  // applying S -> 0Q produces sentential form 00Q1
+            -> 0011  // applying Q -> 1  produces sentential form 0011 </pre> 
+ 
+**************
+* FIRST SETS *      
+**************
+
+Notation: *-> means 1 or more derivations.
+
+ FIRST(X), where X is a single grammar symbol (nonterminal
+ or terminal), is  defined as the set
+ of terminals that begin strings derived in one or more derivations from X.
+<p/>
+<div style="background-color:white; 
+  width:800px; border:1px solid black; padding:3px 10px;margin: 5px;">
+ FIRST(X), for terminal or nonterminal X, is computed as follows: <p>
+ RULE 1. If X is a terminal then FIRST(X) = {X}.                                <p/> 
+RULE 2. If X is a nonterminal and X->Y_1 Y_2...Y_k is a production
+ for some k>=1, then place <b>a</b> in FIRST(S) if for some i,
+ <b>a</b> is in FIRST(Y_i) and &epsilon; is in all
+ of FIRST(Y_1),...,FIRST(Y_i-1).
+ If &epsilon; is in FIRST(Y_j) for all j = 1,2,...,k, then add &epsilon;                 to FIRST(X). If Y_1 does not derive &epsilon;, then add nothing 
+ more to FIRST(X), but if Y_1 *-> &epsilon;, then add FIRST(Y_2) and so on.
+<p/>
+RULE 3. If X->&epsilon; is a production, then add &epsilon; to FIRST(X).
+<p/>
+</div>
+
+
+ <p> 
+     FIRST(&alpha;), &alpha; = X_1 X_2 . . . X_n, can now be defined as:
+<p/>
+ FIRST(&alpha;) contains FIRST(X_1) - {e}. For each i = 2,...,n, if
+ FIRST(X_k) contains &epsilon; for all k=1,...,i-1, then FIRST(q) contains
+ FIRST(X_i) - {e}. Finally, if for all i = 1,..,n, FIRST(X_i) contains
+ &epsilon; then FIRST(q) contains &epsilon;.
+     <p>
+ The definition for FIRST can be implemented by an iterative algorithm
+ (simplified here by avoiding &epsilon;-productions). 
+<div><pre>
+     // computing FIRST(A), assuming no &epsilon;-productions  
+     for all nonterminals A do FIRST(A) = {};
+     while there are changes to any FIRST(A) do
+          for each production choice A &rarr; X_1,X_2,..X_n do
+             add FIRST(X_1) to FIRST(A);
+</pre></div>
+ 
+ 
+<hr>
+An important attribute of a nonterminal is whether it is NULLABLE.
+<p>
+<u>Definition</u>. A nonterminal X is nullable if X *-> &epsilon;. 
+
+<pre>*****************
+*  FOLLOW SETS *
+*****************
+</pre>
+
+<u>Definition</u>.<br>
+
+ FOLLOW(A), for nonterminal A, is the set of terminals 
+  a that can appear immediately to the right of A in some
+ sentential form; 
+  i.e., the set of terminals a
+  for which there exists a derivation <font size=+1>
+<pre>    
+  S *-> &alpha;Aa&beta;, for some &alpha; and &beta;   
+</font></pre>
+Example.<div><pre>
+              S
+           / / \ \ 
+          &alpha; A   d &beta; 
+           / \
+          c   &gamma;
+
+Terminal c is in FIRST(A) and Terminal d is in FOLLOW(A).
+</pre></div>
+<p>
+
+<div style="background-color:white; width:600px; border:1px solid black; padding:3px 10px;margin: 5px;">
+FOLLOW(A), for all nonterminals A,  is computed 
+ recursively by these rules: <p>
+ 
+Rule 1. Place $ in FOLLOW(S), where S is the start symbol, and $
+is the input right endmarker.<p>
+
+Rule 2. If there is a production A &rarr; &alpha;B&beta;, then everything in
+ FIRST(&beta;) except &epsilon; is in FOLLOW(B).
+
+<p/>Rule 3. If there is a production A &rarr; &alpha;B, or a production
+ A &rarr; &alpha;B&beta;, where FIRST(&beta;) contains &epsilon;, then 
+ everything in FOLLOW(A) is in FOLLOW(B).
+</div>
+<p>
+In general, FIRST is constructed by looking at the LHS of a production and
+ determining which terminal(s) that are derived first. FOLLOW is constructed by
+ looking at nonterminals in the RHS of productions and determining which
+ terminal(s) follow it first.
+<pre><tt>
+Example from Dragon. 
+E -> TE'
+E' -> +TE' | e
+T -> FT'
+T' -> *FT' | e
+F-> (E) | id
+
+FIRST(E) = {(,id}
+FIRST(E')= {+,e}
+FIRST(T) = {(,id}
+FIRST(T')= {*,e}
+FIRST(F) = {(,id}
+
+FOLLOW(E) = {$,)}      // EOF symbol is in follow E
+FOLLOW(E')= {$,)}      // since E' appears only at the end of E productions
+FOLLOW(T) = {+,),$}    // first(E') - e and follow(E)
+FOLLOW(T')= {+,),$}    // T' appears only at ends of T production so follow(T)
+FOLLOW(F) = {+,*,),$}  // first(T') - e; follow(E); first(E') - e 
+
+EXAMPLE TWO. 
+Grammar G = &lt;S,&Sigma;,N,P>      
+  &Sigma; = {+, -, *, (, ), NUM}   // terminals
+  S = exp    // the starting symbol
+  N = {exp, addop, term, mulop, factor} // nonterminals 
+  P, the set the set of productions in  G:
+   
+     exp &rarr; exp addop term | term
+     addop &rarr; + | -
+     term &rarr; term mulop factor | factor
+     mulop &rarr; *
+     factor &rarr; (exp) | NUM 
+</pre> </div>
+The FIRST and FOLLOW sets contain terminals from &Sigma;. Both sets are 
+recursively constructed in multiple passes through the grammar rules. When 
+complete, every symbol in G has a FIRST set. Every nonterminal symbol in G 
+has a FOLLOW set.  Since |&Sigma;| = 6 and |N| = 5, there are 11 FIRST sets 
+and 5 FOLLOW sets.  FIRST and FOLLOW sets for G: <p>
+
+<div><pre>
+   FIRST(exp)    = {(, NUM}        FIRST(() = {(}    
+   FIRST(term)   = {(, NUM}        FIRST()) = {)}
+   FIRST(factor) = {(, NUM}        FIRST(+) = {+}
+   FIRST(addop)  = {+, -}          FIRST(-) = {-}
+   FIRST(mulop)  = {*}             FIRST(*) = {*}
+                                   FIRST(NUM) = NUM
+   
+   FOLLOW(exp)    = {$,+,-,)}
+   FOLLOW(addop)  = {(,NUM}
+   FOLLOW(term)   = {$,+,-,*,) } 
+   FOLLOW(mulop)  = {(,NUM} 
+   FOLLOW(factor) = {$,+,-,*,)}
+   </pre> </div>
+
+  A grammar G is LL(1) if and only if whenever A &rarr; &alpha; | &beta;,
+  FIRST(&alpha;) and FIRST(&beta;) are disjoint sets. If
+ &epsilon; is in FIRST(&beta;) then FIRST(&alpha;) and
+ FOLLOW(A) are disjoint sets. <p>
+
+ Is Grammar G from Example 2 LL(1)?<Br/>
+ FIRST(exp) &cap; FIRST(term) = {(,NUM}. Not LL(1). The next
+ section discusses bottom-up parsing, which is a technique by which
+ languages that are not LL(1) can be parsed.
+
+<h3> Ch 4.5 Bottom-Up Parsing</h4>
+<p>	
+   LR grammars define languages to which LR parsing   can
+	 be applied. LR meaning a left-to-right scan, a rightmost 
+    derivation and a bottom-up recursive <i>ascent</i>. Left recursion 
+   is not a problem in LR grammars. The primary drawback is that LR parsers 
+   are difficult
+   to code manually, thus are usually generated by a parser generator. 
+   Yacc generates an LALR parser (Look-Ahead LR parser) which is a simplified
+   version of a canonical LR parser.
+</p>
+<p>
+Bottom-up parsing is a process of "reducing" a string  back to the
+ starting symbol of the grammar.  Decisions involve when to reduce and
+ what production rule to apply. Going "backwards" means
+ you need to know what chunk of symbols is
+ is the body of a production in G. 
+ These 'chunks' are called handles. This is the same Grammar G as
+ above, simplified slightly to make parsing easier to read. 
+ &Sigma; = {+,*,(,),id}. N = {E,T,F}. S = E. There are six 
+ production rules. The handles for G are 
+  the RHS of each rule in G.
+<p>
+<div><pre>
+      --------------
+      | GRAMMAR G  |
+      --------------
+                           Handle 
+Rule 1.   E -> E + T       E+T     
+Rule 2.   E -> T           T
+Rule 3.   T -> T * F       T*F   
+Rule 4.   T -> F           F
+Rule 5.   F -> (E)         (E)   
+Rule 6.   F -> id          id
+ 
+Example 1.
+Input string: id + id 
+
+Rightmost derivation (F derives to id in E+F):
+------------------------------------------------------------
+  E => E + T => E + <span>F</span> => T + <span>id</span> => F + id => id+id
+
+
+Example 2.
+Input string: id * id 
+
+Rightmost derivation (F derives to id in T*F):
+------------------------------------------------------------
+  E => T => T * <span>F</span> => T * <span>id</span> => F * id => id*id</pre>
+
+
+<p>
+   Bottom-up parsing is a rightmost derivation in reverse. When you have a
+   choice of handles (as in id * id) select the leftmost handle since we
+   are doing a left-to-right scan. Bottom-up parse on input string:
+   id * id:
+<pre>
+   --        --           --    -----       --
+   id * id   F * id   T * id    T * F        T           E
+             |        |         |   |      / | \         |
+             id       F         F   id    T  *  F        T
+                      |         |         |     |      / | \
+                      id        id        F     id    T  *  F
+                                          |           |     |
+                                          id          F     id
+                                                      |
+                                                      id
+</pre></div>  <p>
+<u>Handle Pruning</u> is the process of grabbing the handle and
+ reducing it (deriving in reverse) to the LHS (head) of its 
+ sentential form. Handles are marked by as dashed line in
+ the parse tree  above.
+ Handle pruning produces a right-most derivation in reverse.
+</p>
+<p>
+
+<u>Shift-Reduce Parsing</u> is an implementation of bottom-up parsing in 
+ which a stack holds the grammar symbols and an input buffer holds the
+ string to be parsed. This uses the same data structures (a stack and a
+ buffer) as in
+  the top-down parsing with a stack but the technique differs. 
+ The stack begins empty.
+ "Shift" means to
+ move a terminal symbol from input onto the stack. Reduce means to
+ reduce the current sentential form on the stack to another sentential
+ form. "Accept" occurs when the stack holds the start symbol
+  and the buffer is
+ empty($). "Error" occurs when the shift/reduce process gets stuck
+ before the Accept state. Using
+ Grammar G and the input string: x * y, 
+ the actions of shift-reduce are shown below. Note that the handle
+ always appears at the top of the stack.  
+<pre>    Grammar G.        Handle 
+   E -> E + T          E+T     
+   E -> T              T
+   T -> T * F          T*F   
+   T -> F              F
+   F -> (E)           (E)   
+   F -> x              x 
+   F -> y              y 
+ 
+   Input string: x * y 
+
+   STACK      INPUT       ACTION              HANDLE
+   $          x*y$        shift 
+   $x          *y$        reduce by F->x      x 
+   $F          *y$        reduce by T->F      F
+   $T          *y$        shift                 
+   $T*          y$        shift                
+   $T*y          $        reduce by F->y      y 
+   $T*F          $        reduce by T->T*F    T*F  
+   $T            $        reduce by E->T      T
+   $E            $        accept  
+
+
+Note: $ marks the bottom of the stack and EOF.
+</pre>
+See <a href="http://en.wikipedia.org/wiki/LALR_parser">this wiki article</a>
+ for a good introduction to LALR (Look-Ahead Left Scan Right Derivation) 
+ parsing.
+</body>
+</html>

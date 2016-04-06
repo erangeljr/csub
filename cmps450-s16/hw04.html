@@ -1,0 +1,341 @@
+<HTML> <HEAD> <TITLE>CMPS 450: HW 04</TITLE>
+<style type=text/css> DIV.ans {
+ margin: 3px 0px 10px 3px; padding: 4px; border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #555;
+ background-color: #DEE; padding-right: 5px; height: 50px; width: 600px; }
+DIV.box { position: relative; float: left; margin: 0px 0px 2px 0px; 
+ padding: 4px; # border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #19193A;
+ background-color: #eee; padding-right: 0px; width: 450px; height: 60px; }
+h5 { background-color: yellow; width: 300px;}
+BODY { margin: 2% 15% 5% 5%; color: 19193A; } </STYLE> </HEAD>
+<BODY TEXT="#000000" LINK="#FB6A2D" VLINK="#993300" ALINK="#FF6600">
+ <h3>CMPS 450 HW 04: Finite-state Automata, Chapter 3.6 - 3.7</h3>
+
+You do not need to submit anything for this homework. The homework is
+  designed for self-evaluation on the reading material. It will be
+ assumed that you know this material as you construct
+ your compiler and before your take-home final exam.
+<p>
+<b>resources:</b><br>
+<table style="background-color:#EEEEEE;">
+<tr><td>
+ch 03.5 - 3.7 of dragon text<br>
+<a href="./ch03b_notes.html">ch 03.5 - 3.7 lecture notes</a><br>
+<a href="http://www.jflap.org">Java-based FA tool</a><br>
+<a href="http://www.jflap.org/tutorial/">JFLAP tutorial</a><br>
+<a href="./examples/week04">week04 example files</a><br>
+</td></tr></table>
+
+<h4> Ch 3.6 Finite-State Automata </h4>   
+<pre> <tt> Conventions and notation for Finite-state Automata:
+
+A Finite-state Automaton (FA) is defined by a 5-tuple &lt;A,S,s0,F,t>, where A is a 
+finite terminal alphabet, S is a finite set of states, s0 is the start state, F 
+is the set of final states from S, and t is a transition function defined by a 
+transition diagram. A DFA is the same as an NFA with the following exception:
+
+The transition function for a DFA is t: (S x A) -> S. 
+
+The transition function for an NFA is t: (S x {A U lambda) -> {f | f isin S}. 
+
+L(M) is the language accepted by automaton M.
+
+01. Using the above notation, define a DFA M that satisfies: 
+      L(M) = the set of all strings containing the substring abb at least once
+    Assume A = {a, b}. Define S, s0, F and t.  
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q1Area');
+myArea.innerHTML=
+'<tt>The regex for L(M) is (a|b)*abb(a|b)*  <br/>\
+                       <br/>\
+    s0 = 0,              <br/>\
+    S = {0, 1, 2, 3}   <br/>\
+    F = {3}            <br/>\
+                  <br/>\
+        a b        <br/>\
+      0 1 0        <br/>\
+ t =  1 1 2       <br/>\
+      2 1 3       <br/>\
+      3 3 3    </pre>    '; ">
+<DIV class='ans' id="Q1Area" STYLE="height:180px; background-color:DEE">&nbsp;
+</DIV>
+
+02. Check your work by tracing the computation of DFA M against this input:
+      a)  abaabb            b)  ababab  
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q2Area');
+myArea.innerHTML=
+'M(0,abaabb)-> M(1,baabb)->  M(2,aabb)->M(1,abb)->M(1,bb)->M(2,b) ->M(3,e)<br/>\
+Accept since input is finished in state 3. <br/>\
+<br/>\
+M(0,ababab)-> M(1,babab)->  M(2,abab)-> M(1,bab)->M(2,ab)->M(1,b) ->M(2,e)<br/>\
+Reject since input is finished but not in state 3. '; ">
+<DIV class='ans' id="Q2Area" STYLE="height:100px; background-color:DEE">&nbsp;
+</DIV>
+03. Using the same notation, define a DFA M that satisfies:
+       L(M) = the set of all strings that do not contain substring abb
+    Assume A = {a, b}. Define S, s0, F and t.
+    Hint: there is a big shortcut based on what you did in question #1.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q3Area');
+myArea.innerHTML=
+'This language is the complement of #1 so just take the complement <br/> \
+of the final states. Keep everything else the same:<br/><tt>\
+    s0 = 0,                <br/>\
+    S = {0, 1, 2, 3}   <br/>\
+    F = {0, 1, 2}    <br/>\
+    t =                <br/>\
+        a b   <br/>\
+      0 1 0   <br/>\
+      1 1 2   <br/>\
+      2 1 3   <br/>\
+      3 3 3  <= this is a trap state!   '; ">
+<DIV class='ans' id="Q3Area" STYLE="height:180px; background-color:DEE">&nbsp;
+</DIV>
+04. Check your work by tracing the computation of DFA M with these strings.
+      a) abaabb                   b) ababab  </pre>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q4Area');
+myArea.innerHTML=
+'M(0,abaabb)-> M(1,baabb)->  M(2,aabb)-> M(1,abb)->M(1,bb)->M(2,b)->\
+->M(3,&epsilon;)<br/>\
+Reject since input is finished but not in a final state. \
+<p/>\
+M(0,ababab)-> M(1,babab)->  M(2,abab)-> M(1,bab)->M(2,ab)->M(1,b)-->\
+ ->M(2,&epsilon;)<br/>\
+Accept since at end of input we are in a final state.  '; ">
+<DIV class='ans' id="Q4Area" STYLE="height:100px; background-color:DEE">&nbsp;
+</DIV>
+The next questions pertain to NFA M defined as follows: 
+<p/>
+<img src="hw04_NFA.png" align="top">
+<p/>
+<pre><tt>
+ A = {a letter or a digit}
+ S = {q0,q1,..,q9}
+s0 = q0
+ F = {q9} 
+transition function t:
+    letter digit lambda 
+q0  {q1}
+q1               {q2}
+q2               {q3,q9}
+q3               {q4,q6}
+q4  {q5}
+q5               {q8}
+q6        {q7}
+q7               {q8}
+q8               {q3,q9}
+q9                     
+Empty entries in t are {}, meaning stay in the current state. 
+<p/>     
+05. Will M accept or reject this input string:
+          aa9           
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q5aArea');
+myArea.innerHTML=
+'ACCEPT. State changes shown below. Note that with NFAs you can make state<br/>\
+ changes on lambda transitions after input has finished. <p/>\
+ M(q0,aa9) -> M(q1,a9) -> M(q2,a9) -> M(q3,a9) ->M(q4,a9) -> M(q5,9) ->   <br/>\
+ M(q8,9) -> M(q3,9) -> M(q6,9) -> M(q7, ) -> M(q8, ) -> M(q9, ) '; ">
+<DIV class='ans' id="Q5aArea" STYLE="height:100px; background-color:DEE">&nbsp;
+</DIV>
+    Will M accept or reject this input string:
+         a9
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q5bArea');
+myArea.innerHTML=
+'ACCEPT; state transitions shown below. <br/>\
+M(q0,a9)->M(q1,9)->M(q2,9)->M(q3,9)->M(q6,9)->M(q7,_)->M(q8,_)->M(q9,_)'; ">
+<DIV class='ans' id="Q5bArea" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+06. Express L(M) as defined above with an RE as you would in Lex. 
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q6Area');
+myArea.innerHTML=
+'<tt>{letter}({letter}|{digit})* </tt>'; ">
+<DIV class='ans' id="Q6Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+</pre></tt>
+<h3> Ch 3.7 Regular Expressions to Automata </h3>   <pre>
+07. Use the subset contruction algorithm to convert NFA M (above) into DFA D. 
+    Don't forgot the &lambda;->&lambda;-> &lambda;,... transitions. 
+    It is easier to work off the transition diagram rather than the table. For 
+    readability, omit {} entries in the table. The empty set means that no 
+    state change occurs on that input.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q7Area');
+myArea.innerHTML=
+'<tt>\
+        letter digit lambda    <br/>\
+      0  {1}                       <br/>\
+      1             {2}             <br/>\
+      2             {3,9}         <br/>\
+      3             {4,6}            <br/>\
+      4 {5}                        <br/>\
+      5             {8}            <br/>\
+      6       {7}                 <br/>\
+      7             {8}           <br/>\
+      8             {3,9}          <br/>\
+     [9]                           <br/>\
+Notation below: l = letter and d = digit        <br/>\
+Step 1. e-closure(0) = {0} = A                                 <br/>\
+Step 2. Dtran[A,l] = e-closure(move({0},l)) = {1,2,3,4,6,9} = B    <br/>\
+        Dtran[A,d] = e-closure(move[{0},d]) = undefined     <br/>\
+<p/>\
+Step 3. Dtran[B,l] = e-closure(move[{1,2,3,4,6,9},l])={3,4,5,6,8,9} = C<br/>\
+        Dtran[B,d] = e-closure(move[{1,2,3,4,6,9},d])={3,4,6,7,8,9} = D<br/>\
+<p/>\
+Step 4. Dtran[C,l] = e-closure(move[{3,4,5,6,8,9},l])={3,4,5,6,8,9} = C <br/>\
+        Dtran[C,d] = e-closure(move[{3,4,5,6,8,9},d]}={3,4,6,7,8,9} = D<br/>\
+<p/>\
+Step 5. Dtran[D,l] = e-closure(move[{3,4,6,7,8,9},l])= {3,4,5,6,8,9} = C<br/>\
+        Dtran[D,d] = e-closure(move[{3,4,6,7,8,9},d])= {3,4,6,7,8,9} = D<br/>\
+<p/>\
+    DFA D Transition Table:    <br/>\
+   NFA              DFA  letter digit    <br/>\
+   {0}               A      B           <br/>\
+   {1,2,3,4,6,9}     B      C    D     <br/>\
+   {3,4,5,6,8,9}     C      C    D        Final States = {B, C, D}   <br/>\
+   {3,4,6,7,8,9}     D      C    D    <br/>\
+<p/>\
+   Sanity Check.  <br/>\
+   Show that D will accept aa9.    <br/>\
+      (A,aa9) -> (B,a9) -> (C,9) -> (D,_)  ACCEPT.    <br/>\
+<p/>\
+   Show that D will reject 9aa.      <br/>\
+      (A,9aa) -> (A,aa) -> (B,a) -> (C,_)  REJECT.  '; ">
+<DIV class='ans' id="Q7Area" STYLE="height:650px; background-color:DEE">&nbsp;
+</DIV>
+08. Simulate NFA M using on-the-fly subset construction; i.e., construct subsets
+    as needed. You need sample input to show this algorithm. Assume input is:
+             aa9
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q8Area');
+myArea.innerHTML=
+'<tt>Assume input is aa9.   <p/>\
+     Generate e-closure(0) = {0}.    <br/>\
+     Generate e-closure(move({0},a)) = {1} <br/>\
+     Generate e-closure(move[{1},a]) = {2} <br/>\
+     Generate e-closure(move[{2},9]) = {3,9}. Done.  <br/>\
+     Accept since 9 is a final state.  '; ">
+<DIV class='ans' id="Q8Area" STYLE="height:120px; background-color:DEE">&nbsp;
+</DIV>
+09. Use the McNaughton-Yamada-Thompson algorithm to convert /(a*|b*)*/ into 
+    an NFA. 
+
+    Step 1. Construct the regular expression tree from the bottom up. Regex 
+    numbers will be in left-to-right order from the lowest level to the root.
+    Regex 1 is the leftmost leaf and the largest regex number is the root.
+    representing the order in which you build the pieces of the tree.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q09aArea');
+myArea.innerHTML=
+'<tt>                     r_7 <br/>\
+                    /    \\         <br/>\
+                ( r_6 )   * <br/>\
+                  | <br/>\
+                 r_5 <br/>\
+                 /  \\ <br/>\
+                /    \\ <br/>\
+               r_3    r_4            RE = (a*|b*)* <br/>\
+              /  \\    /  \\ <br/>\
+             r_1  *  r_2  * <br/>\
+             |       | <br/>\
+             a       b     '; ">
+<DIV class='ans' id="Q09aArea" STYLE="height:200px; background-color:DEE">&nbsp;
+</DIV>
+    Step 2. Construct NFAs for all regexes in regex order.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q09bArea');
+myArea.innerHTML=
+'    Regex      NFA Construction. Add state numbers as the last step to make\
+ 0 the start state:<tt> <br/>\
+                  a                                <br/>\
+ r_1  a       (3)-->(4)               <br/>\
+<br/>\
+                  b           <br/>\
+ r_2  b       (7)-->(8)     <br/>\
+<br/>\
+                  e     a     e                  e            e      <br/>\
+ r_3  a*      (2)-->(3)-->(4)-->(5); also add (2)->(5) and (5)-->(2) <br/>\
+                                         <br/>\
+                                                 <br/>\
+                 e    b     e                   e            e   <br/>\
+ r_4  b*      (6)-->(7)-->(8)-->(9); also add (6)->(9) and (9)->(6)<br/>\
+                             <br/>\
+ r_5 a*|b*    Merge r_3 and r_4 with new start state 1 and new final state<br/>\
+              10 using lambda transitions<br/>\
+<br/>\
+ r_6 (a*|b*)    r_6 = r_5   (skip since they are equivalent)     <br/>\
+                                                                        <br/>\
+ r_7 (a*|b*)*  Add start state 0 and final state 11 to NFA from r_5; Add <br/>\
+               lambda transitions from state 0 to 11 and from 11 back to 0<br/>\
+                         <p/>\
+ The accepting state is 11. ';">
+<DIV class='ans' id="Q09bArea" STYLE="height:400px; width:615px; background-color:DEE">&nbsp;
+</DIV>
+<a href="./hw04-RE-NFA.png">view image</a>
+<p>
+10. Given RE r, this table summarizes the options to construct an automaton 
+    that will recognize one or more strings x in L(r). The big-O efficiency
+    class is the time it takes to perform the activity. Time is directly
+    proportional to the number of states s in the automaton. See page 165 of 
+    the text for more details. 
+
+    Automaton  | Construction Cost  | Recognition Cost per String x
+    ===========+====================+==============================
+        NFA    |  O(|r|)            |    O(|r|*|x|)
+     DFA_avg   |  O(|r|^3)          |    O(|x|)
+     DFA_worst |  O(|r|^2 2^|r|)    |    O(|x|)
+    ===========+====================+=============================== </pre>
+
+   For all cases, explain the big-O entries in row 1 of the table assuming you 
+   use the McNaughton-Yamada-Thompson for converting an RE to an NFA.
+ <p>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q10aArea');
+myArea.innerHTML=
+'<tt>  Row 1: This is RE to NFA <br/>\
+    To construct an NFA from an RE using the McNaughton-Yamada-Thompson  \
+    algorithm, cost is relative to the number of states you add.  \
+    Following the 4 rules, at most you end up with 2|r| states: O(|r|). \
+<p/>\
+    Using a NFA to recognize a string is a brute-force method. Why? Because  \
+    if lucky you pick the correct transitions, but if not you have to try \
+    all possibilities. Thus, the Per String cost is O(|r|*|m|). </tt> '; ">
+<DIV class='ans' id="Q10aArea" STYLE="height:150px; background-color:DEE">&nbsp;
+</DIV>
+
+  Explain the big-O entries in Row 2 and Row 3 of the table. These rows relate 
+  to applying the subset construction algorithm to convert the NFA to a DFA. 
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q10bArea');
+myArea.innerHTML=
+'<tt>Rows 2,3: This is NFA to DFA. <br/> \
+  Constructing a DFA follows the NFA to DFA subset construction algorithm, \
+  where cost is relative to the no. of states and transitions generated.  \
+   The NFA for any regex r has at most 2|r| states and 4|r| transitions.  \
+    Every DFA state constructed from this NFA may (at most) require |r| \
+    new states. Why? Because for any regex r, there are at most |r| input \
+    symbols. Thus, constructing a DFA of s states is O(|r|^2s). Since s is  \
+   roughly equivalent to |r|, this is O(|r|^3) \
+   <p/> CONSTRUCTION COST. <br/>\
+   Row 2: DFA_avg <br/>\
+   In the average case, the number of states s in the DFA is about |r|. Thus, \
+   the algorithm takes O(|r|^3).  \
+   <p/>\
+    Row 3: DFA_worst   <br/>\
+    In the worst case, the number of states in the DFA for regex r is 2^r. A \
+    sample language of this type is all strings over {a,b} such that the nth  \
+    character from the tail end is `a`. The NFA is easy but the DFA is hard. \
+    For such languages, constructing the DFA requires exponential time. \
+ <p/>PER STRING COST.<br/>\
+ In both avg and worst cases string recognition can be done in linear  \
+    time. <tt> '; ">
+<DIV class='ans' id="Q10bArea" STYLE="height:600px; background-color:DEE">&nbsp;
+</DIV>
+
+</body>
+</html>
