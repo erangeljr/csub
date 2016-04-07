@@ -1,0 +1,25 @@
+
+   
+   SDD for Type Checking 
+
+   Production Rule       Semantic Rule
+   ================      ==================
+   E -> E_1 + N          E_1.type == N.type  // semantic check 
+   E -> N                E.type = N.type
+   N -> float            N.type = F 
+   N -> int              N.type = I
+
+  Example. 5 + 3 + 2.   // passes semantic check 
+
+  Annotated Syntax Tree and Parse Tree
+
+             E.type==N.type? YES                      E
+            /           |    \                      / | \
+   E.type==N.type? YES  +     N.type=I            E   +  N
+       /   |   \                |               / | \    |
+ E.type=I  +  N.type=I         int            E   +  N   int 
+     |         |                             /       |
+  N.type=I    int                           N        int 
+     |                                      |
+    int                                    int      
+

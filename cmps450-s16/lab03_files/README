@@ -1,0 +1,25 @@
+This program is a simple, desk-calculator that performs addition, subtraction, 
+multiplication, and division operations. The lexical scanner reads input from 
+stdin and sends tokens to the parser. The parser evaluates input and displays 
+the result or errors as necessary.
+
+How to a put everything together:
+
+Step 1. Generate parser with -d flag for a header file that other files can use
+     yacc -d calc.y         //  create y.tab.c and y.tab.h
+
+Step 2. Generate lexical scanner 
+     lex calc.l              // create lex.yy.c
+
+Step 3. Compile and link parser and lexer into a single executable: 
+    gcc y.tab.c lex.yy.c -o calc   
+
+Step 4. Test the calculator
+    ./calc
+       m=4
+       m+5
+       9
+       m*m
+       16
+       CTRL-D
+ 

@@ -1,0 +1,7 @@
+// this code passes all semantic constraints of the parser 
+{ 
+  int myInt;
+  float myFloat;
+  myInt  = 55 + 71;
+  myFloat  = 2.37 + 31.7;
+}

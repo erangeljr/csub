@@ -1,0 +1,10 @@
+
+yacc --debug -v -d parse.y   # generate y.tab.c with debugging flags and
+                             # verbose output to y.output
+
+   $ make clean   # remove cf *.o 
+   $ make
+
+   $ vi y.output  # review the grammar
+
+   $ ./lab05 good.cf 2> good.out 

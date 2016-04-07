@@ -1,0 +1,280 @@
+<html> <body> <title> 450: LAB 03</TITLE>
+<style type=text/css> body { margin : 4% 4% 4% 4%; }
+</style> </HEAD>
+<BODY background="code.gif" TEXT="#000000" LINK="#FB6A2D" VLINK="#993300" ALINK="#FF6600">
+<h3>CMPS 450 - LAB 03 - Introduction to Yacc</h3>
+ 
+<font color=red>Due:&nbsp;before lab next tuesday </font>
+<p>
+<b>resources:</b><br>
+<table style="padding:5px;" bgcolor="#EEEEEE"><tr><td>
+<a href="./lab03_files/">lab03 files</a><br/>
+<a href="http://tldp.org/HOWTO/Lex-YACC-HOWTO-6.html">Lex-Yacc HOWTO</a><br/>
+<a href="http://www.stanford.edu/class/archive/cs/cs143/cs143.1128/handouts/120%20Introducing%20bison.pdf">Bison Handout</a><br>
+<a href="./Material/flex-bison-text.pdf">flex/bison text</a><br>
+
+<a href="http://www.cs.csub.edu/index.php?t=1&p=technical_info/howto/ascii-0-127&prnt=1">ASCII chart</a><br>
+<a href="http://www.ibm.com/developerworks/linux/library/l-lexyac/index.html">IBM: flex/bison tutorial</a><br>
+<a href="http://dinosaur.compilertools.net/yacc/index.html">yacc manual - bell labs</a><br>
+<a href="http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Developer/books/CLanguageRef/sgi_html/index.html">C language ref</a><br>
+<a href="./Material/yacc-intro.pdf">yacc-intro.pdf</a><br>
+<a href="./examples/week03/">week3 example code</a><br>
+<a href="http://www.gnu.org/software/bison/manual/bison.html">GNU Bison Manual</a><br>
+<a href="http://tldp.org/HOWTO/Lex-YACC-HOWTO-6.html">Lex/yacc HOWTO</a><br>
+
+</td><tr><table>
+
+ <p> 
+ This lab is an introduction to yacc (yet another compiler compiler). Yacc
+ is a general-purpose parser generator that converts a 
+ grammar description for an LALR(1) context-free grammar into a 
+ C program to parse that grammar. 
+ You will be using bison, GNU's implementation of yacc.
+ For a gentle introduction to yaac, follow the <a href="http://www.ibm.com/developerworks/linux/library/l-lexyac/index.html">IBM Tutorial</a>.
+ For more detailed references, refer to the links at the top of this lab.
+<p>
+
+ Bison is downwardly compatible with yacc files: all 
+ yacc grammars and code will work with Bison.  If you type 'yacc' on
+ sleipnir, you are actually running bison. For simplicity, we will
+  use the word yacc throughout this course unless the discussion pertains
+ to how bison differs from yacc.
+  Yacc generates an LALR (Look-Ahead Left-to-right scan Rightmost derivation) 
+ parser for a 
+ context-free grammar. The default 
+ target language for the yacc parser is C (bison also supports C++ and Java).  
+  Bison can also produce 
+ "Generalized Left-to-right Rightmost" (GLR) parsers for ambiguous grammars.
+ We will be generating an LALR parser for all assignments in
+ this course.
+ <p>
+ How Yacc Interfaces with Lex.<br/>
+  A yacc parser verifies whether the tokens passed to it from the
+ lex scanner pass the syntax rules of the language. For example, this 
+ statement <pre>
+      if (a == 5) x = 4;</pre>
+is a valid C if-statement and would pass the scanner and the parser.
+ However, this statement<pre>
+      x if (a == 5) 4 =;</pre>
+ would pass the scanner but not the parser. 
+ Both statements have the same number and type of tokens, but
+ the order of the tokens is incorrect. The garbled statement 
+ passes the scanner fine but will not pass the syntax rules of the parser.
+ This statement <pre>
+    7f (a == 5)  x = 4; </pre>
+ would not pass either the scanner or the parser.
+<p>
+ The structure of a  yacc file  is similar to a lex file.
+ There are three sections:
+<pre>
+    declarations
+    %%
+    rules
+    %%
+    programs
+</pre>
+The declarations or programs section may be empty. The smallest yacc file is:
+<pre>
+    %%
+    rules
+</pre>
+To produce an executable the yacc code section must include the following
+  (there are limited versions of these 3 routines in some
+  yacc libraries but bison does not include them):
+<pre>
+     main    // calls yyparse subroutine to start the program
+     yyerror // error-handling routine 
+     yywrap  // wrap-up subroutine; returns 1 at input file EOF 
+</pre>
+The lex object file and the yacc object file are linked
+ to produce a single
+ executable. The main() entry point for the executable must reside in
+ the yacc parser. Thus when you interface with yacc put main() in
+ your yacc file and do not put a main() in your lex file. 
+ <p>
+ From main(), things work like this:<pre>
+Step 1. main() calls yyparse()
+Step 2. yyparse() calls yylex() in a loop until EOF; each call returns a token
+Step 3. yylex() returns a valid token or an EOF marker or an error token
+Step 4. yyparse() parses the token; if token OK goto Step 2 else goto Step 5. 
+Step 5. If recoverable error call yyerror() and repeat from Step 2 else goto 6.
+Step 6. at EOF call yywrap() and return 0; if unrecoverable error call yywrap()
+        and return 1
+</pre>
+From the yacc library you have these yacc internal file
+ names and definitions. To 
+ generate the standard yacc names you must call bison with -y flag.<pre>
+   y.tab.c       generated output file
+   y.tab.h       header file generated with -d option; 
+   yyparse       yacc parsing routine
+   yylval        value of current token on the stack - type int by default
+   yyerror       yacc error pseudotoken
+   yyerrok       procedure to reset parser after error
+   yychar        contain lookahead token that caused an error 
+   YYSTYPE       defines value type of parsing stack (set by #define)
+   %token        defines token preprocessor symbols
+   %start        defines the start nonterminal symbol
+   %union        defines union YYSTYPE, allowing different types on stack
+   %type         defines the variant union type returned by a symbol
+   %left         defines left associativity for the list of tokens that follow
+   %right        defines right associativity for the list of tokens that follow
+   %nonassoc     defines no associativity (either left or right is OK) 
+
+</pre>
+
+<b>LAB INSTRUCTIONS</b><br/>
+ Your task is to modify a simple calculator 
+ so that it accepts floating point numbers. 
+ The current version only accepts integers on input and performs
+ integer calculations only; e.g.,
+  this input<pre>
+     15 / 4
+</pre> returns 3. And this input:
+ <pre>     2.4 </pre>
+returns a parse error.
+  To support floating point numbers the value for a float
+ number token must be able to handle type float. 
+ Integers can always be coerced in C into floats. 
+ You do not need to support
+  any type checking - just treat everything like a float. 
+ C will upcast integers to floating point values.
+ When you display your result you will not be able to
+ know if input was actually whole number. You lose some
+  important information but we will learn to handle this complexity 
+ in later weeks. For now, your calculator should behave as
+ follows. On this input
+<pre> 
+(0.5 + 2.5) * 2.1
+7.3 * 5 
+2 + 2
+a = 4
+a = a + 6
+a / 3  </pre>
+your calculator should display this: <pre>
+ 6.30
+36.50
+ 4.00
+10.00
+ 3.33  </pre>
+
+How to do this? 
+Firstly, DO NOT modify the YYSTYPE definition with a preprocessor
+ define; e.g.  <pre>
+         #define YYSTYPE double !!! DO NOT DO THIS !!! </pre>
+ YYSTYPE holds the token number and this should be type int. You will break
+ your scanner if you try to mess with YYSTYPE.
+ What you need to modify is the yylval for tokens. The default type
+ is int. You want this to be a little more flexible so make yylval a union.
+ The C union type is similar to a structure, but only ONE of the
+ elements is in the union at any given time. The union
+ declaration is similar to a struct but designed to save space.
+For example, this union
+<pre>   union { 
+            double fval; 
+            int dval;
+         }; </pre>
+ can hold two different types but only ONE at a time.
+ When you declare a variable of type union 
+ you get enough memory to hold the largest element, which in this case is
+ 8 bytes for the double. It is then up to you to know which value
+ you wish to use.
+ A reference to the union works like this: <pre>
+          yylval.fval = 4.5; </pre>
+ A floating point value is now stored in the union. 
+ The commands to create a union token type and assign tokens to the
+ fields in yacc are shown here (as an example):<pre>
+     %union { 
+        float fval; 
+        int dval;
+        int digit; 
+        char a_z; 
+     }
+     %token &lt;a_z> LETTER       
+     %token &lt;digit> DIGIT 
+     %type &lt;fval> expr number 
+</pre>
+NOTE: you do not need the digit field in your union if you let the lexer
+ convert an integer into dval.
+<p> 
+In Yacc %token assigns a type for yylval for the terminals in the language and
+  %type assigns a type for yylval for
+  the nonterminals in the language. 
+ For details on the use of %union see 
+ <a href="./examples/week03/">the sample.l and sample.y code </a> in
+ the examples for this
+ week. Review these files. When you understand what is going on - implement
+ the %union  in calc.
+ Before you start modifying code
+ you should understand all existing code in the calculator. This
+ program demonstrates the interaction between the scanner and the parser.
+<P>
+ After modifying your lexer to accept 
+ floating point numbers in expressions and have a union in place 
+ you can call atof to convert yytext into its correct floating
+ point value in the lexer.
+ Currently the calculator computes the value of an integer
+ by having the scanner pass one digit at a time to the parser. The parser
+ then computes the decimal value by num = (num * 10) + digit.
+ Take this logic out and simply call atoi in the lexer and stuff the result
+ into yylval.
+<p>
+ Copy the files from <a href="./lab03_files/">here</a>
+  into your account.<pre>
+     $ cp /home/fac/donna/public_html/cs450/lab03_files/*  .  </pre>
+ Follow the README file to compile and link the calculator.
+ If you are rusty in C unions and coercions, review 
+ <a href="./examples/week03/coercions.c">coercions.c</a> 
+ for C syntax on unions type conversions.
+ Start first by modifying calc.l (the source for lex to generate the scanner)
+ to accept
+ floating point numbers as a valid token type. Right now, this input<pre>
+     5.8 + 4 - 7
+</pre>returns a scan error when encountering the period. You need to
+ define a  regex in your scanner
+ to be a string of digits with an optional period followed by another
+ string of digits; e.g., these are all acceptable numbers
+(you don't need to support scientific notation or octal numbers unless you 
+ wish to): <pre>
+     1.3  3.0  44 </pre>
+<p>
+<b>Error Handling</b><br/>
+ Your final task is to understand the
+ error handling facilities in your yacc-generated parser. Yacc treats
+ errors as a form of productions. You decide what nonterminals
+ in your language to associate with error recovery.
+ A production of the form 
+          <pre> A -> error &alpha; </pre>
+where A is a major nonterminal, &alpha; is a string 
+     of grammar symbols or &epsilon;, and error is a yacc reserved word.
+<p>
+  When the yacc parser encounters an error, it pops symbols from
+ the parsing stack until it hits a state on the top of the stack 
+  in which an error production is included in the set of items.
+  The parser shifts a pseudo-token error onto the stack. 
+ <p>
+ When &alpha; is &epsilon;, a reduction to A occurs immediately and
+ the parser fires the semantic action for A -> error.
+ <p>
+ When &alpha; is not &epsilon;, the parser skips ahead on input for
+ a substring that can be reduced to &alpha;. If &alpha; is all terminals,
+ then the parser looks for these terminals and reduces them by shifting
+ them onto the stack.  
+ <p>
+The parser reduces error &alpha; to A and resumes normal parsing.
+(This is accomplished by calling the 
+ special yacc routine yyerrok, which resets the parser to its normal 
+ mode of operation.)
+ <p>
+  If while evaluating a sequence of expressions
+  your calculator encounters a syntax error, the parser 
+ starts popping symbols from its stack until it  hits the token error.
+  Next, the parser shifts an error token onto the stack and skips past 
+ input until hitting the newline. The parser then shifts newline onto
+ the stack, reduces error token and displays the default error
+  message "Error".
+ The yyerrok; routine is then called to reset the parser.
+  Your task is to modify the error handler yyerror() to display 
+ the lineno at which the error occurs.
+<p>
+</body>
+</html>

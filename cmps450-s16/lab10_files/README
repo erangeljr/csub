@@ -1,0 +1,47 @@
+This program is a compiler front end for a language called 'tiny.' Code modified
+from "Compiler Construction: Principles and Practice" by Kenneth C. Louden                              
+This compiler front-end does the following.
+
+Step 1: performs lexical and syntax analysis (scans and parses) and during 
+        these stages builds an abstract syntax tree
+
+Step 2: traverses the abstract syntax tree to build symbol table 
+
+Step 3: traverses the abstract syntax tree to perform semantic analysis (type 
+        checking) 
+
+Step 4: traverses the abstract syntax tree to generate intermediate code in the
+        form of a pseudo-assembly language 
+
+
+notes: the symbol table is not build by the scanner or the parser - it is
+built after parsing and before the analysis stage by traversing the abstract 
+syntax tree
+
+To compile and execute compiler front-end:
+
+     $ make
+     $ ./tc source.tny
+
+Output:
+     source.code    # intermediate code
+
+The intermediate code is assembly-like:
+
+register-only (RO) instruction
+ * op = the opcode
+ * r = target register
+ * s = 1st source register
+ * t = 2nd source register
+ * c = a comment to be printed
+
+register-to-memory (RM) instruction
+ * op = the opcode
+ * r = target register
+ * d = the offset
+ * s = the base register
+ * c = a comment to be printed if TraceCode is TRUE
+
+ 
+ 
+     

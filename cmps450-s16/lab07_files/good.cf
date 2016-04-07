@@ -1,0 +1,5 @@
+// this code passes syntax of the parser 
+int iname;
+{ 
+  iname  = 55;
+}

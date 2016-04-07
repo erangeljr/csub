@@ -1,0 +1,180 @@
+<html> <body> <title> 450: LAB 09</TITLE>
+<style type=text/css> body { margin : 4% 4% 4% 4%; } </style> </HEAD>
+<BODY background="code.gif" TEXT="#000000" LINK="#FB6A2D" VLINK="#993300" ALINK="#FF6600">
+<h3>CMPS 450 Lab 09 - One-Pass Code Generation with Backpatching
+ for Jump Stmts </h3>
+<p><table bgcolor="silver"><tr><td>
+<b>resources:</b><br>
+<a href="./lab09_files">lab09_files</a><br>
+dragon ch 6.7
+</td></tr></table>
+<p>
+ Intermediate code generation is a little tricky for flow-control statements
+ since they involve jumps. Unconditional jumps (with no boolean expressions)
+ is the easiest flow-control statement to code. Conditional jump
+ instructions will generate lines of code to be executed 
+ when the condition is false (a false list) and lines of code that
+ will be generated when the condition is true (a true list).
+ You will also need a label to the lines of code that should be
+ jumped to after the conditional statement (otherwise you will
+ have fall through).
+<p>
+ The false list, the  true list, and the code  that comes after
+ the flow-control statement
+  can be generated at the time the statements are encountered
+ during parsing. What cannot be generated at that time
+ is the target of the GOTOs. This is because the parser
+ does not know how much code it must jump over.
+  These GOTO labels can be filled
+ in by a second pass of the parse tree. However, it is still possible 
+ for a one-pass compiler to generate
+ the GOTO labels for instruction targets using a technique called backpatching.
+ <p>
+ The instruction lists are generated during parsing. When the
+ target label is known a function can be called to insert the label into
+ the instructions in the list. When all labels have been inserted
+ the code can then be generated from the lists.
+<p>
+
+ The current code in <a href="./lab09_files/">lab09_files</a> constructs 
+ a parser that generates 3-address code for while statements. The usage for
+ this code is:
+<pre>       $ cat demo.c | ./lab09
+       $ cat code.out   # 3-address code is generated to this file
+</pre>
+ For example, this source:
+<pre>int main () {
+ if (a == 7)
+   a = 99;
+ else
+   x = a;
+ return 0;
+} </pre>
+ generates this code in code.out:
+<pre>
+0    GOTO 1
+1    IF (a == 7) GOTO 3
+2    GOTO 5
+3    a := 99 
+4    GOTO 6
+5    x := a
+6    RETURN 0
+</pre>
+ Note that the GOTO labels are such that flow
+  correctly jumps to or past the proper statements.
+ The language specified in the parser is a little funky. Stick 
+ to the syntax in the demo.c file and you will be fine. The parser
+ does not semantic checking. The only purpose of this lab is to
+ demonstrate how to use backpatching to generate conditional branching.
+ A good place to start is to look at <a href="./lab09_files/y.output">y.output</a> to get a sense of the grammar and the parsing table.
+ Of special note is the symbols mark and jump_mark. The purpose of
+ these symbols is to generate the GOTO statements and their labels at
+ the appropriate times during parsing. The production rule for both
+ marks goes to epsilon but each rule has an action associated to it.
+ The purpose of the mark rules is to generate the GOTO labels in the
+ proper order.
+<p>
+ It helps to understand backtracking if you look at the bottom-up 
+ (rightmost derivation in reverse) shown below
+ on demo.c. The unnecessary terminal symbols are omitted for clarity. 
+ The handles are overlined and the marks when derived to epsilon are
+ noted by asterisks.
+<pre>
+head 
+____
+prog
+______________
+jump_mark func
+*
+e func
+________________
+INT id func_body
+       _________ 
+INT id stmt_list
+       ___________________ 
+INT id stmt_list mark stmt
+                      _______    
+INT id stmt_list mark RET NUM 
+                 *  
+INT id stmt_list e RET NUM 
+       ____ 
+INT id stmt mark RET NUM 
+       ____________________________________________               
+INT id IF (cond) mark stmt jump_mark ELSE mark stmt  RET NUM
+                                               ______        
+INT id IF (cond) mark stmt jump_mark ELSE mark assign RET NUM
+                                               _________ 
+INT id IF (cond) mark stmt jump_mark ELSE mark id = expr RET NUM
+                                               __ 
+INT id IF (cond) mark stmt jump_mark ELSE mark ID = NUM  mark RET NUM
+                                          * 
+INT id IF (cond) mark stmt jump_mark ELSE e ID = NUM  mark RET NUM
+                            *                    
+INT id IF (cond) mark stmt  e ELSE mark ID = NUM  mark RET NUM
+                      ______                             
+INT id IF (cond) mark assign  ELSE ID = NUM  RET NUM
+                      _________ 
+INT id IF (cond) mark id = expr ELSE ID = NUM RET NUM
+                           ___ 
+INT id IF (cond) mark id = NUM ELSE ID = NUM RET NUM
+                      __ 
+INT id IF (cond) mark ID = NUM ELSE ID = NUM RET NUM
+                 * 
+INT id IF (cond) e ID = NUM ELSE ID = NUM RET NUM
+           ____________ 
+INT id IF (expr EQ expr) ID=NUM ELSE  ID = NUM RET NUM
+                   ___  
+INT id IF (expr EQ NUM) ID=NUM ELSE ID = NUM RET NUM
+           __ 
+INT id IF (id EQ NUM) ID = NUM ELSE ID = NUM  RET NUM
+           __ 
+INT id IF (ID EQ NUM) ID = NUM ELSE ID = NUM RET NUM
+    __ 
+INT ID IF (ID EQ NUM) ID = NUM ELSE ID = NUM RET NUM
+</pre>
+
+<p>
+ TASK ONE. Your first
+ job is to add functionality to lab09.y to support code
+ generation for the WHILE statement. 
+ For example, this source:
+<pre>
+int main () {
+ if ( x <= 4)
+   x = 99;
+ else 
+   x = 0;
+ while (a == 7)
+   a = 17;
+ x = a;
+ return 0;
+} </pre>  
+
+Should generate this code:
+<pre>
+0    GOTO 1
+1    IF (x <= 4) GOTO 3
+2    GOTO 5
+3    x := 99
+4    GOTO 6
+5    x := 0
+6    IF (a == 7) GOTO 8
+7    GOTO 10
+8    a := 17
+9    GOTO 6
+10   x := a
+11   RETURN 0  </pre>
+
+ TASK TWO. Your next job is to support multiple statements in
+ the body of the WHILE (a statement block).  The
+ current code only accepts one statement (without curly braces)
+ You will need to change the BNF syntax
+ of your parser so that a while statement looks like this:
+<pre>
+  WHILE { stmt_list } </pre>
+</pre> 
+ No need to support both versions of the while - assume you will always
+ have curly braces surrounding the body of the while.
+
+</body>
+</html>

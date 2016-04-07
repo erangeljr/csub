@@ -1,0 +1,77 @@
+<html> <body> <title> 450: LAB 10</TITLE>
+<style type=text/css>
+ body { margin : 4% 4% 4% 4%; } </style>
+</HEAD>
+<BODY background="code.gif" TEXT="#000000" LINK="#FB6A2D" VLINK="#993300" ALINK="#FF6600">
+<h3>CMPS 450 Lab 10 - Intermediate Code Generation</h3>
+<p><table bgcolor="silver"><tr><td>
+<b>resources:</b><br>
+<a href="http://gcc.gnu.org/frontends.html">gcc front ends</a><br/>
+<a href="http://www.linuxjournal.com/article/7884">writing a GCC front end</a><br/>
+<a href="http://cobolforgcc.sourceforge.net/cobol_toc.html">Writing a GCC Compiler Front End</a><br/>
+<a href="<a href="http://llvm.org/docs/">llvm compiler infrastructure</a><br/>
+<a href="./lab09_files">lab09_files</a><br>
+dragon ch 6 
+</td></tr></table>
+<p>
+
+There is a fully coded compiler front-end for you to
+ look at <a href="./lab10_files/">in lab10_files</a>.
+ The language differs significantly from cflat and the
+ intermediate code is closer to assembly, but the concepts
+ are the same. This program demonstrates how to construct the abstract
+ syntax tree and how to traverse it to generate code.
+
+
+
+ Once the compiler checks the syntax and semantics of a program
+ it can then generate intermediate code. Intermediate
+ code generation  
+ is essentially a syntax directed translation from the source language
+ into another language (the target language). The target language
+ is closer to assembly/machine code than the source
+ language but not platform dependent yet. 
+ The compiler backend takes the intermediate code and
+ translates it into platform dependent machine code, doing 
+ lots of optimizations along the way.
+ <p>  
+ Intermediate code generation is
+ syntax directed because the output closely follows the parse tree.
+ An example of this sort of behavior 
+ is a translator for C declarations
+ from cdecl.org (C declarations) that you will modify for this lab.  
+
+<p> The yacc declaration translator in lab09_files parses
+ an English description of a C declaration
+   and translates it into a valid C declaration or
+ takes valid C code and translates it into its meaning in English.
+  For example, from this
+ input<pre>
+   cdecl> declare x as const pointer to const pointer to pointer to char
+</pre>
+ the translator generates this:<pre>
+     char ** const * const x
+</pre>
+ Or if you enter this:<pre>
+     cdecl> explain void * foo()</pre>
+ the translator generates this: 
+<pre>
+   declare foo as function returning pointer to void
+</pre>
+
+Your job is to  modify the translator so that it accepts
+  a new type called decimal
+ that follows the syntax of the built-in <a href="http://msdn.microsoft.com/en-us/library/system.decimal%28v=vs.90%29.aspx">decimal datatype in C#</a>.
+ This datatype is designed to prevent slice attacks for financial systems.
+ Your translator should be able to read keyword 'decimal' as a valid
+ type coming in and also translate the English word 'money' into the decimal
+ data type in any place that a data type can go. 
+<p>
+The lex
+ file you need to modify is <a href="./lab09_files/cdecl-blocks-2.5/cdlex.l">cdlex.l</a>
+ and 
+ yacc file you need to modify is <a href="./lab09_files/cdecl-blocks-2.5/cdgram.y">cdgram.y</a>.
+
+
+</body>
+</html>
