@@ -1,0 +1,110 @@
+
+Symbol Table Section:  .dynsym
+     index    value       size     type bind oth ver shndx       name
+       [0]  0x00000000 0x00000000  NOTY LOCL  D    0 UNDEF       
+       [1]  0x00000000 0x00000000  NOTY WEAK  D    0 UNDEF       _Jv_RegisterClasses
+       [2]  0x00020910 0x00000004  OBJT GLOB  D    0 .bss        _environ
+       [3]  0x0001074c 0x00000000  OBJT GLOB  D    0 .rodata     _etext
+       [4]  0x000208bc 0x00000000  OBJT GLOB  D    0 .data       __dso_handle
+       [5]  0x00020774 0x00000000  OBJT GLOB  D    0 .plt        _PROCEDURE_LINKAGE_TABLE_
+       [6]  0x000207a4 0x00000000  FUNC GLOB  D    0 UNDEF       atexit
+       [7]  0x00000000 0x00000000  NOTY WEAK  D    0 UNDEF       __register_frame_info
+       [8]  0x000207f0 0x00000000  OBJT GLOB  D    0 .dynamic    _DYNAMIC
+       [9]  0x00020914 0x00000000  OBJT GLOB  D    0 .bss        _end
+      [10]  0x00020910 0x00000004  OBJT WEAK  D    0 .bss        environ
+      [11]  0x0002074c 0x00000000  OBJT GLOB  D    0 .got        _GLOBAL_OFFSET_TABLE_
+      [12]  0x000208d0 0x00000004  OBJT GLOB  D    0 .data       intConstant
+      [13]  0x000207b0 0x00000000  FUNC GLOB  D    0 UNDEF       exit
+      [14]  0x000208f4 0x00000000  OBJT GLOB  D    0 .data.rel.l _edata
+      [15]  0x000207bc 0x00000000  FUNC GLOB  D    0 UNDEF       _exit
+      [16]  0x000208c0 0x00000001  OBJT GLOB  D    0 .data       charLit
+      [17]  0x00010718 0x0000001c  FUNC GLOB  D    0 .init       _init
+      [18]  0x000208c8 0x00000008  OBJT GLOB  D    0 .data       floatConstant
+      [19]  0x00010734 0x00000014  FUNC GLOB  D    0 .fini       _fini
+      [20]  0x000104e0 0x00000074  FUNC GLOB  D    0 .text       _start
+      [21]  0x00000000 0x00000000  NOTY WEAK  D    0 UNDEF       __deregister_frame_info
+      [22]  0x00010748 0x00000004  OBJT GLOB  D    0 .rodata     _lib_version
+      [23]  0x000106a4 0x00000014  FUNC GLOB  D    0 .text       main
+
+Symbol Table Section:  .symtab
+     index    value       size     type bind oth ver shndx       name
+       [0]  0x00000000 0x00000000  NOTY LOCL  D    0 UNDEF       
+       [1]  0x00000000 0x00000000  FILE LOCL  D    0 ABS         a.out
+       [2]  0x000100d4 0x00000000  SECT LOCL  D    0 .interp     
+       [3]  0x000100e8 0x00000000  SECT LOCL  D    0 .hash       
+       [4]  0x000101ac 0x00000000  SECT LOCL  D    0 .dynsym     
+       [5]  0x0001032c 0x00000000  SECT LOCL  D    0 .dynstr     
+       [6]  0x00010448 0x00000000  SECT LOCL  D    0 .SUNW_versi 
+       [7]  0x00010468 0x00000000  SECT LOCL  D    0 .rela.got   
+       [8]  0x0001048c 0x00000000  SECT LOCL  D    0 .rela.bss   
+       [9]  0x00010498 0x00000000  SECT LOCL  D    0 .rela.plt   
+      [10]  0x000104e0 0x00000000  SECT LOCL  D    0 .text       
+      [11]  0x00010718 0x00000000  SECT LOCL  D    0 .init       
+      [12]  0x00010734 0x00000000  SECT LOCL  D    0 .fini       
+      [13]  0x00010748 0x00000000  SECT LOCL  D    0 .rodata     
+      [14]  0x0002074c 0x00000000  SECT LOCL  D    0 .got        
+      [15]  0x00020774 0x00000000  SECT LOCL  D    0 .plt        
+      [16]  0x000207f0 0x00000000  SECT LOCL  D    0 .dynamic    
+      [17]  0x000208b8 0x00000000  SECT LOCL  D    0 .data       
+      [18]  0x000208d8 0x00000000  SECT LOCL  D    0 .ctors      
+      [19]  0x000208e0 0x00000000  SECT LOCL  D    0 .dtors      
+      [20]  0x000208e8 0x00000000  SECT LOCL  D    0 .eh_frame   
+      [21]  0x000208ec 0x00000000  SECT LOCL  D    0 .jcr        
+      [22]  0x000208f0 0x00000000  SECT LOCL  D    0 .data.rel.l 
+      [23]  0x000208f4 0x00000000  SECT LOCL  D    0 .bss        
+      [24]  0x00000000 0x00000000  SECT LOCL  D    0 .symtab     
+      [25]  0x00000000 0x00000000  SECT LOCL  D    0 .strtab     
+      [26]  0x00000000 0x00000000  SECT LOCL  D    0 .comment    
+      [27]  0x00000000 0x00000000  SECT LOCL  D    0 .stab.index 
+      [28]  0x00000000 0x00000000  SECT LOCL  D    0 .shstrtab   
+      [29]  0x00000000 0x00000000  SECT LOCL  D    0 .stab.index 
+      [30]  0x00020914 0x00000000  OBJT LOCL  D    0 .bss        _END_
+      [31]  0x00010000 0x00000000  OBJT LOCL  D    0 .interp     _START_
+      [32]  0x00000000 0x00000000  FILE LOCL  D    0 ABS         crti.s
+      [33]  0x00000000 0x00000000  FILE LOCL  D    0 ABS         values-Xa.c
+      [34]  0x00000000 0x00000000  FILE LOCL  D    0 ABS         crtstuff.c
+      [35]  0x0001055c 0x00000000  FUNC LOCL  D    0 .text       __do_global_dtors_aux
+      [36]  0x00010614 0x00000000  FUNC LOCL  D    0 .text       frame_dummy
+      [37]  0x00010608 0x00000000  FUNC LOCL  D    0 .text       call___do_global_dtors_aux
+      [38]  0x000208b8 0x00000000  OBJT LOCL  D    0 .data       force_to_data
+      [39]  0x000208d8 0x00000000  OBJT LOCL  D    0 .ctors      __CTOR_LIST__
+      [40]  0x000208e0 0x00000000  OBJT LOCL  D    0 .dtors      __DTOR_LIST__
+      [41]  0x000208e8 0x00000000  OBJT LOCL  D    0 .eh_frame   __EH_FRAME_BEGIN__
+      [42]  0x00010698 0x00000000  FUNC LOCL  D    0 .text       call_frame_dummy
+      [43]  0x000208f8 0x00000018  OBJT LOCL  D    0 .bss        object.2
+      [44]  0x000208f4 0x00000001  OBJT LOCL  D    0 .bss        completed.1
+      [45]  0x000208f0 0x00000000  OBJT LOCL  D    0 .data.rel.l p.0
+      [46]  0x000208ec 0x00000000  OBJT LOCL  D    0 .jcr        __JCR_LIST__
+      [47]  0x00000000 0x00000000  FILE LOCL  D    0 ABS         simple.c
+      [48]  0x00000000 0x00000000  FILE LOCL  D    0 ABS         crtstuff.c
+      [49]  0x000208e4 0x00000000  OBJT LOCL  D    0 .dtors      __DTOR_END__
+      [50]  0x000106c0 0x00000000  FUNC LOCL  D    0 .text       __do_global_ctors_aux
+      [51]  0x0001070c 0x00000000  FUNC LOCL  D    0 .text       call___do_global_ctors_aux
+      [52]  0x000208dc 0x00000000  OBJT LOCL  D    0 .ctors      __CTOR_END__
+      [53]  0x000208d4 0x00000000  OBJT LOCL  D    0 .data       force_to_data
+      [54]  0x000208ec 0x00000000  OBJT LOCL  D    0 .jcr        __JCR_END__
+      [55]  0x000208e8 0x00000000  OBJT LOCL  D    0 .eh_frame   __FRAME_END__
+      [56]  0x00000000 0x00000000  FILE LOCL  D    0 ABS         crtn.s
+      [57]  0x00000000 0x00000000  NOTY WEAK  D    0 UNDEF       _Jv_RegisterClasses
+      [58]  0x00020910 0x00000004  OBJT GLOB  D    0 .bss        _environ
+      [59]  0x0001074c 0x00000000  OBJT GLOB  D    0 .rodata     _etext
+      [60]  0x000208bc 0x00000000  OBJT GLOB  D    0 .data       __dso_handle
+      [61]  0x00020774 0x00000000  OBJT GLOB  D    0 .plt        _PROCEDURE_LINKAGE_TABLE_
+      [62]  0x000207a4 0x00000000  FUNC GLOB  D    0 UNDEF       atexit
+      [63]  0x00000000 0x00000000  NOTY WEAK  D    0 UNDEF       __register_frame_info
+      [64]  0x000207f0 0x00000000  OBJT GLOB  D    0 .dynamic    _DYNAMIC
+      [65]  0x00020914 0x00000000  OBJT GLOB  D    0 .bss        _end
+      [66]  0x00020910 0x00000004  OBJT WEAK  D    0 .bss        environ
+      [67]  0x0002074c 0x00000000  OBJT GLOB  D    0 .got        _GLOBAL_OFFSET_TABLE_
+      [68]  0x000208d0 0x00000004  OBJT GLOB  D    0 .data       intConstant
+      [69]  0x000207b0 0x00000000  FUNC GLOB  D    0 UNDEF       exit
+      [70]  0x000208f4 0x00000000  OBJT GLOB  D    0 .data.rel.l _edata
+      [71]  0x000207bc 0x00000000  FUNC GLOB  D    0 UNDEF       _exit
+      [72]  0x000208c0 0x00000001  OBJT GLOB  D    0 .data       charLit
+      [73]  0x00010718 0x0000001c  FUNC GLOB  D    0 .init       _init
+      [74]  0x000208c8 0x00000008  OBJT GLOB  D    0 .data       floatConstant
+      [75]  0x00010734 0x00000014  FUNC GLOB  D    0 .fini       _fini
+      [76]  0x000104e0 0x00000074  FUNC GLOB  D    0 .text       _start
+      [77]  0x00000000 0x00000000  NOTY WEAK  D    0 UNDEF       __deregister_frame_info
+      [78]  0x00010748 0x00000004  OBJT GLOB  D    0 .rodata     _lib_version
+      [79]  0x000106a4 0x00000014  FUNC GLOB  D    0 .text       main

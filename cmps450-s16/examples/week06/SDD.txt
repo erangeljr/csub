@@ -1,0 +1,24 @@
+   SDD for Type Checking 
+
+   Production Rule       Semantic Rule
+   ================      ==================
+   E -> E_1 + T          E_1.type == T.type  // semantic constraint 
+   E -> T                E.type = T.type
+   T -> R                T.type = R 
+   T -> W                T.type = W
+   R -> num.num          // defined in lexer          
+   W -> num              // defined in lexer  
+   num -> [0..9]+        // defined in lexer
+
+  Example. 5 + 3 + 2. Annotated Syntax Tree and Parse Tree.  
+
+             E.type==T.type? YES                      E
+            /           |    \                      / | \
+   E.type==T.type? YES  +     T.type=W            E   +  T
+       /   |   \                |               / | \    |
+  E.type=W +   T.type=W         W              E  +  T   W
+     |         |                             /       |
+     T         W                            T        W
+     |                                      |
+     W                                      W      
+
