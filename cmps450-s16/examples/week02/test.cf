@@ -1,0 +1,9 @@
+{ a sample cflat program with 28 lexemes }
+   read x;
+   if 34 < x then
+   result := result * 7;
+   repeat
+     result := result * x;
+   until x = 0;
+   write result
+   end
