@@ -1,0 +1,10 @@
+/* file: 75.cf generates code for declaration and parameter lists by storing 
+   the size and address for globals as an offset in the symbol table */
+
+float f; 
+int i; 
+char c;
+int foo ( int arg1, float arg2 )
+{
+    return 0;
+}

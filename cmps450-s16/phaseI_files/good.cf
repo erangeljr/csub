@@ -1,0 +1,29 @@
+
+/* phase I test - one or more valid examples of all token types in c-flat  */
+
+/* 7 keywords */
+if else int float char return while 
+
+/* 14 operators */
++ - * / % == !=  > >= < <= =  +=  -= 
+
+/* 8 punctuators */
+;  ,  (  ) [ ]  { }
+
+/* 2 integers */
+34 -5  
+
+/* 4 floating point numbers */
+4.5  -3e+3  25.  3.e-5
+
+/* 2 character constant */
+'\n'  '*'  
+
+/* 4 identifiers  */
+myNum 
+i_ 
+i9 
+i9_
+ 
+/* 4 C strings - zero or more printable chars where " must be escaped */
+" *"  "hi there"  "\""  ""

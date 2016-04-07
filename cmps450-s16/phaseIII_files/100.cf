@@ -1,0 +1,16 @@
+/* file: 100.cf generates intermediate code for function calls */
+
+int i = 4;    
+
+int main( int j ) 
+{
+    foo(i); 
+    return i; 
+}
+
+
+int foo(int i)
+{
+  i = i+100;
+  return i;
+}

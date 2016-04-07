@@ -1,0 +1,14 @@
+/* 70.cf test syntax for declarations, if-else and return expressions */
+
+float f;
+int i = 7;
+
+int foo ( ) 
+{ 
+    if (i == 5) 
+       { f = 4.5 + 8 * 2; }
+    else 
+       { f; }
+
+    return 7 + 10;
+}  

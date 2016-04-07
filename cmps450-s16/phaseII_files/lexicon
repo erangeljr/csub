@@ -1,0 +1,57 @@
+****************************
+* Cflat Lexical Structure  *
+****************************
+
+TokenType   Lexemes
+---------   ----------------------------------------------------------------- 
+Comments    C-style comments  (see definition below)
+
+Keyword     int, char, float, if, else, return, while
+
+Punctuator  [  ]  (  )  {  }  ;  , 
+
+Operator    +  -  *  /  %  ==  !=   >  >=  <  <=  =   ++  --  += -=
+
+FloatConst  C-style floating point number  (see definition below)
+                  
+IntConst    (+|-)integer
+ 
+CharConst   C-style character literals
+            Your lexer should accept constants like this:
+            'a'   '\n'   '\t'   '%'  (the null character '' is invalid)
+
+StringConst C-style string literals (see defintion below)
+
+Identifier  C-style identifiers 
+
+
+------------------------------------------------------------------------------
+DEFINITIONS
+------------------------------------------------------------------------------
+
+C floating point:  "an integer part, a decimal point, a fraction part, an [eE],
+                   and an optionally signed  integer exponent. The integer and
+                   fraction parts both are one or more digits. Either the 
+                   integer part or the fraction part (but not both) can be 
+                   missing. Either the decimal point or the [eE] and the 
+                   exponent (not both) can be missing. " (C manual Ch. 3)
+
+C-style string literals:
+    A string literal is a sequence of characters surrounded by double quotation
+    marks, as in "...". A string literal has type array of char and is 
+    initialized with the given characters. The compiler places a null byte 
+    (\0) at the end of each string literal so that programs that scan the 
+    string literal can find its end. A double-quotation character (") in a 
+    string literal must be preceded by a backslash (\). In addition, the same 
+    escapes as those described for character constants can be used.  
+
+   Your lexer should accept these strings as valid: 
+            "*"  
+            "hi there"  
+       "This is a string that has a \" inside it" 
+             "\""  
+             ""
+C-style identifiers:
+    An identifier is a sequence of letters, digits, and underscores (_). The 
+    first character cannot be a digit. Uppercase and lowercase letters are 
+    distinct. Name length is unlimited.   

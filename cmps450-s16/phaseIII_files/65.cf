@@ -1,0 +1,17 @@
+/* file: 65.cf   - no syntax errors but finds two scope and two type errors*/
+int x;
+float f;
+int i = 7;
+int i;   /* scope error - identifier declared twice */
+int foo ( int j, float x )  
+{ 
+    w = 8;  /* scope error - reference to identifier not declared */
+    i = (5 + i) * (7 + 2); 
+    if (i == 5) 
+    { f = 4.5 + 8 * 2; }  /* type error */
+    else 
+    { x = 7.9; }
+    while ( j < 4 ) 
+    { i=f; }  /* type error */
+    return j;
+}  
