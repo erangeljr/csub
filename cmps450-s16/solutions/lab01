@@ -1,0 +1,25 @@
+#!/usr/bin/perl
+
+if (@ARGV eq 0) {
+  print "\nUsage: ./lab01 <filename>\n";
+  exit;
+}
+
+#  open a file for reading  
+$filename = $ARGV[0];
+if (!open(inf, $filename)) { 
+   print "unable to open input file\n";
+   exit;
+}
+
+while (<inf>)
+{
+  $line= $_;
+
+  # display lines that match regexp 
+  if ($line =~ /^.*o+ ?[dnrw].*[t][^xyz]+$/ ) {
+       print "$line";
+  }
+  
+}
+close(inf); 
