@@ -1,0 +1,26 @@
+%{
+ /*  lab04.l
+  *  demonstrate the structure of a lex generated scanner based on a
+  *  very simple language
+  *
+  *   $ lex hw04a.l
+  *   $ gcc -o lab04a -7 -d -T lex.yy.c -lfl     
+  *   $ ./lab04a
+  *      Enter valid regex following by Enter. Hit Ctrl-D to end.
+  */
+%}
+
+
+%%
+\n         { ; }
+a          { printf("valid lexeme: %s\n", yytext); } 
+[^a]       { printf("invalid char: %s\n", yytext); } 
+%%
+
+int main()
+{
+   /* scan until EOF */
+   printf("Enter regex to match /a+/ followed by Enter. Hit Ctrl-D to end.\n");
+   while( yylex() != 0 );
+   return 0;
+}
