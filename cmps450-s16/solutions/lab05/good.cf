@@ -1,0 +1,6 @@
+// this code passes all semantic constraints of the parser 
+{ float w; 
+  int i;  
+  i = 2 + 4; 
+  float x = 2.4 + 7.9;  
+}
