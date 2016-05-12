@@ -1,0 +1,8 @@
+{ 
+  int myInt;
+  float myFloat;
+  myFloat = 4;          //  type error lineno 4
+  myInt  = 5 + 5.5 + 7;  //  type error lineno 5
+  myFloat  = 2 + 3;     // type error  lineno 6
+  myFloat = myInt;      // type error  lineno 7
+}
