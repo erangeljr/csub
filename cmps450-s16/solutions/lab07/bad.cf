@@ -1,0 +1,6 @@
+// there are 2 scope errors 
+int iname;
+float iname;
+{ 
+  fname = 4;
+}
