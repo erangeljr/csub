@@ -1,0 +1,6 @@
+int main()
+{
+
+ int 5a=5;
+ return 0;
+}

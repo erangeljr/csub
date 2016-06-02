@@ -1,0 +1,185 @@
+/* scan.l                                                           
+ * CMPS 450 - Phase I scanner   SOLUTION                        
+ * $ make
+ * $ cat good.cf | ./scan
+ */
+
+%option yylineno
+
+%{
+#define DEBUG  1 
+#define TRUE 1 
+#define FALSE 0 
+#define MAXTOKENLEN 40 
+#define MAX_MSG_LEN 50 
+
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+#include "y.tab.h" 
+
+/*
+  ENDFILE, ERROR, 
+  WHILE, IF, THEN, ELSE, RETURN, BREAK, GOTO, READ, WRITE, INT,FLOAT,CHAR,VOID,
+
+  ASSIGN, EQ, LT, LE, GE, GT, NE, AND, OR, PLUS, MINUS, TIMES, OVER, MOD,
+  PLUSEQ, MINUSEQ,
+
+  COMMA, LPAREN, RPAREN,SEMI, LBRACE, RBRACE, LBRACK, RBRACK, 
+  FCONST, CCONST, ICONST, SCONST, ID 
+*/
+
+ 
+int col_cnt = 0;
+int line_cnt = 0;
+
+%}
+
+comment     \/\*([^*]|\n)*\*\/
+digit       [0-9]
+id_char     [A-Z_a-z]
+digits      {digit}+
+exponent    (e[+-]{digits})?
+integer     [+-]?{digits}
+efloat      {integer}\.?e[+-]{digits}
+dotfloat    {integer}\.{digit}*
+float       ({efloat}|{dotfloat})
+newline     \n
+strchar     ([ ~]|\\n)
+identifier  {id_char}([0-9]|{id_char})*
+whitespace  [ \t]+
+chrliteral  '([!-}]|\\n)'
+strliteral  \"[^"]*{escquote}*\"
+nullstring  \"\"
+escquote    [^"]*\\\"[^"]*
+%%
+
+"char"          { return CHAR;}
+"break"         {  return BREAK; }
+"goto"          { return GOTO;}
+"if"            { type = Keyword; keywd_cnt++; return IF;}
+"int"           { type = Keyword; keywd_cnt++; return INT;}
+"float"         { type = Keyword; keywd_cnt++; return FLOAT;}
+"then"          { type = Keyword; keywd_cnt++; return THEN;}
+"else"          { type = Keyword; keywd_cnt++; return ELSE;}
+"while"         { type = Keyword; keywd_cnt++; return WHILE;}
+"return"        { type = Keyword; keywd_cnt++; return RETURN;}
+"read"          { type = Keyword; keywd_cnt++; return READ;}
+"write"         { type = Keyword; keywd_cnt++; return WRITE;}
+"void"          { type = Keyword; keywd_cnt++; return VOID;}
+"break"         { type = Keyword; keywd_cnt++; return BREAK;}
+
+"="             { return ASSIGN;}
+"!="            { type = Operator; 
+                  op_cnt++;
+                  return NE;}
+"=="            { type = Operator; 
+                  op_cnt++;
+                  return EQ;}
+"<"             { type = Operator; 
+                  op_cnt++;
+                  return LT;}
+"<="            { type = Operator; 
+                  op_cnt++;
+                  return LE;}
+">"             { type = Operator; 
+                  op_cnt++;
+                  return GT;}
+">="            { type = Operator; 
+                  op_cnt++;
+                  return GE;}
+"&&"            { type = Operator; 
+                  op_cnt++;
+                  return AND;}
+"||"            { type = Operator; 
+                  op_cnt++;
+                  return OR;}
+"+"             { type = Operator; 
+                  op_cnt++;
+                  return PLUS;}
+"-"             { type = Operator; 
+                  op_cnt++;
+                  return MINUS;}
+"*"             { type = Operator; 
+                  op_cnt++;
+                  return TIMES;}
+"/"             { type = Operator; 
+                  op_cnt++;
+                  return OVER;}
+"%"             { type = Operator; 
+                  op_cnt++;
+                  return MOD;}
+"+="            { type = Operator; 
+                  op_cnt++;
+                  return PLUSEQ;}
+"-="            { type = Operator; 
+                  op_cnt++;
+                  return MINUSEQ;}
+"{"             { type = Punctuator; 
+                  punct_cnt++; 
+                  return LBRACE;}
+"}"             { type = Punctuator; 
+                  punct_cnt++; 
+                  return RBRACE;}
+"["             { type = Punctuator; 
+                  punct_cnt++; 
+                  return LBRACK;}
+"]"             { type = Punctuator; 
+                  punct_cnt++; 
+                  return RBRACK;}
+"("             { type = Punctuator; 
+                  punct_cnt++; 
+                  return LPAREN;}
+")"             { type = Punctuator; 
+                  punct_cnt++; 
+                  return RPAREN;}
+";"             { type = Punctuator; 
+                  punct_cnt++; 
+                  return SEMI;}
+","             { type = Punctuator; 
+                  punct_cnt++; 
+                  return COMMA;}
+
+{float}         { return FCONST; }
+
+{integer}[ ]    { return ICONST; }
+
+
+{chrliteral}    { type = charConst; 
+                  //insert(yytext,yyleng, yylineno );
+                  cconst_cnt++;
+                  return CCONST;
+                }
+
+{nullstring}    { type = strConst; 
+                  //insert(yytext,yyleng, yylineno );
+                  sconst_cnt++;
+                  return SCONST;
+                }
+
+{strliteral}    { type = strConst; 
+                  //insert(yytext,yyleng, yylineno );
+                  sconst_cnt++;
+                  return SCONST;
+                }
+
+{identifier}    { insert(yytext,yyleng, yylineno );
+                  return ID;
+                }
+{newline}       { col_cnt = 1; }
+
+{whitespace}    { col_cnt+=yyleng; }
+
+{comment}       { col_cnt = 0; }
+
+"//"            { /* handle C++ style comments */
+                    char c;
+                    do { c = input();
+                    } while (c != '\n');
+                    line_cnt++;
+                }
+
+.               { return ERROR; }
+
+%%
+

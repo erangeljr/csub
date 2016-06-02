@@ -1,0 +1,56 @@
+  
+                  ********************************              
+                  * BNF Specification for cflat  *
+                  ********************************
+  
+  The cflat lexicon is defined in phaseI. Cflat syntax is defined here. Cflat
+  differs from C in these ways:
+  
+    o return statements are required in functions 
+    o if-else constructs must be enclosed in {}
+    o declaration statements are illegal inside blocks
+
+ NOTATION. 
+ ,---------------------------------------------------------------------,
+ | o e denotes epsilon                                                 |
+ | o | is a metacharacter that denotes or                              |
+ | o ::= is the production operator                                    |    
+ | o non-terminals are enclosed in angle brackets                      |
+ | o all other literal chars or strings are terminals; e.g.,           |
+ |                                                                     |
+ | Lexeme   TokenID                                                    |
+ | ,        COMMA                                                      |
+ | )        RPAREN                                                     |
+ | (        LPAREN                                                     |
+ | {        LCURLY                                                     |
+ | }        RCURLY                                                     |
+ | if       KEYWORD                                                    |
+ | int      KEYWORD                                                    |
+ | and so on...                                                        |
+ `---------------------------------------------------------------------'
+ 
+ NOTE : THIS BNF IS A SUGGESTION - YOU CAN MAKE YOUR OWN.
+ NOTE: Bison cannot accept '-' dashes in nonterminals
+ 
+  <program> ::= <decl_seq> <func>
+  <func> ::= <type> <ident> (<param_list>) {<stmt_seq> return <expr>;}
+  <param_seq> ::= <param_seq>, <param> | <param> | e
+  <param> ::= <type> <ident>    
+  <decl_seq> ::=  <decl_seq> <decl> | e
+  <block> ::= {<stmt_seq>}
+  <stmt_seq> ::= <stmt_seq> <stmt>  | <stmt>  | e
+  <stmt> ::= <assignment>  | while <cond><block> 
+              | if <cond> <block> else <block> | ;
+  <decl> ::= <type> <assignment>
+  <type> ::= int | float | char 
+  <assignment> ::= <ident>; | <ident> = <expr> ;
+  <expr> ::= <expr> <addop> <term> | <term>
+  <term> ::= <term> * <factor>  | <factor>
+  <factor> ::= (<expr>) | <ident> | <number> 
+  <cond> ::= (<expr>)   | (<bool>)
+  <bool> ::= <ident> <relop> <factor>
+  <relop> ::= == | < | > | <= | >=
+  <addop> ::= + | -
+  <number> ::= FLOAT | INTEGER
+  
+  

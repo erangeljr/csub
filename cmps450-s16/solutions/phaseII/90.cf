@@ -1,0 +1,14 @@
+/* 90.cf - finds TWO type errors in paramater list - name mangling required 
+   spits out only one error per line */
+
+int x;
+float num; 
+
+int foo ( int num, float y ) 
+{ 
+    num = 7;          /* OK */
+    num = y;          /* line 10 type error */
+    y = 4.5 + 8 * 2;  /* line 11 type error */
+
+    return 0;  
+}  

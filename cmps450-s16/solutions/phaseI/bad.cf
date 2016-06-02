@@ -1,0 +1,6 @@
+/*  comments                  /* nested comments */ */
+9999999999999999999999999999  /* this is overflow but scanner accepts it */
+$name                         /* illegal symbol in the language */
+'h                            /* char constant missing end single quote */ 
+4num                          /* grabbed as two tokens-let parser sort it out*/
+" hi* there                   /* missing end double quote */

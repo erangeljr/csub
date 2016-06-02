@@ -1,0 +1,14 @@
+/* 75.cf  test syntax for parameter lists */
+
+float f;
+int i = 7;
+
+int foo ( int x, float y ) 
+{ 
+    i;
+    while ( a < 7 ) 
+    { 
+       i = 5 + i * (7 / 2);
+    }
+    return i;
+}  

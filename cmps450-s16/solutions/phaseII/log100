@@ -1,0 +1,25 @@
+Type err: assign_stmt, line 7
+Type err: assign_stmt, line 8
+Type err: assign_stmt, line 9
+Type err: return value, line 10
+
+/* 100.cf - finds type errors for char; enforces strong typing on return  */
+int   x =  5;    /* OK */ 
+float y = 5.5;    /* OK */
+char c = 'a';    /* OK */
+int foo ( int y, float x ) 
+{
+    x = 5;        /* line 7 type error */
+    y = 5.5;      /* line 8 type error */
+    c = 7;        /* line 9 type error */
+    return 1.2;   /* line 10 type error */
+}  
+------------ ------ ------------
+Name         Type   Line Numbers
+------------ ------ -------------
+foo0          1      5 
+c0            3      4    9 
+x0            1      2 
+x1            2      5    7 
+y0            2      3 
+y1            1      5    8 
