@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Eddie Rangel @ CSUB</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" type="text/css" href="http://cs.csub.edu/~erangel/css/bootstrap.min.css">
+        
+	</head>
+	<body>
+		<div id="header">
+			<span style="font-size:2.0em; font-weight:bold;">
+				CMPS 2244: Computer Architecture I: Assembly Language Fall 2016
+			</span>
+		</div>
+		<!-- DIV LEFT -->
+		<div id="wrapper">
+
+			<div id="header2">
+				<span style="font-size:14px">
+					<a href="/~gordon/w2016sched.html"
+						target="_blank">mySchedule</a> |
+					<a href="/~gordon/">myPage</a> |
+					<a href="http://www.csub.edu" target="_blank">CSUB</a> |
+					<a href="http://www.cs.csubak.edu" target="_blank">
+						CS Dept</a> |
+					<a href="http://www.csub.edu/academics/calendars/index.html"
+						target="_blank">AcademicCalendar</a> |
+					<a href="http://www.timeanddate.com/calendar/"
+						target="_blank">2016calendar</a> 
+				</span>
+			</div>
+<!--
+<div id="announce">
+	Course prep material will be posted soon..
+</div>
+-->
+
+<div id="announce2">
+	CMPS 224 Assembly Language Programming (5 units)<br>
+	Introduction to machine architecture and program structure;
+	code, data, and stack segments; programming with an assembly
+	language. Each week lecture meets for 200 minutes and lab
+	meets for 150 minutes. Prerequisite: CMPS 221
+</div>
+
+			<div style="width:100%; color:#886655;">
+				<span style="color:#bb2222;">
+				</span>
+			</div>
+			<div id="left">
+				<div id="lefttop">
+					<b class="ltop">
+						<b class="l1"></b>
+						<b class="l2"></b>
+						<b class="l3"></b>
+					</b>
+					<div style="padding-left:2px;">
+						<h3> &nbsp; Links</h3>
+						<p>
+						- <a href='syllabus.html'>Syllabus</a><br>
+						- <a href="#">Scores</a><br>
+						</p>
+					</div>
+					<b class="lbottom">
+						<b class="l3"></b>
+						<b class="l2"></b>
+						<b class="l1"></b>
+					</b>
+				</div>
+				<div id="leftmid">
+					&nbsp;
+				</div>
+				<div id="lefttop">
+					<b class="ltop">
+						<b class="l1"></b>
+						<b class="l2"></b>
+						<b class="l3"></b>
+					</b>
+					<div style="padding-left:2px;">
+						<h3> &nbsp; MIPS</h3>
+						<p>
+						- <a href="./doc/mips-quick-guide.txt"
+							target="_blank">
+							Quick guide</a><br>
+						- <a href="./doc/mips_list.html"
+							target="_blank">
+							Instructions</a><br>
+						- <a href="./doc/mips32-instruc-set.pdf"
+							target="_blank">
+							32 ISA</a><br>
+						- <a href="./doc/mips_reference_data.pdf"
+							target="_blank">
+							Refcard</a><br>
+						- <a href="./doc/overview.html"
+							target="_blank">
+							Overview</a><br>
+						- <a href="http://courses.missouristate.edu/
+							KenVollmar/MARS/"
+							target="_blank">
+							MARS</a>
+						</p>
+						<p>
+						Textbooks<br>
+						- <a href="./doc/HP_AppenA.pdf"
+							target="_blank">
+							Appendix A</a><br>
+						- <a href="./doc/britton-mips-text.pdf"
+							target="_blank">
+							Britton</a><br>
+						- <a href="./doc/harvard-mips-text.pdf"
+							target="_blank">
+							Harvard, Ellard</a><br> 
+						- <a href="./doc/assemblylanguageprogdoc.pdf"
+							target="_blank">
+							SGI	Advanced</a><br> 
+						</p>
+					</div>
+					<b class="lbottom">
+						<b class="l3"></b>
+						<b class="l2"></b>
+						<b class="l1"></b>
+					</b>
+				</div>
+				<div id="leftmid">
+					&nbsp;
+				</div>
+				<div id="lefttop">
+					<b class="ltop">
+						<b class="l1"></b>
+						<b class="l2"></b>
+						<b class="l3"></b>
+					</b>
+					<div style="padding-left:2px;">
+						<h3> &nbsp; x86</h3>
+						<p>
+						- <a href="http://www.cs.virginia.edu/~evans/cs216/
+							guides/x86.html"
+							target="_blank">
+							x86 guide</a><br>
+						- <a href="http://www.nasm.us/doc/nasmdo11.html"
+							target="_blank">
+							nasm manual</a><br>
+			    		- <a href='./examples/week9/x86-64-notes'
+							target="_blank">
+							64-bit overview</a><br> 
+						- <a href="http://www.nasm.us/doc/nasmdocb.html"
+							target="_blank">
+							nasm x86 ISA</a><br>
+						- <a href='http://www.cs.csub.edu/~donna/cs224/doc/
+							inline-quick-guide.txt'
+							target="_blank">
+							Inline guide</a><br> 
+						- <a href='http://www.codeproject.com/Articles/15971/
+							Using-Inline-Assembly-in-C-C'
+							target="_blank">
+							Inline tutorial</a><br> 
+						</p>
+					</div>
+					<b class="lbottom">
+						<b class="l3"></b>
+						<b class="l2"></b>
+						<b class="l1"></b>
+					</b>
+				</div>
+				<div id="leftmid">
+					&nbsp;
+				</div>
+				<div id="lefttop">
+					<b class="ltop">
+						<b class="l1"></b>
+						<b class="l2"></b>
+						<b class="l3"></b>
+					</b>
+					<div style="padding-left:2px;">
+						<h3> &nbsp; misc</h3>
+						<p>
+						- <a href="./examples/"
+							target="_blank">
+							Sample code</a><br>
+						- <a href="./doc/ascii-chart.txt"
+							target="_blank">
+							ASCII chart</a><br>
+						<!--
+						- <a href="./resources.php"
+							target="_blank">
+							MIPS + x86</a><br>
+						-->
+						- <a href='./doc'
+							target="_blank">
+							docs</a> 
+						</p>
+					</div>
+					<b class="lbottom">
+						<b class="l3"></b>
+						<b class="l2"></b>
+						<b class="l1"></b>
+					</b>
+				</div>
+			</div>
+			<br>
+			<!-- DIV CENTER ---------------------------------->
+			<div id="main">
+				<table cellspacing="2" cellpadding="2">
+					<tr>
+						<th id="h0">Wk</th>
+						<th id="h0">Assignments</th>
+						<th id="h0">Topics</th>
+					</tr>
+					<tr>
+						<td id="td0">1</td>
+						<td id="td1">
+						<a href='a1.html' target="_blank">homework1</a><br> 
+						<a href='lab1.html' target="_blank">lab1</a>
+						</td>
+						<td id="td1">
+						binary, octal, and hexadecimal operations<br>
+						</td>
+					</tr>
+					<tr>
+						<td id="td0">2</td>
+						<td id="td1">
+						<a href='a2.html' target="_blank">homework2</a><br>
+						<a href='lab2.html' target="_blank">lab2</a>
+						</td>
+						<td id="td1">
+						arithmetic, shift &amp; rotate operations<br>
+						</td>
+					</tr>
+					<tr>
+						<td id="td0">3</td>
+						<td id="td1">
+						<a href='a3.html' target="_blank">homework3</a><br>
+						<a href='lab3.html' target="_blank">lab3</a>
+						</td>
+						<td id="td1">
+						subroutine linkage &amp; call frames<br>
+						</td>
+					</tr>
+					<tr>
+						<td id="td0">4</td>
+						<td id="td1">
+						<a href='a4.html' target="_blank">homework4</a><br>
+						<a href='lab4.html' target="_blank">lab4</a>
+						</td>
+						<td id="td1">
+						instruction encoding, jumps &amp; branches<br>
+						</td>
+					</tr>
+					<tr>
+						<td id="td0">5</td>
+						<td id="td1">
+						<a href='a5.html' target="_blank">homework5</a><br>
+						<a href='lab5.html' target="_blank">lab5</a>
+						</td>
+						<td id="td1">
+						optimizing MIPS code<br>
+						</td>
+					</tr>
+					<tr>
+						<td id="td0">6</td>
+						<td id="td1">
+						<a href='a6.html' target="_blank">homework6</a><br>
+						<a href='lab6.html' target="_blank">lab6</a>
+						</td>
+						<td id="td1">
+						arithmetic operations &amp; overflow<br>
+						</td>
+					</tr>
+					<tr>
+						<td id="td0">7</td>
+						<td id="td1">
+						<a href='a7.html' target="_blank">homework7</a><br>
+						<a href='lab7.html' target="_blank">lab7</a>
+						</td>
+						<td id="td1">
+						program flow &amp; delay slots<br>
+						</td>
+					</tr>
+					<tr>
+						<td id="td0">8</td>
+						<td id="td1">
+						<a href='a8.html' target="_blank">homework8</a><br>
+						<a href='lab8.html' target="_blank">lab8</a>
+						</td>
+						<td id="td1">
+						introduction to x86<br>
+						</td>
+					</tr>
+					<tr>
+						<td id="td0">9</td>
+						<td id="td1">
+						<a href='a9.html' target="_blank">homework9</a><br>
+						<a href='lab9.html' target="_blank">lab9</a>
+						</td>
+						<td id="td1">
+						optimizing x86-64 code<br>
+						</td>
+					</tr>
+					<tr>
+						<td id="td0">10</td>
+						<td id="td1">
+						<a href='#' target="_blank">homework10</a><br>
+						<a href='lab10.html' target="_blank">lab10</a>
+						</td>
+						<td id="td1">
+						inlining x86 in C<br>
+						</td>
+					</tr>
+					<tr>
+						<td id="td0">11</td>
+						<td colspan="3" id="td1">
+							Monday Mar 14 is last day of class.<br>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" id="final">Final Exam:
+							Date/time not yet determined.
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="footer">
+				Gordon Griesel | gordon at cs.csubak.edu | Science-III 337 
+			</div>
+		</div>
+		<!-- 
+		DIV RIGHT
+		-------------------------->
+		<div id="right">
+			<div style="height:10px;"></div>
+			<div id="rightsub">
+				<b class="atop">
+					<b class="a1"></b>
+					<b class="a2"></b>
+					<b class="a3"></b>
+				</b>
+				<div id="rightInner">
+					<span id="rightHeading">LAB: Thursdays 10:00am</span>
+					<p>
+					Due prior to next lab.<br>
+					</p>
+				</div>
+				<b class="abottom">
+					<b class="a3"></b>
+					<b class="a2"></b>
+					<b class="a1"></b>
+				</b>
+			</div>
+			<div id="rightsub">
+				<b class="atop">
+					<b class="a1"></b>
+					<b class="a2"></b>
+					<b class="a3"></b>
+				</b>
+				<div id="rightInner">
+					<span id="rightHeading">HOMEWORK</span>
+					<p>
+					<a href="homework.html">Homework format</a>.
+					</p>
+					<p>
+					Due Fridays just before quiz.
+					</p>
+				</div>
+				<b class="abottom">
+					<b class="a3"></b>
+					<b class="a2"></b>
+					<b class="a1"></b>
+				</b>
+			</div>
+			<div id="rightsub">
+				<b class="atop">
+					<b class="a1"></b>
+					<b class="a2"></b>
+					<b class="a3"></b>
+				</b>
+				<div id="rightInner">
+					<span id="rightHeading">Quizzes</span>
+					<p>
+					Each Friday at 11:30.
+					</p>
+				</div>
+				<b class="abottom">
+					<b class="a3"></b>
+					<b class="a2"></b>
+					<b class="a1"></b>
+				</b>
+			</div>
+			<div id="rightsub">
+				<b class="atop">
+					<b class="a1"></b>
+					<b class="a2"></b>
+					<b class="a3"></b>
+				</b>
+				<div id="rightInner">
+					<span id="rightHeading">Project</span>
+					<p>
+					A final project will be completed<br>
+					by each student.
+					</p>
+				</div>
+				<b class="abottom">
+					<b class="a3"></b>
+					<b class="a2"></b>
+					<b class="a1"></b>
+				</b>
+			</div>
+		</div>
+	</body>
+</html>
+
