@@ -1,0 +1,39 @@
+
+Your 224 directory on the sleipnir server must be setup correctly.
+The owner of your 224 directory must be "faculty".
+If it is not, then no work will be accepted from your account.
+
+Check the owner of your directory:
+
+1. At your terminal, enter the following commands
+
+   $ cd
+   $ ls -al
+
+   You will se a detailed listing of your server directories.
+
+2. Look at the entry for your 224 directory.
+
+   The owner must be faculty.
+   Most or all of your other entries will have owner as student.
+
+3. If owner is not faculty...
+   You must do the following steps:
+
+   a. Rename the 224 directory to something like x224.
+      $ mv 224 x224
+
+   b. Run the script to properly create this directory.
+      $ cd
+      $ /home/stu/gordon/p/224/build_dirs.sh
+
+   c. Check the owner again and make sure it worked.
+
+   d. Copy any of your work from x224 to 224 directory.
+      This is an important step.
+      If you do not know how to copy files,
+          then please go to the tutoring center for some help.
+      When complete, you can remove the x224 directory.
+
+Contact your instructor with questions or problems.
+

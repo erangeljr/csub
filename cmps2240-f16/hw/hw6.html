@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<!-- <link rel="stylesheet" href="./cssReset.css"> -->
+	<style>
+		body { margin-left: 20px; }
+		h2 {
+			font-family:'Arial',sans-serif; font-size:1.6em; color:#999;
+			padding:0px; margin:0px;
+		}
+		h3 {
+			font-family:'Arial',sans-serif; font-size:1.2em;
+			color:#114;
+			margin:0px; padding-top:0px;
+		}
+	</style>
+	<body>
+		<p>
+		<h2>CMPS-224 Assembly Language Programming</h2>
+		</p>
+		<p>
+		<h3>Homework Set 6</h3>
+<pre>
+Rules from previous homework sets apply.
+
+1. What is the purpose of the branch delay slot?
+
+2. The following questions pertains to what can or cannot be placed in a
+   branch delay slot.
+       A. Give examples of instructions that can be placed in a
+          branch delay slot.
+       B. Give examples of instructions that CANNOT be placed in a
+          branch delay slot.
+       C. Describe what happens if a branch is placed in a branch delay slot.
+
+3. What value will be in $t1 after this loop executes 5 times?
+
+          move $t1, $zero
+    loop:
+          sll $zero, $zero, 0
+          j loop
+          addiu $t1, $t1, 1 
+
+4. In addition to branch instructions, load instructions are followed by a
+   delay slot. Why do you think this is?
+
+5. Given the following chunk of MIPS code, can any instruction be safely placed
+   in the branch delay slot? Or must you use a noop?
+
+      li $7, 10
+      move $8, $zero
+      slt $9, $8, $7
+      beqz $9, done
+      branch delay slot
+      ...more code ...
+      done:
+      li $v0, 10
+      syscall 
+
+</pre>
+</body>
+</html>
+

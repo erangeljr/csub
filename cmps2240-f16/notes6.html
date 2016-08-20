@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>
+</title>
+<style>
+	.box {
+		padding:4px;
+		width:600px;
+		border:2px solid #aaaaff;
+		background-color:#ddddff;
+		color:#110000;
+	}
+</style>
+</head>
+<body>
+		
+<h3>Refactoring</h3>
+<pre>
+Chapter 9 in textbook.
+
+<a href="https://sourcemaking.com/refactoring/when-should-you-refactor">When to refactor</a>.
+
+Maintainability
+Extensibility
+
+ . replace magic numbers with well-named variables or constants
+ . replace strings with named constants
+ . rename variables and functions
+ . simplify conditional expressions
+ . keep functions generally short
+   keep function names short?
+ . reduce level of indentations where possible
+ . remove duplication
+
+
+<a href="http://www.spatial.com/blog/pre-increment-vs-post-increment-which-faster-part-i">pre increment vs post increment</a>
+
+</pre>
+
+
+
+
+<h3>Software Metrics</h3>
+
+<pre>
+
+<b>Topics:</b>
+Metric is a quantitative measure.
+
+Software size is measured by:
+
+	LOC, lines of code
+	Number of classes
+	Number of bytes used by program
+
+<b>Feature Point Metrics:</b>
+FPs of an application are determined by counting the number and types of
+functions used in the applications.
+
+Categories
+	1. External Inputs
+	2. External Outputs
+	3. Queries
+	4. External Interfaces
+	5. Internal Files
+
+<b>Quality Metrics</b>
+ . Efficiency
+ . Integrity
+ . Reliability
+ . Usability
+ . Accuracy
+ . Maintainability
+ . Testability
+ . Flexibility
+ . Interface facility
+ . Reusability
+ . Transferability
+
+Even more...
+
+ . Usability
+ . Clarity
+ . Efficiency
+ . Reliability
+ . Modifiability
+ . Reusability
+ . Modularity
+ . Documentation
+ . Resilience
+ . Correctness
+ . Maintainability
+ . Portability
+ . Interoperability
+ . Understandability
+ . Integrity
+ . Validity
+ . Flexibility
+ . Generality
+ . Economy
+
+There are way too many to discuss, but look for a few of these on the
+homework quiz.
+
+
+<b>Project Estimation</b>
+If we can measure attributes of Software, then maybe we can use
+that information to estimate the time and cost of a project.
+
+    . Judgement
+    . Analogy
+    . Available Resources
+    . Software Price
+    . Parametric Modeling
+
+We will focus on Software Construction in the second half of the course.
+
+<b>Software Construction</b>
+What is <a href="http://en.wikipedia.org/wiki/Software_construction">Software Construction</a>?
+
+
+<h3>Correctness and Robustness</h3>
+Should a program be correct or robust?
+
+Is the Internet correct or robust?
+
+Example:
+Please enter a number between 1 and 10:
+
+You enter 15.
+
+What will a robust program do?
+What will a correct program do?
+
+<h3>Optimization</h3>
+What is optimization?
+How do you optimize a software program?
+
+
+<h3>Various Optimization Techniques...</h3>
+Iteration
+
+<div class="box">
+//summation of 1 to n
+int i, sum=0;
+for (i=1; i&le;n; i++) {
+	sum += i;
+}
+</div>
+<!-- n*(n+1)/2 -->
+Loop unrolling:
+
+<div class="box">
+for (i=0; i&lt;4; i++) {
+	sum += x;
+}
+//what are 2 ways to optimize this?
+</div>
+
+Array index to pointer addition:
+
+<div class="box">
+int array[MAX];
+...
+for (i=0; i&lt;N; i++)
+	sum += array[i];
+</div>
+<!--
+<div style="padding:4px;width:400px;background-color:#ccccff;color:#110000;">
+int array[MAX];
+int *ptr = array;
+...
+for (i=0; i&lt;N; i++) {
+	sum += *ptr;
+	ptr++;
+}
+</div>
+-->
+Chunk memory:
+
+<div class="box">
+char *mem = (char *)malloc(1000000);
+char *ptr = mem;
+...
+float *myFloat = (float *)my_malloc(ptr, sizeof(float) * 2000);
+ptr += sizeof(float) * 2000; 
+...
+//reset
+ptr = mem;
+...
+//one free statement
+free(mem);
+</div>
+
+Multiply and divide by 2:
+
+<div class="box">
+//multiply x by 2:
+int x = 12345;
+...
+</div>
+
+XOR toggle:
+
+<div class="box">
+//toggle x between 0 and 1
+int x = 0;
+...
+if (x == 0)
+	x = 1;
+else
+	x = 0;
+...
+<a href="http://en.wikipedia.org/wiki/%3F:">ternary</a>
+x = (x==0) ? 1 : 0;
+
+//with XOR?
+</div>
+
+Bitwise operators
+
+<div class="box">
+int i = x % 2;
+</div>
+
+<div class="box">
+int x = 25;
+int y = 32;
+
+//swap x and y
+int temp = x;
+x = y;
+y = temp;
+</div>
+
+Conditional iterating:
+
+<div class="box">
+for (i=0; i&lt;10000; i++) {
+	if (a==1)
+		do_this();
+	else if (a==2)
+		do_that();
+	else if (a==3)
+		do_it();
+	else
+		do_another();
+}
+
+//at least 2 ways to optimize
+</div>
+
+<a href="http://en.wikipedia.org/wiki/Loop_optimization">Loop optimization</a>
+
+
+
+
+</pre>
+</body>
+</html>
+

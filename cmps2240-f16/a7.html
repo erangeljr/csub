@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+
+<h3>CMPS 224 Homework #7 - Program Flow & Branch Delay Slots</h3>
+<p>
+<div class="notes" style="width:300px;height:110px">
+Read completely: <br/>
+<ul class="a">
+	<li><a href="http://www.ece.lsu.edu/ee3755/spim.pdf" target="_blank">
+		SPIM Manual</a></li>
+	<li><a href="http://chortle.ccsu.edu/AssemblyTutorial/Chapter-17/
+		ass17_1.html" target="_blank">MIPS Tutorial ch 17</a></li> 
+	<li><a href="http://chortle.ccsu.edu/AssemblyTutorial/Chapter-18/
+		ass18_1.html" target="_blank">MIPS Tutorial ch 18</a></li> 
+	<li><a href="./mips-bds-notes.html" target="_blank">
+		lecture notes</a></li>
+</ul>
+</div>
+</p>
+
+<div class="notes" style="width:640px;height:40px">
+ <i>ASSUME THE INSTRUCTION IN THE BRANCH OR LOAD 
+ DELAY SLOT IS EXECUTED IN ALL CODE BELOW. </i>
+</div>
+<br>	
+	
+
+
+1. What is the purpose of the branch delay slot?
+<input type="button"value="hint"onClick="xb[ 1]^=1; zzz('x1', (xb[ 1])?'':
+'To support MIPS pipelining. The goal in pipelining is to keep the processor \
+busy at all times. Since a branch causes a delay (the pipeline is delayed \
+until the processor determines whether to branch or not); during this delay \
+the instruction right after \
+the branch is fetched and executed. This instruction is \
+often a no-op but often actual work can be \
+done. The purpose is purely performance. The CPU wants to be busy at all \
+times.'
+);"><div id="x1"style="height:80px"></div><br>
+
+
+2. The jump instruction below loads the PC (program counter) with a 
+   32-bit address (all addresses are 32-bits) to an instruction.
+   32 bits. The j opcode takes 6 bits. The address is left with only 26 bits. 
+   How does MIPS transform a 26-bit address into a 32-bit address?
+<pre>
+        j target
+</pre> 
+<input type="button"value="hint"onClick="xb[ 2]^=1; zzz('x2', (xb[ 2])?'':
+'The 26-bit target address field is transformed into a 32-bit address \
+at run-time as the jump instruction is executed. Since instructions are \
+word aligned (multiples of 4) the low-order bits must be 00. The remaining \
+4 bits are the high-order bits already in the PC. This means that \
+code segments can be no larger than 2^28 words.'
+);"><div id="x2"></div><br>
+
+
+3.  What value will be in $8 after this loop executes 5 times? (MIPS 
+    initializes all	registers to zero when a program starts)
+<pre>
+            move  $8, $0
+      loop: 
+            sll   $0, $0, 0
+            j     loop 
+            addiu $8, $8, 1
+</pre>
+<input type="button"value="hint"onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+'5. The branch delay slot is loaded with the addiu instruction and is \
+executed while the processor waits on the address of the jump instruction to \
+be resolved.'
+);"><div id="x3"></div><br>
+
+
+4. The jump instruction is an unconditional branch. What happens 
+   if a jump is the only control statement in a loop as shown below?
+<pre>
+           loop: ..
+                 ..
+                 j loop
+</pre> 
+<input type="button"value="hint"onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+'An unconditional jump with no other control structure in the loop (such as \
+a conditional branch to exit) results in an infinite loop.'
+);"><div id="x4"></div><br>
+
+
+5. Explain why the control flow in these MIPS statements
+<pre>
+          bne  $5, $6, L1  
+          add  $7, $5, $6
+    L1:
+          sub  $7, $5, $6 
+          more code..
+</pre>
+    is not equivalent to this C if-else statement, assuming we replace
+    $5, $6, $7 with variable names a, b, c:
+<pre>
+          if (a == b)
+              c = a + b;
+          else
+              c = a - b;
+          more code..
+</pre> 
+<input type="button"value="hint"onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+'if ($u != $v) goto addr (after a delay of one machine cycle). \
+If ($u==$v) you continue with the next statement. This behavior is not the \
+same as an if-else statement in C. This is a one-way conditional statement \
+- you either take the branch or you keep executing the next instructions. \
+One-way branch is all you get in assembly. If you want \
+a two-way conditional (if-else) or n-way conditional (switch) you have to \
+simulate it yourself with 1-way conditional branches and unconditional \
+branches.'
+);"><div id="x5"style="height:100px"></div><br>
+
+
+6. Simulating a two-way branch (if-else) in assembly requires either two 
+   conditional branches (like the code below) or a conditional branch and a 
+   jump. In C-like languages the two branches of control always come together
+   at the first statement after the if-else statement. Is this required to be 
+   the case in assembly?
+<pre>
+        beq  $8,$0, L1
+        sltiu $8,$2,30
+        j L2
+   L1:  ... 
+        ...
+        ...     
+   L2:  ...
+        ...
+</pre> 
+<input type="button"value="hint"onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+'No. Since you are simulating a two-way branch yourself \
+you can jump all over the place in your code, which can be a big problem \
+for readability. Assembly is not structured by nature but you should strive \
+to make your code as structured as possible.'
+);"><div id="x6"></div><br>
+
+
+7. What is the purpose of this code? Write the equivalent algorithm in a C 
+   if-else statement. (Assume that 0x1000 points to the beginning of the
+   data segment.)
+<pre>
+main: 
+        lui   $10,0x1000     #  Init base register
+        lw    $8,0($10)      #  Load A
+        sll   $0,$0,0        #  load delay slot
+
+        srl   $9,$8,31       #  Shift sign bit to position 0
+        beq   $0,$9,done     #  sign bit == zero, done
+        sll   $0,$0,0        #  branch delay slot
+
+        subu  $8,$0,$8       #  negate A
+        sw    $8,0($10)      #  save it
+
+done:   sll   $0,$0,0        #  target of the branch
+
+        .data
+A:      .word   -1
+</pre>
+<input type="button"value="hint"onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+'if  (A is positive) break; else A = -(A); .'
+);"><div id="x7"></div><br>
+
+
+8. What are relational operators? Give examples. 
+<input type="button"value="hint"onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+'Relational operators compare two values and return true or false. \
+The operators are: <, <=, =, >, >= , !=; for example \
+5 <= 8 returns true; 7 >= 9 returns false; 3 = 3 returns true.'
+);"><div id="x8"></div><br>
+
+
+9.  Explain these two instructions, where s denotes a source register.
+<pre>
+       bltz   Rs, label 
+       bgez   Rs, label
+</pre>
+<input type="button"value="hint"onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+'bltz: Branch to label if the twos comp. integer in register s is < 0 ; \
+bgez : Branch to label if the twos comp. integer in register s is >= 0 \
+A branch delay slot follows both instructions.'
+);"><div id="x9"></div><br>
+
+
+10. Explain the meaning of this set instruction, where rd is a destination
+    register and rs and rt are source registers.
+<pre>
+        slt Rd, Rs, Rt
+</pre>
+<input type="button"value="hint"onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+'Please explain in your own words.'
+);"><div id="x10"></div><br>
+
+
+11. What is the difference between these instructions?
+<pre>
+        slt  Rd, Rs, Rt
+        sltu Rd, Rs, Rt
+</pre>
+<input type="button"value="hint"onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+'Look this up please then answer in your own words.'
+);"><div id="x11"></div><br>
+
+
+12. What is the value in $7 after this code executes?
+<pre>
+        li   $5, -25
+        li   $6, 25
+        slt  $7, $5, $6
+</pre>
+<input type="button"value="hint"onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+'1. This is a set on less than instruction. Since -25 < 25 $7 is set to 1.'
+);"><div id="x12"></div><br>
+
+
+13. What is the value in $7 after this code executes?
+<pre>
+        addiu    $5,$0,-25    # treat immediate as a 16-bit unsigned int
+        addiu    $6,$0,25
+        sltu     $7,$5,$6
+</pre>
+<input type="button"value="hint"onClick="xb[13]^=1; zzz('x13',(xb[13])?'':
+'0. Since sltu treats operands as unsigned integers, the twos complement -25 \
+will be interpreted as \
+a very large positive number, definitely greater than 25.'
+);"><div id="x13"></div><br>
+
+
+14. Give the semantics of these instructions and explain
+    difference between the two.
+<pre>
+        slti   Rd, Rs, imm
+        sltiu  Rd, Rs, imm
+</pre> 
+<input type="button"value="hint"onClick="xb[14]^=1; zzz('x14',(xb[14])?'':
+'These are set less than immediate instructions.  slti sets d to 1 if s is \
+less than the 16-bit twos complement value imm, otherwise 0. sltiu \
+has the same semantics as slti except the operands are 16-bit unsigned \
+integers.'
+);"><div id="x14"></div><br>
+
+
+15. What is the range of integers that can fit into the 16-bit field of the 
+    <code>sltiu</code> instruction?  (These are unsigned integers.)
+<input type="button"value="hint"onClick="xb[15]^=1; zzz('x15',(xb[15])?'':
+'The range is from 0 to 2^16 - 1 (65 535). note: plug 2^16 - 1 \
+into wolfram alpha'
+);"><div id="x15"></div><br>
+
+
+16. What is the value in $3 after this code is executed?
+<pre>
+        ori     $3, $0, 1        
+        ori     $2, $0, 88     
+        sltiu   $8, $2, 100       
+        beq     $8, $0, out      
+        sll     $0, $0, 0     # branch delay instruction
+        sltiu   $8, $2, 30     
+        beq     $8, $0, next    
+        sll     $0, $0, 0     # branch delay instruction
+out:    ori     $3, $0, 0       
+next:   sll     $0, $0, 0    
+</pre> 
+<input type="button"value="hint"onClick="xb[16]^=1; zzz('x16',(xb[16])?'':
+'one. since 88 is less than 100, $8 is set to one and you do not \
+jump to out; the branch delay slot \
+at label out which sets $3 to 0 is not executed.'
+);"><div id="x16"></div><br>
+
+
+17. Assume you are on a *real* MIPS machine where the instruction in the
+    slot is executed and that you remove the two branch delay no-op
+    instructions in the above code. Also assume that the original value
+    in $2 could be less than or greater than 100. How would removing the
+    two no-op instructions affect the logic of your code?
+<input type="button"value="hint"onClick="xb[17]^=1; zzz('x17',(xb[17])?'':
+'Taking out the no-op in the first branch delay slot would not matter \
+since no harm is done if the \
+sltiu instruction is executed before the branch. However, if the second \
+no-op is removed then the ori instruction will set $3 to 1.'
+);"><div id="x17"></div><br>
+
+
+18.  In addition to branch instructions, load instructions are followed by
+     a delay slot. Why do you think this is?
+<input type="button"value="hint"onClick="xb[18]^=1; zzz('x18',(xb[18])?'':
+'Load instructions require a memory access so there is also a delay.'
+);"><div id="x18"></div><br>
+
+
+19. What does this code accomplish?
+<pre>
+    init:   ori    $8,$0,0        # count = 0
+    test:   sltiu  $9,$8,10       # count &lt; 10
+            beq    $9,$0,endloop
+            move   $a0, $8
+            li     $v0,1
+            syscall 
+            addiu  $8,$8,1        # count++
+            j      test
+ endloop:   sll    $0,$0,0        # branch target
+</pre>
+<input type="button"value="hint"onClick="xb[19]^=1; zzz('x19',(xb[19])?'':
+'It displays 0123456789 on the screen. This is a counting loop that executes \
+10 times; $8 is the loop variable - $8 is initialized to 0 and incremented by \
+1; the loop stops when $8 is not < 10'
+);"><div id="x19"></div><br>
+
+
+20. Select A or B. Given the following chunk of MIPS code
+<pre>
+        li   $7, 10
+        move $8, $zero
+        slt  $9, $8, $7
+        beqz $9, done
+        branch delay slot
+    ... more code ...
+
+ done:  li $v0, 10
+        syscall
+</pre>
+    A. Any instruction can safely be put in this branch delay slot.<br>
+    B. Only a no-op instruction can safely be put in this branch delay slot.
+<input type="button"value="hint"onClick="xb[20]^=1; zzz('x20',(xb[20])?'':
+'Look at the code carefully, then give your answer.'
+);"><div id="x20"></div><br>
+
+
+21. The sll instruction is popular to use as a no-op instruction. Write
+a no-op instruction of your own. Do not use sll, and do not use a
+nmemonic that is a macro or psuedo-instruction.
+
+<input type="button"value="hint"onClick="xb[21]^=1; zzz('x21',(xb[21])?'':
+'What is your no-op instruction?'
+);"><div id="x21"></div><br>
+
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>

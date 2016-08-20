@@ -1,0 +1,296 @@
+ 
+             Comparison of 80x86 and MIPS Architectures
+ 
+ Learning assembly demands some understanding of computer architecture, in
+ particular the Instruction Set Architecture (ISA) of the processor. The ISA
+ is the hardware/software interface and this is where assembly language lives.
+
+ This guide covers Intel 80x86, one of the oldest and most widely-used family 
+ of processors, and MIPS (developed in the 80s for embedded systems and used in
+ Sony PlayStation2, DEC machines, CISCO routers... ). ISA design includes
+ registers, instruction operands, memory and addressing modes, branches, 
+ procedure calls and instruction formats. 
+
+ Intel 80x86(x86) is a family of processors with backward compatibility to x86:
+ 1971: 4004 introduced; first microprocessor; 4-bit CPU 
+ 1978: x86 introduced; cutting-edge 16-bit processor
+ 1981: IBM uses the 8088 in first IBM PC project
+ 1989: 80486 introduced; floating-point unit on main processor chip; RISC-based 
+       pipelining to increase performance
+ 1997: Pentium 2; superscalar, multiprocessing, special instructions for 
+       multimedia applications
+ 2002: Pentium 4; high clock rates (3.06 GHz); more multimedia instructions;
+       large on-chip cache
+ 
+ *************
+ * REGISTERS *
+ *************
+
+ Registers are memory locations on the processor where work is performed. How
+ many, how big and what type dictate instruction format. Fewer general-purpose 
+ registers means more data must be stored in memory, and more memory accesses 
+ will be needed.
+
+ MIPS32 registers
+ o 32 (0-31) 32-bit wide registers
+ o $t0-$t9, $s0-$s7 are for programmer use - all others are reserved
+
+ $zero(0)  - contains a constant 0
+ $at(1) -  used by assembler to converts pseudo-instructions
+ $v0-$v1(2-3) - contain return values from procedures 
+ $a0-$a3(4-7) - store arguments for procedure calls 
+ $t0-$t7(8-15) - caller-saved registers; values not saved across calls
+ $s0-$s7(16-23) callee-saved registers; values are preserved across calls
+ $t8-$t9(24,25) - caller-saved registers; values not preserved across calls
+ $k0(26), $k1(27) - reserved for assembler and OS 
+ $gp(28) - pointer to global area
+ $sp(29) - pointer to top of current stack 
+ $fp(30) - pointer to start of current frame
+ $ra(31) - holds the return address from a procedure call
+ 
+ x86-32 registers
+ o four general-purpose 32-bit registers: EAX EBX ECX EDX
+ o four 32-bit registers generally used to address memory: ESP EBP ESI EDI
+ o several 16-bit registers for the segmented memory model: CS SS DS ES FS GS
+ o 32-bit register for instruction pointer/program counter: EIP
+ o 32-bit register EFLAGS contains condition codes for branch instructions
+ 
+ 
+ ***********************
+ * Instruction Formats *
+ ***********************
+
+ MIPS32 uses 32-bit, three-address, register-to-register instructions:
+ 
+     operation    3 operands
+     ---------     ---------
+      add          a,   b, c 
+                   /     \  \ 
+            destination  2 sources
+ 
+ Meaning: a = b + c, where a and b are registers, c is a register or constant.
+
+ o three instruction formats: R-type, I-type and J-type
+ o formats are very uniform, leading to simpler hardware.
+ o each instruction is 32 bits, so easy to compute instruction addresses for 
+   branch and jump targets
+ o fields are located in the same relative positions when possible
+ o sufficient for most operations - if not, implement as multiple instructions
+ 
+ 
+ x86 uses a two-address, register-to-memory instructions: 
+ 
+   operation  2 operands
+   ---------  ----------
+       add     a,      b 
+               /        \ 
+         dest & src1    src2
+ 
+ Meaning: a = a + b, where a can be a register or a memory address, b can be 
+ a register, a memory reference, or a constant, a and b cannot both be memory 
+ addresses.
+ 
+ x86 also has one-address instructions, where dest and src1 are implicit.
+
+ o instruction formats range in size from 1 to 17 bytes, mostly due to complex 
+   and multiple addressing modes 
+ o x86 assembly more difficult for programmer, assembler and hardware
+ o instruction decoding is very complex
+ o harder to compute the address of an arbitrary instruction
+ o some instructions appear in two formats - simpler but shorter one, and a 
+   more general but longer one
+ o multiple ways to encode some instructions
+ o non-orthogonality is confusing for programmers
+ 
+ **********
+ * MEMORY *
+ **********
+
+ MIPS Memory 
+ o byte-addressable 
+ o each address stores an 8-bit value
+ o addresses can be up to 32 bits long, resulting in up to 4 GB of memory
+ o one addressing mode: indexed addressing
+
+    lw $t0, 20($a0) # $t0 = M[$a0 + 20] 
+    sw $t0, 20($a0) # M[$a0 + 20] = $t0
+
+ o The lw/sw instructions access one word, or 32 bits of data, at a time
+ o a word is four *contiguous* bytes in memory
+ o words must be aligned, starting at addresses divisible by four 
+ o attempting to read non-aligned data is a bus error
+
+ x86 Memory
+ o Memory is byte-addressable
+ o original x86 had 20-bit address bus that could address just 1MB of RAM
+ o modern x86 CPUs can access 64GB of main memory, using 36-bit addresses
+ o x86 is a 16-bit processor so an x86 word is 16 bits
+ o 32-bit quantity is a double word
+ o data does not have to be aligned - programs can access data at any address
+ 
+ x86 Segments
+ o two 16-bit registers are needed to produce a 20-bit memory address
+ o a segment register specifies the upper 16 bits of the address
+ o another register specifies the lower 16 bits of the address
+ o these two registers are added together in a funky, messy way:
+
+       4 bits     16 bits
+       -----                       16-bit segment register 
+    +         ---- ---- ---- ----  16-bit offset register
+       --------------------------- 
+      =                            20-bit address
+ 
+ o modern x86 processors support a flat 32-bit address space plus segments
+ 
+ x86 addressing modes
+ o immediate mode is similar to MIPS
+      mov eax, 4000000 # eax = 4000000
+ o displacement mode accesses a constant address
+      mov eax, [4000000] # eax = M[4000000]
+ o register indirect mode uses the address in a register
+      mov eax, [ebp] # eax = M[ebp]
+ o indexed addressing is similar to MIPS
+      mov eax, [ebp+40] # eax = M[ebp+40]
+ o scaled indexed addressing does multiplication for you
+      mov eax, [ebx+esi*4] # eax = M[ebx+esi*4]
+ 
+ MIPS array accesses 
+ o scaled addressing will step through arrays with multi-byte elements
+ o access word $t1 of an array at $t0 takes 3 instructions: 
+
+       mul $t2, $t1, 4      # $t2 is byte offset of element $t1 
+       add $t2, $t2, $t0    # $t2 is address of element $t1 
+       lw $a0, 0($t2)       # $a0 contains the element
+
+ x86 array accesses 
+ o accessing double word esi of an array at ebx takes 1 instruction:
+
+       mov eax, [ebx+esi*4] # eax gets element esi
+ 
+ MIPS branches and jumps
+ o four basic instructions for branching and jumping
+           bne beq j jr
+ o other ways to branches are split into two separate instructions
+
+      slt $at,$a0,$a1     # $at=1if$a0<$a1
+      bne $at, $0, Label  # branch if $at != 0
+
+ o slt uses a temporary register to store a boolean value that is then tested 
+   by a bne/beq instruction.
+ o branches and jumps implement conditional statements, loops, and procedure
+   calls and returns
+
+ ****************
+ * FLOW CONTROL * 
+ ****************
+
+ x86 branches and jumps
+ o x86 chips contain a special register of status flags, EFLAGS
+ o the bits in EFLAGS are set as a result of arithmetic and test instructions:
+    S = 1 if the ALU result is negative
+    O = 1 if the operation caused a signed overflow
+    Z = 1 if the result was zero
+    C = 1 if the operation resulted in a carry out
+ o x86 ISA provides instructions to branch (called jump) if any of the flags
+  are set or not set
+
+       js/jns  jo/jno  jz/jnz  jc/jnc
+
+ *******************
+ * PROCEDURE CALLS * 
+ *******************
+
+ MIPS procedure calls
+ o the jal instruction saves the address of the next instruction in $ra before 
+   transferring control to a procedure.
+ o register conventions for passing arguments ($a0-$a3), returning values 
+   ($v0-$v1), and preserving caller-saved and callee-saved registers.
+ o the stack is a special area of memory used to support procedures 
+ o procedures can allocate a private stack frame for local variables and
+   register preservation
+ o stack modifications are explicit by modifying $sp and using load/store 
+   instructions with $sp as the base register
+ 
+ x86 procedure calls
+ o control flow for x86 procedure calls involves two aspects
+ o the CALL instruction is similar to jal in MIPS, but the return address is
+   placed on the stack instead of in a register
+ o RET pops the return address on the stack and jumps to it
+ o arguments and return values can be passed either in registers or on stack
+ o procedures are expected to preserve the original values of any registers 
+   they modify; i.e., all registers are callee-saved
+ o the x86 also relies upon a stack for local storage
+ o the stack can be manipulated explicitly through the esp register
+ o the CPU also includes special PUSH and POP instructions, which can manage 
+   the stack pointer automatically
+
+ ************************
+ * CISC v. RISC DESIGNS *
+ ************************
+ 
+ A complex instruction set computer (CISC) is a computer design where single 
+ instructions can execute several low-level operations (such as a load from 
+ memory, an arithmetic operation, and a memory store) and/or are capable of
+ multi-step operations or addressing modes within single instructions. The 
+ term CISC was retroactively applied to non-RISC architectures.
+ Examples of CISC instruction set architectures are IBM System/360 through 
+ z/Architecture, PDP-11, VAX, Motorola 68k, and Intel x86.
+ 
+ A reduced instruction set computer (RISC) instruction set architecture (ISA)
+ is based on simpler instructions that execute more quickly, resulting in 
+ higher performance. The RISC family includes DEC Alpha, AMD 29k, ARC, ARM, 
+ Atmel AVR, Blackfin, PA-RISC, Power (including PowerPC), SuperH, SPARC and
+ MIPS (Microprocessor without Interlocking Pipeline Stages). MIPS instruction 
+ set is much more simple than 80x86 and assembly is easier.
+ 
+ RISC and CISC architectures share common features:
+ o general-purpose registers 
+ o simple branch and jump instructions for control flow
+ o stacks and special instructions implement procedure calls
+
+ CISC (Complex Instruction Set Computer)
+ o x86-based processors are examples of CISC architecture
+ o in the 1970s memory was expensive and slow
+ o keeping encodings of common instructions short helped in two ways
+   + made programs shorter and saved memory space
+   + shorter instructions can also be fetched faster
+ o more complex, longer instructions were still available when needed
+ o assembly programmers like more powerful instructions to make coding easier
+ o compilers had to balance compilation and execution speed.
+ 
+ RISC (Reduced Instruction Set Computer)
+ o a processor design in response to problems with CISC
+ o simpler instructions and formats a radical idea in the 1980s
+ o RISC-based programs need more instructions -- harder to write than CISC
+ o more instructions mean that RISC programs use more memory
+ o but now memory is faster and cheaper
+ o compilers generate code instead of assembly programmers
+ o simpler hardware made advanced techniques like pipelining easier to implement 
+ Intel Pentium Processor Family 
+ o original IBM PC was 8088 - x86 with 8-bit data bus instead of a 16-bit one
+ o continually adding to x86 instruction set
+ o 8088 cheaper to design, and maintained compatibility with existing 8-bit 
+   memories, chipsets and hardware
+ o 8088 registers were still 16 bits, requiring two cycles to transfer data 
+   between a register and memory
+ o improved floating-point unit
+ o backward compatibility with x86 a drawback:
+   + hard to implement pipelining and superscalar architectures until recently 
+   + overall performance suffered
+ o Pentiums now use RISC-based ideas:
+   + complex x86 instructions are translated to simpler RISC-like instructions
+   + deep pipelining is possible, improving performance
+   + slower, inefficient instructions in the ISA (for x86 compatibility) can 
+     be avoided
+ o Pentiums now have MMX, SSE and SSE2 instructions for parallel computing
+ o Intel 80386SX used 16-bit data bus whereas 80386 had a 32-bit bus
+ o less expensive processors (Intel Celeron and AMD Duron) have smaller caches 
+   and/or slower buses than more expensive cousins
+ o price v. performance - cheaper processors often mean reduced performance
+ o low-power processors: Intel Mobile Pentiums - AMD has Mobile Athlons;
+   Transmeta Crusoe and IBM/Motorola PowerPC
+ o Pentium backward compatibility is a strength but also prevents enhancements 
+   to CPU design
+ o Intel Itanium is a completely new designed 64-bit processor did not succeed 
+ o AMD is a 64-bit, backward compatible extension to the x86 architecture
+ 

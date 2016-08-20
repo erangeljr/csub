@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+
+<h3>CMPS-224 Homework 3: MIPS procedure call conventions </h3>
+<br>
+<p>
+<div class="notes" style="width:500px; height:130px">
+Refer to as needed:<br>
+Before starting this homework you should read and understand:<br>
+<ul class="a">
+	<li><a href="./doc/HP_AppenA.pdf">
+		Appendix A.6 "Procedure Call Convention"</a></li> 
+	<li><a href="./notes03.html">
+		week03 notes</a></li> 
+	<li><a href="./examples/week03/fact.s">
+		fact.s</a></li> 
+	<li><a href="http://chortle.ccsu.edu/AssemblyTutorial/Chapter-25/
+		ass25_1.html">MIPS tutorial Ch 25</a></li> 
+</ul>
+</div>
+</p>
+
+<div class="notes" style="height:70px">
+Use these references as needed:
+<ul class="a">
+<li><a href="./doc/mips-quick-guide.txt">mips-quick-guide</a></li> 
+<li><a href="./doc/mips32-instruc-set.pdf">mips ISA</a></li> 
+</ul>
+</div>
+	
+<!--
+Error pg. A-25: "In the first part, the caller puts the procedure call
+arguments in standard places...". This should read: "In the first part, the 
+caller puts the procedure call arguments in standard places and performs the
+following:"
+-->
+<br>
+
+1. What information is stored in the procedure call frame? (also called stack 
+   frame or stack activation record) 
+<input type="button"value="hint"onClick="xb[ 1]^=1; zzz('x1', (xb[ 1])?'':
+'When a procedure is called, its call frame is loaded onto the runtime stack. \
+The call frame holds arguments that are passed to the \
+procedure (MIPS loads the first 3 args into registers), local variables, \
+a return address and a frame pointer. The call frame \
+also stores the values of registers that the caller does not want \
+changed. In other words, everything necessary to execute the procedure \
+except the code.'
+);"><div id="x1"style="height:80px"></div><br>
+
+
+2. Early computer architectures and languages (circa 1960s) did not support 
+    a runtime stack. All modern architectures and languages do.
+    What advantages are there to a runtime stack? Why not just
+    store data in a procedure call in the data segments of the executable
+     rather than in a stack frame?  
+<input type="button"value="hint"onClick="xb[ 2]^=1; zzz('x2', (xb[ 2])?'':
+'The text and data segments of the executable is completely static. A runtime \
+stack on the other hand, since it is constructed at runtime, supports dynamic \
+variables, recursion and nested procedure calls.  In addition, without a \
+runtime stack, memory for local data variables and arguments for procedures \
+would be a part of the executable.'
+);"><div id="x2"></div><br>
+
+
+3. Give the expanded symbolic name of each of these registers and state their purpose.<pre>
+        $sp      $fp     $ra    $pc </pre> 
+<input type="button"value="hint"onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+'All three of these registers hold addresses. The $sp (stack pointer) points \
+to the top of the runtime stack. The $fp (frame pointer) points to bottom of \
+the most recent frame on the stack; the $ra points to the next instruction \
+to be executed upon return to the calling procedure. The $pc points to the \
+next instruction to be executed by the processor.'
+);"><div id="x3"></div><br>
+
+
+4. Explain what this instruction does.<pre>
+         lw $v0, 0($fp) </pre>
+<input type="button"value="hint"onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+'Loads the word (4 bytes) that are found at an offset of 0 bytes from the \
+address of the frame pointer; i.e., this is the last word in the call \
+frame of the currently executing procedure. '
+);"><div id="x4"></div><br>
+
+
+5. How do you compute the size of the current stack frame, assuming the
+ $fp points to the first word in the current stack frame? 
+<input type="button"value="hint"onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+'The size of the current stack frame is $fp - $sp + 4 (subtract the address \
+of the stack pointer from the address of the frame pointer and add in the \
+size of a word). \
+To get the frame pointer you add 28 bytes to the current stack \
+pointer; you want the frame pointer to point to the first word in the call \
+frame.'
+);"><div id="x5"></div><br>
+
+
+6. What is the purpose of caller-saved registers? 
+<input type="button"value="hint"onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+'The values of caller-saved registers have been saved by the caller on its \
+stack frame, thus can be safely used by the callee.'
+);"><div id="x6"></div><br>
+
+
+7. Explain these two instructions. <pre>
+          jal a_label 
+           jr    $ra        </pre>
+<input type="button"value="hint"onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+'jal (jump and link) is effectively a \
+procedure call; this instruction saves the address of the next \
+instruction after the jump in the $ra (return address) \
+register then copies the address \
+of a_label into the $pc (program counter). The processor will then start \
+executing  instructions at address a_label. The jr instruction  loads \
+the address in $ra into the $pc. This effectively returns the procedure \
+back to the caller.'
+);"><div id="x7"style="height:80px"></div><br>
+
+
+8. Assume you wish to construct a stack frame (also called call frame)
+   for procedure foo. Which register is immediately
+   assigned a new value? After that is done,
+   which two registers must the procedure save to its newly
+   constructed stack frame? 
+<input type="button"value="hint"onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+'Foo first assigns a new value to the \
+$sp (stack pointer). This  effectively gives foo a call frame \
+on the runtime stack. Foo then stores the current value of \
+$fp (frame pointer) and $ra (return address) \
+in this call frame. The $fp is then \
+assigned a value that points it to the bottom \
+of the call frame. The new $sp is the size of the \
+new frame subtracted from the old stack pointer (the stack grows from high to \
+low addresses). The callee MUST save the orginal values of $ra and $fp but \
+does not need to save $sp since $sp can be calculated by adding the size of \
+the call frame. \
+The callee may optionally save local variables and arguments \
+and any callee-saved registers ($s0-$s7) in the stack frame.'
+);"><div id="x8"style="height:120px"></div><br>
+
+
+9. Before the callee can return to the caller what must the callee do?
+<input type="button"value="hint"onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+'1) If the procedure returns a value, place that value in $v0. \
+2) Restore the values of callee-saved registers (these register values were \
+saved upon entry to the callee stack frame). 3) Pop the stack frame by adding \
+the frame size to $sp. 4) Return by jumping to the address in $ra.'
+);"><div id="x9"></div><br>
+
+
+10. What is the difference between caller-saved and callee-saved registers and
+    when would you use one instead of the other?
+<input type="button"value="hint"onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+'Caller-saved registers are saved by the caller in its own stack frame. \
+The callee can overwrite these registers since \
+the caller (if desired) has already saved the values. Caller-saved \
+registers are NOT preserved across calls. Callee-saved registers are saved \
+by the callee in its own frame upon entry (if the callee wants to use the \
+registers) and restored by the callee before \
+exit. Callee-saved registers ARE thus preserved across calls. You use \
+callee-saved registers to hold variables that exist for the lifetime of the \
+program. Caller-saved registers are the temporary places for work to occur \
+in a procedure.'
+);"><div id="x10"style="height:120px"></div><br>
+
+
+11. Assume you write a programming language that does not support
+    recursion nor allow a procedure to call another procedure. 
+    Does your language require the use of a runtime stack? Justify your answer.
+<input type="button"value="hint"onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+'In this scenario only one procedure is active at one time. There is no \
+need to save register values to a call frame on the call stack. The call \
+frame is essentially part of the executable. The other advantage to \
+a runtime stack is the ability to dynamically allocate memory on the stack \
+for variables at runtime. '
+);"><div id="x11"></div><br>
+
+
+12. This chunk of code from fact.s sets up a stack frame for main. Why 
+    do you substract 32 rather than add 32 from the current stack pointer?
+    Why do you add 28 to the stack pointer to setup the current frame pointer?
+<pre>
+  main:
+          addi  $sp, $sp, -32   # stack frame is 32 bytes long
+          sw    $ra, 20($sp)    # save return address
+          sw    $fp, 16($sp)    # save old frame pointer
+          addi  $fp, $sp, 28    # set up new frame pointer</pre>
+<input type="button"value="hint"onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+'Since the stack grows from high to low addressess you must subtract the \
+size of the stack frame (32 bytes) from the current stack pointer.'
+);"><div id="x12"></div><br>
+
+
+13. Load fact.s and print.s into spim. Set a breakpoint in main. Run the 
+    program. Step through enough code to find the values of $sp before and
+    after the call to fact (see detailed instructions in fact.s).
+    Confirm that the values differ by 32 bytes.
+<input type="button"value="hint"onClick="xb[13]^=1; zzz('x13',(xb[13])?'':
+'<pre>\
+   0x7ffff7dc (before call) <br>\
+-  0x7ffff7bc (after call)  <br>\
+   ----------  <br>\
+   0x00000020 = 32 bytes. check. </pre>'
+);"><div id="x13"style="height:80px"></div><br>
+
+
+14. This code sets up the stack frame for the fact procedure. In addition to
+    storing the frame pointer and the return address on the stack, the
+    last sw instruction stores the argument n from $a0 to the stack. 
+    Is this really necessary? <pre>
+        addi  $sp, $sp, -32    # stack frame is 32 bytes long
+        sw    $ra, 20($sp)     # save return address
+        sw    $fp, 16($sp)     # save frame pointer
+        addi  $fp, $sp, 28     # set up frame pointer
+        sw    $a0, 0($fp)      # save argument (n)  </pre>
+<input type="button"value="hint"onClick="xb[14]^=1; zzz('x14',(xb[14])?'':
+'Yes. Absolutely necessary. The value in a0 (the current value of n) is \
+multiplied with the returned value from the next call to compute the \
+factorial. If a0 is not saved to the stack, it would be overwritten.'
+);"><div id="x14"></div><br>
+
+
+15. This chunk of code is also from the fact procedure. Without looking at the
+    rest of the code, explain what is at label L2 and what is at label L1.<pre>
+           lw    $v0, 0($fp)      # load n from stack to v0
+           bgtz  $v0, L2          # branch to L2 if value in v0 > 0
+           li    $v0, 1           # load 1 into the return value register
+           j     L1               # unconditional jump to L1  </pre>
+<input type="button"value="hint"onClick="xb[15]^=1; zzz('x15',(xb[15])?'':
+'The argument passed to fact (n) is loaded in v0. By the bgtz instruction, \
+if n is > 0 you call fact(n-1). Thus L2 must be the recursive call. Otherwise \
+you jump to L1, which must be the exit/cleanup code for the fact procedure.'
+);"><div id="x15"></div><br>
+
+
+16. This chunk of code from the fact procedure decrements n in order to make 
+    the next recursive call. Why move n -1 into a0?
+<pre>
+           lw    $v1, 0($fp)      # load current value of n
+           addi  $a0, $v1, -1     
+           jal   fact
+</pre> 
+<input type="button"value="hint"onClick="xb[16]^=1; zzz('x16',(xb[16])?'':
+'a0 is where the n argument needs to be.'
+);"><div id="x16"></div><br>
+
+
+17. The tak algorithm from Appendix A.6, implemented below in C, makes four 
+    recursive calls. When this algorithm is written in assembly, what 
+    values will need to be stored in the stack frame for each call to tak?
+<pre>
+       int tak( int x, int y, int z) {
+           if (y &lt; x)
+              return 1 + tak(tak(x-1,y,z), tak(y-1,z,x), tak(z-1,x,y));
+           else 
+              return z;
+       }
+       int main() {
+           tak(18,12,6);
+       }
+</pre>
+<input type="button"value="hint"onClick="xb[17]^=1; zzz('x17',(xb[17])?'':
+'Each call to tak needs to store its own arguments since the arg registers \
+are overwritten in subsequent calls. Likewise, the return value $v0 needs \
+to be stored in the frame before it is overwritten. In Appen A-31, $a0-$a2 \
+are moved to callee-saved registers $s0-$s2 and $v0 is moved to $s3. \
+$s0-$s3 are stored to the stack. By comparison, fact did not need \
+ to store the return value from subsequent calls since the return value \
+ was utilized after all calls were made - while popping the stack.'
+);"><div id="x17"style="height:120px"></div><br>
+
+
+18. Look at the code to construct the stack frame for tak (pg. A-31, Appen A). 
+    Unlike the fact procedure, which stores the frame pointer $fp on the
+    stack, the tak procedure does not store $fp. Why does this work?
+    Could you rewrite fact to not store $fp?
+    Under what circumstances is storing $fp essential? 
+<input type="button"value="hint"onClick="xb[18]^=1; zzz('x18',(xb[18])?'':
+'Neither procedure needs to store the frame pointer. The frame pointer is \
+only critical when the frame size is dynamic (when stack-dynamic variables \
+are declared). Since the fact frame size is always 32 bytes and the tac \
+frame is always 40 bytes, you can pop the stack without using $fp. To modify \
+fac, you just need to change offsets from $fp to offsets from $sp.'
+);"><div id="x18"style="height:80px"></div><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!--
+<p>
+19. 
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q19Area');
+myArea.innerHTML=
+'
+  '; ">
+<DIV class="ans" id="Q19Area" STYLE="background-color:DEE; height: px;">&nbsp; </DIV>
+
+<p>
+20.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q20Area');
+myArea.innerHTML=
+''; "
+
+<DIV class="ans" id="Q20Area" STYLE="background-color:DEE; height:50px;">&nbsp; </DIV>
+-->
+
+
+
+
+
+<hr>
+</body>
+</html>

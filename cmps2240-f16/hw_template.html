@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+
+<h3>CMPS-224 Homework 2: Assembler</h3>
+<br>
+<p>
+<div class="notes" style="width:200px;">
+Refer to as needed:<br/>
+<ul>
+<li><a href="./doc/units_of_measure.html">CS Units of Measure</a> </li> 
+<li><a href="./doc/mips32-instruc-set.pdf">MIPS32 ISA</a> </li>
+<li><a href="./doc/mips-quick-quide.txt">MIPS quick guide</a> </li>
+</ul>
+</div>
+</p>
+<br>
+	
+
+<input type="button"value="hint"onClick="xb[ 1]^=1; zzz('x1', (xb[ 1])?'':
+);"><div id="x1"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[ 2]^=1; zzz('x2', (xb[ 2])?'':
+);"><div id="x2"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+);"><div id="x3"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+);"><div id="x4"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+);"><div id="x5"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+);"><div id="x6"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+);"><div id="x7"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+);"><div id="x8"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+);"><div id="x9"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+);"><div id="x10"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+);"><div id="x11"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+);"><div id="x12"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[13]^=1; zzz('x13',(xb[13])?'':
+);"><div id="x13"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[14]^=1; zzz('x14',(xb[14])?'':
+);"><div id="x14"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[15]^=1; zzz('x15',(xb[15])?'':
+);"><div id="x15"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[16]^=1; zzz('x16',(xb[16])?'':
+);"><div id="x16"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[17]^=1; zzz('x17',(xb[17])?'':
+);"><div id="x17"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[18]^=1; zzz('x18',(xb[18])?'':
+);"><div id="x18"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[19]^=1; zzz('x19',(xb[19])?'':
+);"><div id="x19"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[20]^=1; zzz('x20',(xb[20])?'':
+);"><div id="x20"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[21]^=1; zzz('x21',(xb[21])?'':
+);"><div id="x21"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[22]^=1; zzz('x22',(xb[22])?'':
+);"><div id="x22"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[23]^=1; zzz('x23',(xb[23])?'':
+);"><div id="x23"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[24]^=1; zzz('x24',(xb[24])?'':
+);"><div id="x24"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[25]^=1; zzz('x25',(xb[25])?'':
+);"><div id="x25"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[26]^=1; zzz('x26',(xb[26])?'':
+);"><div id="x26"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[27]^=1; zzz('x27',(xb[27])?'':
+);"><div id="x27"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[28]^=1; zzz('x28',(xb[28])?'':
+);"><div id="x28"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[29]^=1; zzz('x29',(xb[29])?'':
+);"><div id="x29"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[30]^=1; zzz('x30',(xb[30])?'':
+);"><div id="x30"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[31]^=1; zzz('x31',(xb[31])?'':
+);"><div id="x31"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[32]^=1; zzz('x32',(xb[32])?'':
+);"><div id="x32"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[33]^=1; zzz('x33',(xb[33])?'':
+);"><div id="x33"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[34]^=1; zzz('x34',(xb[34])?'':
+);"><div id="x34"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[35]^=1; zzz('x35',(xb[35])?'':
+);"><div id="x35"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[36]^=1; zzz('x36',(xb[36])?'':
+);"><div id="x36"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[37]^=1; zzz('x37',(xb[37])?'':
+);"><div id="x37"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[38]^=1; zzz('x38',(xb[38])?'':
+);"><div id="x38"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[39]^=1; zzz('x39',(xb[39])?'':
+);"><div id="x39"></div><br>
+
+
+<input type="button"value="hint"onClick="xb[40]^=1; zzz('x40',(xb[40])?'':
+);"><div id="x40"></div><br>
+
+
+
+<hr>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<style>
+	body{
+		font-family:arial;
+		xfont-family:courier new;
+	}
+	h2 {
+		margin:0px;
+	}
+	td {
+		border: 1px solid #abc;
+		padding-left:4px;
+		padding-right:2px;
+	}
+	#mk {
+		background:#fea;
+		font-weight:bold;
+	}
+</style>
+<body>
+<h2>MIPS Instructions</h2>
+<!-- Idea for this page came from:
+http://alumni.cs.ucr.edu/~vladimir/cs161/mips.html
+-->
+<!-- closing tags omitted for space -->
+<table>
+<tr><td>Instruction<td>Syntax<td>Opcode<td>Operation<td>Description
+<tr><td id="mk"colspan="5">arithmetic and logical
+<tr><td>add  <td>add   $d, $s, $t    <td>100000<td>$d = $s + $t<td>Add with overflow
+<tr><td>addu <td>addu  $d, $s, $t    <td>100001<td>$d = $s + $t<td>Add unsigned
+<tr><td>addi <td>addi  $d, $s, i     <td>001000<td>$d = $s + se(i)<td>Add immediate
+<tr><td>addiu<td>addiu $d, $s, i     <td>001001<td>$d = $s + se(i)<td>Add immediate unsigned
+<tr><td>and  <td>and   $d, $s, $t    <td>100100<td>$d = $s &amp; $t<td>Bitwise logical AND
+<tr><td>andi <td>andi  $d, $s, i     <td>001100<td>$d = $s &amp; ze(i)<td>Bitwise logical AND imm
+<tr><td>div  <td>div   $s, $t        <td>011010<td>lo = $s/$t; hi=$s%$t<td>Divide
+<tr><td>divu <td>divu  $s, $t        <td>011011<td>lo = $s/$t; hi=$s%$t<td>Divide unsigned
+<tr><td>mult <td>mult  $s, $t        <td>011000<td>hi:lo = $s * $t<td>Multiply
+<tr><td>multu<td>multu $s, $t        <td>011001<td>hi:lo = $s * $t<td>Multiply unsigned
+<tr><td>nor  <td>nor   $d, $s, $t    <td>100111<td>$d = ~($s | $t)<td>Bitwise logical NOR
+<tr><td>or   <td>or    $d, $s, $t    <td>100101<td>$d = $s | $t<td>Bitwise logical OR
+<tr><td>ori  <td>ori   $d, $s, i     <td>001101<td>$t = $s | ze(i)<td>Bitwise logical OR imm
+<tr><td>sll  <td>sll   $d, $t, a     <td>000000<td>$d = $t &lt;&lt; a<td>Shift left logical, a bits
+<tr><td>sllv <td>sllv  $d, $t, $s    <td>000100<td>$d = $t &lt;&lt; $s<td>Shift left logical, $s bits
+<tr><td>sra  <td>sra   $d, $t, a     <td>000011<td>$d = $t &gt;&gt; a<td>Shift right arithmetic, a bits
+<tr><td>srav <td>srav  $d, $t, $s    <td>000111<td>$d = $t &gt;&gt; $s<td>Shift right arithmetic, $s bits
+<tr><td>srl  <td>srl   $d, $t, a     <td>000010<td>$d = $t &gt;&gt; a<td>Shift right logical, a bits
+<tr><td>srlv <td>srlv  $d, $t, $s    <td>000110<td>$d = $t &gt;&gt; $s<td>Shift right logical, $s bits
+<tr><td>sub  <td>sub   $d, $s, $t    <td>100010<td>$d = $s - $t<td>Subtract
+<tr><td>subu <td>subu  $d, $s, $t    <td>100011<td>$d = $s - $t<td>Subtract unsigned
+<tr><td>xor  <td>xor   $d, $s, $t    <td>100110<td>$d = $s ^ $t<td>Exclusive OR
+<tr><td>xori <td>xori  $d, $s, i     <td>001110<td>$d = $s ^ ze(i)<td>Exclusive OR immediate
+<!--
+<tr><td id="mk"colspan="5">load hi or low register with immediate
+<tr><td>lhi  <td>lhi   $t, immed32   <td>011001<td>HH ($t) = i<td>Load high
+<tr><td>llo  <td>llo   $t, immed32   <td>011000<td>LH ($t) = i<td>Load low
+-->
+<tr><td id="mk"colspan="5">set register, on comparison
+<tr><td>slt  <td>slt   $d, $s, $t    <td>101010<td>$d = ($s &lt; $t)<td>Set on less than
+<tr><td>sltu <td>sltu  $d, $s, $t    <td>101001<td>$d = ($s &lt; $t)<td>Set on less than, unsigned
+<tr><td>slti <td>slti  $d, $s, i     <td>001010<td>$t = ($s &lt; se(i))<td>Set on less than, immediate
+<tr><td>sltiu<td>sltiu $d, $s, i     <td>001001<td>$t = ($s &lt; se(i))<td>Set on less than, both
+<tr><td id="mk"colspan="5">branching
+<tr><td>beq  <td>beq   $s, $t, label <td>000100<td>if ($s==$t) pc+=i&lt;&lt;2<td>Branch if equal
+<tr><td>bgtz <td>bgtz  $s, label     <td>000111<td>if ($s&gt;0) pc+=i&lt;&lt;2<td>Branch if > zero
+<tr><td>blez <td>blez  $s, label     <td>000110<td>if ($s&lt;=0) pc+=i&lt;&lt;2<td>Branch if <= zero
+<tr><td>bne  <td>bne   $s, $t, label <td>000101<td>if ($s!=$t) pc+=i&lt;&lt;2<td>Branch if not equal
+<tr><td id="mk"colspan="5">jump to
+<tr><td>j    <td>j     label         <td>000010<td>pc += i &lt;&lt; 2<td>Jump
+<tr><td>jal  <td>jal   label         <td>000011<td>$31 = pc; pc+=i&lt;&lt;2<td>Jump and link 
+<tr><td>jalr <td>jalr  labelR        <td>001001<td>$31 = pc; pc = $s<td>Jump and link, register
+<tr><td>jr   <td>jr    labelR        <td>001000<td>pc = $s<td>Jump to address in register
+<tr><td id="mk"colspan="5">load (right to left)
+<tr><td>lb   <td>lb    $t, i ($s)    <td>100000<td>$t=se (mem[$s+i]:1)<td>Load byte
+<tr><td>lbu  <td>lbu   $t, i ($s)    <td>100100<td>$t=ze (mem[$s+i]:1)<td>Load byte unsigned
+<tr><td>lh   <td>lh    $t, i ($s)    <td>100001<td>$t=se (mem[$s+i]:2)<td>Load halfword
+<tr><td>lhu  <td>lhu   $t, i ($s)    <td>100101<td>$t=ze (mem[$s+i]:2)<td>Load halfword unsigned
+<tr><td>lw   <td>lw    $t, i ($s)    <td>100011<td>$t= i mem[$s+i]:4<td>Load word
+<tr><td>lui  <td>lui   $t, i         <td>100011<td>$t = i&lt;&lt;16<td>Load i into upper halfword 
+<tr><td id="mk"colspan="5">store (left to right)
+<tr><td>sb   <td>sb    $t, i ($s)    <td>101000<td>mem[$s+i]:1=LB($t)<td>Store byte
+<tr><td>sh   <td>sh    $t, i ($s)    <td>101001<td>mem[$s+i]:2=LH($t)<td>Store halfword
+<tr><td>sw   <td>sw    $t, i ($s)    <td>101011<td>mem[$s+i]:4=$t<td>Store word
+<tr><td id="mk"colspan="5">load hi or low results
+<tr><td>mfhi <td>mfhi  $d            <td>010000<td>$d = hi<td>Move from high
+<tr><td>mflo <td>mflo  $d            <td>010010<td>$d = lo<td>Move from low
+<tr><td>mthi <td>mthi  $s            <td>010001<td>hi = $s<td>Move to hi
+<tr><td>mtlo <td>mtlo  $s            <td>010011<td>lo = $s<td>Move to low
+<tr><td id="mk"colspan="5">exception and interrupt
+<tr><td>trap <td>trap  i             <td>011010<td>OS dependent
+</table>
+
+<pre>
+Notes:
+
+se: SignExtImm = 16 copies of sign bit [15] + imm16
+ze: ZeroExtImm = zeros16 + imm16
+
+Branch Address = 14 copies of sign bit + addr16 + zeros2 
+Jump Address   = Copy of top 4 bits of PC + jumpAddr26 +  zeros2
+</pre>
+
+<!-- Definition of SE and ZE came from the page below. 
+cs.lamar.edu/faculty/foreman/MIPS_example.../MIPSReferenceData.doc
+-->
+
+<p>
+Note:<br>
+The instructions below are macro-instructions. Each of the following instructions<br>
+is made up of one or more of the core MIPS instructions above.<br>
+</p>
+
+Macro Instructions:<br>
+<table>
+<tr style="font-weight:bold">
+<td>inst <td>syntax            <td>description                                  <td>clocks
+<tr><td>abs  <td>abs Rd, Rs        <td>Absolute Value:                              <td>3/3
+<tr><td>beqz <td>beqz Rs, Label    <td>Branch if Equal to Zero:                     <td>1/1
+<tr><td>bge  <td>bge Rs, Rt, Label <td>Branch if Greater Than or Equal :            <td>2/2
+<tr><td>bgeu <td>bgeu Rs, Rt, Label<td>Branch if Greater Than or Equal Unsigned:    <td>2/2
+<tr><td>bgt  <td>bgt Rs, Rt, Label <td>Branch if Greater Than:                      <td>2/2
+<tr><td>bgtu <td>bgtu Rs, Rt, Label<td>Branch if Greater Than Unsigned:             <td>2/2
+<tr><td>ble  <td>ble Rs, Rt, Label <td>Branch if Less Than or Equal:                <td>2/2
+<tr><td>bleu <td>bleu Rs, Rt, Label<td>Branch if Less Than or Equal Unsigned:       <td>2/2
+<tr><td>blt  <td>blt Rs, Rt, Label <td>Branch if Less Than:                         <td>2/2
+<tr><td>bltu <td>bltu Rs, Rt, Label<td>Branch if Less Than Unsigned:                <td>2/2
+<tr><td>bnez <td>bnez Rs, Label    <td>Branch if Not Equal to Zero:                 <td>1/1
+<tr><td>b    <td>b Label           <td>Branch Unconditional:                        <td>1/1
+<tr><td>div  <td>div Rd, Rs, Rt    <td>Divide:                                      <td>4/41
+<tr><td>divu <td>divu Rd, Rs, Rt   <td>Divide Unsigned:                             <td>4/41
+<tr><td>la   <td>la Rd, Label      <td>Load Address:                                <td>2/2
+<tr><td>li   <td>li Rd, value      <td>Load Immediate:                              <td>2/2
+<tr><td>move <td>move Rd, Rs       <td>Move:                                        <td>1/1
+<tr><td>mul  <td>mul Rd, Rs, Rt    <td>Multiply:                                    <td>2/33
+<tr><td>mulo <td>mulo Rd, Rs, Rt   <td>Multiply (with overflow exception):          <td>7/37
+<tr><td>mulou<td>mulou Rd, Rs, Rt  <td>Multiply Unsigned (with overflow exception): <td>5/35
+<tr><td>neg  <td>neg Rd, Rs        <td>Negate:                                      <td>1/1
+<tr><td>negu <td>negu Rd, Rs       <td>Negate Unsigned:                             <td>1/1
+<tr><td>nop  <td>nop               <td>No operation:                                <td>1/1
+<tr><td>not  <td>not Rd, Rs        <td>Not:                                         <td>1/1
+<tr><td>remu <td>remu Rd, Rs, Rt   <td>Remainder Unsigned:                          <td>4/40
+<tr><td>rol  <td>rol Rd, Rs, Rt    <td>Rotate Left Variable:                        <td>4/4
+<tr><td>ror  <td>ror Rd, Rs, Rt    <td>Rotate Right Variable:                       <td>4/4
+<tr><td>rem  <td>rem Rd, Rs, Rt    <td>Remainder:                                   <td>4/40
+<tr><td>rol  <td>rol Rd, Rs, sa    <td>Rotate Left Constant:                        <td>3/3
+<tr><td>ror  <td>ror Rd, Rs, sa    <td>Rotate Right Constant:                       <td>3/3
+<tr><td>seq  <td>seq Rd, Rs, Rt    <td>Set if Equal:                                <td>4/4
+<tr><td>sge  <td>sge Rd, Rs, Rt    <td>Set if Greater Than or Equal:                <td>4/4
+<tr><td>sgeu <td>sgeu Rd, Rs, Rt   <td>Set if Greater Than or Equal Unsigned:       <td>4/4
+<tr><td>sgt  <td>sgt Rd, Rs, Rt    <td>Set if Greater Than:                         <td>1/1
+<tr><td>sgtu <td>sgtu Rd, Rs, Rt   <td>Set if Greater Than Unsigned:                <td>1/1
+<tr><td>sle  <td>sle Rd, Rs, Rt    <td>Set if Less Than or Equal:                   <td>4/4
+<tr><td>sleu <td>sleu Rd, Rs, Rt   <td>Set if Less Than or Equal Unsigned:          <td>4/4
+<tr><td>sne  <td>sne Rd, Rs, Rt    <td>Set if Not Equal:                            <td>4/4
+<tr><td>ulh  <td>ulh Rd, n(Rs)     <td>Unaligned Load Halfword Unsigned:            <td>4/4
+<tr><td>ulhu <td>ulhu Rd, n(Rs)    <td>Unaligned Load Halfword:                     <td>4/4
+<tr><td>ulw  <td>ulw Rd, n(Rs)     <td>Unaligned Load Word:                         <td>2/2
+<tr><td>ush  <td>ush Rd, n(Rs)     <td>Unaligned Store Halfword:                    <td>3/3
+<tr><td>usw  <td>usw Rd, n(Rs)     <td>Unaligned Store Word:                        <td>2/2
+</table>
+
+<p>
+Here is a <a href="all.s">program named all.s</a> that tries every command above.
+</p>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+</body>
+</html>
+

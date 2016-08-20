@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+
+<h3>CMPS-224 Homework 4: MIPS Encoding & Pseudoinstructions</h3>
+<p>
+<div class="notes" style="height:60px;">
+Read:<br/>
+<ul>
+	<li><a href="./doc/HP_AppenA.pdf">Appendix A.10</a></li> 
+	<li><a href="./doc/mips-v-8086.txt">MIPS vs. x86 Architectures</a></li> 
+</ul>
+</div>
+</p>
+<div class="notes" style="width:320px;height:90px">
+refer to as needed:<br/>
+<ul>
+	<li><a href="./doc/mips-quick-guide.txt">
+		MIPS Quick Guide & Exam Notes</a></li>
+	<li><a href="./units_of_measure.html">
+		CMPS Units of Measure</a></li> 
+	<li><a href="./doc/mips32-instruc-set.pdf">
+		MIPS32 Instruction Set Quick Reference</a></li>
+</ul>
+</div>
+</p>
+<br>
+	
+
+
+1. MIPS is a load/store architecture. What does this mean?
+<input type="button"value="hint"onClick="xb[ 1]^=1; zzz('x1', (xb[ 1])?'':
+'Any operand to a computations must be in a register before the operation \
+occurs. This means that any data must be loaded from memory into a \
+register first. Writes to memory occur only in a store instruction. In \
+summary only load and store statements have direct access to memory.'
+);"><div id="x1"></div><br>
+
+
+2. MIPS requires that most data to be aligned. What does this mean?
+<input type="button"value="hint"onClick="xb[ 2]^=1; zzz('x2', (xb[ 2])?'':
+'This means that addresses of data must be in multiples of the size of \
+ the data. Memory is byte addressable, so alignment could be at the byte \
+ level. But most data types are in chunks larger than a byte; e.g., \
+ the address of a 4-byte integer (a word) is a multiple of 4. This means that \
+ the two least significant bits will be zeros. The address to a half-word \
+ (two bytes) is a multiple of two (the least significant bit is a zero). '
+);"><div id="x2"style="height:80px"></div><br>
+
+
+3. What are the restrictions on label names in MIPS?
+<input type="button"value="hint"onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+'Labels cannot begin with a number and cannot be a MIPS opcode. \
+ Anything else is OK. For example, add is not valid since add is an opcode. \
+ 7add is not valid since the identifier begins with a number.'
+);"><div id="x3"></div><br>
+
+
+4. What does this assembler directive accomplish?<pre>
+    stuff:   .byte 'a','b','c','d','e','g' </pre>
+<input type="button"value="hint"onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+'Stores the 6 char values in consecutive bytes of memory starting at\
+ address stuff'
+);"><div id="x4"></div><br>
+
+
+5. What do these assembler directives accomplish?<pre>
+    stuff:   .space 15 
+    stuff2:  .word 0:10 </pre>
+<input type="button"value="hint"onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+'.space 15 allocates 15 bytes of space in the current data segment starting at\
+ address stuff. <p/>\
+ .word 0:10 allocates 10 words starting at address stuff2, where stuff2 \
+ is guaranteed to be aligned on a word boundary (address is a multiple \
+ of 4) and initializes all words with 0 value. In C this is equivalent to <p\>\
+ <tt> int stuff[10] = {0}; </tt> '
+);"><div id="x5"style="height:80px"></div><br>
+
+
+6. Since MIPS instructions are all one word (4 bytes), it is easy to compute 
+   the address of the next instruction even if the instructions vary by number
+   of operands. Give the addresses of the next two instructions after addi.<pre> 
+      Address     Instruction         
+      0x00400024  addi $t2, $t3, 5   
+      __________  la  $a0, mystuff
+      __________  b target </pre>
+<input type="button"value="hint"onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+'<pre>0x00400028 <br/>\
+0x0040002c </pre>\
+(Just add 4 bytes to the current instruction to get the address of \
+the next instruction.)'
+);"><div id="x6"></div><br>
+
+
+7. It is easy to encode MIPS instructions since there are so few instruction 
+    types (I, R and J). The encoding format for this type 
+    I instruction with opcode 8 <pre>
+          opcode  rt, rs,   imm
+          addi   $t1, $zero, 13  # initialize $t1 to decimal 13 </pre> 
+   is shown here (see Appen A pg. A-51), noting that rs and rt are reversed:
+<pre>
+          8      rs      rt      imm  
+          ====== ======  ======  =======
+          6 bits 5 bits  5 bits  16 bits   = 32 bits.
+</pre>
+Addi is opcode 8, rt is register target, rs is
+register source, and imm is the immediate value.
+What is the binary encoding of this addi instruction? 
+(The opcode for addi is 8. See quick guide for register numbers. )
+<input type="button"value="hint"onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+'The first 6 bits holds the opcode, which for addi is 8. The next five \
+bits (rs) hold the register source number, which is register 0.\
+The next five bits (rt) hold the register number for the target, which is 9 \
+for $t1 (see reg nums in quick guide). The last 16 bits hold the integer, which\
+is 13. The binary encoding is thus\
+<pre>\
+        001000  00000 01001 0000000000001101\
+</pre>'
+);"><div id="x7"style="height:80px"></div><br>
+
+
+8. Pseudoinstructions are macros added to MIPS to make life
+   easier for the programmer. The assembler translates pseudos
+   into actual instructions; e.g., this pseudo:
+<pre>
+        move $t1, $s3   # $t1 = $s3
+</pre>
+   is really, under the covers, an add operation. Provide the
+   equivalent MIPS add. Why provide a macro for a single instruction?
+<input type="button"value="hint"onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+'Without the move you would need to add zero to the \
+ value of s3 and store the result in t1; e.g.:<br> \
+ <tt> add $t1, $s3, $zero </tt> <br>OR <br>\
+ <tt> add $t1, $zero, $s3 </tt><br>\
+ The word move is used for the macro, but it\'s actually a copy.'
+);"><div id="x8"style="height:90px"></div><br>
+
+
+9. Most pseudoinstructions are macros for multiple MIPS instructions. For
+    example, the bgt pseudo is really three instructions: beq, slt and bne.
+    Explain the meaning of the bgt below and translate it into its 
+    equivalent three MIPS instructions beq, slt and bne.<pre>
+            bgt $t0, $s2, Label </pre>
+<input type="button"value="hint"onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+'meaning: if ($t0 > $s2) go to Label <pre>\
+beq $t0, $s2, Next    # Do not branch to label if they are equal <br/>\
+slt $at, $s2, $t0     # Set if s2 < t0. $at is assembler reserved register<br/>\
+bne $at, $zero, Label # if flag = 0, s2 >= t0; If flag = 1, $t0 > $s2; <br/>\
+Next:'
+);"><div id="x9"style="height:100px"></div><br>
+
+
+10. Using Appen A-10 or the quick guide as a reference, write a brief comment
+   for each line of MIPS code below. Then explain what the code is doing.
+    Assume that $s2 holds the starting address of an array of five integers 
+   1,2,3,4,5.<pre>
+ 1       li    $s0, 5
+ 2       move  $v0, $zero
+ 3       move  $t0, $zero    
+ 4 Loop: beq   $t0, $s0, Exit 
+ 5       sll   $t1, $t0, 2   
+ 6       add   $t1, $t1, $s2   
+ 7       lw    $t2, 0($t1)      
+ 8       add   $v0, $v0, $t2      
+ 9       addi  $t0, $t0, 1     
+10       j Loop
+11 Exit: </pre>
+<input type="button"value="hint"onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+'<pre>      li   $s0, 5         # initialize s0 to 5 <br>\
+      move $v0, $zero     # initialize v0 to 0       <br>\
+      move $t0, $zero     # initialize t0 to 0       <br>\
+Loop: beq  $t0, $s0, Exit # if t0 == s0, go to Exit  <br>\
+      sll  $t1, $t0, 2    # shift left 2 bits: t1=t0 * 4 (t1 is an offset)<br>\
+      add  $t1, $t1, $s2  # t1 = s2 + (t0 * 4); add offset to s2          <br>\
+      lw   $t2, 0($t1)    # bring element in from memory                  <br>\
+      add  $v0, $v0, $t2  # v0 += t2 <br>\
+      addi $t0, $t0, 1    # t0++     <br>\
+      j Loop                         <br>\
+Exit: </pre>\
+This code is a loop that sums the first 5 elements in an array of integers \
+ located at address $s2:<pre>\
+int size = 5; <br>\
+int sum = 0;  <br>\
+for(int i = 0; i < size; i++) <br>\
+    sum += array[i];  <p/>\
+A trace of t0, t1 and v0 in the loop looks like this:<br>\
+to  t1           v0      <br>\
+0   0*4; 0(s2)   0+1=1   <br>\
+1   1*4; 4(s2)   1+2=3   <br>\
+2   2*4; 8(s2)   3+3=6   <br>\
+3   3*4;12(s2)   6+4=10  <br>\
+4   4*4;16(s2)   10+5=15 <br>'
+);"><div id="x10"style="height:410px"></div><br>
+
+
+
+11. The following is the machine language of a small MIPS program.<br>
+What does the program do?
+<pre>
+
+00110100000001000000000000001010
+00100000100001000000000000010100
+00110100000000100000000000000001
+00000000000000000000000000001100
+
+</pre>
+<input type="button"value="hint"onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+'Use our reference sources.'
+);"><div id="x11"></div><br>
+
+
+
+<!--
+<input type="button"value="hint"onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+);"><div id="x12"></div><br>
+-->
+
+
+<hr>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>

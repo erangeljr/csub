@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<style>
+	body { padding-left: 10px; color: #000; }
+	h2 { font-family:'Arial',sans-serif; font-size:2.0em; color:#999; }
+	h3 {
+		font-family:'Arial',sans-serif; font-size:1.6em;
+		color:#114;
+		margin:2px; padding-top:6px;
+	}
+	.box { border:2px solid #999; width:600px; padding-left:8px; }
+	p { width:800px; }
+    .console {
+        padding-left:10px;
+        background:#222;
+        color:#afa;
+        border:4px solid #66a;
+        width:600px;
+    }
+	#p_indent {
+		padding-left:20px;
+	}
+	</style>
+<body>
+<p>
+CMPS-224 Homework-10
+</p>
+
+<p>
+This assignment is no longer required, but you should try to do it.
+</p>
+
+<p>
+Write your program on Sleipnir here: <b>/home/stu/username/224/hwa/circle.c</b><br>
+replacine username with your own userid.
+</p>
+
+<div class="box">
+<pre>
+<b>Step 1</b>:
+
+Get the files <a href="./code/hwa/">here</a>:
+<b>cp /home/stu/gordon/public_html/cs224/code/hwa/* .</b>
+</pre>
+</div>
+<br>
+
+<div class="box">
+<pre>
+<b>Step 2</b>:
+
+Read the notes at the top of the circle.c file.
+You are building a function named inlineCircle() to draw a circle.
+Replace the commented code with <b>x86 inline code</b>.
+</pre>
+</div>
+<br>
+
+<div class="box">
+<pre>
+<b>Step 3</b>:
+
+Attempt to convert the if-else statement to one inline asm() statement.
+Here is the code:
+
+    if (d &lt; 0)
+        d += ((x * 4) + 6);
+    else
+        d += (((x - y--) * 4) + 10);
+    ++x;
+
+Include the ++x if you can also.
+
+</pre>
+</div>
+<br>
+
+<pre>
+<b>Notes</b>:
+
+When you log on to Sleipnir, add <b>-YC</b> at the end of the ssh string.
+
+Example:  $ ssh manfred@sleipnir <b>-YC</b>
+
+This program is worth some extra credit points if you are able to
+complete Step-3, and do the work yourself.
+
+</pre>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>
+

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<style>
+	body {
+		padding-left: 10px;
+		color: #000;
+	}
+	h2 { font-family:'Arial',sans-serif; font-size:2.0em; color:#999; }
+	h3 {
+		font-family:'Arial',sans-serif; font-size:1.6em;
+		color:#114;
+		margin:2px; padding-top:6px;
+	}
+	.box_border {
+		border:4px solid #abc; width:600px; padding-left:8px;
+	}
+	.thin_border {
+		border:1px solid #abc; width:800px; padding-left:8px;
+	}
+    .console {
+        padding-left:10px;
+        background:#222;
+        color:#afa;
+        border:4px solid #66a;
+        width:600px;
+    }
+	p { width:800px; }
+
+	</style>
+
+	
+Quiz-6: Programming the Fewest Lines of Code
+
+<hr>
+Team 1:
+<hr>
+<pre>
+main:
+move $s0, $a0       # a0 holds the number of cmdline args
+move $s1, $a1       # a1 is the base pointer to the array of addresses 
+li $t0, 3           #
+ble $a0, $t0, error # if arg count is <= 3 exit with err msg 
+lw $a0, 4($s1)      #
+jal atoi            #
+move $s2, $v0       #
+lw $a0, 8($s1)      #
+jal atoi            #
+move $s3, $v0       #
+lw $a0, 12($s1)      #
+jal atoi             #
+move $s5, $v0        #
+li $v0, 4
+la $a0, prompt
+syscall
+ble $s2, $s3, compare1
+j compare2
+compare1:
+beq $s2, $s5, print2
+ble $s2, $s5, print2
+j print3
+compare2:
+beq $s3, $s5, print1
+ble $s3, $s5, print1
+j print3
+print1:
+li $v0, 1
+move $a0, $s3
+syscall
+j exit
+print2:
+li $v0, 1
+move $a0, $s2
+syscall
+j exit
+print3:
+li $v0, 1
+move $a0, $s5
+syscall
+j exit
+exit:
+li  $v0,10       # 10 is exit system call
+syscall   
+error:
+j exit 
+atoi:
+li $t7, 0
+move $v0, $zero
+li $t0, 1            # assume sign is positive
+lbu $t1, 0($a0)      # load byte from 1st argument into t1
+bne $t1, 45, digit   # if (t1 != '-') goto digit
+li $t0, -1           # save negative sign, will multiply by this later.
+addu $a0, $a0, 1     # move to the character after '-'
+digit:
+lbu $t1, 0($a0)      # load next character
+bltu $t1, 48, finish # check for characters before 0
+bgtu $t1, 57, finish # check for characters after 9
+subu $t1, $t1, 48    # t1 = t1 - '0'
+li $t2, 10           # load 10
+mult $v0, $t2        # multiply
+mflo $v0             # get the result
+add $v0, $v0, $t1    # did it.
+addu $a0, $a0, 1     # move to next character in argument
+b digit              # continue loop
+finish:
+mult $v0, $t0        # set the number's sign
+mflo $v0             # put the result of multiply into v0
+jr $ra
+.data
+prompt: .asciiz "The lowest value is: "
+</pre>
+
+<hr>
+Team 2:
+<hr>
+<pre>
+.data 
+line: .asciiz "The lowest value is: "
+.text 
+main: lw $a0, 4($a1)
+    jal atoi    
+    move $s1, $v0      
+    lw $a0, 8($a1)      
+    jal atoi          
+    move $s2, $v0     
+    lw $a0, 12($a1)     
+    jal atoi          
+    move $s3, $v0      
+    li $v0, 4
+    la $a0, line        
+    syscall
+    li $v0, 1
+    ble $s1, $s2, next1 
+    move $s1, $s2
+next1: ble $s1, $s3, next2  
+    move $a0, $s3
+    j done
+next2: move $a0, $s1
+done: syscall
+    li $v0, 10
+    syscall
+atoi: move $v0, $zero     
+    li $t0, 1            
+    lbu $t1, 0($a0)     
+    bne $t1, 45, digit   
+    li $t0, -1           
+    addu $a0, $a0, 1     
+digit: lbu $t1, 0($a0)    
+    bltu $t1, 48, finish 
+    subu $t1, $t1, 48   
+    li $t2, 10           
+    mult $v0, $t2       
+    mflo $v0             
+    add $v0, $v0, $t1   
+    addu $a0, $a0, 1     
+    b digit              
+finish: mult $v0, $t0   
+    mflo $v0            
+    jr $ra            
+</pre>
+
+
+
+<hr>
+Team 3:
+<hr>
+<pre>
+.text 
+main: lw $a0 4($a1)
+jal atoi
+move $s0 $v0
+lw $a0 8($a1)
+jal atoi
+blt $s0 $v0 go1
+move $s0 $v0
+go1: lw $a0 12($a1)
+jal atoi
+blt $s0 $v0 go2
+move $s0 $v0
+go2: move $a0 $s0
+li $v0 1
+syscall
+li $v0 10
+syscall
+atoi: move $v0, $zero
+li $t0, 1
+lbu $t1, 0($a0)
+bne $t1, 45, digit
+li $t0, -1
+addu $a0, $a0, 1
+digit:lbu $t1, 0($a0)
+bltu $t1, 48, finish
+bgtu $t1, 57, finish
+subu $t1, $t1, 48
+li $t2, 10
+mult $v0, $t2
+mflo $v0
+add $v0, $v0, $t1
+addu $a0, $a0, 1
+b digit
+finish: mult $v0, $t0
+mflo $v0
+jr $ra
+</pre>
+
+
+
+<hr>
+Team 4:
+<hr>
+<pre>
+.text
+.globl main
+.ent  main
+main:  move $s1, $a1
+  lw $a0, 4($s1)
+  jal atoi
+  move $s2, $v0
+  lw $a0, 8($s1)
+  jal atoi
+  move $s3, $v0
+  lw $a0, 12($s1)
+  jal atoi
+  move $s4, $v0
+  blt $s2, $s3, test_s2
+  blt $s3, $s4, print_s3
+  b print_s4
+print_s4:  move $a0, $s4
+  li $v0, 1
+  syscall
+  li $v0, 10
+  syscall
+test_s2:  blt $s4, $s2, print_s4
+  move $a0, $s2
+  li $v0, 1
+  syscall
+  li $v0, 10
+  syscall
+print_s3:  move $a0, $s3
+  li $v0, 1
+  syscall
+  li $v0, 10
+  syscall
+atoi:    move $v0, $zero
+    li $t0, 1
+    lbu $t1, 0($a0)
+    bne $t1, 45, digit
+    li $t0, -1
+    addu $a0, $a0, 1
+digit:    lbu $t1, 0($a0)
+    bltu $t1, 48, finish
+    bgtu $t1, 57, finish
+    subu $t1, $t1, 48
+    li $t2, 10
+    mult $v0, $t2
+    mflo $v0
+    add $v0, $v0, $t1
+    addu $a0, $a0, 1
+    b digit
+finish:    mult $v0, $t0
+    mflo $v0
+    jr $ra
+.end  main
+</pre>
+
+
+
+<hr>
+Team 5:
+<hr>
+<pre>
+.data
+message:.asciiz "The lowest value is: "
+.text
+main: move $s0, $a0
+    move $s1, $a1
+    lw   $a0, 4($s1)
+    jal  atoi
+    move $s2, $v0
+    lw   $a0, 8($s1)
+    jal  atoi
+    move $s3, $v0
+    lw   $a0, 12($s1)
+    jal  atoi
+    move $s4, $v0
+    blt  $s2, $s3, test2
+    move $s5, $s3
+    blt  $s3, $s4, print
+test2: move $s5, $s2
+    blt  $s2, $s4, print
+    move $s5, $s4
+print:li   $v0, 4
+    la   $a0, message
+    syscall
+    li   $v0, 1
+    move $a0, $s5
+    syscall
+    li   $v0, 11
+    li   $a0, 10
+    syscall
+    li   $v0, 10
+    syscall
+atoi:move $v0, $zero
+    li $t0, 1
+    lbu $t1, 0($a0)
+    bne $t1, 45, digit
+    li $t0, -1
+    addu $a0, $a0, 1
+digit:lbu $t1, 0($a0)
+    bltu $t1, 48, finish
+    bgtu $t1, 57, finish
+    subu $t1, $t1, 48
+    li $t2, 10
+    mult $v0, $t2
+    mflo $v0
+    add $v0, $v0, $t1
+    addu $a0, $a0, 1
+    b digit
+finish:mult $v0, $t0
+    mflo $v0
+    jr $ra
+</pre>
+
+
+
+<hr>
+Team 6:
+<hr>
+<pre>
+.data
+ least: .asciiz "\nThe lowest value is: "
+.text
+main:
+     move $s0, $a0      
+     move $s1, $a1        
+     lw $a0, 4($s1)      
+     jal atoi           
+     move $s2, $v0      
+     lw $a0, 8($s1)     
+     jal atoi          
+     move $s3, $v0
+     lw $a0, 12($s1)    
+     jal atoi            
+     move $s4, $v0      
+check_less:
+     bgt $s2 $s3, save
+     bgt $s2, $s4, swap
+     li $v0, 4
+     la $a0, least
+     syscall
+     li  $v0, 1
+     move $a0, $s2
+     syscall
+     li $v0, 10
+     syscall
+save:
+     move $s2, $s3
+     b check_less 
+swap:
+    move $s2, $s4
+    b check_less
+atoi:
+    move $v0, $zero
+    li $t0, 1
+    lbu $t1, 0($a0)
+    bne $t1, 45, digit
+    li $t0, -1
+    addu $a0, $a0, 1
+digit:
+    lbu $t1, 0($a0)
+    bltu $t1, 48, finish
+    bgtu $t1, 57, finish
+    subu $t1, $t1, 48
+    li $t2, 10
+    mult $v0, $t2
+    mflo $v0
+    add $v0, $v0, $t1
+    addu $a0, $a0, 1
+    b digit
+finish:
+    mult $v0, $t0
+    mflo $v0
+    jr $ra
+</pre>
+<hr>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>	
+</body>
+</html>
+

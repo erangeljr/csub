@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+
+<h3>CMPS-224 Homework #6 : Arithmetic Operations & Overflow</h3>
+<p>
+<div class="notes" style="width:400px;height:80px">
+All questions taken from these tutorials: <br/>
+<ul class="a">
+	<li><a href="http://chortle.ccsu.edu/AssemblyTutorial/Chapter-13/
+		ass13_1.html">MIPS Tutorial Ch 13</a> </li> 
+	<li><a href="http://chortle.ccsu.edu/AssemblyTutorial/Chapter-14/
+		ass14_1.html">MIPS Tutorial Ch 14</a> </li> 
+</ul>
+</div>
+</p>
+	
+<div class="notes" style="width:380px;">
+Use as needed:<br/>
+<ul class="a">
+	<li><a href="http://www.mrc.uidaho.edu/mrc/people/jff/digital/MIPSir.html">
+		MIPS Instruction Ref</a>
+	<li><a href="./doc/mips-quick-guide.txt">
+		MIPS quick quide</a> </li> 
+	<li><a href="./doc/mips32-instruc-set.pdf">
+		MIPS32 Instruction Set Quick Reference</a> </li>
+</ul>
+</div>
+<br>
+
+1. What happens when you perform addition on these 8-bit binary numbers
+    if a register can only hold 1 byte (8 bits)?
+<pre>
+          1010 1011
+        + 0101 0101
+          ---------
+</pre>
+<input type="button"value="hint"onClick="xb[ 1]^=1; zzz('x1', (xb[ 1])?'':
+'The result should be 1 0000 0000 but since you only have room for 8 bits you \
+end up with 0000 0000.<br>This is called overflow.'
+);"><div id="x1"></div><br>
+
+
+2. What happens if you get overflow with the following instruction:
+<pre>
+   addu  $9, $8, $7
+</pre> 
+<input type="button"value="hint"onClick="xb[ 2]^=1; zzz('x2', (xb[ 2])?'':
+'The problem is silently undetected. \
+The *u* in addu means that overflow is ignored (i.e, not trapped). \
+The result from an overflow is meaningless but your program will not crash - \
+it will just silently continue as is nothing bad happened. The *u* does \
+not mean that you cannot add signed integers - it means that the sign bit \
+is not protected from overflow.'
+);"><div id="x2"></div><br>
+
+
+3. What range of signed integers can be represented with 32-bits
+ using two's complement for negative values?
+<input type="button"value="hint"onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+'The most significant bit is reserved for the sign. Thus, positive integers \
+range from 1 to (2^31 - 1). This is 2^31 - 1 different values. \
+Negative integers range from -1 to -(2^31). This is 2^31 different \
+values. (2^31 - 1) + (2^31 - 1) = 2^32 - 1. Adding zero (all bits flipped \
+off - you have (2^31 - 1 + 1) = 2^32 different values. With 32 bits, you have \
+2^32 different values. Zero is neither positive nor negative. A 1 in the sign \
+bit followed by all zeros is -(2^31), which is the largest negative integer \
+and also that -(-2^32) does not exist.'
+);"><div id="x3"style="height:100px"></div><br>
+
+
+4. What is the size of the operands in the addu operation? Can one of the 
+    operands for ori be a negative number?  <pre>
+        ori      $8, $0, 0xAB       
+        ori      $9, $0, 0x01      
+        addu     $10,$9, $8    </pre> 
+<input type="button"value="hint"onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+'The size of all immediate operands is 16 bits - this is part of the isa. \
+Thus the operand for ori is 16 bits. However, when the 16-bit unsigned \
+integer is loaded into $8, it is left padded to 32-bits. The ori will not \
+accept a negative value.'
+);"><div id="x4"></div><br>
+
+
+5. Assume register $8 has been loaded with +94 as shown below. What 
+   two instructions will give you the two's complement of 94 (i.e., -94)? To 
+   produce the two's complement you need to flip (reflect) the bits and then 
+	add 1 to the result.
+<pre>
+        ori $8, $0, 94
+</pre> 
+<input type="button"value="hint"onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+'<pre>ori $8, $0, 94  <br>\
+nor   $8, $8, $0  (0000 NOR 0101 = 1010; i.e., NOR with zero flips bits)<br>\
+ori   $9, $0, 1 <br>\
+addu  $8, $8, $9 </pre>'
+);"><div id="x5"style="height:80px"></div><br>
+
+
+6. What is in $a0 after this code executes?<pre>
+        ori      $8, $0,  82       
+        nor      $8, $8,  $0       
+        ori      $9, $0,   1      
+        addu     $8, $8,  $9    
+        ori      $7, $0,  82   
+        addu     $a0, $7, $8  </pre> 
+<input type="button"value="hint"onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+'zero - you add 82 with its twos complement: 82 + -82 = 0.'
+);"><div id="x6"></div><br>
+
+
+7. How do <code>addu</code> and <code>addiu</code> differ?  Can the operand to 
+<code>addiu</code> be negative? In general why use an immediate instruction?
+<input type="button"value="hint"onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+'Both ignore overflow. The difference is that addiu includes a 16-bit \
+immediate operand. The operand can be negative. If so, it is sign-extended \
+to 32-bits before performing the operation so all works OK. The disadvantage \
+to addiu is that you only get 16 bits to work with.'
+);"><div id="x7"></div><br>
+
+
+8. What is in register $9 after this code executes?
+<pre>
+        ori      $8, $0, 12     
+        sll      $9, $8,  2      
+        addu     $9, $9, $8      
+        addiu    $9, $9,-15
+</pre> 
+<input type="button"value="hint"onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+'45. The computation is ((12*4)+12)-15; I.e., 12 * 5 - 15. The sll \
+operation results in 12*4. \
+The addu results in 12*5. The addiu gives the final answer of 12*5-15.'
+);"><div id="x8"></div><br>
+
+
+9. Can you write the same 4 instructions in question #8 with fewer registers?
+<input type="button"value="hint"onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+'No. You need at least two registers since the original value of x (12) is \
+used two times and cannot be overwritten.'
+);"><div id="x9"></div><br>
+
+
+10. Show that if you multiply one 32-bit unsigned integer in binary
+     by another 32-bit unsigned integer in binary, the binary representation 
+     of the product will never be longer than 64 bits.
+<input type="button"value="hint"onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+'The largest unsigned integer in 32 bits is 2^32-1. Multiply this number\
+ with itself:          <br>\
+<tt><pre>\
+  2^32 - 1             <br>\
+* 2^32 - 1             <br>\
+ ================      <br>\
+  2^64 - 2^32          <br>\
+       - 2^32  + 1     <br>\
+=====================  <br>\
+ 2^64 - 2^33 + 1 </pre><br>\
+The largest unsigned integer in 64 bits is 2^64 - 1. The above number \
+is obviously smaller than 2^64 - 1; \
+Thus the product of two 32-bit integers can safely be stored in \
+two 32 bit registers without overflow.'
+);"><div id="x10"style="height:200px"></div><br>
+
+
+11. Explain the three multiplication instructions shown below.
+<pre>
+         MUL   rd, rs, rt
+         MULT  rs, rt
+         MULTU rs, rt
+</pre>
+<input type="button"value="hint"onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+'MUL treats rs and rt as signed ints and stores the product in rd. <br> \
+MULTU treats rs and rt as unsigned ints and stores the product in the \
+accumulator HiLo.<br>\
+MULT treats rs and rt as signed ints and stores the \
+product in the accumulator HiLo. '
+);"><div id="x11"></div><br>
+
+
+12. The multiply unit of MIPS contains a 64-bit accumulator that is divided
+    into two 32-bit registers called Hi and Lo. (These two registers are not 
+    general purpose and cannot be accessed directly.) When two 32-bit operands 
+    are multiplied, the accumulator holds the result. What is in Hi and what 
+    is in Lo?
+<input type="button"value="hint"onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+'As would be expected, the most significant half of the 64-bit result is \
+stored in Hi. The least significant half of the 64-bit result is in Lo. To \
+be precise, bits 32 through 63 are in Hi and bits 0 through 31 are in Lo.'
+);"><div id="x12"></div><br>
+
+
+13. Give one example of two operands for a MULTU instruction that will 
+ produce a 0000...0001 in register Hi and all zeros in Lo.
+<input type="button"value="hint"onClick="xb[13]^=1; zzz('x13',(xb[13])?'':
+'The decimal value of 1 followed by 32 zeros is 2^32. \
+Some examples of two operands with a MULTU \
+operation to produce a 0000....0001 in Hi and 32 0s in Lo are:<pre><tt>\
+     (2^31) * 2  <br>\
+     (2^30)(2^2) <br>\
+     (2^29)(2^3) \
+	 .... there are many others... </pre></tt>'
+);"><div id="x13"style="height:100px"></div><br>
+
+
+14. What are the significant bits in this unsigned binary number? I.e., which
+of the 32 bits are significant to computing the value of the number? Assume
+the least significant bit is the zero-th bit and the most significant bit is 
+the 31st bit.
+<pre>
+        0000 0000 0000 0001 0101 0110 1101 1110
+</pre>
+<input type="button"value="hint"onClick="xb[14]^=1; zzz('x14',(xb[14])?'':
+'Since we know this is an unsigned integer, we do not need to concern \
+ourselves with the leading zeros. Thus, bit zero through \
+bit 16, which is the first 1, are the significant bits.'
+);"><div id="x14"></div><br>
+
+
+15. What are the significant bits in this signed two's complement number?
+The significant bits are those that would alter the value of the number 
+if omitted. Assume bits are labeled starting at zero from right to left.
+<pre>
+        1111 1111 1111 1100 1010 1001 0010 0010
+</pre>
+<input type="button"value="hint"onClick="xb[15]^=1; zzz('x15',(xb[15])?'':
+'Since we know this is a signed integer, we do not need to concern ourselves \
+with the leading ones. The significant bits are thus bit zero through bit \
+17, which is the first zero.'
+);"><div id="x15"></div><br>
+
+
+16.  What do these instructions do?<pre>
+       mfhi  $8 
+       mflo  $9  </pre>
+<input type="button"value="hint"onClick="xb[16]^=1; zzz('x16',(xb[16])?'':
+'Moves the result from the last \
+mult op into a general purpose register. You cannot \
+directly access hi and low - you must move it to a gp reg.'
+);"><div id="x16"></div><br>
+
+
+17. What is in $9 after this code execute?
+ <a href="./examples/week6/q17.s">q17.s</a>
+<pre>
+        ori      $8, $0, 12       
+        ori      $9, $0,  5     
+        mult     $9, $8         
+        mflo     $9             
+        addiu    $9, $9,-74
+</pre>
+<input type="button"value="hint"onClick="xb[17]^=1; zzz('x17',(xb[17])?'':
+'-14. This code computes 5*12 - 74.'
+);"><div id="x17"></div><br>
+
+
+18. Integer division results in a quotient and a remainder. The MIPS div
+instruction uses the hi and lo registers to hold these values. Where
+does the quotient go and where does the remainder go?
+<input type="button"value="hint"onClick="xb[18]^=1; zzz('x18',(xb[18])?'':
+'the quotient goes in lo and the remainder goes in hi  '
+);"><div id="x18"></div><br>
+
+
+19. The hi register of this div operation holds what integer operation?
+<pre>
+        div rs, rt   # lo holds rs div rt and hi holds what?
+</pre>
+<input type="button"value="hint"onClick="xb[19]^=1; zzz('x19',(xb[19])?'':
+' rs mod rt '
+);"><div id="x19"></div><br>
+
+
+20. What is in $10 and what is in $11 after executing this code? 
+<a href="./examples/week6/q20.s">q20.s</a>
+<pre>
+        ori    $8,   $0,  8     
+        ori    $9,   $0, 36  
+        addu   $10,  $9, $8  
+        subu   $11,  $9, $8    
+        div    $10,  $11       
+        mflo   $10        
+        mfhi   $11
+</pre>
+<input type="button"value="hint"onClick="xb[20]^=1; zzz('x20',(xb[20])?'':
+'hilo = (y+x)/(y-x); (lo) $10 holds 1 and (hi) $11 holds 16 ;\
+44/28 = 1 r. 16.'
+);"><div id="x20"></div><br>
+
+
+21. What is the difference between a shift right arithmetic (sra) and a shift 
+right logical (srl)?
+<a href="./examples/week6/q21.s">q21.s</a>
+<input type="button"value="hint"onClick="xb[21]^=1; zzz('x21',(xb[21])?'':
+' srl on a negative twos complement number loses the \
+sign bit for even a small value. On the other hand, sra does not. \
+the sra replicates the sign bit as needed to \
+fill the bit positions emptied by the shift.'
+);"><div id="x21"></div><br>
+
+
+22. Do any of the multiplication instructions below trap for overflow? 
+ <a href="./examples/week6/q22.s">sample code</a> 
+<pre>
+         MUL   rd, rs, rt
+         MULT  rs, rt
+         MULTU rs, rt
+</pre> 
+<input type="button"value="hint"onClick="xb[22]^=1; zzz('x22',(xb[22])?'':
+'None of the MIPS multiplication instructions trap for overflow. \
+MULT and MULTU store the product in the 64-bit accumulator. Even with \
+unsigned integers, it is not possible to get overflow with MULT and MULTU  \
+since the largest unsigned int squared will still fit in 64 bits: <pre><tt>\
+    2^32 - 1          <br>\
+    2^32 - 1          <br>\
+   ============       <br>\
+    2^64 - 2^32       <br>\
+         - 2^32 + 1   <br>\
+   ================== <br>\
+    2^64 - 2^33 + 1.   </pre>\
+The largest 64 bit integer is 2^64 - 1. 2^64 - 2^33 + 1 is \
+less than 2^54 - 1. Thus there is no overflow with MULTU and MULT. \
+The MUL operation, on the other hand, \
+stores the product in a general purpose register rd and treats the operands \
+in rs and rt as signed ints. Overflow is possible. A \
+One simple example is if you multiply the largest positive signed int \
+(2^31 - 1) by 2. This is a left shift by 1, so you lose the most \
+significant bit. This overflow is not trapped by the arithmetic unit of the \
+processor. In the MUL instruction,the programmer must worry \
+about overflow.'
+);"><div id="x22"style="height:280px"></div><br>
+
+<!--
+<input type="button"value="hint"onClick="xb[23]^=1; zzz('x23',(xb[23])?'':
+);"><div id="x23"></div><br>
+-->
+
+<hr>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>
+

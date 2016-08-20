@@ -1,0 +1,22 @@
+         GUIDE TO USING GDB TO DEBUG X86 ASSEMBLY
+ 
+Step 1. Add a nop as the first instruction after _start or main.
+      _start:
+      main:    nop  # add a nop so you can check things first 
+ 
+Step 2. Assemble and link then load the progrom into gdb:
+       $ make lab08
+       $ gdb ./lab08
+       (gdb) set language asm
+       (gdb) break *_start+1    # set breakpoint right at the nop
+       (gdb) si                 # step one instruction 
+       (gdb) disassemble $pc    # display code starting a program counter
+       (gdb) info registers
+       (gdb) p/d $ecx           # display value as a decimal number in reg ecx
+       (gdb) x/5i $pc           # examine 5 instructions past program counter 
+       (gdb) cont
+       (gdb) ret                # return from another function
+       (gdb) exit
+
+Using the debugger will help you understand why your code is not working as it 
+should as well as trace your code's execution.

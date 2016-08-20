@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+	
+<h3>CMPS-224 Homework 2: Assemblers, Linkers & Loaders -
+Creating the Process Image </h3>
+<br>
+
+<p>
+<div class="notes" style="width:200px;height:100px">
+Refer to as needed:<br/>
+<ul class="a">
+	<li><a href="./units_of_measure.html">
+		CS Units of Measure</a></li> 
+	<li><a href="./doc/mips32-instruc-set.pdf">
+		MIPS32 ISA</a></li>
+	<li><a href="./doc/mips-quick-guide.txt">
+		MIPS quick guide</a></li>
+</ul>
+</div>
+</p>
+<br>
+
+<p>
+All questions except #17 are taken from 
+<a href="./doc/HP_AppenA.pdf">Appendix A.1 - A.5</a>.
+Read A.1-A.5 completely before starting homework.
+Do not worry about references in the Appendix to chapters in the text, we will
+cover that material as needed.
+</p>
+<br>
+<br>
+
+
+1. How does assembly language differ from machine language?
+<input type="button"value="hint"onClick="xb[ 1]^=1; zzz('x1', (xb[ 1])?'':
+'Assembly language is human-readable whereas machine language is pure \
+binary.  Assembly is a symbolic representation of the binary encoding \
+of machine language. Machine language is ready to be executed by the \
+processor - assembly must be translated into machine by the assembler.'
+);"><div id="x1"style="height:80px"></div><br>
+
+
+2. Code written in  a high-level language (C/Java/Python) can, in theory,
+    be ported to a different architecture without modifying the source. An 
+    assembly language program, on the other hand, is specific to a certain 
+    architecture; i.e., a MIPS assembly program will only assemble on
+    a MIPS architecture, x86 assembly is for Intel architectures, etc. Why is 
+    assembly not portable unless you use a cross-assembler?
+<input type="button"value="hint"onClick="xb[ 2]^=1; zzz('x2', (xb[ 2])?'':
+'The processor of a machine defines the machine architecture. Each processor \
+type has its own unique instruction set architecture (ISA). The assembly \
+language for an architecture is based on the instruction set for that \
+processor. Unless you use a cross-assembler or a simulator - you cannot \
+assemble and execute MIPS code, for example, on an x86 machine.'
+);"><div id="x2"style="height:80px"></div><br>
+
+
+3. Define the terms <i>assembler</i>, <i>macro</i>, and <i>object file</i>. 
+<input type="button"value="hint"onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+'An <i>assembler</i> takes an assembly language source and produces object \
+code (machine code); a <i>macro</i> is a set of frequently used instructions \
+(pseudo-instructions) that are replaced at by the assembler to make \
+programming easier, an <i>object file</i> is machine code that cannot be \
+executed yet because it needs the linker to resolve addresses.'
+);"><div id="x3"></div><br>
+
+
+4. What is the difference between a compiler and an assembler? Compare GNU C 
+    compiler and GNU gas assembler under Linux as a specific example.
+<input type="button"value="hint"onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+'The GNU compiler translates the high-level C source code \
+into assembly (there are \
+some intermediate steps but not necessary to know now). \
+The GNU assembler translates the assembly code into a binary object file of \
+machine code. The object file is not executable yet - it needs to be \
+linked with system libraries to produce a machine code executable. When you \
+call gcc all three steps are performed for you.'
+);"><div id="x4"style="height:80px"></div><br>
+
+
+5. What are the disadvantages to writing in assembly language versus 
+    writing in a high-level language?
+<input type="button"value="hint"onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+'Assembly source is not portable. Coding in assembly language \
+will generally require more lines of code (LOC) than coding the same \
+task in a  high-level language. LOC generally relates to more errors and \
+less productivity. Assembly is less readable and writable than high-level \
+languages - again error prone and less productivity. Modern compilers can  \
+produce better assembly code than most humans.'
+);"><div id="x5"style="height:80px"></div><br>
+
+
+6. Define the terms <i>external label</i>, <i>local label</i>, 
+ and <i>forward reference</i> in the context of assembly language. How 
+ do these concepts differ from a high-level language context?
+<input type="button"value="hint"onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+'An <i>external label</i> is a reference (address) to an object outside \
+the assembly source file. A  <i>local label</i> is a reference to something \
+within the same file. A <i>forward reference</i> is a label that is used \
+before it is defined. Assembly language allows forward references but \
+high-level languages do not. Local and external labels are similar to \
+local and global variables in high-level languages.'
+);"><div id="x6"style="height:80px"></div><br>
+
+
+7. How does an assembler handle forward references? 
+<input type="button"value="hint"onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+'An assembler handles forward references  by making two passes of the source -\
+the first pass breaks up the source into lexemes and the second pass \
+produces the machine code.'
+);"><div id="x7"></div><br>
+
+
+8. List two important differences between assembly language 
+    and a high-level language such as C in terms of code writability.
+<input type="button"value="hint"onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+'High-level languages provide rich syntax, data types, and \
+control structures. Assembly has 3 data types: characters, integers and \
+floats and the primary control structure is the goto. (Assembly \
+and high-level \
+languages do share basic arithmetic, boolean and relational operators.)'
+);"><div id="x8"></div><br>
+
+
+9. List the primary sections of an object file under Unix.
+<input type="button"value="hint"onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+'header, text segment, data segment, relocation information, symbol \
+table, debugging information.  '
+);"><div id="x9"></div><br>
+
+
+10. What is an assembler directive? Give an example of one and explain what
+    it does.
+<input type="button"value="hint"onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+'An assembler directive is an instruction for the assembler only and will \
+not be translated into a machine instruction. An example is \
+<pre>\
+     .data\
+</pre>\
+which simply tells the assembler that what comes next belongs in the data \
+segment of the object file.'
+);"><div id="x10"style="height:80px"></div><br>
+
+
+11. What is a pseudoinstruction?
+<input type="button"value="hint"onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+'A pseudo-instruction (aka macro) \
+is an instruction provided by the assembler that \
+is not part of the hardware instruction set. The pseudo-instruction is two \
+or more instructions from the ISA (instruction set architecture). The \
+purpose of pseudo-instructions is simply to make coding easier. examples are \
+move and li.'
+);"><div id="x11"></div><br>
+
+
+12. List the duties of a linker. What is the name of the Unix linker?
+<input type="button"value="hint"onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+'The Unix linker is named ld. The linker joins multiple object files \
+together, resolves addresses across multiple object files, relocates absolute \
+addresses, and searches library path to find libraries used by the program.'
+);"><div id="x12"></div><br>
+
+
+13. Describe the steps by which an executable is loaded into memory
+    under Unix? (This is also typical of most OSs.)
+<input type="button"value="hint"onClick="xb[13]^=1; zzz('x13',(xb[13])?'':
+'The Linux kernel 1) reads the header to get executable size; 2) creates an \
+address space for .text, .data, stack and heap segments; 3) maps instructions \
+to .text segment; 4) copies cmdline args for main onto stack frame for main; \
+5) initializes registers and stack pointer; 6) calls a startup routine to \
+copy args to registers and call first instruction in main function; \
+7) startup routine passes control back to OS after program exits.'
+);"><div id="x13"style="height:80px"></div><br>
+
+
+14. Draw a picture of how a program is 
+    loaded in memory (AppenA shows MIPS which is fairly typical).
+    Include the stack, the heap, the text segment and the data segment. 
+<input type="button"value="hint"onClick="xb[14]^=1; zzz('x14',(xb[14])?'':
+'<pre>\
+high (larger) addresses  +----------------+ <br>\
+                         |  stack segment | <br>\
+                         |----------------| <br>\
+             |           |       &darr;        |<br>\
+             |           |                |<br>\
+             |           |                |<br>\
+             v           |       &uarr;        |<br>\
+                         |----------------| <br>\
+                         |     heap       | <br>\
+                         |----------------| <br>\
+                         | .data segment  | <br>\
+                         |----------------| <br>\
+low (smaller) addresses  | .text segment  | <br>\
+                         +----------------+ </pre>'
+);"><div id="x14"style="height:250px"></div><br>
+
+
+15. Where does the MIPS global pointer register ($gp) point and what is $gp 
+    used for?
+<input type="button"value="hint"onClick="xb[15]^=1; zzz('x15',(xb[15])?'':
+'$gp points to the static data segment.  A load and store instruction can \
+use the signed 16-bit offset field to access the first 64 KB of the static \
+data segment in a single instruction.  $gp makes addressing the static \
+data segment faster than the heap. Global variables are stored in this area \
+for that reason.'
+);"><div id="x15"></div><br>
+
+
+16. Why is the maximum size of a program's stack and the size of each stack 
+    frame not necessarily known at compile time?
+<input type="button"value="hint"onClick="xb[16]^=1; zzz('x16',(xb[16])?'':
+'The stack is used for procedure calls. The order and frequency of procedure \
+calls often depends on \
+user input, which is not known until program execution. Additionally, the \
+size of variables local to a procedure is often determined at runtime.'
+);"><div id="x16"></div><br>
+
+
+17. Little-endian (little-end in first) and big-endian (big-end in first) refer 
+    to the order in which chunks (one byte or two bytes) of a word 
+    are loaded into memory. Little refers to the "little end" (smallest value) 
+    of a number; i.e., the "little end" of 
+    347 decimal is 7. The "big end" of 342 decimal is 3 (since the value of
+    that digit is 300). In little-endian the least significant chunk is loaded
+    into lowest memory address. Consider a 2-byte unsigned integer 
+    with binary and hex representations shown here:
+<pre>
+           1100_0111 1111_0101  0xB7_F5
+</pre>
+    Assuming a machine with an 8-bit data bus (memory is loaded one byte at
+    a time), the little end is the least significant btye (F5)
+    and the big end is the most significant btye (B7).
+    Show the order of bytes in both little-endian and big-endian.
+<input type="button"value="hint"onClick="xb[17]^=1; zzz('x17',(xb[17])?'':
+'Little-endian order loads the bytes into contiguous memory like this:\
+<pre>\
+             1111_0101 1100_0111   0xF5_B7\
+</pre>\
+with smaller memory address corresponding to the little end of the number. \
+In Big-endian the bytes are loaded in the opposite order like this: \
+0xB7_F5. Why? Big-endian order means that smaller memory addresses \
+correspond to the most significant byte of the number. The number would thus \
+be loaded as B7 F5. x86 machines are little-endian and IBM 360 and IBM \
+POWER PC are big-endian machines. MIPS machines are bi-endian and can switch \
+between endianness. NOTE: a 16-bit data bus means the word is loaded in \
+16-bit chunks (two bytes at a time).'
+);"><div id="x17"style="height:140px"></div><br>
+
+
+18. Write MIPS code for a subroutine <b>get_int</b> that reads an integer from the keyboard and echos it to the display and stores the result into $v0.
+<input type="button"value="hint"onClick="xb[18]^=1; zzz('x18', (xb[18])?'':
+'Please write this code yourself.'
+);"><div id="x18"style="height:80px"></div><br>
+
+19. Write MIPS code for a subroutine <b>to_neg</b> that takes the value in $a0
+and converts it to negative two's compliment. Assume that the value in $a0 is
+positive (don't do any input error checking). Store the result into $v0.
+<input type="button"value="hint"onClick="xb[19]^=1; zzz('x19', (xb[19])?'':
+'Please write this code yourself.'
+);"><div id="x19"style="height:80px"></div><br>
+
+20. How do each of these commands modify the program counter?<br>
+<pre>
+          a. jr
+          b. jal
+          c. j
+</pre>
+<input type="button"value="hint"onClick="xb[20]^=1; zzz('x20', (xb[20])?'':
+'Use any sources you need to answer this, then write your answer in your own words.'
+);"><div id="x20"style="height:80px"></div><br>
+
+
+
+
+
+
+
+
+
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>

@@ -1,0 +1,33 @@
+GAS Syntax
+
+GAS or GNU as syntax is a different form of syntax for assembly language files, known also as AT&T syntax after the original style. It is commonly used by other versions of GAS for other architectures (i.e. non-x86). This guide is not a complete reference, but merely an overview.
+Differences
+
+GAS syntax can appear foreign to someone who is familiar with Intel syntax.
+
+1. Registers are prefixed by a % sign, thus eax becomes %eax
+
+2. Operands are reversed, so mov eax, ecx (move ecx into eax) becomes movl %ecx, %eax. Note the "l". This is discussed in item 4.
+
+3. Constants are prefixed with a "$", so mov eax, 50 becomes movl $50, %eax. Constants are decimal by default; hexadecimal constants are additionally prefixed with 0x, e.g. "$0x50".
+
+4. Opcodes do not have implied sizes nor does it specify the size as a separate word. For example, a 32 bit move with Intel syntax requires the "dword" specifier when it is ambigious, while GAS syntax uses suffixes. See below.
+
+5. Memory references through register are in the form of "displacement(base register, offset register, scalar)". Thus the memory reference [eax + 4 + edx*2] is written as 4(%eax, %edx, 2). Note that parentheses are used, NOT square brackets.
+
+6. Symbol names require a "$" to load the address, and no prefix to access contents. Thus the Intel/NASM syntax memory reference mov dword eax, [symbol] is the same movl symbol, %eax. To load the address of "symbol", then Intel/NASM syntax uses mov eax, symbol, while GAS uses movl $symbol, %eax.
+
+Integer Suffixes
+
+* b -- 8 bit byte. Ex: movb $0x40, %al, move constant 0x40 into register al.
+* w -- 16 bit word. Ex: movw %ax, %bx, move register ax into bx.
+* l -- 32 bit long. Ex: movl %ecx, %eax, move register ecx into eax
+* q -- 64 bit quadword. Ex: (64 bit programs only) movq %rax, %rdx, move register rax into rdx
+
+Floating Point (x87) Suffixes
+
+* s -- Short (single precision, 32 bits). Ex: flds (%eax), load 32 bit "float" from memory.
+* l -- Long (64 bits). Ex: fldl (%eax), load 64 bit "double" from memory.
+* t -- Ten-byte (80 bits). Ex: fldt (%eax), load 80 bit "long double" from memory.
+
+

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+
+<h3>CMPS-224 Homework 9 - x86-64 Assembly</h3>
+<p>
+<div class="notes" style="width:600px;height:200px">
+The answers to the first few questions are found in 
+<a href="http://www.nasm.us/doc/nasmdo11.html" target="_blank">
+	Ch. 11: Writing 64-bit Code</a>
+of the NASM Manual (Win64 not covered).
+The answers to the remaining questions are
+in <a href="./examples/week9/x86-64-notes" target="_blank">
+	x86-64-notes</a>
+and <a href="./examples/week9/hw09.asm" target="_blank">
+	hw09.asm</a>.
+<br>
+<br> 
+For additional material on x86-64 see the
+<a href="http://asmtutor.com" target="_blank">
+	NASM Assembly Lanuage Tutorial</a> and this
+<a href="http://vikaskumar.org/amd64/sample.htm" target="_blank">
+	AMD64 Tutorial</a> by Vikas Naresh Kumar.
+<br>
+<br>
+Last week's homework covered x86-32. This homework covers x86, specifically
+calling conventions and those extensions added to x86-64 that you need to
+know to write 64-bit code on sleipnir.
+</div>
+</p>
+<br>
+	
+
+
+
+1.  The x86-64 processor has sixteen 64-bit registers (all but 
+     RBP and RSP are GPRs): 
+     RAX, RBX, RCX, RDX, RDI, RSI, RBP, RSP, R8, R9 , R10, R11, R12, R13, R14, 
+     R15. It is also possible to reference a chunk of a 64-bit register 
+     (i.e., a sub-register). For example, what does EAX refer to?
+<input type="button"value="hint"onClick="xb[ 1]^=1; zzz('x1', (xb[ 1])?'':
+'EAX addresses the least significant 32 bits of the RAX register.'
+);"><div id="x1"></div><br>
+
+
+2. What is the difference between these two instructions?
+<pre>
+    mov rax, stuff
+    mov eax, stuff
+</pre>
+<input type="button"value="hint"onClick="xb[ 2]^=1; zzz('x2', (xb[ 2])?'':
+'In 64-bit mode immediate values are generally only 32 bits wide. However, \
+in the MOV RAX instruction the immediate (the address of stuff) \
+is 64 bits wide. In the second instruction (MOV EAX), the immediate address \
+is 32 bits wide?'
+);"><div id="x2"></div><br>
+
+
+3. In 64-bit assembly the first six arguments (from left to right) are
+   passed in which registers?
+<input type="button"value="hint"onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+'RDI, RSI, RDX, RCX, R8 and R9, in that order.'
+);"><div id="x3"></div><br>
+
+
+4. Which register holds the return value from a function call?
+<input type="button"value="hint"onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+'RAX'
+);"><div id="x4"></div><br>
+
+
+5. What does this 64-bit instruction do?
+<pre>
+    pushfq
+</pre>
+<input type="button"value="hint"onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+'Pushes the quad-word flags register (64-bits) \
+onto the currect call frame.'
+);"><div id="x5"></div><br>
+
+
+6. What is the difference between the .rodata and the .data segments?
+<input type="button"value="hint"onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+'.rodata is a read-only segment whereas values can change \
+in the .data segment. The addresses to values in both segments are static.'
+);"><div id="x6"></div><br>
+
+
+7. The second argument that you pass to scanf in rsi determines where
+   the information read from the keyboard goes. Explain why, in the
+   code below, to read in a string you use 'mov' and to read an int you
+   use 'lea'.
+<pre>  
+        ;; read in a string
+        mov     rdi, dword str_fmt
+        mov     rsi, dword buffer
+        call    scanf
+
+        ;; read in an integer
+        mov     rdi, dword num_fmt
+        lea     rsi, [rbp-8]     
+        call    scanf
+</pre>
+<input type="button"value="hint"onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+'Both scanf instructions expect an address to end up in rsi. \
+In the code \
+to read a string, the address is to a chunk of space in the .data segment. \
+The mov instruction in this case loads that address into rsi. In the code \
+to read an integer, the integer is read into a chunk of space on the runtime \
+stack. Since that location is referenced by an offset to the base ptr, you \
+use lea to convert that offset+address into an address. '
+);"><div id="x7"style="height:80px"></div><br>
+
+
+8. Explain in detail this instruction:
+<pre>
+    lea rsi, [rbp-8]
+</pre> 
+<input type="button"value="hint"onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+'The load effective address (lea) instruction, unlike a mov, \
+does not grab the value that rbp-8 points to (i.e.,is not a dereference) \
+but instead the address in rbp is decremented by 8 and loaded into rsi. \
+Thus address in rbp is effectively decremented by 8. '
+);"><div id="x8"></div><br>
+
+
+9. Explain in detail this instruction:
+<pre>
+    mov rdi, [rbp-8]
+</pre> 
+<input type="button"value="hint"onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+' Since this is a mov (not lea) the address [rbp-8] is \
+dereferenced. Thus, the value stored in the call frame 8 bytes past the \
+base pointer is grabbed and loaded into rdi. Since rdi is a 4-byte register, \
+4 bytes are grabbed. '
+);"><div id="x9"></div><br>
+
+
+10. Assume that main calls foo. If foo and main follow standard calling 
+    conventions, what is accomplished by these instructions in foo?
+<pre>
+    push rdi
+    push rsi
+</pre>
+<input type="button"value="hint"onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+'By convention rdi and rsi hold arg0 and arg1 during a \
+funtion call. We can assume that 2 arguments were passed to foo. Foo \
+is storing these arguments in the call frame for function foo. '
+);"><div id="x10"></div><br>
+
+
+11. What does this instruction accomplish?
+<pre>
+    imul  rax, rsi, 4
+</pre>
+<input type="button"value="hint"onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+'Multiplies the value in rsi by 4 and loads that product \
+into register rax.'
+);"><div id="x11"></div><br>
+
+
+12.  Explain these two instructions (taken from fac.asm).
+<pre>
+    pop  rsi
+    mul  rsi
+</pre>
+<input type="button"value="hint"onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+'<pre>\
+pop rsi  ; pops 4 bytes off stack;loads those 4 bytes into register rsi<br>\
+mul rsi  ; a quick-and-dirty way to perform unsigned multiplication.<br>\
+         ; the first operand is expected to be in rax; thus mul does this:<br>\
+         ; rax = rax * rsi'
+);"><div id="x12"style="height:80px"></div><br>
+
+<!--
+<input type="button"value="hint"onClick="xb[13]^=1; zzz('x13',(xb[13])?'':
+);"><div id="x13"></div><br>
+
+13. The bitwise logical AND, OR and EXCLUSIVE OR instructions perform the 
+    operation on the first register place the result in the first register.
+   Explain these operations: <pre>
+   and eax, 0fH   # 0fH  is 15 in decimal - the H denotes hex 
+   xor edx, edx
+   neg edx
+   not edx</pre>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q13Area');
+myArea.innerHTML='<pre>\
+and eax, 0fH  ; clear all but the last 4 bits of EAX. <br/>\
+xor edx, edx  ; set the contents of EDX to zero. <br/>\
+neg edx       ; perform twos-complement negation of value in edx;e.g.5=-5.<br/>\
+not edx     ; flip all bits in edx';">
+<DIV class="ans" id="Q13Area" STYLE="background-color:DEE; height:150px;">&nbsp; </DIV>
+
+<p>
+14. The Shift Left and Shift Right instructions perform shifts on the first
+ operand, padding empty bit positions with zeros. The second operand is either
+ an 8-bit constant or the register CL. Explain these shift
+ operations: <pre>
+    shl eax,1 
+    shr ebx,cl  </pre>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q14Area');
+myArea.innerHTML='<pre>\
+shl eax,1 ;multiply value of EAX by 2 (if most sig bit=1 you get overflow)<br/>\
+shr ebx,cl;divide value of EBX by 2^n, where n is the value in CL.  '; ">
+<DIV class="ans" id="Q14Area" STYLE="background-color:DEE; height:100px;">&nbsp; </DIV>
+
+<p>
+15. In x86, what does the instruction pointer (IP) register hold?
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q15Area');
+myArea.innerHTML='<pre>\
+ The address of the next instruction to be fetched and executed.  '; ">
+<DIV class="ans" id="Q15Area" STYLE="background-color:DEE; height:100px;">&nbsp; </DIV>
+
+<p>
+16. The unconditional jump instruction jumps to the given label. The conditional
+  jump instruction jumps based on the contents of a condition bit in the
+ machine status word register. This bit is set to 0 or 1 in the instruction
+  prior to the conditional jump. Explain the control flow instructions below
+ assuming that each is preceeded by<code> cmp eax, ebx  </code>: <pre>
+  jump L1 
+  jle done
+  je L1
+  jge L1
+</pre>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q16Area');
+myArea.innerHTML='<pre>\
+  jump L1 ; unconditional jump to label L1     <br/>\
+  jle done ; jump to label done if condition bit is -1 or 0 <br/>\
+  je L1   ; jump if condition bit is 0   <br/>\
+  jge L1  ; jump if condition bit is 0 or 1'; ">
+<DIV class="ans" id="Q16Area" STYLE="background-color:DEE; height:150px;">&nbsp; </DIV>
+
+<p>
+17. The Compare (cmp) instruction compares the values of two operands and sets
+    the condition codes in the machine status word appropriately. The
+   result can then be used to facilitate a jump. Explain these:<pre>
+      cmp eax, ebx   
+      jle done
+
+      cmp DWORD PTR [var], 10
+      jeq loop 
+   </pre>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q17Area');
+myArea.innerHTML='<pre>\
+  cmp eax, ebx ;subtract value in ebx from value in ebx; set condition bit<br/>\
+  jle done     ;if condition bit is -1 or 0 jump to done  <br/>\
+  cmp DWORD PTR [var], 10 ; subtract 10 from value at address var; set bit<br/>\
+  jeq loop  ; jump to loop if condition bit is 0 '; ">
+<DIV class="ans" id="Q17Area" STYLE="background-color:DEE; height:150px;">&nbsp; </DIV>
+
+<p>
+18. What do the instructions below facilitate?<pre>
+      call foo
+      return  </pre>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q18Area');
+myArea.innerHTML='<pre>\
+  You call a subroutine with call and you  return from a subroutine with\
+ return'; ">
+<DIV class="ans" id="Q18Area" STYLE="background-color:DEE; height:100px;">&nbsp; </DIV>
+-->
+
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>
