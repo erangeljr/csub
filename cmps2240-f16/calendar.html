@@ -10,198 +10,275 @@
         <link rel="stylesheet" type="text/css" href="http://cs.csub.edu/~erangel/css/bootstrap.min.css">
         
 	</head>
-	<body>
-		<div id="header">
-			<span style="font-size:2.0em; font-weight:bold;">
-				CMPS 2244: Computer Architecture I: Assembly Language Fall 2016
-			</span>
-		</div>
-		<!-- DIV LEFT -->
-		<div id="wrapper">
 
-			<div id="header2">
-				<span style="font-size:14px">
-					<a href="/~gordon/w2016sched.html"
-						target="_blank">mySchedule</a> |
-					<a href="/~gordon/">myPage</a> |
-					<a href="http://www.csub.edu" target="_blank">CSUB</a> |
-					<a href="http://www.cs.csubak.edu" target="_blank">
-						CS Dept</a> |
-					<a href="http://www.csub.edu/academics/calendars/index.html"
-						target="_blank">AcademicCalendar</a> |
-					<a href="http://www.timeanddate.com/calendar/"
-						target="_blank">2016calendar</a> 
-				</span>
-			</div>
-<!--
-<div id="announce">
-	Course prep material will be posted soon..
+<body class="wrap">
+	<div id="page"> <!--closing div in footer-->
+         <header class="container">
+          <div id="menu" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-header">
+            <button class="btn btn-success navbar-toggle"
+              data-toggle="collapse"
+              data-target=".navbar-collapse"><span class="glyphicon glyphicon-chevron-down"></span></button>
+            <div id="logo">
+                  <a href="http://cs.csubak.edu/~erangel/"  class="navbar-brand">CSUB | Computer Science</a>
+            </div>
+            </div>
+            <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+               <li id="home-menu" class="nav"><a href="http://cs.csubak.edu/~erangel/index.html">Home</a></li>
+                <li id="about-menu" class="nav"><a href="http://cs.csubak.edu/~erangel/about.html">About</a></li>
+                <li id="schedule-menu" class="nav"><a href="http://cs.csubak.edu/~erangel/schedule.html">Schedule</a></li>
+                <li id="contact-menu" class="nav"><a href="http://cs.csubak.edu/~erangel/contact.html">Contact</a></li>
+            </ul>
+            </div>
+          </div>
+
+        </header>
+
+<section id="body" class="container">
+	  <div class="row">	
+          <br/>
+	<br/>
+	<br/>
+      <div class="col-lg-2">
+   <!-- /well -->
+    <div class="well" style="padding:0px">
+        <div class="list-group" style="margin-bottom:0px">
+            <a href="#" class="list-group-item">Navigation</a>
+            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/syllabus" class="list-group-item">Syllabus</a>
+            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/calendar.html"class="list-group-item">Calendar</a>
+            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/material/"class="list-group-item">Course Material</a>
+            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/examples/"class="list-group-item">Examples</a>
+            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/solutions/"class="list-group-item">Solutions</a>
+            <a href="http://cs.csub.edu/~erangel/notes.html"class="list-group-item">Notes</a>
+            <a href="http://cs.csub.edu/~erangel/news.html"class="list-group-item">News</a>
+			<a href="#" class="list-group-item">MIPS</a>
+			<a href="./doc/mips-quick-guide.txt" class="list-group-item" target="_blank">Quick guide</a>
+			<a href="./doc/mips_list.html" class="list-group-item" target="_blank">Instructions</a>
+			<a href="./doc/mips32-instruc-set.pdf" class="list-group-item" target="_blank">32 ISA</a>
+			<a href="./doc/mips_reference_data.pdf" class="list-group-item" target="_blank">Refcard</a>
+			<a href="./doc/overview.html" class="list-group-item" target="_blank">Overview</a>
+			<a href="http://courses.missouristate.edu/KenVollmar/MARS/" class="list-group-item" target="_blank">MARS</a>
+			<a href="#" class="list-group-item">Textbooks</a>
+			<a href="./doc/HP_AppenA.pdf" class="list-group-item" target="_blank">Appendix A</a>
+			<a href="./doc/britton-mips-text.pdf" class="list-group-item" target="_blank">Britton</a>
+			<a href="./doc/harvard-mips-text.pdf" class="list-group-item" target="_blank">Harvard, Ellard</a> 
+			<a href="./doc/assemblylanguageprogdoc.pdf" class="list-group-item" target="_blank">SGI	Advanced</a>
+			<a href="#" class="list-group-item">&nbsp; x86</a>
+			<a href="http://www.cs.virginia.edu/~evans/cs216/guides/x86.html" class="list-group-item" target="_blank">x86 guide</a>
+			<a href="http://www.nasm.us/doc/nasmdo11.html" class="list-group-item" target="_blank">nasm manual</a>
+			<a href='./examples/week9/x86-64-notes' class="list-group-item" target="_blank">64-bit overview</a> 
+			<a href="http://www.nasm.us/doc/nasmdocb.html" class="list-group-item" target="_blank">nasm x86 ISA</a>
+			<a href='http://www.cs.csub.edu/~erangel/cmps2240/doc/inline-quick-guide.txt' class="list-group-item" target="_blank"> Inline guide</a> 
+			<a href='http://www.codeproject.com/Articles/15971/Using-Inline-Assembly-in-C-C' class="list-group-item" target="_blank">Inline tutorial</a>
+			<a href="./doc/ascii-chart.txt" class="list-group-item" target="_blank">ASCII chart</a>
+			<a href='./doc'	class="list-group-item" target="_blank">Docs</a> 
+        </div>
+    </div>
+    <!-- /well -->
+      </div>
+<div class="col-lg-9">
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Course Calender | Fall 2016</div>
+
+        <!-- Table -->
+        <table class="table table-striped table-hover">
+          <tr>
+            <th class="col-lg-2">Week</th>
+            <th>Lecture Topics</th>
+            <th>Laboratory</th>
+            <th>Homework</th>
+            <th>Notes</th>
+          </tr>
+          <tr>
+            <td>Week 1</td>
+            <td><a href="#">Binary, Octal, and Hexadecimal Operations<br></a></td>
+            <td><a href='lab1.html' target="_blank">Lab 1</a></td>
+            <td><a href='a1.html' target="_blank">Homework 1</a></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Week 2</td>
+            <td><a href="#">Arithmetic, Shift &amp; Rotate Operations</a></td>
+            <td><a href='lab2.html' target="_blank">lab2</a></td>
+            <td><a href='a2.html' target="_blank">homework2</a></td>
+            <td><a href="#">Notes</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Week 3</td>
+            <td><a href="#">Subroutine Linkage &amp; Call Frames</a></td>
+            <td><a href='lab3.html' target="_blank">lab3</a></td>
+            <td><a href='a3.html' target="_blank">homework3</a></td>
+            <td><a href="#">Notes</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+         </tr>
+          <tr>
+            <td>Week 4</td>
+            <td><a href="#">Instruction Encoding, Jumps &amp; Branches</a></td>
+            <td><a href='lab4.html' target="_blank">lab4</a></td>
+            <td><a href='a4.html' target="_blank">homework4</a></td>
+            <td><a href="#">Notes</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Week 5</td>
+            <td><a href="#">Optimizing MIPS Code</a></td>
+            <td><a href='lab5.html' target="_blank">lab5</a></td>
+            <td><a href='a5.html' target="_blank">homework5</a></td>
+            <td><a href="#">Notes</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          
+          <tr>
+            <td>Week 6</td>
+            <td><a href="#">Arithmetic Operations &amp; Overflow</a></td>
+            <td><a href='lab6.html' target="_blank">lab6</a></td>
+            <td><a href='a6.html' target="_blank">homework6</a></td>
+              <td><a href="#">Notes</a></td>
+          </tr>
+           <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Week 7</td>
+           <td><a href="#">Program Flow &amp; Delay Slots</a></td>
+            <td><a href='lab7.html' target="_blank">lab7</a>/td>
+            <td><a href='a7.html' target="_blank">homework7</a></td>
+            <td><a href="#">Notes</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>">Notes</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Week 8</td>
+           <td><a href="#">Syntax-Directed Translation</a></td>
+            <td><a href="http://cs.csub.edu/~erangel/cmps450-s16/lab08.html">Lab 08</a></td>
+            <td><a href="http://cs.csub.edu/~erangel/cmps450-s16/hw08.html">HW 08</a></td>
+            <td><a href="#">Notes</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a href="http://cs.csub.edu/~erangel/cmps450-s16/content/WeekEight-III.pdf">Notes</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Week 9</td>
+            <td><a href="http://cs.csub.edu/~erangel/cmps450-s16/ch06a_notes.html">Intermediate Code Generation</a><br>
+                <a href="http://cs.csub.edu/~erangel/cmps450-s16/ch06b_notes.html">Code Generation - Flow Control</a></td>
+            <td><a href="http://cs.csub.edu/~erangel/cmps450-s16/lab09.html">Lab 09</a></td>
+            <td><a href="http://cs.csub.edu/~erangel/cmps450-s16/hw09.html">HW 09</a></td>
+            <td></td>
+          </tr> 
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Week 10</td>
+            <td>Work on your Project</td>
+            <td>No Lab</td>
+            <td>No HW</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>Final Exam</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr bgcolor=white>
+            <th colspan=4 > FINAL PROJECT
+            <font color=red> &nbsp; DUE: 5PM FRI JUN 10</font>
+              (submit highest phase completed) <br/>
+            <a href="final.txt">Take-home Final Exam</a><font color=red> 
+            &nbsp; DUE: 5PM FRI JUN 10th (slip under my door)</font>
+            </th>
+            </tr>
+        </table>
+      </div>
+    </div>
 </div>
--->
+	</section>
+		<hr />
+	<footer class="container">
+	<p>All Rights Reserved <a href="http://cs.csub.edu/~erangel/">Eddie Rangel @ CSUB | Computer Science</a>.</p>
 
-<div id="announce2">
-	CMPS 224 Assembly Language Programming (5 units)<br>
-	Introduction to machine architecture and program structure;
-	code, data, and stack segments; programming with an assembly
-	language. Each week lecture meets for 200 minutes and lab
-	meets for 150 minutes. Prerequisite: CMPS 221
-</div>
+	</footer>
 
-			<div style="width:100%; color:#886655;">
-				<span style="color:#bb2222;">
-				</span>
-			</div>
-			<div id="left">
-				<div id="lefttop">
-					<b class="ltop">
-						<b class="l1"></b>
-						<b class="l2"></b>
-						<b class="l3"></b>
-					</b>
-					<div style="padding-left:2px;">
-						<h3> &nbsp; Links</h3>
-						<p>
-						- <a href='syllabus.html'>Syllabus</a><br>
-						- <a href="#">Scores</a><br>
-						</p>
-					</div>
-					<b class="lbottom">
-						<b class="l3"></b>
-						<b class="l2"></b>
-						<b class="l1"></b>
-					</b>
-				</div>
-				<div id="leftmid">
-					&nbsp;
-				</div>
-				<div id="lefttop">
-					<b class="ltop">
-						<b class="l1"></b>
-						<b class="l2"></b>
-						<b class="l3"></b>
-					</b>
-					<div style="padding-left:2px;">
-						<h3> &nbsp; MIPS</h3>
-						<p>
-						- <a href="./doc/mips-quick-guide.txt"
-							target="_blank">
-							Quick guide</a><br>
-						- <a href="./doc/mips_list.html"
-							target="_blank">
-							Instructions</a><br>
-						- <a href="./doc/mips32-instruc-set.pdf"
-							target="_blank">
-							32 ISA</a><br>
-						- <a href="./doc/mips_reference_data.pdf"
-							target="_blank">
-							Refcard</a><br>
-						- <a href="./doc/overview.html"
-							target="_blank">
-							Overview</a><br>
-						- <a href="http://courses.missouristate.edu/
-							KenVollmar/MARS/"
-							target="_blank">
-							MARS</a>
-						</p>
-						<p>
-						Textbooks<br>
-						- <a href="./doc/HP_AppenA.pdf"
-							target="_blank">
-							Appendix A</a><br>
-						- <a href="./doc/britton-mips-text.pdf"
-							target="_blank">
-							Britton</a><br>
-						- <a href="./doc/harvard-mips-text.pdf"
-							target="_blank">
-							Harvard, Ellard</a><br> 
-						- <a href="./doc/assemblylanguageprogdoc.pdf"
-							target="_blank">
-							SGI	Advanced</a><br> 
-						</p>
-					</div>
-					<b class="lbottom">
-						<b class="l3"></b>
-						<b class="l2"></b>
-						<b class="l1"></b>
-					</b>
-				</div>
-				<div id="leftmid">
-					&nbsp;
-				</div>
-				<div id="lefttop">
-					<b class="ltop">
-						<b class="l1"></b>
-						<b class="l2"></b>
-						<b class="l3"></b>
-					</b>
-					<div style="padding-left:2px;">
-						<h3> &nbsp; x86</h3>
-						<p>
-						- <a href="http://www.cs.virginia.edu/~evans/cs216/
-							guides/x86.html"
-							target="_blank">
-							x86 guide</a><br>
-						- <a href="http://www.nasm.us/doc/nasmdo11.html"
-							target="_blank">
-							nasm manual</a><br>
-			    		- <a href='./examples/week9/x86-64-notes'
-							target="_blank">
-							64-bit overview</a><br> 
-						- <a href="http://www.nasm.us/doc/nasmdocb.html"
-							target="_blank">
-							nasm x86 ISA</a><br>
-						- <a href='http://www.cs.csub.edu/~donna/cs224/doc/
-							inline-quick-guide.txt'
-							target="_blank">
-							Inline guide</a><br> 
-						- <a href='http://www.codeproject.com/Articles/15971/
-							Using-Inline-Assembly-in-C-C'
-							target="_blank">
-							Inline tutorial</a><br> 
-						</p>
-					</div>
-					<b class="lbottom">
-						<b class="l3"></b>
-						<b class="l2"></b>
-						<b class="l1"></b>
-					</b>
-				</div>
-				<div id="leftmid">
-					&nbsp;
-				</div>
-				<div id="lefttop">
-					<b class="ltop">
-						<b class="l1"></b>
-						<b class="l2"></b>
-						<b class="l3"></b>
-					</b>
-					<div style="padding-left:2px;">
-						<h3> &nbsp; misc</h3>
-						<p>
-						- <a href="./examples/"
-							target="_blank">
-							Sample code</a><br>
-						- <a href="./doc/ascii-chart.txt"
-							target="_blank">
-							ASCII chart</a><br>
-						<!--
-						- <a href="./resources.php"
-							target="_blank">
-							MIPS + x86</a><br>
-						-->
-						- <a href='./doc'
-							target="_blank">
-							docs</a> 
-						</p>
-					</div>
-					<b class="lbottom">
-						<b class="l3"></b>
-						<b class="l2"></b>
-						<b class="l1"></b>
-					</b>
-				</div>
-			</div>
-			<br>
+
+	
+	<script src="http://cs.csubak.edu/~erangel/js/jquery-2.1.4.min.js"></script>
+	<script src="http://cs.csubak.edu/~erangel/js/bootstrap.min.js"></script>
+  <script src="http://cs.csubak.edu/~erangel/js/custom.js"></script>
+	<!-- Google Analytics -->
+	<!--  -->
+
+</div> <!-- opeing div in  header id="page" -->
+</body>
+</html>
+
+<!-- BELOW  -->		
 			<!-- DIV CENTER ---------------------------------->
 			<div id="main">
 				<table cellspacing="2" cellpadding="2">
@@ -213,71 +290,71 @@
 					<tr>
 						<td id="td0">1</td>
 						<td id="td1">
-						<a href='a1.html' target="_blank">homework1</a><br> 
-						<a href='lab1.html' target="_blank">lab1</a>
+						
+						
 						</td>
 						<td id="td1">
-						binary, octal, and hexadecimal operations<br>
+						
 						</td>
 					</tr>
 					<tr>
 						<td id="td0">2</td>
 						<td id="td1">
-						<a href='a2.html' target="_blank">homework2</a><br>
-						<a href='lab2.html' target="_blank">lab2</a>
+						<br>
+						
 						</td>
 						<td id="td1">
-						arithmetic, shift &amp; rotate operations<br>
+						<br>
 						</td>
 					</tr>
 					<tr>
 						<td id="td0">3</td>
 						<td id="td1">
-						<a href='a3.html' target="_blank">homework3</a><br>
-						<a href='lab3.html' target="_blank">lab3</a>
+						<br>
+						
 						</td>
 						<td id="td1">
-						subroutine linkage &amp; call frames<br>
+						<br>
 						</td>
 					</tr>
 					<tr>
 						<td id="td0">4</td>
 						<td id="td1">
-						<a href='a4.html' target="_blank">homework4</a><br>
-						<a href='lab4.html' target="_blank">lab4</a>
+						<br>
+						
 						</td>
 						<td id="td1">
-						instruction encoding, jumps &amp; branches<br>
+						<br>
 						</td>
 					</tr>
 					<tr>
 						<td id="td0">5</td>
 						<td id="td1">
-						<a href='a5.html' target="_blank">homework5</a><br>
-						<a href='lab5.html' target="_blank">lab5</a>
+						<br>
+						
 						</td>
 						<td id="td1">
-						optimizing MIPS code<br>
+						<br>
 						</td>
 					</tr>
 					<tr>
 						<td id="td0">6</td>
 						<td id="td1">
-						<a href='a6.html' target="_blank">homework6</a><br>
-						<a href='lab6.html' target="_blank">lab6</a>
+						<br>
+						
 						</td>
 						<td id="td1">
-						arithmetic operations &amp; overflow<br>
+						<br>
 						</td>
 					</tr>
 					<tr>
 						<td id="td0">7</td>
 						<td id="td1">
-						<a href='a7.html' target="_blank">homework7</a><br>
-						<a href='lab7.html' target="_blank">lab7</a>
+						<br>
+						
 						</td>
 						<td id="td1">
-						program flow &amp; delay slots<br>
+						<br>
 						</td>
 					</tr>
 					<tr>
