@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Eddie Rangel @ CSUB</title>
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" type="text/css" href="http://cs.csub.edu/~erangel/css/bootstrap.min.css">
+        
+	</head>
+
+<body class="wrap">
+	<div id="page"> <!--closing div in footer-->
+         <header class="container">
+          <div id="menu" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-header">
+            <button class="btn btn-success navbar-toggle"
+              data-toggle="collapse"
+              data-target=".navbar-collapse"><span class="glyphicon glyphicon-chevron-down"></span></button>
+            <div id="logo">
+                  <a href="http://cs.csubak.edu/~erangel/"  class="navbar-brand">CSUB | Computer Science</a>
+            </div>
+            </div>
+            <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+               <li id="home-menu" class="nav"><a href="http://cs.csubak.edu/~erangel/index.html">Home</a></li>
+                <li id="about-menu" class="nav"><a href="http://cs.csubak.edu/~erangel/about.html">About</a></li>
+                <li id="schedule-menu" class="nav"><a href="http://cs.csubak.edu/~erangel/schedule.html">Schedule</a></li>
+                <li id="contact-menu" class="nav"><a href="http://cs.csubak.edu/~erangel/contact.html">Contact</a></li>
+            </ul>
+            </div>
+          </div>
+
+        </header>
+
+<section id="body" class="container">
+	  <div class="row">	
+          <br/>
+	<br/>
+	<br/>
+      <div class="col-lg-2">
+   <!-- /well -->
+    <div class="well" style="padding:0px">
+        <div class="list-group" style="margin-bottom:0px">
+          <a href="#" class="list-group-item active">Navigation</a>
+            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/syllabus" class="list-group-item">Syllabus</a>
+            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/calendar.html"class="list-group-item">Calendar</a>
+            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/material/"class="list-group-item">Course Material</a>
+            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/examples/"class="list-group-item">Examples</a>
+            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/solutions/"class="list-group-item">Solutions</a>
+            <a href="http://cs.csub.edu/~erangel/notes.html"class="list-group-item">Notes</a>
+            <a href="http://cs.csub.edu/~erangel/news.html"class="list-group-item">News</a>
+        </div>
+    <div class="list-group" style="margin-bottom:0px">
+          <a href="#" class="list-group-item active">MIPS</a>
+			<a href="./doc/mips-quick-guide.txt" class="list-group-item" target="_blank">Quick guide</a>
+			<a href="./doc/mips_list.html" class="list-group-item" target="_blank">Instructions</a>
+			<a href="./doc/mips32-instruc-set.pdf" class="list-group-item" target="_blank">32 ISA</a>
+			<a href="./doc/mips_reference_data.pdf" class="list-group-item" target="_blank">Refcard</a>
+			<a href="./doc/overview.html" class="list-group-item" target="_blank">Overview</a>
+			<a href="http://courses.missouristate.edu/KenVollmar/MARS/" class="list-group-item" target="_blank">MARS</a>
+   </div>
+   <div class="list-group" style="margin-bottom:0px">
+          <a href="#" class="list-group-item active">Textbooks</a>
+			<a href="./doc/HP_AppA.pdf" class="list-group-item" target="_blank">Appendix A</a>
+			<a href="./doc/britton-mips-text.pdf" class="list-group-item" target="_blank">Britton</a>
+			<a href="./doc/harvard-mips-text.pdf" class="list-group-item" target="_blank">Harvard, Ellard</a> 
+			<a href="./doc/assemblylanguageprogdoc.pdf" class="list-group-item" target="_blank">SGI	Advanced</a>
+            
+    </div>
+   <div class="list-group" style="margin-bottom:0px">
+			<a href="#" class="list-group-item active">&nbsp; x86</a>
+			<a href="http://www.cs.virginia.edu/~evans/cs216/guides/x86.html" class="list-group-item" target="_blank">x86 guide</a>
+			<a href="http://www.nasm.us/doc/nasmdo11.html" class="list-group-item" target="_blank">nasm manual</a>
+			<a href='./examples/week9/x86-64-notes' class="list-group-item" target="_blank">64-bit overview</a> 
+			<a href="http://www.nasm.us/doc/nasmdocb.html" class="list-group-item" target="_blank">nasm x86 ISA</a>
+			<a href='http://www.cs.csub.edu/~erangel/cmps2240/doc/inline-quick-guide.txt' class="list-group-item" target="_blank"> Inline guide</a> 
+			<a href='http://www.codeproject.com/Articles/15971/Using-Inline-Assembly-in-C-C' class="list-group-item" target="_blank">Inline tutorial</a>
+            </div>
+   <div class="list-group" style="margin-bottom:0px">
+			<a href="#" class="list-group-item active">Misc.</a>
+			<a href="./doc/ascii-chart.txt" class="list-group-item" target="_blank">ASCII chart</a>
+			<a href='./doc'	class="list-group-item" target="_blank">Docs</a> 
+        </div>
+    </div>
+    <!-- /well -->
+      </div>
+<div class="col-lg-9">
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Course Calender | Fall 2016</div>
+
+        <!-- Table -->
+        <table class="table table-striped table-hover">
+          <tr>
+            <th class="col-lg-2">Id</th>
+            <th>Lab 1</th>
+            <th>HW 1</th>
+            <th>Quiz 1</th>
+            <th>Lab 2</th>
+            <th>HW 2</th>
+            <th>Quiz 2</th>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+         </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+           <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a href="#">Notes</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a href="#">Notes</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+            <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+            <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+            <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+            <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>0000</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+            <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+</div>
+	</section>
+		<hr />
+	<footer class="container">
+	<p>All Rights Reserved <a href="http://cs.csub.edu/~erangel/">Eddie Rangel @ CSUB | Computer Science</a>.</p>
+
+	</footer>
+
+
+	
+	<script src="http://cs.csubak.edu/~erangel/js/jquery-2.1.4.min.js"></script>
+	<script src="http://cs.csubak.edu/~erangel/js/bootstrap.min.js"></script>
+  <script src="http://cs.csubak.edu/~erangel/js/custom.js"></script>
+	<!-- Google Analytics -->
+	<!--  -->
+
+</div> <!-- opeing div in  header id="page" -->
+</body>
+</html>
