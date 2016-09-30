@@ -9,10 +9,7 @@
 		color:#114;
 		margin:2px; padding-top:6px;
 	}
-	.box {
-		border: 4px solid #dde;
-		width: 600px;
-		padding-left: 10px; }
+	.box_border { border:2px solid #999; width:600px; padding-left:8px; }
     .console {
         padding-left:10px;
         background:#222;
@@ -23,185 +20,340 @@
 	p { width:800px; }
 	</style>
 
-<h2>CMPS-224  Lab 6<br>Parsing Command Line Arguments</h2>
-Gordon Griesel<br>
+<h2>CMPS-224  Lab 6<br>Code Optimization in MIPS</h2>
+Eddie Rangel<br>
 Department of Computer and Electrical Engineering and Computer Science<br>
 California State University, Bakersfield<br>
-
+<p style="padding:4px; color:red; border:2px dashed #111;">
+<b>Notice:</b><br>
+<b>Due:</b> Wednesday Oct. 10th by 4pm
+</p>
 <p>
 <h3>Introduction</h3>
-<b>Goals</b>:<br>
-Learn how to parse command-line arguments.
+<b>Goal</b>:<br>
+Learn how to optimize a MIPS assembly program.
 </p>
 
 <p>
 <b>Resources</b>:<br>
 <a href="http://www.mrc.uidaho.edu/mrc/people/jff/digital/MIPSir.html">
-	MIPS Instruction Reference</a><br>
+MIPS Instruction Reference</a><br>
 <a href="http://chortle.ccsu.edu/AssemblyTutorial/Chapter-17/ass17_1.html">
-	MIPS Tutorial Part 5</a> (Ch 17 - Ch 20):<br>
+MIPS Tutorial Part 5</a> (Ch 17 - Ch 20):<br>
+<a href="http://www.cs.csub.edu/~erangel/cmps2240-f16/code/lab5/">
+Week 5 examples</a><br>
 <a href="./doc/HP_AppenA.pdf">Appendix A.10</a> in the text<br>
 </p>
 
+
 <p>
-<b>Files Needed</b>:<br>
-<b>calc.s</b> at <a href="http://cs.csubak.edu/~gordon/cs224/code/lab6/calc.s">
-	calc.s at http://cs.csubak.edu/~gordon/cs224/code/lab6/calc.s</a><br>
-<b>gcd.s</b> at <a href="http://cs.csubak.edu/~gordon/cs224/code/lab6/gcd.s">
-	http://cs.csubak.edu/~gordon/cs224/code/lab6/gcd.s</a><br>
-<b>sample.s</b> at
-<a href="http://cs.csubak.edu/~gordon/cs224/code/lab6/sample.s">
-	http://cs.csubak.edu/~gordon/cs224/code/lab6/sample.s</a><br>
-<br>
-Get the files: <b>cp /home/stu/gordon/public_html/cs224/code/lab6/* .</b>
+<b>Files Needed</b>:
+fib.s at <a href="http://cs.csubak.edu/~erangel/cmps2240-f16/code/lab5/fib.s">
+	http://cs.csubak.edu/~erangel/cmps2240-f16/code/lab5/fib.s</a><br>
+Get more files at:<br>
+<b>
+cp /home/stu/erangel/public_html/cmps2240-f16/code/lab5/* .<br>
+</b>
+or<br>
+<b>
+scp sleipnir.cs.csubak.edu:/home/stu/erangel/public_html/cmps2240-f16/code/lab5/* .<br>
+</b>
 </p>
 
 <p>
-It is often the case that that you do not know in advance how many or what
-type of arguments are passed in from the command line.  In this situation
-you must <b>parse</b> the command line.
-</p>
-<p>
-Your task is to write a small MIPS calculator <b>calc.s</b> that accepts a
-single arithmetic expression (+,-,*) from the command line, evaluates the
-expression, and displays the result. Then you will use the MIPS div operator to
-determine if the result of your operation is even or odd. Start by copying
-calc.s and gcd.s into your directory:
-</p>
-<p class="box">
-Note: for full credit on this lab, you must finish part-1 during class.
-Prepare by reading through the lab and references before Thursday.
+In this assignment, we will work with code that computes the numbers in
+the Fibonacci sequence.
 </p>
 
 <p>
-Currently calc.s prompts the user to input two integers, sums the integers
-and displays the result like this:
-<pre class="console">
+We will define the Fibonacci sequence as beginning with 1,1.<br>
+So, an algorithm for computing the n<sup>th</sup> Fibonacci number is:
+</p>
+<p>
+<pre style="border:4px solid #ddd; width:400px; padding-left:10px">
 
-$ spim -f calc.s
-Enter an integer: 11
-Enter an integer: 23
-34
+int fib(int n) {
+   if (n == 1)
+      return 1;
+   if (n == 2)
+      return 1;
+   return fib(n-2) + fib(n-1);
+}
 
 </pre>
 </p>
 
 <p>
-<h3>Part One</h3>
+You may define your Fibonacci sequence as beginning at 0,1, if you like.<br>
 </p>
 <p>
-Modify calc.s to accept one subtraction, addition, or multiplication
-expression from the command line, perform the operation and display the result
-as in the samples below.
-<p>
-<pre class="console">
+<pre style="border:4px solid #ddd; width:400px; padding-left:10px">
 
-$ spim -f calc.s 11 + 12
-23
-
-$ spim -f calc.s 22 - 12
-10
-
-$ spim -f calc.s 5 \* 20
-100
+int fib(int n) {
+   if (n == 1)
+      return 0;
+   if (n == 2)
+      return 1;
+   return fib(n-2) + fib(n-1);
+}
 
 </pre>
-Notice:<br>
-An asterisk needs to be preceeded with a backslash.<br>
-The bash interpreter will see an asterisk as a wildcard, unless escaped.<br>
-The <b>\</b> is an escape character.<br>
+In our work, there will be no 0<sup>th</sup> Fibonacci number.<br>
+A numerical sequence begins with the 1<sup>st</sup> number, and there is no<br>
+number before the first number, or it would be the first number.
 </p>
 
-<p>
-Since your code executes from the command line, any functions that you call
-(e.g., print.s or read.s) would need to be in the calc.s file.
-Since you do not need sophisticated output, just use syscalls for output.
-You do not need to include printf procedure unless you want to. You will,
-however, need the atoi function to convert the command line arguments into
-decimal values. The <b>atoi</b> code is in <b>gcd.s</b>.
-</p>
 
 <p>
-The code to grab the ascii decimal equivalent of a character is in
-<b>sample.s</b>.
-Have your <a href="http://www.cs.csub.edu/~gordon/cs224/doc/ascii-chart.txt">
-ASCII chart</a> handy.
-</p>
-<p>
-Note that '-' is 45. The ascii decimal equivalent for '+' is 43.
-The ascii decimal equivalent for '*' is 42. Display an error
-condition and exit if you do NOT get a valid operator:  ~(42 or 43 or 45).
-</p>
-<p>
-You can assume your operands will be small enough that you will not
-need the HI and LO registers; i.e., you can use this instruction to perform
-multiplication:
+A trace of the calls in the fib function looks like a binary tree, where a call
+is either an internal node or a leaf. For example, the call tree for fib(5)
+looks like this:
 </p>
 <p>
 <pre>
-mul rd, rs, rt
+                  fib(6)
+               /           \
+            fib(4)           fib(5)
+           /     \        /          \
+        fib(2)  fib(3)  fib(3)            fib(4)
+            /     \       /    \         /      \
+      fib(1)    fib(2)  fib(1)  fib(2)  fib(2)   fib(3)
+                                                 /   \
+                                            fib(1)    fib(2)
 </pre>
 </p>
-
 <p>
-<b>1.1  Check Off</b>
+fib(6) makes 15 calls, 7 of which are leaf calls. The nodes on the tree that
+have no children are leaf nodes. Leaf calls are terminal, meaning
+the call immediately hits the stopping condition of n=1 or n=2 and returns
+with a value of 1. The goal of this lab is to reduce the run time of
+the Fibonacci algorithm. There are three steps we will take, described as
+follows.
 </p>
 <p>
-Have the instructor check off that your program accepts different command
-line operations.
-</p>
-
-<hr>
-<p>
-<h3>Step Two</h3>
-</p>
-<p>
-After evaluating the expression, determine if the result is even or odd.  To
-do this, divide the result by 2.  If the remainder is 0 you know the number
-is even.  Otherwise, the result is odd.  Use the div operation as shown below
-(register usage will differ in your code):
-</p>
-<p>
-<pre>
-li  $t0, 2
-div $t1, $t0
-mfhi $t2
-</pre>
+(1) Reduce the stack frame of the recursive solution.<br>
+(2) Reduce the of instructions of the recursive solution.<br>
+(3) Refactor from recursive to an iterative algorithm.<br>
 </p>
 
 <p>
-Now just check if the contents of $t2 are zero. If yes, branch to code to
-display the word EVEN. If not, branch to code to display the word ODD.<br>
-Your finished program should execute like this:
+<h3>Improve the recursive Fibonacci version</h3>
+</p>
+<p>
+<b>1 Reduce Stack Frame Construction</b>
+</p>
+<p>
+In the case of terminal calls, it is not necessary to go through the work of
+setting up and dismantling a stack frame since you immediately return. Since
+much of the overhead of this recursive function is in saving and restoring all
+of the registers you will notice a big improvement.
+</p>
+<p>
+Time fib.s like this:
 </p>
 <p>
 <pre class="console">
 
-$ spim -f calc.s 22 - 12
-10
-EVEN
-
-$ spim -f calc.s 5 \* 11
-55
-ODD
+$ time spim -f fib.s 27
+27 Fibonacci number is 196418
+real 0m0.873s
+user 0m0.208s
+sys 0m0.664s
 
 </pre>
 </p>
 
 <p>
-<b>2.1  Check Off</b>
+Copy your fib.s file to <b>fibo.s</b>, and make your optimizations
+to the <b>fibo.s</b> file.<br>
+The first optimization is to reduce stack frame construction. Since you do
+not need to build a stack frame for terminal calls, why go to the trouble to
+build the frame? Make the check for a stopping condition <b>above</b> the code
+to build a stack frame. If you have hit a stopping condition, all you need to
+do is store the return result in $v0 and return.<br>
+At the very top of the fib function, add this:
 </p>
 <p>
-Have the instructor check off that your program now outputs EVEN or ODD.
-</p>
-
-
-<p>
-<h3>What to turn in</h3>
 <pre>
-Your lab program <i><b>calc.s</b></i> must be located in the correct directory on Sleipnir.
-directory name: /home/stu/<i>yourname</i>/224/lab6/
+fib:
+li   $t6, 2
+bgt  $a0, $t6, nonleaf
+#move $v0, $a0
+li $v0, 1
+jr $ra
+nonleaf:
+subu $sp, $sp, 32
+...
+</pre>
+</p>
+
+<p>
+Secondly, you can also save some work in non-terminal calls by eliminating
+any callee-saved registers that are not essential.  In particular, there is one
+return value in the recursive calls to fib that does not need to be saved to an
+'s' register. I'll let you figure out which one it is. Load/store operations
+are expensive so you should definitely see an improvement by eliminating just
+one.
+</p>
+<p>
+After making these changes, time your code again:
+</p>
+<p>
+<pre class="console">
+
+$ time spim -f <b>fibo.s</b> 27
+real 0m4.550s
+user 0m0.168s
+sys  0m4.384s
+
+</pre>
+</p>
+
+<p>
+You should see an improvement of roughly 40%. If not, keep working. If
+you wish to optimize further you can optimize main.  Since main does not
+need to return anywhere and does not have any local values in registers that
+it needs to preserve you do not need a call frame.  (This assumes that you
+display the value of n before you make the call to fib.)
+</p>
+
+<p>
+<b>2 Reduce the Number of Instructions</b>
+</p>
+<p>
+You can try to reduce the number of instructions,
+but don't spend too much time on this part.
+Every instruction takes at least one machine cycle but some are worse than
+others. Loads and stores are obviously the most expensive since they require
+a memory access.  Time your code again.
+</p>
+<p>
+Note, you may want to sftp your source files from sleipnir down to the
+local machine if the load on sleipnir is heavy.  From a terminal window on
+the local machine:
+</p>
+<p>
+<pre class="console">
+
+$ cd
+$ cd Desktop
+$ mkdir lab5
+$ cd lab5
+$ sftp sspade@sleipnir
+sftp&gt; cd 224/lab5
+sftp&gt; get *.s
+sftp&gt; quit
+$ ls
+
+</pre>
+</p>
+
+<p>
+<b>Check Off</b>
+</p>
+<p>
+Have the instructor check-off that your program's run time has reduced.  Do
+this by keeping a separate slow version and fast version.  This part of the lab
+is worth 5 points.  Submit it as fibo.s.
+</p>
+<p>
+<h3>3 Iterative Fibonacci</h3>
+</p>
+<p>
+Name this file <b>fibi.s</b>.<br>
+Based on the figure above, recursion is not the best way to handle this
+problem. There are many calls that are repeated. As it turns out, the
+recursive Fibonacci implementation has a run time of
+O(2<sup>n</sup>).
+</p>
+<p>
+This problem should be linear O(n). You can verify for yourself by writing
+down the Fibonacci base cases and calculating the n<sup>th</sup> number,
+you should notice right away you are doing a single sweep of the numbers,
+hence linear runtime.
+</p>
+<p>
+Furthermore, recursion calls a new instance of the function. Each new
+instance of the function will construct a call frame which is a costly
+operation despite our optimization.
+<b>This means that if you have a linear runtime recursive function and a
+	linear runtime iterative function, the iterative version should be much
+   	faster.</b>
+In the case of factorial and Fibonacci algorithms, the recursive version is
+liable to fail before the iterative version because of stack overflow.
+This is not to say that recursion is bad. There will be problems in the future
+that are best framed with recursion (such as tree operations).
+Recursion looks more elegant but elegance does not necessarily mean optimal.
+</p>
+<p>
+Indeed, it is possible to use a single for loop to compute the n-th Fibonacci
+number and only a handful of registers (and this is the version you should
+give if asked of this in a coding interview).  The algorithm is as follows.
+</p>
+<p>
+<pre style="border:4px solid #ddd; width:400px; padding-left:10px">
+int fib_iterative(int n)
+{
+   if (n == 1 || n == 2)
+      return 1;
+   int a = 1;
+   int b = 1;
+   int result;
+   for (int i=2; i&lt;=n; i++) {
+      result = b + a;
+      a = b;
+      b = result;
+   }
+   return result;
+}
+</pre>
+</p>
+
+<p>
+Here is another iterative Fibonacci algorithm...
+<pre style="border:4px solid #ddd; width:400px; padding-left:10px">
+int fib_iterative(int n)
+{
+   int a=1;
+   int b=0;
+   int result;
+   for (int i=0; i&lt;n; i++) {
+      result = b + a;
+      a = b;
+      b = result;
+   }
+   return result;
+}
+</pre>
+</p>
+
+<p>
+When you complete this you should compare your runtime results with
+the runtime results in the previous section. It should be faster but the load
+on sleipnir may cause unpredictable results. You may want to download it
+locally and test on your own machine, but this is not required.
+</p>
+
+<p>
+<b>2.1 Check Off</b>
+</p>
+<p>
+Show your iterative Fibonacci function to the instructor.<br>
+Submit it as fibi.s. This is worth 5 points.
+</p>
+
+<p>
+<b>Extra credit</b><br>
+Add an ordinal indicator to show which Fibonacci number you calculated.
+</p>
+
+<p>
+<h3>What to turn in:</h3>
+<pre>
+Your lab programs <i><b>fibo.s</b></i> and <i><b>fibi.s</b></i> must be located in the correct directory on Sleipnir.
+directory name: /home/stu/<i>yourname</i>/2240/5/
 Replace <i>yourname</i> with your own Sleipnir username!
+</pre>
 </p>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>	
 </body>
