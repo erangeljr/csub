@@ -149,48 +149,6 @@ mul rd, rs, rt
 Your program should accept different command line operations.
 </p>
 
-<hr>
-<p>
-<h3>Step Two</h3>
-</p>
-<p>
-After evaluating the expression, determine if the result is even or odd.  To
-do this, divide the result by 2.  If the remainder is 0 you know the number
-is even.  Otherwise, the result is odd.  Use the div operation as shown below
-(register usage will differ in your code):
-</p>
-<p>
-<pre>
-li  $t0, 2
-div $t1, $t0
-mfhi $t2
-</pre>
-</p>
-
-<p>
-Now just check if the contents of $t2 are zero. If yes, branch to code to
-display the word EVEN. If not, branch to code to display the word ODD.<br>
-Your finished program should execute like this:
-</p>
-<p>
-<pre class="console">
-
-$ spim -f calc.s 22 - 12
-10
-EVEN
-
-$ spim -f calc.s 5 \* 11
-55
-ODD
-
-</pre>
-</p>
-
-<p>
-Your program should now output EVEN or ODD.
-</p>
-
-
 <p>
 <h3>What to turn in</h3>
 Your instructor will look for your <b>/2240/6/calc.s</b> program on Sleipnir.
