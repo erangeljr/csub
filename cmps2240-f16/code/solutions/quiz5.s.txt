@@ -1,0 +1,61 @@
+# CMPS-2240
+# One possible solution to the Quiz-5 programming problem.
+#
+# This solution is provided as-is. It was written by the team of
+# students listed and was written during class period under time
+# constraints of an exam.
+#
+# Authors: Chris, Albert, Jeremy, Mark, Taylor, Sean
+#
+# Assignment is here:
+#-----------------------------------------------------------------------------
+# Write a complete assembly language program, including data declarations,
+# that corresponds to the following C code fragment. Make use of the fact
+# that multiplication and division by powers of 2 can be performed most
+# efficiently by bit-shifting.
+#
+# int main()
+# {
+# 	int a, b;
+# 	int c[10];
+# 	b = 56;
+# 	a = 20;
+# 	c[9] = b - 16 * (a / 4 + 210);
+# 	for (int i=0; i<10; i++)
+# 		cout << c[i] << endl;
+# 	return 1;
+# }
+#-----------------------------------------------------------------------------
+
+.data 
+array: .space 40
+.text
+main:
+    li $a0, 20
+    li $a1, 56
+    la $a2, array
+    sra $a0, $a0, 2
+    addi $a0, $a0, 210
+    sll $a0, $a0, 4
+    sub $a0, $a1, $a0
+    sw $a0, 36($a2)
+    la $t0, array
+    li $t1, 0
+loop:
+    bge $t1, 10, end
+    li $v0, 1
+    lw $a0, ($t0)
+    syscall
+    li $a0, ' ' # <------ interesting line of code
+    li $v0, 11
+    syscall
+    addi $t0, 4
+    addi $t1, 1
+    j loop
+end:
+    li $a0, 10
+    li $v0, 11
+    syscall
+    li $v0, 10
+    syscall
+
