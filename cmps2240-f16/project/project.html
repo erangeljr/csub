@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<title>CMPS 2240 Final Project</title>
+<style>
+	.box50 { padding:10px; background:#ddddff; color:#000;	width: 800px;
+		border:4px solid #fda; }
+	.box65 { padding:10px; background:#d5e0f5; color:#000; width: 800px;
+		border:4px solid #fda; }
+	.box70 { padding:10px; background:#d0e5f0; color:#000; width: 800px;
+		border:4px solid #fda; }
+	.box80 { padding:10px; background:#c5eae5; color:#000; width: 800px;
+		border:4px solid #fda; }
+	.box90 { padding:10px; background:#a0f0d5; color:#000; width: 800px;
+		border:4px solid #fda; }
+	.box95 { padding:10px; background:#b8f5cc; color:#000; width: 800px;
+		border:4px solid #fda; }
+	.box100 {padding:10px; background:#b5ffbb; color:#000; width: 800px;
+		border:4px solid #fda; }
+	#announce {
+		margin:8px; margin-left:4px; padding:4px;
+		font-family:'Arial',sans-serif; font-size: 1.0em;
+		background:#efe; border:4px solid #5f5;
+		width:540px;
+	}
+	#announce2 {
+		margin:10px; margin-left:4px; padding:4px;
+		font-family:'Arial',sans-serif; font-size: 1.0em;
+		background:#cfe; border:4px solid #5f5; width:500px;
+	}
+	.code {
+		padding-left:10px;
+		background:#ffa;
+		color:#222;
+		border:3px solid #66a;
+		width:600px;
+	}
+	.console {
+		padding-left:10px;
+		background:#222;
+		color:#afa;
+		border:4px solid #66a;
+		width:600px;
+	}
+</style>
+<body>
+<p>
+CMPS 2240 Final Project<br>
+Eddie Rangel<br>
+Fall 2016<br>
+
+<pre id="announce2">
+This is not a group project.
+Do not accept code from other students or tutors.
+Do not have the code of other students in your own directories.
+</pre>
+
+<pre id="announce">
+REQUIRED:
+
+Put your project file in a directory named:
+<span style="font-size:32px">
+<b>/home/stu/<i>you</i>/224/project/</b>
+</span>
+(replace <u><i>you</i></u> with your username)
+
+
+You have to make the folder yourself.
+<i>mkdir project</i>
+
+Not: /224/p224/project/
+Not: /224/p224/
+</pre>
+
+<div id="announce2">
+<pre>
+Your project filename must be one of the following:
+
+50.s
+65.s
+70.s
+80.s
+90.s
+95.s
+100.s
+</pre>
+</div>
+
+
+
+<p>
+<b>Project details</b><br>
+This is not a trivial assignment. Start at the 50% mark and work your way up
+-- functionality for all preceeding stages must still work as you complete
+subsequent phases.
+</p>
+<p>
+We will cover the algorithms needed to meet the specifications for each phase
+during class. Write these algorithms on paper and understand them fully before
+you try to implement them in MIPS. You do not need to complete the phase in
+the timeline in which we cover the algorithm but this will keep you on track.
+If you complete the weekly labs you can code the final project.  
+</p>
+
+<p>
+<b>Due date: Last day of class. Friday 12/9 at 11:59pm.</b>
+</p>
+
+<p>
+<b>Grading:</b><br>
+Your grade for the final project is based upon the highest phase that you
+complete according to the specifications.
+Keep your previous code in case you run into trouble. Feel free to complete
+your project in advance. You may e-mail the instructor for comments.
+</p>
+<p>
+The project due date is firm. Late projects cannot be accepted for any reason.<br>
+<br>
+After testing your code I will also check your source for readability.
+Points marked off if your source is not well-documented and clean. Clean
+means that an algorithm that could be written in 10 lines of code should
+not be written in 50. Extraneous code is harder to debug.
+Code should have a consistent and pleasing style.
+</p>
+
+<p>
+<b>Required header:</b><br>
+Your code should have a header at the top. An example follows.
+</p>
+<p>
+<pre class="code">
+
+# 95.s 
+# larry coder
+# cs224 final project - wtr 2016
+# this code displays the nth row of pascal's triangle
+# usage: spim -f 95.s n k 
+
+</pre>
+</p>
+
+<p>
+<b>Collaboration policy:</b><br>
+You can discuss the project with other students but the code must be written 
+entirely by you. Please do not ask tutors to write your code. Tutors can 
+show you how to debug your code and can explain algorithms only.
+Tutors cannot write code for you.
+</p>
+<p>
+<b>Where to write your project code?</b><br>
+I recommend doing your project development in your <b>/224/p224/</b> folder.
+<br>
+You may do your work in any folder under your 224 directory, except a folder
+named project.<br>
+A folder named <b>/224/project/</b> is reserved to hold your final project
+submission only.
+</p>
+<p>
+<b>How to turn in your project final program?</b><br>
+Create a directory named <b>224/project</b>. Put your final program there.<br>
+Log on to Sleipnir, then do this:
+</p>
+<pre class="console">
+
+$ cd ~/224
+$ mkdir project
+
+</pre>
+
+<p>
+<b>Example Code:</b><br>
+Example code for project:
+<a href="http://cs.csubak.edu/~gordon/cs224/project/">http://cs.csubak.edu/~gordon/cs224/project/</a>
+</p>
+
+
+<p>
+<b>Project Grading Milestones:</b>
+<pre>
+Week  Grade  Milestone
+----  -----  ---------------------------------------------------------
+  4    50%   Read n,k from cmdline; convert to ints; swap if n &lt; k.
+  5    65%   Set n=6, k=4 as default; exit if args are not numbers
+  6    70%   Compute n! and k!
+  7    80%   Compute C(n,k) = n!/((n-k)!k!).
+  8    90%   Display row n of Pascal's triangle for k = 0 to n.
+  9    95%   Display all rows i of Pascal's triangle, i = 0 to n.
+ 10   100%   Write a recursive function to compute C(n,k), named Cnk_r.
+----------------------------------------------------------------------
+
+</pre>
+
+<p>
+<b>Project Technical Description:</b><br>
+Unless stated otherwise, all phases must be written as a function (modular
+code is easier to read and debug). This project is built around Pascal's
+triangle. The entries in the triangle are computed as C(n,k), the
+combination of n things taken k at a time, where n is the row in the
+triangle and k is the column.
+</p>
+<p>
+The project consists of specific milestones. You should complete one
+milestone before moving on to the next. The milestone you reach is the
+grade you will recieve (assuming you properly completed that milestone).
+Refer to Table above for the milestones.
+</p>
+
+<p id="announce">
+<b>Required Function Calls:</b><br>
+You must write function calls for each phase that you complete.
+You should have a <b>jal</b> &lt;function&gt; for each phase.
+These function calls should be near the top of your program so I
+can easily find them.<br>
+You may combine phases 50 and 65 into one function call.
+</p>
+
+<p id="announce2">
+<b>Delay Slot:</b><br>
+A No op instruction after each branch is not required.<br>
+A MIPS assembler, such as the GNU Binutils, places the no-operation
+instructions for you, and you have to set a flag to turn it off.
+</p>
+
+
+<div class="box50">
+<p>
+<b>Phase 50</b>
+</p>
+<p>
+Objective: Read n, k from cmdline, convert and swap if n < k
+</p>
+<p>
+Deliverable: 50.s
+</p>
+
+<p>
+Description:
+</p>
+<p>
+For 50% write a MIPS program to grab two numbers n and k from the
+command line. Call atoi to convert the numbers (which are really
+strings) to integers. Swap the integers if n &lt; k. Display args
+followed by a line feed.
+</p>
+<p>
+Refer to <b>gcd.s</b> from Week 3 for how to grab and use two numbers
+from the command line and convert them from a string to an integer.
+You may want to start your project with gcd.s and remove things you
+do not need.
+</p>
+<p>
+For now you can assume valid arguments (i.e., two numbers) will be
+passed. Thus you do not need to do any error checking in this phase.
+In Phase 65 you will code two default arguments so your program will
+work if the user does not pass two arguments.
+</p>
+
+<p>
+To copy the project example files into your current directory do this:
+<pre>
+$ cp /home/stu/gordon/public_html/cs224/project/* . 
+</pre>
+</p>
+
+<p>
+The integers typed in by the user are the second and third argument in
+the cmdline structure (the name of the executable is the first). Before
+doing anything move the base address to the command line structure to a
+persistant register (such as $s0) for safekeeping. The integers are read
+in as strings so you must grab the address to the first string and call
+<b>atoi</b> to convert the string into an integer. Do the same thing with
+the second string. 
+</p>
+
+<p>
+Once you have successfully grabbed and converted the integers, swap their
+values if k &gt; n. The swap algorithm looks like this: 
+<pre class="code">
+
+if (n &lt; k) {
+    temp = n;
+    n = k;
+    k = temp;
+}
+
+</pre>
+</p>
+
+<p>
+To implement swap you need a temp register to ensure that you do not
+overwrite registers that hold n and k. Compare the values of n and k
+with the "set if less than" instruction:  
+<pre>
+slt rd, rs, rt   # set rd=1 if rs &lt; rt else rd=0
+</pre>
+
+You may also deploy an in-place swap like this...
+<pre class="code">
+
+if (n &lt; k) {
+    n = n ^ k;
+    k = k ^ n;
+    n = n ^ k;
+}
+
+</pre>
+No temporary register needed.
+</p>
+
+<p>
+See loops.s from week 4 for sample usage of slt.
+Display n and k after the swap. To test: 
+<pre class="console">
+
+$ spim -f 50.s 6 10    # swap since n &lt; k
+10 6
+$ spim -f 50.s 10 6    # do not swap if n &gt; k 
+10 6
+
+</pre>
+</p>
+</div>
+<br>
+
+
+<div class="box65">
+<p>
+<b>Phase 65</b>
+</p>
+<p>
+Objective: Code default values for n and k
+</p>
+<p>
+Deliverable: 65.s
+</p>
+<p>
+Description:
+</p>
+<p>
+Copy 50.s to 65.s. Modify your code to set n=6 and k=4 as default
+arguments if no args are passed. Load values n=6 and k=4 into the
+appropriate registers before doing anything. If the user has passed
+arguments, verify that the arguments are numbers
+(start with character 1...9). If invalid, exit with an error message.
+If valid, overwrite the default values and continue the program.
+A program that implements what you need for 65% is <b>fib.s</b> from
+the week 5 code examples.
+</p>
+<p>
+Your code should work regardless of the number of arguments that
+are passed. If fewer than two are passed, use the default values.
+The purpose of default values is to be able to run your program
+using SPIM as a debugger. This allows you to find and fix problems.
+The algorithm for this specification is shown below. The code that
+implements this algorithm should be inserted at the very top of your
+program.
+<pre class="code">
+
+n = 6;
+k = 4;
+if (arg_count == 3) {
+    n = atoi(argv[1];
+    k = atoi(argv[2];
+}
+
+</pre>
+</p>
+<p>
+To test:
+</p>
+<p>
+<pre class="console">
+
+$ spim -f 65.s 5 10  
+10 5
+$ spim -f 65.s    # if two args are not passed use default values 
+6 4 
+
+</pre>
+</p>
+</div>
+<br>
+
+
+<div class="box70">
+<p>
+<b>Phase 70</b>
+</p>
+<p>
+Objective: Compute n! and k!
+</p>
+<p>
+Deliverable: 70.s 
+</p>
+<p>
+Description:
+</p>
+<p>
+For 70% you will compute the factorials for n and k. The factorial
+function you should implement for 70% is iterative (uses a loop)
+rather than recursive.
+</p>
+<p>
+The pseudo-code below shows the iterative algorithm.
+</p>
+<p>
+<pre class="code">
+
+int fac(n)  {
+    int product = 1;
+    for (int i = 1 to n) 
+        product = product * i;
+    return product;
+} 
+
+</pre>
+</p>
+<p>
+Under normal circumstances you would want to use a 64-bit register to
+hold n! since factorials get large very quickly. Unfortunately, SPIM
+does not support 64-bit integers (a 64-bit integer is the LONG INT
+type in C). The largest integer value in SPIM is a positive signed
+int (a 31-bit positive integer). Since this is the case you do not
+need to use the HI and LO registers to store the product. Thus you can
+use the MUL instruction to compute the product. Lab 3 covers looping
+and all the MIPS code you need to know to complete this phase.<br>
+Call <b>fac</b> using the MIPS <b>jal</b> instruction. Follow parameter
+passing conventions; i.e., load n into $a0 before making the call and
+put n! in $v0 before returning. Return to main using the MIPS
+<b>jr $ra</b> instruction.<br>
+To test: 
+</p>
+<pre class="console">
+
+$ spim -f 80.s 4 5   
+5 4
+120 24
+
+</pre>
+</div>
+<br>
+
+<div class="box80">
+<p>
+<b>Phase 80</b>
+</p>
+<p>
+Objective: Compute C(n,k) = n! / ((n-k)! k!)
+</p>
+<p>
+Deliverable: 80.s
+</p>
+<p>
+Description:
+</p>
+<p>
+For 80%, write a function <b>Cnk</b> that computes 'n choose k'
+(the combination of n things taken k at a time) using the definition
+for C(n,k):
+<pre>
+C(n,k) = n! / ((n-k)! k!)
+</pre>
+</p>
+<p>
+You will need to use the MIPS div instruction. The result of div is
+in LO so use mflo to grab it:
+<pre class="code">
+
+DIV    rs, rt   # the quotient is stored in LO
+MFLO   rd       # grab the quotient 
+
+</pre>
+</p>
+
+<p>
+To follow conventions you should pass 'n' to Cnk in $a0,
+pass 'k' to Cnk in $a1 and return C(n,k) in $v0.
+</p>
+<p>
+Your Cnk function will call the fac function that you wrote in phase 80.
+Since you are calling one function (fac) from another function (Cnk),
+you must construct a stack frame for Cnk to prevent the $ra register
+from being overwritten. See fact.s from the project examples.
+</p>
+<p>
+NOTE: You will be marked down if you do not construct a call frame.
+You can compute C(n,k) without a call frame but in doing so you will
+duplicate your code to compute n!. That is bad coding. Since you have
+a stack frame you might as well save the result from fac(n), fac(k)
+and fac(n-k) onto the stack. Make room for 3 words if you do this.
+Thus, you don't need to worry about registers being overwritten.
+</p>
+<p>
+Sample code:
+<pre class="code">
+
+jal fac           # n is loaded into $a0 and n! returned in $v0
+sw  $v0, 0($fp)   # store n! on stack for safekeeping  
+
+</pre>
+</p>
+<p>
+This phase is a little bit tricky. Be careful with your registers! 
+To test: 
+<pre class="console">
+
+$ spim -f 80.s 4 6  
+6 4
+720 24
+15
+
+</pre>
+</p>
+</div>
+<br>
+
+<div class="box90">
+<p>
+<b>Phase 90</b>
+</p>
+<p>
+Objective: Display row n of Pascal's Triangle for k = 0 to n
+</p>
+<p>
+Deliverable: 90.s 
+</p>
+<p>
+Description:
+</p>
+<p>
+For 90% write a function <b>displayRow</b> that displays row n of
+Pascal's triangle for k = 0 to n. Ignore the value for k that is
+passed in. Since the displayRow function calls Cnk, you must contruct
+a stack frame. Within displayRow write a loop that goes from k=0 to n.
+Within the body of the loop display the return value for Cnk(n,k).
+If you coded phase80 well, phase90 should be easy to complete.
+</p>
+<p>
+To test: 
+<pre class="console">
+
+$ spim -f 90.s 4 6  
+6 4
+720 24
+15
+1 6 15 20 15 6 1 
+
+</pre>
+</p>
+</div>
+<br>
+
+<div class="box95">
+<p>
+<b>Phase 95</b>
+</p>
+<p>
+Objective: Display Pascal's Triangle
+</p>
+<p>
+Deliverable: 95.s
+</p>
+<p>
+Description:
+</p>
+<p>
+For 95% you will write a function to display Pascal's Triangle as a
+right triangle for rows 0...n on the screen. Here is what the triangle
+should look like for n=5. Note that the top of the triangle is for n=0, k=0. 
+<pre class="console">
+
+(n=0) 1
+(n=1) 1  1
+(n=2) 1  2  1
+(n=3) 1  3  3  1
+(n=4) 1  4  6  4  1
+(n=5) 1  5 10 10  5  1 
+
+</pre>
+</p>
+
+<p>
+Phase95 assumes that phase80 is coded as a function; e.g, calling
+displayRow(n) will display row n of Pascal's triangle. To complete
+phase95 you call displayRow in a loop that executes from i=0 to n.
+</p>
+<p>
+To test: 
+<pre class="console">
+
+$ spim -f 95.s 13 2 
+13 2
+1932053504 2
+24
+1 4 24 88 221 399 532 532 399 221 88 24 4 1 
+1 
+1 1 
+1 2 1 
+1 3 3 1 
+1 4 6 4 1 
+1 5 10 10 5 1 
+1 6 15 20 15 6 1 
+1 7 21 35 35 21 7 1 
+1 8 28 56 70 56 28 8 1 
+1 9 36 84 126 126 84 36 9 1 
+1 10 45 120 210 252 210 120 45 10 1 
+1 11 55 165 330 462 462 330 165 55 11 1 
+1 12 66 220 495 792 924 792 495 220 66 12 1
+
+</pre>
+</p>
+
+<p>
+The algorithm for this phase is as follows:
+<pre>
+/* assume n is either the default value or has been read in from cmdline */ 
+for (int i=0; i &lt;= n; i++)
+    displayRow(i);
+</pre>
+</p>
+</div>
+<br>
+
+<div class="box100">
+<p>
+<b>Phase 100</b>
+</p>
+<p>
+Objective: Write recursive version of C(n,k)
+</p>
+<p>
+Deliverable: 100.s 
+</p>
+<p>
+Description: For 100% you will replace the iterative version of C(n,k) with a
+recursive function.
+The recursive algorithm is shown below:
+<pre class="code">
+
+int C(n,k) {
+    if (k==0) return 1;
+    if (k==n) return 1;
+    if (k==1) return n;
+    return C(n-1,k) + C(n-1,k-1);
+}
+
+</pre>
+</p>
+
+<p>
+You should write a separate function for recursive C(n,k).<br>
+Name it <b>Cnk_r:</b>
+</p>
+
+<p>
+Note that in this algorithm computing a factorial is not necessary.
+See pascal.cpp in project code for an implementation of the algorithm
+in C. Try to optimize the code as much as possible by not constructing
+a call frame for terminal calls. The goal is to compare the iterative
+and the recursive version. Time both programs with n=14 and k=2.
+Note that your factorial values will be incorrect due to a limitation
+in SPIM (see notes below) but anything below 14 will not give you a
+valid comparison. At 14 2 the timing results will look similar to this:
+<pre class="console">
+
+$ time spim -f 95.s 14 2   # iterative
+
+output is here
+...
+...
+
+real 0m0.047s
+user 0m0.004s
+sys 0m0.040s
+
+$ time spim -f 100.s 14 2  # recursive
+
+output is here
+...
+...
+
+real 0m0.873s
+user 0m0.048s
+sys 0m0.820s  
+
+</pre>
+</p>
+
+<p>
+You should see that even with optimization recursion is always worse than
+iteration - in this case roughly 19 times worse. 
+</p>
+<p>
+Warning:<br>
+SPIM does not support long ints (64 bits) or unsigned ints
+(the most  significant bit is always reserved for the sign).<br>
+Thus, the largest positive integer is 2<sup>31</sup> - 1,<br>
+which is 2,147,483,647.<br>
+13! = 6,227,020,800.<br>
+12! = 479,001,600 and thus is OK.<br>
+factorial you can compute without overflow is 12!. 
+</p>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>
+
+
+
