@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<style>
+	body { padding-left: 10px; color: #000; }
+	h2 { font-family:'Arial',sans-serif; font-size:2.0em; color:#999; }
+	h3 {
+		font-family:'Arial',sans-serif; font-size:1.6em;
+		color:#114;
+		margin:2px; padding-top:6px;
+	}
+    .console {
+        padding-left:10px;
+        background:#222;
+        color:#afa;
+        border:4px solid #66a;
+        width:600px;
+    }
+	.box_border { border:2px solid #999; width:600px; padding-left:8px; }
+	p { width:800px; }
+	</style>
+
+<h2>CMPS-2240  Lab 8<br>Intro to x86-64 Assembly</h2>
+Eddie Rangel<br>
+Department of Computer and Electrical Engineering and Computer Science<br>
+California State University, Bakersfield<br>
+<p style="padding:4px; color:red; border:2px dashed #111;">
+<b>Notice:</b><br>
+<b>Due:</b> Wednesday Nov. 2nd by 4pm
+</p>
+
+
+<p>
+<h3>Introduction</h3>
+<b>Goals</b>:<br>
+Learn to write an x86-64 assembly language program.
+</p>
+
+<p>
+<b>Files Needed</b>:<br>
+
+All files at: <a href="http://cs.csubak.edu/~erangel/cmps2240-f16/code/lab8/">
+	http://cs.csubak.edu/~erangel/cmps2240-f16/code/lab8/</a>
+<br>
+Copy them to your area like this:<br>
+<b>cp /home/stu/erangel/public_html/cmps2240-f16/code/lab8/* .</b><br>
+or like this<br>
+<b>scp sleipnir.cs.csubak.edu:/home/stu/~erangel/cmps2240-f16/code/lab8/* .</b><br>
+</p>
+
+
+<p>
+<h3>Description</h3>
+</p>
+<p>
+This lab introduces you to x86-64 assembly using NASM or Yasm. Both are x86
+assemblers. Yasm has a few more capabilities than NASM. For the purposes of
+this class, either assembler will work fine.
+</p>
+<p>
+Your job is to modify lab8.asm.
+The source currently prompts the user to input two integers from the keyboard
+and displays the greater of the two. Please modify the assembly code to:<br>
+. Display the <b>sum</b> of the two numbers.<br>
+. Display a message indicating when the numbers are <b>equal</b>.<br>
+
+</p>
+<p>
+Since integer I/O requires a conversion routine to convert from char to int
+you are going to link in the gcc standard c library and use
+<b>printf</b> and <b>scanf</b>
+rather than use assembly code to do this.
+Since the executable can be run on sleipnir, you can use gdb to debug your
+code. Note that you are linking a program written in C and a program written
+in x86 assembly.<br>
+This is ok because gcc will compile the C program into x86 machine language,
+and NASM/Yasm will compile the assembly source mnemonics into the same kind of
+machine language. Thus, the two programs can interact with each other as
+long as they follow the same conventions.<br>
+As we learned with MIPS, function arguments and output return values must be
+placed in specific registers for programs to work together.
+This is the <b>calling convention</b>.
+</p>
+<p>
+Before beginning, study the comments on each line of code in <b>bare.asm</b>
+and <b>inout.asm</b>.
+</p>
+<p>
+inout.asm prompts the user to enter a string from the keyboard (stdin) and then displays the entire string that the user entered to stdout (the screen).
+An x86-64 assembly file under linux will be assembled by nasm or
+yasm into an elf64 object file and then linked by ld into an elf64 executable.
+The file can then be executed on sleipnir.
+Some console commands to do this for nasm are:
+</p>
+<p>
+<pre class="console">
+
+ nasm -f elf64 lab8.asm    # this produces lab8.o
+ gcc -o lab8 lab8.o        # gcc calls the linker
+
+</pre>
+</p>
+
+<p>
+There is a convenient way to assemble and link your code.
+Since we are writing in x86 on an x86 machine we can use the
+<b>make utility</b> to handle the assembling and linking commands.
+</p>
+<p>
+The copy commands above already placed a Makefile in your own folder.
+</p>
+
+<p>
+So, to assemble and link inout.asm using the Makefile do this:
+</p>
+
+<p><pre><b>make inout
+</b></pre></p>
+To remove .o and executables do this:
+<p><pre><b>make clean
+</b></pre></p>
+
+<p>
+All the code you need to complete this lab is in lab8.asm. x86-64 is CISC,
+is not load/store and is backwards compatible with 8 or so ISAs.
+"Not load/store" means that most instructions allow one of the operands to be
+a memory address. These three reasons make the x86 ISA instruction set larger
+than the MIPS instruction set.<br>
+<br>
+Some programmers find that x86 is more difficult to understand than MIPS, but
+it really all depends on the individual.
+</p>
+<p>
+One thing to notice is that the 64-bit register names in x86-64 begin
+with 'R' instread of 'E'. Add the instructions below into your code.
+Use <b>printf</b> to display the result.
+You can keep all existing code in lab8.asm.
+</p>
+<p>
+<pre>
+; add two numbers together - put sum in RCX
+xor   rbx, rbx      ; effectively zero out rbx
+xor   rcx, rcx      ; effectively zero out rcx
+mov   rcx, [rbp-16] ; load rcx with value 16 bytes from base ptr
+mov   rbx, [rbp-8]  ; load rbx with value 8 bytes from base ptr
+add   rcx, rbx      ; add num1 + num2 - store in rcx
+
+; There are other ways to achieve the same result.
+; For example, since x86 is not load/store you can directly access memory as follows:
+
+mov   rcx, [rbp-16] ; load rcx with value 16 bytes from base ptr
+add   rcx, [rbp-8]  ; add num2 and num1 - store result in rcx
+</pre>
+</p>
+
+
+When you run your program, it should produce approximately
+the sample output below.
+<p>
+<pre class="console">
+
+$ make
+nasm -f elf64 -g -F dwarf lab8.asm    # -g -F dwarf adds debugging stuff
+gcc -o lab8  lab8.o -lc
+
+$ ./lab8
+
+Enter an integer: 21
+Enter another integer: 5
+The greater of 21 and 5 is 21.
+The sum of 21 and 5 is 26.
+
+$ ./lab8
+
+Enter an integer: 23
+Enter another integer: 23
+23 and 23 are equal.
+The sum of 23 and 23 is 46.
+
+$ 
+
+</pre>
+</p>
+
+<p>
+<h3>What to turn in</h3>
+<pre>
+Your lab program <i><b>lab8.asm</b></i> must be in the correct directory on Sleipnir.
+directory name: /home/stu/<i>you</i>/2240/8/
+Replace <i>you</i> with your own Sleipnir username!
+</p>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>	
+</body>
+</html>
+
