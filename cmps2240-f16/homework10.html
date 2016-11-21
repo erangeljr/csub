@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0050)http://cs.csubak.edu/~erangel/cmps321-w16/hw1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 321 - Homework 1</title>
+</head>
+
+<body>
+<h2>Homework 10</h2>
+Next Monday
+<ol>
+<li>(2 pts) Translate the following C/C++ loop into assembly. Give JUST the
+instructions associated with this loop, not a full MIPS assembly program. 
+Assume the base address of the array <code>a</code> is already stored in 
+register <code>s2</code>, the variable <code>i</code> is already stored in 
+register <code>s1</code>, and the variable <code>size</code> is already stored 
+in register <code>s3</code>.
+<pre>    for(i = 0; i &lt; size; i++)
+    {
+      a[i] = i + 5;
+    }
+    i = 0;
+</pre>
+</li><li>(4 pts) Translate the MIPS assembly you created in your answer to Question
+1 into binary instructions. You may use any address you like for the immediate
+portion of the branch instruction.
+</li><li>(2 pts) Translate the following MIPS assembly snippet back into a C/C++
+loop:
+<pre>      move  $v0, $zero      # initialize v0 to 0
+      move  $t0, $zero      # initialize t0 to 0
+Loop: beq   $t0, $s0, Exit  # if t0 == s0, go to Exit
+      sll   $t1, $t0, 2     # t1 = t0 * 4
+      add   $t1, $t1, $s2   # t1 = s2 + (t0 * 4)
+      lw    $t2, 0($t1)     # bring element in from memory
+      add   $v0, $v0, $t2   # v0 += t2
+      sw    $t2, 0($t1)     # send updated value back to memory
+      addi  $t0, $t0, 1     # increment t0
+      j     Loop
+Exit: 
+</pre>
+</li><li>(2 pts) What would be the human-readable MIPS instruction represented by
+the binary string 
+<pre>    1000 1101 0010 1000 0000 0100 1011 0000
+</pre>
+</li><li>(2 pts) Convert the decimal number 1054 to binary and hexidecimal.
+</li><li>(2 pts) What is the motivation behind using multiple levels of caches with 
+different sizes and addressing modes (e.g. a level 1 cache with 16 direct 
+mapped blocks and a level 2 cache with 64 2-way set associative blocks)? 
+</li></ol></body></html>
