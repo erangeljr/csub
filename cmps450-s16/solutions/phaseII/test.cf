@@ -1,6 +1,0 @@
-/* 65.cf - test syntax for while statement */
-int i = 33;
-int main()
-{
-    return i;
-}  

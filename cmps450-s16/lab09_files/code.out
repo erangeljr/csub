@@ -1,8 +1,0 @@
-
-0    GOTO 1
-1    IF (a == 77) GOTO 3
-2    GOTO 5
-3    a := 88
-4    GOTO 6
-5    a := 99
-6    RETURN 0

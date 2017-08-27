@@ -1,9 +1,0 @@
-/* 80.cf - finds one type error in a numeric expression */
-int i;
-int main ( int x, float y ) 
-{ 
-    4.5 + 8 * 2;      /* lineno 5 - TYPE ERROR */
-    4.5 + 3.4;        /* no type error */
-    33 + 22;          /* no type error */
-    return 0;
-}  

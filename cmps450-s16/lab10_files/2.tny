@@ -1,6 +1,0 @@
-{ file: 2.tny }
-x := 3;
-repeat
-x := x - 1;
-y := 5
-until x = 0

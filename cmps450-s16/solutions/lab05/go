@@ -1,4 +1,0 @@
-#!/usr/bin/bash
-./cfc test.cf 2> of
-cat dump.symtab
-vi of

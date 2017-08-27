@@ -1,9 +1,0 @@
-/* an updated cflat program for lab 2 with 28 tokens  */
-read x;
-if (34.3e-3 < x) then
-  result := result * .5; 
-  repeat
-     result += result;
-  until x = 0;
-  write result
-end

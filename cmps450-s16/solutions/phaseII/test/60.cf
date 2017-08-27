@@ -1,8 +1,0 @@
-/* 60.cf - test syntax for a function and simple expressions */
-int main()
-{
-    i = i * 1;
-    c = 7.5 + 1;
-
-    return 0;
-}  
