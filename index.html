@@ -7,45 +7,65 @@
         <meta name="viewport" content="width=device-width">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" type="text/css" href="http://cs.csub.edu/~erangel/css/bootstrap.min.css">
-               
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="http://cs.csub.edu/~erangel/css/custom.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
 
     </head>
 <body class="wrap">
 	<div id="page"> <!--closing div in footer-->
          <header class="container">
-          <div id="menu" class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-header">
-            <button class="btn btn-success navbar-toggle"
-              data-toggle="collapse"
-              data-target=".navbar-collapse"><span class="glyphicon glyphicon-chevron-down"></span></button>
-            <div id="logo">
-                <a href="http://cs.csub.edu/~erangel/"  class="navbar-brand">CSUB | Computer Science</a>
-            </div>
-            </div>
-            <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li id="home-menu" class="nav"><a href="http://cs.csub.edu/~erangel/index.html">Home</a></li>
-                <li id="about-menu" class="nav"><a href="http://cs.csub.edu/~erangel/about.html">About</a></li>
-                <li id="schedule-menu" class="nav"><a href="http://cs.csub.edu/~erangel/schedule.html">Schedule</a></li>
-                <li id="contact-menu" class="nav"><a href="http://cs.csub.edu/~erangel/contact.html">Contact</a></li>
-            </ul>
-            </div>
-          </div>
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Eddie Rangel @ CSUB</a>
+                  </div>
+              
+                  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                    <ul class="nav navbar-nav">
+                      <li class=""><a href="http://www.csub.edu/">CSUB <span class="sr-only">(current)</span></a></li>
+                      <li><a href="http://www.cs.csubak.edu/">CEECS</a></li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Courses <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href='./cmps2040'>CMPS 2040</a></li>
+                            <li><a href='./cmps450'>CMPS 450 </a></li>
+                            <li><a href='./cmps321'>CMPS 321</a></li>
+                        </ul>
+                      </li>
+                      <li clas='dropwdown'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' 
+                           href="#">Resources <span class='caret'></span></a>
+                        <ul class='dropdown-menu'>
+                            <li><a href='http://www.cplusplus.com/'>cplusplus.com</a></li>
+                            <li><a href='http://www.w3schools.com/'>w3schools.com</a></li>
+                            <li><a href='http://php.net/'>php.net</a></li>
+                            <li class="divider"></li>
+                            
+                            <li><a href='http://www.csub.edu/facultyaffairs/Academic_Calendars/index.html'>Academic Calendar</a></li>
+                        </ul>
+                    </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="https://cmsweb.cms.csub.edu/psp/HBAKPRD/?&cmd=login&languageCd=ENG">myCSUB</a></li>
+                      </ul>
+                  </div>
+                </div>
+              </nav>
         </header>
 	<section id="body" class="container">
 	  <div class="row">
       <div class="col-lg-2">
-	<br/>
-	<br/>
-	<br/>
     <div class="well" style="padding:0px">
-        <div class="list-group" style="margin-bottom:0px">
-        <a href="#" class="list-group-item">Navigation</a>
-        <a href="http://cs.csub.edu/~erangel/notes.html" class="list-group-item">Notes</a>
-        <a href="http://cs.csub.edu/~erangel/news.html" class="list-group-item">News</a>
+        <div class="list-group" style="margin-bottom:0px"> 
+        <img src="images/csub_logo_trans2.gif" >
+        <a href="notes.html" class="list-group-item">Notes</a>
+        <a href="news.html" class="list-group-item">News</a>
     </div>
     </div>
       </div>
@@ -74,11 +94,6 @@
          <li><a href="#">Spring 2016 | CMPS 450 Compilers</a></li>
         <li><a href="#">Winter 2016 | CMPS 321 Computer Architecture</a></li>
     </ul>
-    <p><b>Moodle Link</b></br>
-      The direct link to the course on Moodle is 
-      <a href="https://moodle.cs.csub.edu/moodle/course/view.php?id=103">https://moodle.cs.csub.edu/moodle/course/view.php?id=103</a> </p>
-      <p><b>Academic Calendar</b></p>
-      <a href="/content/CSUB Calendar Winter 2016.pdf">CSUB Academic Calendar for Winter 2016</a> </p>
     </div>
   </div>
 <hr>
@@ -86,9 +101,6 @@
 </div>
 
 	<div class="col-lg-3">
-    <br/>
-    <br/>
-    <br/>
     <!-- /well -->
     <div class="well">
         <h4>Links from the Web</h4>
@@ -101,7 +113,7 @@
                     </li>
                     <li><a href="http://community.linuxmint.com/tutorial/view/45">Linux Mint Gnome Desktop</a>
                     </li>
-                    <li><a href="http://cs.csub.edu/~erangel/#random">Random</a>
+                    <li><a href="#random">Random</a>
                     </li>
                 </ul>
             </div>
@@ -122,14 +134,11 @@
 
   		<hr />
 	<footer class="container">
-	<p>All Rights Reserved <a href="http://cs.csub.edu/~erangel/">Eddie Rangel @ CSUB | Computer Science</a>.</p>
+	<p>All Rights Reserved <a href="">Eddie Rangel @ CSUB | Computer Science</a>.</p>
 
-	</footer>
-
-
-<script src="http://cs.csub.edu/~erangel/js/jquery-2.1.4.min.js"></script>
-<script src="http://cs.csub.edu/~erangel/js/bootstrap.min.js"></script>
-<script src="http://cs.csub.edu/~erangel/js/custom.js"></script>
+    </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- Google Analytics -->
 	<!--  -->
 
