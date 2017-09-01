@@ -66,7 +66,7 @@ Other links from our home page.<br>
 
 <p>
 <b>Files Needed</b>:<br>
-Example programs for today's lab: <a href="http://cs.csubak.edu/~erangel/2240/code/lab1/">Lab1</a>
+Example programs for today's lab: <a href="cmps2240-f17/code/lab1/">Lab1</a>
 </p>
 
 <p>
@@ -98,14 +98,14 @@ a UNIX terminal on Sleipner, you can copy files into your local directory
 with the following command:
 </p>
 <p>
-<b>scp -r /home/stu/erangel/public_html/2240/code/lab1/* .</b>
+<b>scp -r /home/stu/erangel/public_html/cmps2240-f17/code/lab1/* .</b>
 </p>
 <p>
 which will copy the /lab1/ directory to your current directory.
 Or, if you're in the terminal but on your own machine not on the network:
 </p>
 <p>
-<b>scp -r <i>name</i>@sleipnir.cs.csubak.edu:/home/stu/erangel/public_html/2240/code/lab1/* .</b>
+<b>scp -r <i>name</i>@sleipnir.cs.csubak.edu:/home/stu/erangel/public_html/cmps2240-f17/code/lab1/* .</b>
 </p>
 <p>
 replace <i>name</i> with your own user name.
@@ -115,7 +115,7 @@ replace <i>name</i> with your own user name.
 
 <h3>hello.s</h3>
 You will learn MIPS well in the coming weeks. This lab introduces you to a
-few of the basics. The code below from <a href="http://cs.csubak.edu/~erangel/2240/code/lab1/hello.s">hello.s</a> is a good place to start:
+few of the basics. The code below from <a href="cmps2240-f17/code/lab1/hello.s">hello.s</a> is a good place to start:
 <p>
 <pre class="box_border">
 
@@ -231,105 +231,15 @@ You do not need to check this off with the instructor.
 </p>
 
 <p>
-<h3>Modifying the program</h3>
-<b>Add Two Integers: </b>
-Your job is to create an assembly file called <b>sum.s</b> that takes two hard-coded
-integer values (hard-coded means the values are not read in from the keyboard
-but literal constants that you code into the program), adds the two values
-together together and displays the result. The guts of the code (the header and
-the syscall to exit) will resemble hello.s so you can start by modifying the
-program. Before making any changes review hello.s until you understand every
-line of code. You will need code to load the values of two integers into
-registers and sum the two integers together. You will use the li, addu and move
-instructions shown below. Note that source register(s) are the right operands
-and the destination register is the left operand in these instructions:
-</p>
-<pre class="box_border">
-
-li     dest, integer      # load integer into dest register
-addu   dest, src1, src2   # add values in src1 and src2 registers
-                          # and store result in dest register
-move   dest, src          # copy value in src reg to dest reg
-
-You can also use fewer instructions if you want to use the add immediate
-instruction:
-
-addi  dest, src, integer  # store result of value in src + integer
-                          # in dest
-
-</pre>
-<p>
-<b>Which Registers to Use?</b>
-Since all 32 MIPS registers are general purpose, you can generally get away
-with using any registers that you want. However, there are conventions that
-good coders should use. For example, temporary values (such as the integers you
-are adding together) should be loaded into temporary registers $t0 - $t7.
-Function arguments are loaded into $a0 - $a3. The results of computations are
-loaded into the value registers $v0 - $v1. To make sure you have added the
-values correctly you need to display the result. Display it like this (your
-integers should differ from mine):
-</p>
-
-<p>
-<pre class="console">
-
-The sum of 5 and 9 is 14.
-
-</pre>
-</p>
-
-<p>
-Input/Output is provided by the assembler via system calls. In a high-level
-language such as C++ you can sometimes get away with letting the compiler
-figure out what data type you are displaying; e.g.,
-</p>
-<pre>
-int x = 5;
-cout &lt;&lt; x &lt;&lt; endl;
-char stuff[20] = "hello\n";
-cout &lt;&lt; stuff &lt;&lt; endl;
-</pre>
-<p>
-will display an integer first and then a character string next.  In assembly
-you need to specify precisely what type of data you wish the bit string in the
-register to be displayed as. In this lab you will make calls to print strings
-(printable text) and integers. The syscall service you need to print the
-integers is print int. To use this call load the value you want to display into
-$a0. Then load the value 1 into $v0. Then make the print int call.
-</p>
-<p>
-The syscall service you need to print the text strings is the same as noted in
-hello.s. You will need to create strings with labels in the data segment for
-each string you want to print. For example:
-</p>
-<pre class="box_border">
-
-          .data
-str1:     .asciiz "The sum of"
-
-Then make a syscall to print each string in the correct order. For example,
-
-la $a0, string1         # load the address of the string into a0
-li $v0, 4               # 4 is syscall to print a string
-syscall                 # make the call
-
-</pre>
-<p>
-<b>Hint:</b>
-Since you need to print three integers, you may need to use three registers for
-these values. Move each integer as you print it into $a0.
-</p>
-<p>
 <h3>What to turn in</h3>
 <pre>
-Your lab program <i><b>sum.s</b></i> must be located in the correct directory on Sleipnir.
+Your lab program <i><b>yourname_hello.s</b></i> must be located in the correct directory on Sleipnir.
 
 directory name: /home/stu/<i><b>yourname</b></i>/2240/lab1/
 
 Replace <i>yourname</i> with your own Sleipnir username!
 </pre>
 </p>
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>	
 </body>
 </html>
 
