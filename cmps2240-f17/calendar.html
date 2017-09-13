@@ -7,14 +7,15 @@
         <meta name="viewport" content="width=device-width">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" type="text/css" href="http://cs.csub.edu/~erangel/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
         
 	</head>
 
 <body class="wrap">
 	<div id="page"> <!--closing div in footer-->
          <header class="container">
-          <div id="menu" class="navbar navbar-inverse navbar-fixed-top">
+          <div id="menu" class="navbar navbar-inverse">
             <div class="navbar-header">
             <button class="btn btn-success navbar-toggle"
               data-toggle="collapse"
@@ -25,10 +26,8 @@
             </div>
             <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-               <li id="home-menu" class="nav"><a href="http://cs.csubak.edu/~erangel/index.html">Home</a></li>
-                <li id="about-menu" class="nav"><a href="http://cs.csubak.edu/~erangel/about.html">About</a></li>
-                <li id="schedule-menu" class="nav"><a href="http://cs.csubak.edu/~erangel/schedule.html">Schedule</a></li>
-                <li id="contact-menu" class="nav"><a href="http://cs.csubak.edu/~erangel/contact.html">Contact</a></li>
+               <li id="home-menu" class="nav"><a href="index.html">Home</a></li>
+                <li id="contact-menu" class="nav"><a href="contact.html">Contact</a></li>
             </ul>
             </div>
           </div>
@@ -37,21 +36,17 @@
 
 <section id="body" class="container">
 	  <div class="row">	
-          <br/>
-	<br/>
-	<br/>
       <div class="col-lg-2">
    <!-- /well -->
     <div class="well" style="padding:0px">
         <div class="list-group" style="margin-bottom:0px">
           <a href="#" class="list-group-item active">Navigation</a>
-            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/syllabus" class="list-group-item">Syllabus</a>
-            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/calendar.html"class="list-group-item">Calendar</a>
-            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/material/"class="list-group-item">Course Material</a>
-            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/examples/"class="list-group-item">Examples</a>
-            <a href="http://cs.csub.edu/~erangel/cmps2240-f16/solutions/"class="list-group-item">Solutions</a>
-            <a href="./content/GradesFall2016.pdf" class="list-group-item active">Scores</a>
-            <a href="http://cs.csub.edu/~erangel/news.html"class="list-group-item">News</a>
+            <a href="syllabus.html" class="list-group-item">Syllabus</a>
+            <a href="calendar.html"class="list-group-item">Calendar</a>
+            <a href="material/"class="list-group-item">Course Material</a>
+            <a href="examples/"class="list-group-item">Examples</a>
+            <a href="solutions/"class="list-group-item">Solutions</a>
+            <a href="#" class="list-group-item active">Scores</a>
         </div>
     <div class="list-group" style="margin-bottom:0px">
           <a href="#" class="list-group-item active">MIPS</a>
@@ -63,7 +58,8 @@
 			<a href="http://courses.missouristate.edu/KenVollmar/MARS/" class="list-group-item" target="_blank">MARS</a>
    </div>
    <div class="list-group" style="margin-bottom:0px">
-          <a href="#" class="list-group-item active">Textbooks</a>
+      <a href="#" class="list-group-item active">Textbooks</a>
+      <a href="./doc/WGC_Chapter_3.pdf" class="list-group-item" target="_blank">Binary Arithmetic</a>
 			<a href="./doc/HP_AppA.pdf" class="list-group-item" target="_blank">Appendix A</a>
 			<a href="./doc/britton-mips-text.pdf" class="list-group-item" target="_blank">Britton</a>
 			<a href="./doc/harvard-mips-text.pdf" class="list-group-item" target="_blank">Harvard, Ellard</a> 
@@ -103,11 +99,13 @@
           </tr>
           <tr>
             <td>Week 1</td>
-            <td>Binary, Octal, and Hexadecimal Operations</td>
-            <td><a href='lab1.html' target="_blank">Lab 1</a></td>
-            <td><a href='homework1.html' target="_blank">Homework 1</a></td>
-            <td><a href="./content/Week1.pdf">Week 1 Notes</a></td>
+            <td>Course Introducation and Orientation</td>
+            <td><a href='labs.html' target="_blank">Lab Assignments</a><br>
+              <a href='lab1.html' target="_blank">Lab 1</a></td>
+            <td><a href='#' target="_blank"></a></td>
+            <td><a href='./content/Week1.pdf'>Week 1 Notes</a></td>
           </tr>
+          
           <tr>
             <td></td>
             <td></td>
@@ -117,8 +115,22 @@
           </tr>
           <tr>
             <td>Week 2</td>
+            <td>Binary, Octal, and Hexadecimal Operations</td>
+            <td><a href='#' target="_blank">Lab 2</a></td>
+            <td><a href='./hw/hw1.html' target="_blank">Homework 1</a></td>
+            <td><a href="./content/Week1.pdf">Week 2 Notes</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Week 3</td>
             <td>Arithmetic, Shift &amp; Rotate Operations</td>
-            <td><a href='./lab2.html' target="_blank">Lab 2</a></td>
+            <td><a href='#' target="_blank">Lab 3</a></td>
             <td><a href='./homework2.html' target="_blank">Homework 2</a></td>
             <td><a href="./content/Week2.pdf">Week 2 Notes</a></td>
           </tr>
@@ -130,24 +142,24 @@
             <td></td>
           </tr>
           <tr>
-            <td>Week 3</td>
-            <td>Short Week</td>
-            <td>Used for review</td>
-            <td></td>
-            <td><a href="./content/Quiz1_solution.pdf">Q1 Solutions</a></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
             <td>Week 4</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a href="#">Q1 Solutions</a></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Week 5</td>
             <td>Subroutine Linkage &amp; Call Frames</td>
-            <td><a href='./lab3.html' target="_blank">Lab 3</a></td>
-            <td><a href='./homework3.html' target="_blank">Homework 3</a></td>
+            <td><a href='#' target="_blank">Lab 4</a></td>
+            <td><a href='#' target="_blank">Homework 3</a></td>
             <td><a href="./content/IntroToMIPS.pdf">Notes</a></br>
                 <a href="./content/LWSWDecisions.pdf">More Notes</a></td>
           </tr>
@@ -159,7 +171,7 @@
             <td></td>
          </tr>
           <tr>
-            <td>Week 5</td>
+            <td>Week 6</td>
             <td>Instruction Encoding, Jumps &amp; Branches</td>
             <td><a href='./lab4.html'target="_blank">Lab 4</a></td>
             <td><a href='./homework4.html' target="_blank">Homework 4</a></td>
@@ -175,7 +187,7 @@
                 <a href="./content/ProceduresI.pdf">More Notes</a></td>
           </tr>
           <tr>
-            <td>Week 6</td>
+            <td>Week 7</td>
             <td>Program Optimization</td>
             <td><a href='./lab5.html' target="_blank">Lab 5</a></td>
             <td><a href='./homework5.html' target="_blank">Homework 5</a></td>
@@ -190,7 +202,7 @@
           </tr>
           
           <tr>
-            <td>Week 7</td>
+            <td>Week 8</td>
             <td>Logical and bit-field operations &amp; condition testing</td>
             <td><a href='./lab6.html' target="_blank">Lab 6</a></td>
             <td><a href='./homework6.html' target="_blank">Homework 6</a></td>
@@ -204,7 +216,7 @@
             <td></td>
           </tr>
           <tr>
-            <td>Week 8</td>
+            <td>Week 9</td>
            <td>Multiplication, division, branch delay slot</td>
             <td><a href='./lab7.html' target="_blank">Lab 7</a></td>
             <td><a href='./homework7.html' target="_blank">Homework 7</a></td>
@@ -218,14 +230,7 @@
             <td></td>
           </tr>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Week 9</td>
+            <td>Week 10</td>
            <td>Introduction to x86</td>
             <td><a href='project/project.html' target="_blank">Project</a></td>
             <td><a href='./homework8.html' target="_blank">Homework 8</a></td>
@@ -236,17 +241,10 @@
             <td></td>
             <td></td>
             <td></td>
-            <td><a href="#">Notes</a></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
             <td></td>
           </tr>
           <tr>
-            <td>Week 10</td>
+            <td>Week 11</td>
             <td>More x86-64 Code</td>
             <td><a href='./lab8.html' target="_blank">Lab 8</a></td>
             <td><a href='./homework9.html'target="_blank">Homework 9</a></td>
@@ -260,7 +258,7 @@
             <td></td>
           </tr>
           <tr>
-            <td>Week 11</td>
+            <td>Week 12</td>
             <td>Optimizing x86</td>
             <td><a href='./lab9.html' target="_blank">Lab 9</a></td>
             <td><a href='./homework9.html' target="_blank">Homework 9</a></td>
@@ -274,7 +272,7 @@
             <td></td>
           </tr>
           <tr>
-            <td>Week 12</td>
+            <td>Week 13</td>
             <td>Floating-point formats 8-bit, IEEE 32-bit</td>
             <td>No Lab <br>Campus Closed</td>
             <td><a href='#' target="_blank">No Homework</a></td>
@@ -288,7 +286,7 @@
             <td></td>
           </tr>
           <tr>
-            <td>Week 13</td>
+            <td>Week 14</td>
             <td>Performance</td>
             <td><a href='./lab10.html' target="_blank">Lab 10</a></td>
             <td><a href='./homework10.html' target="_blank">Homework 10</a></td>
@@ -304,7 +302,7 @@
             <td></td>
           </tr>
           <tr>
-            <td>Week 14</td>
+            <td>Week 15</td>
             <td></td>
             <td><a href='./lab11.html' target="_blank">Lab 11</td>
             <td><a href='#' target="_blank">No Homework <br> Work on Project </a></td>
@@ -319,7 +317,7 @@
             <td></td>
           </tr>
           <tr>
-            <td>Week 15</td>
+            <td>Week 16</td>
             <td>Project completion</td>
             <td><a href='#' target="_blank">No lab <br> Work on Project</a></td>
             <td><a href='#' target="_blank">No Homework <br> Work on Project </a></td>
