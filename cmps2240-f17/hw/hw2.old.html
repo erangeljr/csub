@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<!-- <link rel="stylesheet" href="./cssReset.css"> -->
+	<style>
+		body { margin-left: 20px; }
+		h2 {
+			font-family:'Arial',sans-serif; font-size:1.6em; color:#999;
+			padding:0px; margin:0px;
+		}
+		h3 {
+			font-family:'Arial',sans-serif; font-size:1.2em;
+			color:#114;
+			margin:0px; padding-top:0px;
+		}
+	</style>
+	<body>
+		<p>
+		<h2>CMPS-224 Assembly Language Programming</h2>
+		</p>
+		<p>
+		<h3>Homework Set 2</h3>
+<pre>
+You are free to use any resources at your disposal to answer the homework.
+However, directly copying answers from online sources is plagiarism.
+Unsupported answers will be given a zero grade.
+(#5 and #6 are 6-points each)
+
+1. Discuss how each of the following MIPS commands modifies the program counter:
+    A. jr
+    B. jal
+    C. j
+
+2. Consider the following MIPS source code:
+
+    main:            # Begin main
+    add $t0 $t1 $t2  # Add two registers
+    jr myfun         # Jump to my function
+
+    ...
+
+    myfun:           # Begin myfun
+    addi $t0 $t1 1   # Add 1
+    jr $ra
+
+    Upon reaching "..." the code should store t1 + t2 + 1 in register t0.
+    If there are errors, discuss how this code could be fixed.
+
+
+3. Consider the J-type operation j. Calculate the maximum jump distance from
+   the current program counter.
+
+
+4. Carry out the following expressions, unsigned, limited to 12 bits:
+
+    A. 0xFFF + 0x001
+    B. 0xFFAC + 0xDA98
+    C. 0b000011100000 + 0b010111111101
+
+5. Give MIPS code for a subroutine <i>getint</i> that reads an integer from the
+   keyboard, echos it to the display and stores the result into $v0.
+
+6. Give MIPS code for a subroutine <i>toneg</i> that takes the value in $a0 and
+   converts it to negative two's compliment. Assume that the value in $a0 is
+   positive (don't do any input error checking). Store the result into $v0.
+
+</pre>
+</body>
+</html>
+
