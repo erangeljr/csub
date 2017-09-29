@@ -1,3 +1,90 @@
+# filename: main.s
+# Developer: Eddie Rangel
+# Date: 9-18-2017
+# purpose:  test output facilities in print.s and input facilities in read.s
+
+#  spim> re "main.s"
+#  spim> re "printf.s"
+#  spim> re "read.s"
+#  spim> run
+#  spim> exit 
+
+.text
+.globl  main
+.ent  main
+
+main:
+    la  $a0,gorunners  # Load address of format string #1 into $a0
+    jal printf       # call printf
+
+    # -----------------------------------------------------------------
+
+    la $a0 fprompt   # load address of first name prompt 
+    jal printf
+
+    la $a0 fnamebuffer   # load address of buffer
+    li $v0 8         # setup syscall 8 (read_string)
+    syscall          # address of string buffer returned in $a0
+
+    move $t0 $a0     # moves input into temp register
+
+    # -----------------------------------------------------------------
+
+    la $a0 lprompt   # load address of last name prompt 
+    jal printf
+
+    la $a0 lnamebuffer   # load address of buffer
+    li $v0 8         # setup syscall 8 (read_string)
+    syscall          # address of string buffer returned in $a0
+
+    move $t1 $a0     # moves input into temp register
+
+
+    # -----------------------------------------------------------------
+
+    # prompt user to input an integer
+    li $v0 4         # load immediate with 4 to setup syscall 4 (print_str)
+    la $a0 iprompt   # load address of prompt into $a0 for print_str
+    syscall          # display the prompt 
+
+    # read the integer and display it 
+    li $v0 5         # setup syscall 5 (read_int)
+    syscall          # integer returned in $v0
+    move $t2 $v0     # move the integer into register $t2
+
+    # -----------------------------------------------------------------
+    la $a0, razzle
+    jal printf
+
+    la $a0, finalstring
+    move $a1, $t0
+    move $a2, $t1
+    move $a3, $t2
+    jal printf       # call printf
+
+    # -----------------------------------------------------------------
+    la $a0, razzle
+    jal printf
+
+    li  $v0,10       # 10 is exit system call
+    syscall    
+
+.end  main
+
+
+
+.data
+    gorunners:
+    .asciiz "Go\nRoadrunners\nin 2017!\n" # asciiz adds trailing null byte to string
+    fnamebuffer: .space 32
+    lnamebuffer: .space 32
+    fprompt: .asciiz "Enter your firstname [return]: "
+    lprompt: .asciiz "Enter your lastname [return]: "
+    iprompt: .asciiz "Enter your 3-Digit Identification number [return]: "
+    razzle: .asciiz "\n--------------------\n"
+    finalstring: .asciiz "Firstname: %sLastname: %sID: %d \n"
+
+
 # printf.s  
 # purpose:  MIPS assembly implementation of a C-like printf procedure 
 # supports %s, %d, and %c formats up to 3 formats in one call to printf
