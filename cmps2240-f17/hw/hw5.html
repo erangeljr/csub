@@ -1,50 +1,213 @@
+
 <!DOCTYPE html>
 <html>
-	<!-- <link rel="stylesheet" href="./cssReset.css"> -->
-	<style>
-		body { margin-left: 20px; }
-		h2 {
-			font-family:'Arial',sans-serif; font-size:1.6em; color:#999;
-			padding:0px; margin:0px;
-		}
-		h3 {
-			font-family:'Arial',sans-serif; font-size:1.2em;
-			color:#114;
-			margin:0px; padding-top:0px;
-		}
-	</style>
-	<body>
-		<p>
-		<h2>CMPS-224 Assembly Language Programming</h2>
-		</p>
-		<p>
-		<h3>Homework Set 5</h3>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+
+<h3>CMPS-2240 Homework #5: Bitwise Logic </h3>
+This homework covers MIPS bit manipulation facilities in depth.<br> 
+All answers are in the MIPS Tutorial 11 - 12.<br>
+Answer the questions as you work through the tutorial.
+<br>
+<div class="notes" style="width:260px; height:70px">
+Read completely:<br>
+<ul class="a">
+	<li><a href="http://chortle.ccsu.edu/AssemblyTutorial/Chapter-11/
+		ass11_1.html">MIPS Tutorial Ch 11</a></li> 
+	<li><a href="http://chortle.ccsu.edu/AssemblyTutorial/Chapter-12/
+		ass12_1.html">MIPS Tutorial Ch 12</a></li> 
+</ul>
+</div>
+<div class="notes" style="width:340px;">
+Use as needed:<br>
+<ul class="a">
+	<li><a href="./doc/mips-quick-guide.txt">
+		MIPS Quick Guide</a></li>
+	<li><a href="./units_of_measure.html">
+		CMPS Units of Measure</a></li> 
+	<li><a href="./doc/HP_AppA.pdf">
+		Appendix A.10</a></li>
+	<li><a href="./doc/mips32-instruc-set.pdf">
+		MIPS32 Instruction Set Quick Reference</a></li>
+</ul>
+</div>
+<br>
+
+
+1. Where is the operand 0x2 placed in the binary encoding of this instruction?
 <pre>
-Same rules as previous homework sets apply.
 
-1. Explain the following terms in the context of floating point numbers:
-       A. Mantissa
-       B. Exponent
-       C. Number base
-
-2. In plain English, explain the procedure for converting a fixed&lt;16,16&gt;
-   number to a single precision floating point.
-
-3. In plain English, explain the procedure for converting a single precision
-   floating point to a double precision floating point.
-
-4. This question involves some independent research on floating point
-   operations. What is an Intel x87? What was its purpose? Why must floating
-   point instructions still refer to x87 instructions despite it not existing
-   with contemporary microprocessors?
-
-5. (9 points) Convert the following decimal numbers to single precision
-   floating point numbers:
-	   A. 0<sub>10</sub>
-	   B. 0.7<sub>10</sub>
-	   C. 8.5125<sub>10</sub>
-
+        ori $8, $0, 0x2
 </pre>
+<div id="x1"></div><br>
+
+
+2. All MIPS registers are 32-bits. That means that $0 is a bit string of
+   32 zeros. The operand in this bitwise immediate OR is only 16 bits. 
+   How does MIPS handle this?
+<pre>
+           ori $8, $0, 0x2
+</pre>
+<div id="x2"></div><br>
+
+
+3. Explain this MIPS instruction and give the result.<pre>
+           ori $8, $0, 0x2 </pre>
+<div id="x3"></div><br>
+
+
+4. Can you use ori to load a register with a signed integer? 
+<div id="x4"></div><br>
+
+
+5. What is wrong with the following instruction?
+<pre>
+        ori  $0, $9, 0x32
+</pre>
+<div id="x5"></div><br>
+
+
+6. What is loaded into $10 when you execute this code?
+<pre>
+    ## Program to bitwise OR two patterns 
+   .text
+   .globl  main
+main:
+    ori   $8,$0,0x0DA5    # put first pattern into register $8
+    ori   $10,$8,0x368F   # or ($8) with second pattern.  Result to $10.
+## End of file
+</pre>
+<div id="x6"style="height:80px"></div><br>
+
+
+7. Explain in detail what this instruction does and give the result.
+<pre>
+         andi $8, $0, 0xFFFF
+</pre>
+<div id="x7"></div><br>
+
+
+8. What is in $8, $9, and $10 after this program executes? Test in spim:
+<pre>
+ spim> re "q8.s" 
+ spim> breakp main
+ spim> run
+ spim> s 
+ spim> p $8  
+ spim> s 
+ spim> p $9
+ spim> s 
+ spim> p $10 
+
+# file: q8.s
+        .text
+        .globl  main
+main:
+        ori     $15, $0,0x0DA5       # load bit pattern register into $15
+        ori      $8,$15,0x368F       # OR with second pattern
+        andi     $9,$15,0x368F       # AND with second pattern
+        xori    $10,$15,0x368F       # XOR with second pattern
+## End of file
+</pre>
+<div id="x8"style="height:300px"></div><br>
+
+
+9. Let b1 and b2 be loaded as shown below. What is in b1 after these C xor 
+    operations? Is there a generalization you can make for any arbitrary
+    bit string?
+<pre>
+    // load b1 with 1011
+    a) b1 = b1 ^ b1;  // caret in C is bitwise exclusive or
+
+    // load b1 with 1010 and b2 with 1001
+    b) b1 = b1 ^ b2;  
+       b2 = b2 ^ b1; 
+       b1 = b1 ^ b2;
+</pre>
+<div id="x9"style="height:200px"></div><br>
+
+
+<hr>
+<h5>Starting Tutorial 12</h5>
+<hr>
+
+10. What is the outcome of these MIPS instructions?
+<pre>
+      ori  $9,  $0, 0x5 
+      sll  $10, $9, 3
+</pre>     
+<div id="x10"></div><br>
+
+<hr>
 </body>
 </html>
-

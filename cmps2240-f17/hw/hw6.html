@@ -1,62 +1,208 @@
+
 <!DOCTYPE html>
 <html>
-	<!-- <link rel="stylesheet" href="./cssReset.css"> -->
-	<style>
-		body { margin-left: 20px; }
-		h2 {
-			font-family:'Arial',sans-serif; font-size:1.6em; color:#999;
-			padding:0px; margin:0px;
-		}
-		h3 {
-			font-family:'Arial',sans-serif; font-size:1.2em;
-			color:#114;
-			margin:0px; padding-top:0px;
-		}
-	</style>
-	<body>
-		<p>
-		<h2>CMPS-224 Assembly Language Programming</h2>
-		</p>
-		<p>
-		<h3>Homework Set 6</h3>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+
+<h3>CMPS-2240 Homework #5: Bitwise Logic </h3>
+This homework covers MIPS bit manipulation facilities in depth.<br> 
+All answers are in the MIPS Tutorial 11 - 12.<br>
+Answer the questions as you work through the tutorial.
+<br>
+<div class="notes" style="width:260px; height:70px">
+Read completely:<br>
+<ul class="a">
+	<li><a href="http://chortle.ccsu.edu/AssemblyTutorial/Chapter-11/
+		ass11_1.html">MIPS Tutorial Ch 11</a></li> 
+	<li><a href="http://chortle.ccsu.edu/AssemblyTutorial/Chapter-12/
+		ass12_1.html">MIPS Tutorial Ch 12</a></li> 
+</ul>
+</div>
+<div class="notes" style="width:340px;">
+Use as needed:<br>
+<ul class="a">
+	<li><a href="./doc/mips-quick-guide.txt">
+		MIPS Quick Guide</a></li>
+	<li><a href="./units_of_measure.html">
+		CMPS Units of Measure</a></li> 
+	<li><a href="./doc/HP_AppA.pdf">
+		Appendix A.10</a></li>
+	<li><a href="./doc/mips32-instruc-set.pdf">
+		MIPS32 Instruction Set Quick Reference</a></li>
+</ul>
+</div>
+<br>
+1. What is the value in $10 after you perform the sll operation below? $9 
+    contains the 32-bit negative integer -5 stored in two's complement. When
+    can using a shift left logical be a problem?
 <pre>
-Rules from previous homework sets apply.
-
-1. What is the purpose of the branch delay slot?
-
-2. The following questions pertains to what can or cannot be placed in a
-   branch delay slot.
-       A. Give examples of instructions that can be placed in a
-          branch delay slot.
-       B. Give examples of instructions that CANNOT be placed in a
-          branch delay slot.
-       C. Describe what happens if a branch is placed in a branch delay slot.
-
-3. What value will be in $t1 after this loop executes 5 times?
-
-          move $t1, $zero
-    loop:
-          sll $zero, $zero, 0
-          j loop
-          addiu $t1, $t1, 1 
-
-4. In addition to branch instructions, load instructions are followed by a
-   delay slot. Why do you think this is?
-
-5. Given the following chunk of MIPS code, can any instruction be safely placed
-   in the branch delay slot? Or must you use a noop?
-
-      li $7, 10
-      move $8, $zero
-      slt $9, $8, $7
-      beqz $9, done
-      branch delay slot
-      ...more code ...
-      done:
-      li $v0, 10
-      syscall 
-
+        add  $9, $0, -5   # sign extend from 16 bit immediate to 32 neg int
+        sll $10, $9, 2
 </pre>
+<div id="x11"style="height:80px"></div><br>
+
+
+2. Sometimes you want to use the same register in an instruction. Is this OK?
+<pre>
+       ori   $8, $0, 0x6f
+       sll   $8, $8, 2
+</pre> 
+<div id="x12"></div><br>
+
+
+3. What does this instruction do?
+<pre>
+         sll $0, $0, 0
+</pre>
+<div id="x13"style="height:80px"></div><br>
+
+
+4. What is the machine instruction in #13 called?
+<div id="x14"></div><br>
+
+
+5. What is the result of the following shift right logical?
+<pre>
+        li   $9, -10
+        srl  $10, $9, 2
+</pre> 
+<div id="x15"style="height:120px"></div><br>
+
+
+6. Assume a 32-bit register. If you shift left logical a value in that 
+    register by 2 and then shift right logical on the result by 2
+    do you always end up with the original pattern?
+<div id="x16"></div><br>
+
+
+7. What is the difference between bitwise 'ORI' and bitwise 'OR' operators?
+<div id="x17"></div><br>
+
+
+8. MIPS has a bitwise nor instruction (there is no immediate nor).   The
+    meaning of nor is
+<pre>
+               nor
+          -+--+---
+          1| 1| 0
+          -+--+---
+          1| 0| 0
+          -+--+---
+          0| 1| 0
+          -+--+---
+          0| 0| 1
+</pre> 
+In other words, nor is 1  only when both operand bits are 0. What is
+the bitwise NOR of the following?
+<pre>
+    FEED     
+    BECA     
+    -----    
+</pre>
+<div id="x18"style="height:80px"></div><br>
+
+
+9. What is the result of this instruction?
+<pre>
+      li   $9, 1
+      nor  $10,$9,$0
+</pre>
+<div id="x19"style="height:80px"></div><br>
+
+
+10. Explain each of these bitwise ops. What does this code accomplish?
+<pre>
+    1    or  $9, $0, $0
+    2    ori $8, $9, 0x001A
+    3    or  $10, $8, $0
+</pre>
+<div id="x20"style="height:100px"></div><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<!--
+<input type="button"value="hint"onClick="xb[21]^=1; zzz('x21',(xb[21])?'':
+);"><div id="x21"></div><br>
+<input type="button"value="hint"onClick="xb[22]^=1; zzz('x22',(xb[22])?'':
+);"><div id="x22"></div><br>
+-->
+
+
+
+<hr>
 </body>
 </html>
-
