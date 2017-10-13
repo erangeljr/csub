@@ -1,0 +1,111 @@
+
+
+<!DOCTYPE html>
+<html>
+<body>
+	<style>
+	body { padding-left: 10px; color: #000; }
+	h2 { font-family:'Arial',sans-serif; font-size:2.0em; color:#999; }
+	h3 {
+		font-family:'Arial',sans-serif; font-size:1.6em;
+		color:#114;
+		margin:2px; padding-top:6px;
+	}
+	.box_border { border:2px solid #999; width:600px; padding-left:8px; }
+	.console {
+		padding-left:10px;
+		background:#222;
+		color:#afa;
+		border:4px solid #66a;
+		width:600px;
+	}
+	p { width:800px; }
+	</style>
+
+<h2>CMPS-2240  Lab 7<br>Removal of Whitespace</h2>
+Eddie Rangel<br>
+Department of Computer and Electrical Engineering and Computer Science<br>
+California State University, Bakersfield<br>
+<p style="padding:4px; color:red; border:2px dashed #111;">
+<b>Notice:</b><br>
+<b>Due:</b> Wednesday Oct. 18th by 4pm
+</p>
+
+<p>
+<h3>Introduction</h3>
+<b>Goals</b>:<br>
+Modify a character string.<br>
+Remove the trailing whitespace from the string.<br>
+This is a right-trim function.
+</p>
+
+<p>
+<b>Resources</b>:<br>
+Please refer to all the resources on our home page.
+</p>
+
+<p>
+<b>Files Needed</b>:<br>
+<a href=".code/lab7/chop.s">chop.s</a><br>
+<a href="./code/lab7/rev.s">rev.s</a><br>
+<a href="./code/lab7/read.s">read.s</a><br>
+</p>
+
+Copy all the files like this...<br>
+<b>scp sleipnir.cs.csubak.edu:/home/stu/erangel/public_html/cmps2240-f17/code/lab7/* .</b>
+
+<p>
+<h3>Lab details:</h3>
+</p>
+<p>
+Your task is to write a program <b>rtrim.s</b> that trims the whitespace off
+a word entered from the keyboard. Start by copying the two example files into
+your directory.
+</p>
+<p>
+<b>chop.s</b> shortens a string by inserting a '\0' (NULL character) into the string.
+This effectively chops the string off. <b>rev.s</b> reverses the characters in a
+string. The algorithm takes two pointers, one starting at the end of the string
+and one starting at the begining of the string. It swaps the two characters at
+the top and bottom location. It moves the pointers 1 character (a byte)
+towards each other.  It swaps the two characters at that location.
+It moves the pointers toward each other, swaps the two characters, so on and
+so forth until the pointers hit each other.
+</p>
+<p>
+Your job is to write a program <b>rtrim.s</b> that removes trailing whitespace.
+Everything you need to do this is in rev.s and chop.s.
+</p>
+<p>
+Use chunks of these two sample programs. You can grab the code to prompt the
+user for a string from read.s.
+</p>
+<p>
+To demonstrate that you trimmed the white space, display the string
+followed by a period (if the period does not have any whitespace before it
+you know your code works). The code should execute as follows:
+</p>
+<p>
+<pre class="console">
+
+
+$ spim -f rtrim.s
+
+Enter a word followed by some whitespace: foo[Tab]      [Tab][Enter]
+foo.
+
+
+</pre>
+</p>
+
+<p>
+<h3>What to turn in</h3>
+<pre>
+Your lab program <b>rtrim.s</b> must be in the correct directory on Sleipnir.
+directory name: /home/stu/<i>you</i>/2240/7/
+Replace <i>you</i> with your own Sleipnir username!
+</p>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>	
+</body>
+</html>
+
