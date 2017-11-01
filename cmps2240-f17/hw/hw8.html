@@ -1,48 +1,159 @@
 <!DOCTYPE html>
-<html>
-	<!-- <link rel="stylesheet" href="./cssReset.css"> -->
-	<style>
-		body { margin-left: 20px; }
-		h2 {
-			font-family:'Arial',sans-serif; font-size:1.6em; color:#999;
-			padding:0px; margin:0px;
-		}
-		h3 {
-			font-family:'Arial',sans-serif; font-size:1.2em;
-			color:#114;
-			margin:0px; padding-top:0px;
-		}
-	</style>
-	<body>
-		<p>
-		<h2>CMPS-224 Assembly Language Programming</h2>
-		</p>
-		<p>
-		<h3>Homework Set 8</h3>
-<pre>
-All rules from previous homework sets apply.
+<!-- saved from url=(0124)file:///C:/Users/00179400/OneDrive%20-%20Kern%20Community%20College%20District/Course%20Material/cmps2240-f16/homework8.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"></head><body>
+<link rel="stylesheet" href="./hw7_files/cssReset.css">
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
 
-1. Describe how general purpose registers differ from MIPS to x86
 
-2. Describe how instruction operands differ from MIPS to x86
-
-3. Describe how setting up a call frame differs from MIPS to x86
-
-4. Describe how passing arguments to a subroutine differs from MIPS to x86
-
-5. For each of the following x86 registers, describe its use:
-       A. EFLAGS
-       B. EIP
-       C. EBP
-
-6. Give complete x86 code for a subroutine that divides by 2. It takes a single
-   unsigned integer as an argument. Follow CDECL calling convention.
-
-7. Give complete x86 code for a subroutine that returns 1 if the number is
-   positive and 0 if the number is negative. It takes a single unsigned integer
-   as an argument. Follow CDECL calling convention.
-
+<h3>CMPS-2240 Homework 8 - Intro to x86 Assembly</h3>
+<br>
+<p>
+</p><div class="notes" style="width:600px;">
+The answers to the questions below are found in this 
+<a href="./doc/assembly64.pdf">x86-64 assembly guide</a> and 
+<a href="./content/chapt_02.pdf">PPT PDF</a>
+</div>
+<p></p>
+<br>
+1. Explain these inc, dec instructions
+<pre>    dec eax 
+    inc DWORD PTR [var]
 </pre>
-</body>
-</html>
+<div id="x11"></div><br>
 
+
+2. Integer division utilizes a 64-bit register EDX:EAX (where EDX is the 
+    most significant 32 bits). The idiv instruction divides the contents of 
+    EDX:EAX by the operand. The quotient is stored into EAX and the 
+	remainder in EDX.  Explain these operations:
+<pre>    idiv ebx
+    idiv DWORD PTR [var]
+</pre> 
+<div id="x12" style="height:90px"></div><br>
+
+
+3. The bitwise logical AND, OR and EXCLUSIVE OR instructions perform the 
+    operation on the first register place the result in the first register.
+    Explain these operations:
+<pre>    and eax, 0fH   # 0fH  is 15 in decimal - the H denotes hex 
+    xor edx, edx
+    neg edx
+    not edx
+</pre>
+<div id="x13" style="height:90px"></div><br>
+
+
+4. The Shift Left and Shift Right instructions perform shifts on the first
+    operand, padding empty bit positions with zeros. The second operand is
+	either an 8-bit constant or the register CL. Explain these shift operations:
+<pre>    shl eax,1 
+    shr ebx,cl
+</pre>
+<div id="x14"></div><br>
+
+
+5. In x86, what does the instruction pointer (IP) register hold?
+<div id="x15"></div><br>
+
+
+6. The unconditional jump instruction jumps to the given label. The
+    conditional jump instruction jumps based on the contents of a condition
+   	bit in the machine status word register. This bit is set to 0 or 1 in the
+	instruction prior to the conditional jump. Explain the control flow
+	instructions below assuming that each is preceeded by
+	<code>cmp eax, ebx</code>:
+<pre>    jump L1 
+    jle done
+    je L1
+    jge L1
+</pre>
+<div id="x16" style="height:80px"></div><br>
+
+7. The Compare (cmp) instruction compares the values of two operands and sets
+    the condition codes in the machine status word appropriately. The
+    result can then be used to facilitate a jump. Explain these:
+<pre>      cmp eax, ebx   
+      jle done
+
+      cmp DWORD PTR [var], 10
+      jeq loop 
+</pre>
+<div id="x17" style="height:80px"></div><br>
+
+8. What do the instructions below facilitate?
+<pre>    call foo
+    return
+</pre>
+<div id="x18"></div><br>
+
+<hr>
+<br>
+</body></html>
