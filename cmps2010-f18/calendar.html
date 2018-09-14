@@ -6,34 +6,59 @@
         <title>Eddie Rangel @ CSUB</title>
         <meta name="viewport" content="width=device-width">
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
-        
+         <!-- Bootstrap CSS --><!-- Latest compiled and minified CSS -->
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+ 
 	</head>
 
 <body class="wrap">
 	<div id="page"> <!--closing div in footer-->
-         <header class="container">
-          <div id="menu" class="navbar navbar-inverse">
+    <header class="container">
+      <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
             <div class="navbar-header">
-            <button class="btn btn-success navbar-toggle"
-              data-toggle="collapse"
-              data-target=".navbar-collapse"><span class="glyphicon glyphicon-chevron-down"></span></button>
-            <div id="logo">
-                  <a href="http://cs.csubak.edu/~erangel/"  class="navbar-brand">CSUB | Computer Science</a>
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Eddie Rangel @ CSUB</a>
             </div>
-            </div>
-            <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-               <li id="home-menu" class="nav"><a href="index.html">Home</a></li>
-                <li id="contact-menu" class="nav"><a href="contact.html">Contact</a></li>
-            </ul>
+        
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+              <ul class="nav navbar-nav">
+                <li class=""><a href="http://www.csub.edu/">CSUB <span class="sr-only">(current)</span></a></li>
+                <li><a href="http://www.cs.csubak.edu/">CEECS</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Courses <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                      <li><a href='cmps2240-f17/index.html'>CMPS 2040</a></li>
+                      <li><a href='./cmps450'>CMPS 450 </a></li>
+                      <li><a href='./cmps321'>CMPS 321</a></li>
+                  </ul>
+                </li>
+                <li clas='dropwdown'>
+                  <a class='dropdown-toggle' data-toggle='dropdown' 
+                     href="#">Resources <span class='caret'></span></a>
+                  <ul class='dropdown-menu'>
+                      <li><a href='http://www.cplusplus.com/'>cplusplus.com</a></li>
+                      <li><a href='http://www.w3schools.com/'>w3schools.com</a></li>
+                      <li><a href='http://php.net/'>php.net</a></li>
+                      <li class="divider"></li>
+                      
+                      <li><a href='http://www.csub.edu/facultyaffairs/Academic_Calendars/index.html'>Academic Calendar</a></li>
+                  </ul>
+              </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                  <li><a href="https://cmsweb.cms.csub.edu/psp/HBAKPRD/?&cmd=login&languageCd=ENG">myCSUB</a></li>
+                </ul>
             </div>
           </div>
-
-        </header>
-
+        </nav>
+  </header>
 <section id="body" class="container">
 	  <div class="row">	
       <div class="col-lg-2">
