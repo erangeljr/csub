@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<style>
+	body { padding-left: 10px; color: #000; }
+	h2 { font-family:'Arial',sans-serif; font-size:2.0em; color:#999; }
+	h3 {
+		font-family:'Arial',sans-serif; font-size:1.6em;
+		color:#114;
+		margin:2px; padding-top:6px;
+	}
+	.box_border { border:2px solid #999; width:600px; padding-left:8px; }
+    .code {
+        padding-left:12px;
+        background:#ffe;
+        color:#320;
+        border:2px solid #da6;
+        width:600px;
+    }
+    .console {
+        padding-left:10px;
+        background:#222;
+        color:#afa;
+        border:4px solid #66a;
+        width:600px;
+    }
+	p { width:800px; }
+	</style>
+
+<h2>CMPS-2240  Lab 4<br>Recursive Function Calls</h2>
+Eddie Rangel<br>
+Department of Computer and Electrical Engineering and Computer Science<br>
+California State University, Bakersfield<br>
+
+<p>
+<h3>Introduction</h3>
+<b>Goals</b>:<br>
+Write a recursive procedure that requires subroutine linkage<br>
+Utilize caller-saved and callee-saved registers<br>
+Code default arguments<br>
+</p>
+
+<p>
+<b>Resources</b>:<br>
+Multi-platform <a href="http://sourceforge.net/projects/spimsimulator/
+	files/">SPIM simulator</a><br>
+<a href="https://www.cs.tcd.ie/John.Waldron/itral/spim_ref.html">
+	Spim Quick Reference</a>
+</p>
+
+<p>
+<b>Files Needed</b>:<br>
+<a href="code/lab4/fact.s">
+	fact.s</a><br>
+<a href="code/lab4/cmdline.s">
+	cmdline.s</a><br>
+<a href="code/lab4/gcd.s">
+	gcd.s</a><br>
+<br>
+from Sleipnir:<br>
+<b>cp /home/stu/erangel/public_html/cmps2240-f17/code/lab4/* .</b><br>
+from local directory:<br>
+<b>scp sleipnir.cs.csubak.edu:/home/stu/erangel/public_html/cmps2240-f17/code/lab4/* .</b><br>
+
+</p>
+
+
+<h3>Background</h3>
+<p>
+Until now you have called procedures (e.g., printf, read) without worrying
+about protecting the environment of the caller (i.e.,the registers).
+In a high level language, variables hold local data, return values from
+computations, the procedure's arguments, etc. When you make a function call in
+C, for example, you can assume the local variables in the calling function
+(the  caller) will not be overwritten by the called function (the callee). In
+MIPS, you have no variables you have registers. In MIPS it is your
+responsibility to ensure the registers in the caller are not overwritten
+by code in the callee.
+</p>
+<p>
+In MIPS you must also worry about the address in the stack pointer
+register ($sp) and the return address register ($ra) since these registers could
+also be overwritten.  If the caller loads a value/address into a register before
+making a function call, the content of that register may need to be saved if
+the callee will overwrite the register and if the caller needs the contents in
+that register after the function call.  The only way to protect the contents of
+registers is to construct a stack frame in memory (also called a call frame)
+for the caller, store the contents of registers to that stack frame before the
+call, and restore the contents of the registers after the call.
+</p>
+<p>
+Creating a stack frame is not always necessary. Let's say you have a
+procedure named foo.  If foo nevers calls another procedure (or itself) then
+foo does not need to be concerned about saving its own environment.  In this
+scenario foo has no need for a stack frame.
+However, if foobar is the callee and does not know if foo (the  caller)
+expects persistent values to be in some registers and foobar is going to modify
+those register then foobar needs to be concerned about CLOBBERING the
+environment of foo. Thus foobar must construct a stack from for itself in
+order to save the values in the persistent registers. Once those values are
+saved, foobar can do work, and then restore the values in the persistent
+registers before returning to the caller.
+</p>
+<p>
+In conclusion, the only way to save an environment is to store the values
+in the registers onto the stack frame of the currently executing procedure.
+The environment is saved in the procedure's stack frame on the runtime
+stack and cannot be overwritten by another procedure. The two methods of
+storing and restoring registers are shown below.
+</p>
+
+<p style="border: 4px dashed #ddd">
+<b>Caller and Callee</b><br>
+When a function is called with jal, the state of the calling function
+should be saved, just in case the called function changes register values.
+Convention dictates that the calling function saves its temporary registers
+($t0 - $t9) on the stack, and the called function saves the ($s0 - $s7)
+registers.
+</p>
+
+<p>
+<b>Caller-saved...</b><br>
+In this method the caller stores to its stack frame the value of any register
+that the caller wants to prevent from being overwritten by a procedure that it
+calls. In this scenario the caller restores the value of the register after the callee returns.  Storing a register to the stack before calling another
+function is a <i>CALLER-SAVED</i> register. The convention is to use the
+$t0 - $t7 and $t8 - $t9 for this purpose.
+</p>
+<p>
+<b>Callee-saved...</b><br>
+Before using a register the callee stores the register's value
+to its stack and before exiting restores the register's value back.
+This process will save the environment of the <b>caller</b>.
+The registers that you perform this process on is a <i>CALLEE-SAVED</i>
+register. You do this method for persistent values that you want to maintain
+across procedure calls.
+The convention is to use the $s0 - $s7 registers for this purpose.
+</p>
+
+<h3>Recursive Fibonacci</h3>
+<p style="padding:4px; border:2px dashed #f00">
+Suggestion:<br>
+Copy the fact.s program to <b>fib.s</b>, then make your changes in fib.s.
+</p>
+
+<p>
+Recursive procedures nicely demonstrate the need to do one or both of the
+above methods because you are generally relying on values computed in both
+the caller and the callee.  When you write a recursive program in a high-level
+language, the job of creating a stack frame and cleaning up the stack upon
+exit is done for you by the compiler.  In assembly, if you wish to utilize the
+runtime stack you must do all the setup yourself.  You will do so in this lab
+as you implement this C function in MIPS assembly:
+</p>
+<p>
+<pre class="code">
+
+int main() {
+    printf("The 7th Fibonacci number is %d\n", fib(7));
+}
+
+int fib(int n) {
+    if (n == 1 || n == 2)
+        return 1;
+    return fib(n-1) + fib(n-2);
+}
+
+</pre>
+</p>
+<p>
+This function is a similar to fact.s and tac.s. fact.s is available in the
+code examples. tac.s is in
+<a href="doc/HP_AppA.pdf">Appendix A</a> of the text. In particular, review
+the fact.s program before beginning. Start with fact.s and modify it as shown
+above.  If you are careful, you will only need to add/modify 6 instructions.
+I am giving you several of those instructions below.  Just like fac, you will
+need to construct your own stack frame upon entering fib and cleanup after
+yourself (restore any registers you used) as you leave fib. In addition, since
+you need to make two recursive function calls, you will need to be sure to store
+the result of the first call onto the stack before making the second call. Use
+this instruction to do so:
+</p>
+
+<pre class="code">
+
+sw $v0 4($sp)   # store the result of jal fib
+                # sw ------&gt;
+                # lw &lt;------
+
+</pre>
+
+
+<p>
+(Normally, you would need to draw the stack to see which stack offsets
+are not being used and save your result there - I am giving it to you.)  You
+will also need two (not one) conditional branches since there are two stopping
+conditions:
+</p>
+
+<pre class="code">
+
+	li    $v0, 1         # Set return value to 1
+	beq   $a0, $v0, L1   # If n=1, branch to exit and return 1
+	li    $v1, 2         # Set test value to 2
+	beq   $a0, $v1, L1   # If n=2, branch to exit and return 1
+
+</pre>
+
+<p>
+<b>Required Files</b>
+Copy fact.s from the resources one page 1 using wget and copy printf.s from the
+previous week's lab.  Test your code from within spim:
+</p>
+
+<p>
+<pre class="console">
+
+$ spim
+(spim) re "fib.s"
+(spim) re "printf.s"
+(spim) run
+
+</pre>
+</p>
+
+<p>
+Note that <b>re</b> is another way to load an ASM file.<br>
+<b>lo</b> can also be used.
+<b>re</b> is short for read, <b>lo</b> is short for load.
+</p>
+
+<b>Check Off</b><br>
+Have the instructor check off that your program is working for the hard coded
+value of 7.<br>This check off is worth 7.5 points.
+</p>
+<p>
+<h3>What to turn in</h3>
+<pre>
+Your lab program <b>fib.s</b> must be located in the correct directory on Sleipnir.
+directory name: /home/stu/<i><b>yourname</b></i>/2240/4/
+Replace <i>yourname</i> with your own Sleipnir username!
+</pre>
+</p>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>	
+</body>
+</html>
+

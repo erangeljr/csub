@@ -1,48 +1,219 @@
+
 <!DOCTYPE html>
 <html>
-	<!-- <link rel="stylesheet" href="./cssReset.css"> -->
-	<style>
-		body { margin-left: 20px; }
-		h2 {
-			font-family:'Arial',sans-serif; font-size:1.6em; color:#999;
-			padding:0px; margin:0px;
-		}
-		h3 {
-			font-family:'Arial',sans-serif; font-size:1.2em;
-			color:#114;
-			margin:0px; padding-top:0px;
-		}
-	</style>
-	<body>
-		<p>
-		<h2>CMPS-224 Assembly Language Programming</h2>
-		</p>
-		<p>
-		<h3>Homework Set 4</h3>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+
+<h3>CMPS-2240 Homework 4: MIPS Encoding &amp; Pseudoinstructions</h3>
+<p>
+<div class="notes" style="height:60px;">
+Read:<br/>
+<ul>
+	<li><a href="./doc/HP_AppenA.pdf">Appendix A.10</a></li> 
+	<li><a href="./doc/mips-v-8086.txt">MIPS vs. x86 Architectures</a></li> 
+</ul>
+</div>
+</p>
+<div class="notes" style="width:320px;height:90px">
+refer to as needed:<br/>
+<ul>
+	<li><a href="./doc/mips-quick-guide.txt">
+		MIPS Quick Guide & Exam Notes</a></li>
+	<li><a href="./units_of_measure.html">
+		CMPS Units of Measure</a></li> 
+	<li><a href="./doc/mips32-instruc-set.pdf">
+		MIPS32 Instruction Set Quick Reference</a></li>
+</ul>
+</div>
+</p>
+<br>
+	
+
+
+1. MIPS is a load/store architecture. What does this mean?
+<div id="x1"></div><br>
+
+
+2. MIPS requires that most data to be aligned. What does this mean?
+<div id="x2"style="height:80px"></div><br>
+
+
+3. What are the restrictions on label names in MIPS?
+<div id="x3"></div><br>
+
+
+4. What does this assembler directive accomplish?<pre>
+    stuff:   .byte 'a','b','c','d','e','g' </pre>
+<div id="x4"></div><br>
+
+
+5. What do these assembler directives accomplish?<pre>
+    stuff:   .space 15 
+    stuff2:  .word 0:10 </pre>
+<div id="x5"style="height:80px"></div><br>
+
+
+6. Since MIPS instructions are all one word (4 bytes), it is easy to compute 
+   the address of the next instruction even if the instructions vary by number
+   of operands. Give the addresses of the next two instructions after addi.<pre> 
+      Address     Instruction         
+      0x00400024  addi $t2, $t3, 5   
+      __________  la  $a0, mystuff
+      __________  b target </pre>
+<div id="x6"></div><br>
+
+
+7. It is easy to encode MIPS instructions since there are so few instruction 
+    types (I, R and J). The encoding format for this type 
+    I instruction with opcode 8 <pre>
+          opcode  rt, rs,   imm
+          addi   $t1, $zero, 13  # initialize $t1 to decimal 13 </pre> 
+   is shown here (see Appen A pg. A-51), noting that rs and rt are reversed:
 <pre>
-You are free to use any resources at your disposal to answer the homework.
-However, directly copying answers from online sources is plagiarism.
-Unsupported answers will be given a zero grade.
+          8      rs      rt      imm  
+          ====== ======  ======  =======
+          6 bits 5 bits  5 bits  16 bits   = 32 bits.
+</pre>
+Addi is opcode 8, rt is register target, rs is
+register source, and imm is the immediate value.
+What is the binary encoding of this addi instruction? 
+(The opcode for addi is 8. See quick guide for register numbers. )
+<div id="x7"style="height:80px"></div><br>
 
-1. What causes memory fragmentation?
 
-2. (6 points) Write MIPS code that creates a 5-length linked list. Each link
-   consists of an integer (word) initialized to 0 and another word pointing to
-   the next link. The links should be stored on the heap. You should use
-   branching to iterate allocation of links.
+8. Pseudoinstructions are macros added to MIPS to make life
+   easier for the programmer. The assembler translates pseudos
+   into actual instructions; e.g., this pseudo:
+<pre>
+        move $t1, $s3   # $t1 = $s3
+</pre>
+   is really, under the covers, an add operation. Provide the
+   equivalent MIPS add. Why provide a macro for a single instruction?
+<div id="x8"style="height:90px"></div><br>
 
-3. (6 points) Write MIPS code that computes the n-th Fibonacci number
-   using iteration.
 
-4. Convert the following decimal numbers to fixed point &lt;4,4&gt;:
+9. Most pseudoinstructions are macros for multiple MIPS instructions. For
+    example, the bgt pseudo is really three instructions: beq, slt and bne.
+    Explain the meaning of the bgt below and translate it into its 
+    equivalent three MIPS instructions beq, slt and bne.<pre>
+            bgt $t0, $s2, Label </pre>
+<div id="x9"style="height:100px"></div><br>
 
-       A. 22.9375
-       B. 0.625
-       C. 1.09375
 
-5. Repeat Question 4 for half precision floating points.
+10. Using Appen A-10 or the quick guide as a reference, write a brief comment
+   for each line of MIPS code below. Then explain what the code is doing.
+    Assume that $s2 holds the starting address of an array of five integers 
+   1,2,3,4,5.<pre>
+ 1       li    $s0, 5
+ 2       move  $v0, $zero
+ 3       move  $t0, $zero    
+ 4 Loop: beq   $t0, $s0, Exit 
+ 5       sll   $t1, $t0, 2   
+ 6       add   $t1, $t1, $s2   
+ 7       lw    $t2, 0($t1)      
+ 8       add   $v0, $v0, $t2      
+ 9       addi  $t0, $t0, 1     
+10       j Loop
+11 Exit: </pre>
+<div id="x10"style="height:410px"></div><br>
+
+
+
+11. The following is the machine language of a small MIPS program.<br>
+What does the program do?
+<pre>
+
+00110100000001000000000000001010
+00100000100001000000000000010100
+00110100000000100000000000000001
+00000000000000000000000000001100
 
 </pre>
-</p>
+<div id="x11"></div><br>
+
+
+
+<!--
+<input type="button"value="hint"onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+);"><div id="x12"></div><br>
+-->
+
+
+<hr>
+<br>
+<br>
+<br>
+<br>
 </body>
 </html>

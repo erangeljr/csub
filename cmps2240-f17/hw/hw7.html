@@ -1,50 +1,190 @@
 <!DOCTYPE html>
-<html>
-	<!-- <link rel="stylesheet" href="./cssReset.css"> -->
-	<style>
-		body { margin-left: 20px; }
-		h2 {
-			font-family:'Arial',sans-serif; font-size:1.6em; color:#999;
-			padding:0px; margin:0px;
-		}
-		h3 {
-			font-family:'Arial',sans-serif; font-size:1.2em;
-			color:#114;
-			margin:0px; padding-top:0px;
-		}
-	</style>
-	<body>
-		<p>
-		<h2>CMPS-224 Assembly Language Programming</h2>
-		</p>
-		<p>
-		<h3>Homework Set 7</h3>
-<pre>
-Rules from previous homework sets apply.
+<!-- saved from url=(0124)file:///C:/Users/00179400/OneDrive%20-%20Kern%20Community%20College%20District/Course%20Material/cmps2240-f16/homework8.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"></head><body>
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
 
-1. Explain why a zero-valued register is not required for floating point
-   operations.
 
-2. Consider the following operation:
+<h3>CMPS-2240 Homework 7 - Intro to x86 Assembly</h3>
+<br>
+<p>
+</p><div class="notes" style="width:600px;">
+The answers to the questions below are found in this 
+<a href="../doc/assembly64.pdf">x86-64 assembly guide</a> and 
+<a href="../content/chapt_02.pdf">PPT PDF</a>
+</div>
+<p></p>
+<br>
 
-      add.s $f0 $f1 $a0
 
-   that mixes integers and floating points. What are the problems with carrying
-   out this instruction?
 
-3. Write a complete MIPS program that prompts for two floating point numbers,
-   adds them and finally displays the result.
+1. What are the ESP and the EBP registers in x86 assembly used for?
+<div id="x1"></div><br>
 
-4. What is the difference between an exception and an interrupt?
 
-5. How can a floating point overflow?
+2. The 6 general purpose registers (GPRs) in x86 are EAX, EBX, ECX, EDX, 
+ ESI, &amp; EDI. There are
+ also sub-registers. For example, explain
+ the difference between the EAX, AX, AH and AL registers.
+ Give the size of each.
+<div id="x2"></div><br>
 
-6. Consider two processors.
-   Processor A is highly pipelined with a CPI of 0.2 and a frequency of 200MHz.
-   Processor B has a CPI of 1.5 and a frequency of 1 GHz.
-   Given the same program, which is faster? 
 
+3. Describe what these declarations in the static data segment accomplish.
+   Note that in x86 a  word is 2 bytes and a double word is 4 bytes.
+<pre>   .DATA
+   var DB 64 
+   var2  DB ? 
+   DB 10     
+   X  DW ?  
+   Y  DD 3000
+</pre> 
+<div id="x3" style="height:90px"></div><br>
+
+
+4. The DUP assembler directive duplicates an initialization. Explain these:
+<pre>    Z  DD 1, 2, 3
+    bytes DB 10 DUP(?)
+    arr  DD 100 DUP(0) 
+    str  DB 'hello',0
+</pre> 
+<div id="x4" style="height:90px"></div><br>
+
+
+5. Unlike MIPS, x86 supports direct accesses to memory. Note that
+   a WORD is
+   2 bytes and a DWORD is 4 bytes. The x86 registers EAX, EBX, ECX, EDX,
+   ESI, EDI, ESP, and EBP  are 32-bit. Also note that with x86, data movement
+   is always from right to left (there is no operation
+   equivalent to the store operation in x86). With these facts in mind,
+   explain the instructions below.
+<pre>    mov eax, [ebx]   
+    mov [edx], eax   
+    mov eax, [esi-4] 
+    mov [esi+eax], cl 
+    mov BYTE PTR [ebx], 12 
+    mov WORD PTR [ebx], 5 
+    mov DWORD PTR [ebx], 9
 </pre>
-</body>
-</html>
+<div id="x5" style="height:130px"></div><br>
 
+
+6. The MOV instruction supports register to memory, register to register or
+   memory to register. Explain these:
+<pre>    mov eax, ebx 
+    mov byte ptr [var], 5
+</pre> 
+<div id="x6"></div><br>
+
+
+7. The push instruction places its operand onto the top of the hardware 
+   supported stack in memory. Push first decrements ESP by 4 (bytes), 
+   then places 
+   its operand into the contents of the 32-bit location at address [ESP]. 
+   ESP (the stack pointer) is decremented by push first since the x86 stack 
+   grows from high to low addresses. Explain these instructions:
+<pre>  push eax  
+  push [var]
+</pre>
+<div id="x7"></div><br>
+
+
+8. The pop instruction copies 4 bytes from the top of the 
+   hardware stack at address SP to register or memory.  SP is
+   then incremented by 4.  Explain these instructions:
+<pre>    pop edi
+    pop [ebx]
+</pre> 
+<div id="x8"></div><br>
+
+
+9. The Load Effective Address instruction (lea)
+   grabs the address of a label/symbol or computes an 
+   address by adding an offset. The effective address is then loaded into the 
+   target register. Explain these:
+<pre>    lea eax, [var] 
+    lea edi, [ebx+4*esi]
+</pre> 
+<div id="x9"></div><br>
+
+
+10. Unlike MIPS, arithmetic operations in x86
+    can be performed register to register or register to
+	memory. The second operand may be a constant. Explain these:
+<pre>    add eax, 10 
+    add BYTE PTR [var], 10 
+    sub al, ah 
+    imul eax, [var]
+    imul esi, edi, 25
+</pre>
+<div id="x10" style="height:110px"></div><br>
+
+
+</body></html>

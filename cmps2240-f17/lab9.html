@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+	<style>
+	body { padding-left: 10px; color: #000; }
+	h2 { font-family:'Arial',sans-serif; font-size:2.0em; color:#999; }
+	h3 {
+		font-family:'Arial',sans-serif; font-size:1.6em;
+		color:#114;
+		margin:2px; padding-top:6px;
+	}
+	.console {
+		padding-left:10px;
+		background:#222;
+		color:#afa;
+		border:4px solid #66a;
+		width:600px;
+	}
+	.box_border { border:2px solid #999; width:600px; padding-left:8px; }
+	p { width:800px; }
+	</style>
+
+<h2>CMPS-2240 Lab-10<br>Inlining x86-64 Assembly to Optimize Code</h2>
+Eddie Rangel<br>
+Department of Computer and Electrical Engineering and Computer Science<br>
+California State University, Bakersfield<br>
+<p style="padding:4px; color:red; border:2px dashed #111;">
+<b>Notice:</b><br>
+<b>Due:</b> Wednesday Nov. 22nd by 4pm
+</p>
+
+<p>
+<h3>Introduction</h3>
+<b>Goals</b>:<br>
+Refactor C/C++ code using x86 inline assembly
+</p>
+
+<p>
+<b>Resources</b>:
+<ul>
+<li>
+<a href="http://www.ibiblio.org/gferg/ldp/GCC-Inline-Assembly-HOWTO.html">
+GCC inline assembly HOWTO</a> at<br>
+http://www.ibiblio.org/gferg/ldp/GCC-Inline-Assembly-HOWTO.html
+</li>
+<li>
+<a href="http://www.delorie.com/djgpp/doc/brennan/
+	brennan_att_inline_djgpp.html">
+	Inline assembly guide</a> at<br>
+http://www.delorie.com/djgpp/doc/brennan/brennan_att_inline_djgpp.html
+</li>
+<li>
+<a href="http://wiki.osdev.org/Inline_Assembly">
+	Wiki:  Inline assembly</a> at<br>
+http://wiki.osdev.org/Inline_Assembly
+</li>
+<li>
+<a href="http://www.cs.cmu.edu/~fp/courses/15213-s07/misc/asm64-handout.pdf">
+	ASM64 GAS syntax</a> at<br>
+http://www.cs.cmu.edu/~fp/courses/15213-s07/misc/asm64-handout.pdf
+</li>
+<li>
+<a href="http://cs.csub.edu/~erangel/cmps2240-f16/code/lab10/">
+	examples/week10</a> at<br>
+http://cs.csub.edu/~erangel/cmps2240-f16/code/lab10/
+</li>
+<li>
+<a href="http://x86.renejeschke.de/">
+	x86 instruction set</a> at<br>
+http://x86.renejeschke.de/
+</li>
+<li>
+<a href="resource://pdf.js/web/">
+	gdb-quide.txt</a> at<br>
+resource://pdf.js/web/
+</li>
+<li>
+<a href="http://gcc.gnu.org/onlinedocs/gcc-4.1.2/gcc/
+	C-Extensions.html#C-Extensions">
+	GCC extensions</a> at<br>
+http://gcc.gnu.org/onlinedocs/gcc-4.1.2/gcc/C-Extensions.html#C-Extensions
+</li>
+</ul>
+</p>
+
+<p>
+<b>Files Needed</b>:
+</p>
+<p>
+Copy all <a href="./code/lab9/">source files</a> and the Makefile for lab 9 into your directory:
+</p>
+<p>
+<pre>
+<b>$ cp /home/stu/erangel/public_html/cmps2240-f17/code/lab9/* .</b>
+or
+<b>$ scp sleipnir.cs.csubak.edu:/home/stu/erangel/public_html/cmps2240-f17/code/lab9/* .</b>
+</pre>
+Use the Makefile to assemble and link any of the sources.
+</p>
+
+
+
+<p>
+<h3>2 Technical Approach</h3>
+</p>
+<p>
+Copy all example source files and the Makefile for lab10 into your directory.
+Use the Makefile to assemble and link any of the sources.
+Start by looking at an example of how to inline x86 in "sample1.c". The
+challenge is to understand AT&amp;T x86 syntax.
+Primarily the use of %% to preface register names and that movement in
+instructions is left to right rather than right to left (as with Intel).
+Once you have looked through the above guides
+(in particular GCC inline asm HOWTO) you should be ready to begin.
+</p>
+<p>
+Your job is to optimize the current "lab10.c" program with additional
+inlined x86-64 assembly code. The program currently computes
+a<sup>b</sup> and log<sub>a</sub>(a<sup>b</sup>) multiple times,
+where 'a' and 'b' are read in from the cmdline.
+
+A preprocessor directive named OPTIMIZE is used when compiling the program.
+Two executables will be generated:<br>
+<pre>
+
+lab10
+lab10_opt
+
+</pre>
+Look in the lab10.c program, and you will see a section near the bottom
+where you will write your own assembly creation.
+</p>
+
+<p>
+Run the programs and see a difference in running time.
+</p>
+
+<p>
+<pre class="console">
+
+$ time ./lab10 2 40
+2^40 is 1099511627776
+1099511627776 log 2 is 40
+
+real 0m0.047s
+user 0m0.047s
+sys 0m0.000s
+$ time ./lab10_opt 2 40
+---> Optimization is set on.
+2^40 is 1099511627776
+1099511627776 log 2 is 40
+
+real 0m0.037s
+user 0m0.037s
+sys 0m0.000s
+
+</pre>
+Notice there is a slight improvement with optimization above.<br>
+We can do better.
+</p>
+<p>
+The optimized code checks if base=2. If so, the source has embedded assembly
+that replaces multiplication with shift lefts to compute the exponential.
+The compiler will not do something like this
+(compile with -s flag to verify this) since the compiler does not know the
+value of the base until runtime. Your inlined assembly code is smarter than
+the compiler.
+</p>
+<p>
+Your job is to similarly optimize the chunk of code that computes the log.
+If base=2, replace division with shift rights to compute the log. Follow the
+example of the inlined assembly for the exponential.<br>
+Hint: do not try to embed the loop logic.<br>
+Simply replace the '/' operation with a right shift.
+</p>
+<p>
+The syntax for the shift operators you need is in "foo.s" which is the
+AT&amp;T x86 assembly produced by:
+</p>
+<p>
+<pre><b>$ gcc -S foo.c
+</b>
+</pre>
+</p>
+
+<p>
+You can also view the syntax of the x86 shift operators at:<br>
+<b><a href="http://x86.renejeschke.de/html/file_module_x86_id_285.html">
+http://x86.renejeschke.de/html/file_module_x86_id_285.html</a>
+</b>
+</p>
+
+<p>
+Time your code with OPTIMIZE set to 0. Then set OPTIMIZE to 1 and recompile.
+Time your code again.  You should see a huge improvement.  Sample output:
+</p>
+
+<p>
+<pre class="console">
+
+$ time ./lab10 2 40
+2^40 is 1099511627776
+1099511627776 log 2 is 40
+
+real 0m0.047s
+user 0m0.047s
+sys 0m0.000s
+$ time ./lab10_opt 2 40
+---> Optimization is set on.
+2^40 is 1099511627776
+1099511627776 log 2 is 40
+
+real 0m0.037s
+user 0m0.001s
+sys 0m0.000s
+
+</pre>
+Notice the improvement above.<br>
+</p>
+<p>
+Good luck!
+</p>
+
+<p>
+<h3>What to turn in</h3>
+<pre>
+Place program <b>lab9.c</b> in the correct directory on Sleipnir.
+directory name: /home/stu/<i><b>you</b></i>/2240/9/
+Replace <i><b>you</b></i> with your own Sleipnir username!
+</p>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>	
+</body>
+</html>
+
