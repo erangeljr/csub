@@ -1,0 +1,435 @@
+<html> <body>
+<h3>CMPS 2120 Lecture Notes - Inference Rules </h2>
+<b>resources:</b><br>
+<a href="./inference_rules.txt">inference rules</a><br>
+<a href="./logical_equivs.txt">logical equivalences</a><br>
+<pre>
+  DEFINITIONS:
+  A premise is a logical expression and a conclusion is a logical expression.
+  An argument is 2 or more premises (P1,P2,...Pn) leading to a conclusion (C).
+
+           Premise1
+           Premise2
+           Premise3
+           -----------
+            &there4; Conclusion
+
+  Meaning:
+  (Premise1 ^ Premise2 ^ Premise3) -> Conclusion. 
+
+  A Valid Argument is one in which true premises lead to a true conclusion. 
+  A valid argument is a tautology.
+
+            Sam likes Sally or Jack likes Jill
+            Sam does not like Sally
+            ----------------------------------
+             &there4; Jack likes Jill
+
+  Validity is an evaluation of the structure of the argument. Validity is not
+  an evaluation of the truth values of the premises. Therefore, we do not care
+  whether Sam actually likes Sally or Jill. The argument is valid because 
+  assuming the premises are true the conclusion is true.
+
+            p v q
+            ~p
+            -----
+             &there4; q
+
+  Invalid Argument: true premises lead to a false conclusion
+
+            Sam likes Sally or Jack likes Jill
+            Sam does not like Sally
+            ----------------------------------
+            &there4; Jack does not like Jill
+   
+ Sound Argument: a valid argument with premises that are actually true.
+
+           If k is an integer then 2k is an even integer 
+           5 is an integer
+           ---------------------------------------------
+           &there4;  10 is an even integer 
+
+  Unsound Argument: An unsound argument is one in which the structure is valid 
+  but one or more of the premises is false or falsely identified as true.
+
+        If something is made of cheese then it is good to eat.
+        The moon is made of cheese.
+        Therefore, the moon is good to eat.
+
+  The structure of the above argument is valid and used so frequently that
+  is has a name -- modus ponens:
+
+        p -> q
+        p 
+        --------
+        &there4; q              
+
+  Although the structure is valid, since the second premise is actually false 
+  the argument is unsound.
+
+  This is an example of an argument that is both valid and sound:
+
+       If you are a bird then you have wings.   T  
+       If you are a bird then you may or may not fly.   T
+       A penquin is a bird.   T
+       Therefore, a penquin has wings and may or may not fly.  T
+
+   The structure of this argument is:
+ 
+       p -> q
+       p -> (r v s) 
+       p
+       _____________
+       &there4;  q ^ (r v s) 
+       
+
+%% 
+  An invalid argument is one in which true premises lead to a false conclusion.
+  The structure for such an argument is invalid regardless of the actual values
+  of the premises and conclusion. Example:
+
+       If an animal can fly then it has wings or webbed skin.  
+       An emu cannot fly.  
+       Therefore, an emu does not have wings and it does not have webbed skin.
+
+  In this argument true premises do NOT lead to the conclusion. The conclusion
+  is thus false. The structure of the srgument is this:
+
+
+            p - > (q v r)
+           ~p
+          --------------
+          &there4; ~(q v r)
+
+  The argument is invalid because a false antecdent does not imply a false
+  consequence. This form of invalid argument is used so frequently that it
+  has a name - Denying the Antecedent. In this argument, the premises are 
+  actually true. The argument would be invalid even if the premises are
+  actually false:
+
+          If the moon is made of cheese then cows jump over it.
+          The moon is not made of cheese.
+          ---------------------------------
+          &there4;  Cows do not jump over it.
+  
+  INVALID. Not because of the ridiculous premises but because of the structure.    
+%% 
+  A Syllogism is a valid argument consisting of two premises and a conclusion.
+
+  A fallacy is an invalid syllogism. 
+  
+  Axioms: accepted as true; e.g. 2+2=4
+  
+  Theorem, Proposition, Fact: already proven 
+
+  Conjecture: a statement whose truth is unknown
+ 
+  Contradiction: a statement that always evaluates to false; e.g., p ^ ~p
+ 
+  Rules of Inference: a number of well-known syllogisms that can determine 
+  the validity of arguments
+  
+  Summary:
+  Arguments can be valid or invalid. Premises are true or false. A valid 
+  argument can be sound or unsound. An invalid argument is true premises
+  leading to a false conclusion, whether sound or unsound.
+  
+%% 
+Inference Engine Aside: 
+  An argument is really one big implication. The logical meaning of which is 
+   
+       (P1 ^ P2 ^ p3) -> C
+
+  Remove the implication:
+
+       ~(P1 ^ P2 ^ p3) v C
+
+  Apply De Morgan's and you have a Horn Clause:
+  
+       ~P1 v ~P2 v ~p3 v C
+
+  Therefore, assuming the argument is valid, to infer C, all you need to show
+  is C or that one of the premises is false! This is the basis for Prolog,
+  the first declarative programming language and the basis for all knowledge
+  databases. Statements of the type shown above are called Horn Clauses.
+
+-------------------------------------------------------------------------------
+Applying Rules Of Inferences (see <A href="./inference_rules.txt">inference rules</a>)
+
+1. Is this argument valid?
+
+   "If I like carrots then I like peas. I like carrots. Thus, I like peas."
+     
+Rewrite as a logical argument: 
+  p -> q   
+  p         
+  ------
+  &there4;  q   
+   
+This is a valid argument. The truth table is a tautology:  
+    -----------------------
+    p q  ((p->q)^ p)) ->  q 
+    -----------------------
+    T T     T   T T  |T|  T    
+    T F     F   F T  |T|  F 
+    F T     T   F F  |T|  T 
+    F F     T   F F  |T|  F
+
+This syllogism is called Modus Ponens (M.P.)
+  
+2. Is this argument valid?
+
+"If it rains today then there will be no BBQ today. If there is no BBQ today 
+then there will be a BBQ tomorrow. Thus, If it rains today then there will be
+a BBQ tomorrow."
+  
+Rewrite as a logical argument and confirm validity with a truth table: 
+
+                               p  q  r   ((p->q) ^ (q->r)) -> (p -> r) 
+                               ---------------------------------------
+     p -> q                    T  T  T      T    T    T   |T|    T 
+     q -> r                    T  T  F      T    F    F   |T|    F    
+     --------                  T  F  T      F    F        |T| 
+   :  p -> r                   T  F  F      F    F        |T|
+                               F  T  T      T    T    T   |T|    T
+                               F  T  F      T    F    F   |T|
+                               F  F  T      T    T    T   |T|    T
+                               F  F  F      T    T    T   |T|    T
+
+The argument is valid. This argument is called Hypothetical Syllogism.
+
+You can use syllogisms to show the validity of more complicated arguments. 
+How? If by applying syllogisms to the premises you can reduce the argument
+to something that obviously leads to the conclusion, the argument is valid.
+
+  The next arguments use these propositions.
+   p:  go swimming
+   q:  it is sunny
+   r:  take a canoe trip
+   s:  home by sunset
+   c:  it is cold
+
+# Is this argument valid?
+  "If I go swimming then it is sunny. If I don't go swimming then I take a 
+   canoe trip. Therefore, it is sunny or I take a canoe trip.
+
+   Premise 1.   p -> q
+   Premise 2.  ~p -> r
+   --------------------
+   Conclusion:  q v r
+
+   Proof.
+   Step 1.  p -> q  == ~p v q by Implication Elim. on Premise 1
+   Step 2.  ~p -> r == p v r by Implication Elim. on Premise 2
+   Step 3.  (~p v q) ^ (p v r) == q v r by Resolution on Step 1 and Step 2
+   Valid. 
+ 
+# Is this argument valid?
+ "If I'm home by sunset then it is cold. I'm home by sunset or it is
+  sunny. Therefore, it is sunny or it is cold."
+
+  P1. s -> c
+  P2. s v q
+  -----------
+  : q v c
+
+  Proof:
+  Step 1. s -> c == ~s v c by Implication Elimination on P1
+  Step 2. (~s v c) ^ (s v q) == c v q by Resolution on Step 1 and P2.
+  Step 3. c v q == q v c by Commutativity on Step 2
+  Valid.
+
+# Is this argument valid?
+"If I go swimming then it is sunny. If it is sunny I take a canoe trip.
+ Either I don't take a canoe trip or I'm home by sunset. Therefore, I go
+ swimming." 
+
+ It sounds invalid, but prove it. 
+
+ P1.  p -> q
+ P2.  q -> r
+ P3.  ~r v s
+ ----------------
+  : p   
+  
+  Step 1. p -> q ^ q -> r == p -> r  by Hypothetical Syllogism on P1 and P2.
+  Step 2. p -> r == ~p v r by Implication Elimination on Step 1.
+  Step 3. (~p v r ) ^ (~r v s) == ~p v s by Resolution on Step 2 and P3. 
+
+  Invalid since ~p v s does not imply p.
+
+# Is this argument valid?
+
+"If I go swimming then it is sunny. If I don't go swimming then I take a 
+ canoe trip. If I take a canoe trip then I am home by sunset. It is not 
+ sunny and it is cold. Therefore, I am home by sunset."
+                                    
+   Premise 1   p -> q                
+   Premise 2  ~p -> r              
+   Premise 3   r -> s             
+   Premise 4   ~q ^ c          
+              --------
+   conclusion :  s
+
+   Step 1. (~p -> r) ^ (r ->s) ==  ~p -> s   H.S. on Premise 2 and Premise 3
+   Step 2. ~p -> s == p v s                  Implication Elimination on Step 1
+   Step 3. p -> q == ~p v q                  Implication Elim on Premise 1
+   Step 4. (p v s)^(~p v q) == s v q         Resolution on Step 2 and Step 3
+   Step 5. (~q ^ c) ^ (s v q)                Conjunc from Step 4 and Prem 4 
+   Step 6. (~q^c^s) v (~q^c^q)               Distribution of AND over OR 
+   Step 7. (~q^c^s) v (F^c)                  negation law
+   Step 8. (~q^c^s) v F                      domination law 
+   Step 9. (~q^c^s)                          identity law 
+   Step 10. ~q^c^s == s                      simplification
+   This argument is valid since Step 10 does imply s.
+ 
+Fallacy:
+True premises lead to a false conclusion.
+
+      p -> q
+      q
+      -----       "Fallacy of affirming the conclusion"
+     :  p
+  
+ An invalid argument is not a tautology:  
+
+    p q  ((p->q)^ q)) ->  p
+    T T     T   T T  |T|  T    
+    T F     F   F F  |T|  T 
+    F T     T   T T  |F|  F
+    F F     T   F F  |T|  F
+
+#. Is this argument valid? 
+      p -> q
+      ~p 
+      -----       
+     :  ~q 
+ 
+ No. This is the "Fallacy of denying the antecedent." It is invalid because 
+ true premises lead to a false conclusion:
+
+      [ (p -> q) ^ ~p] -> ~q 
+        (F -> T)  ^ T  -> F
+              T  ^ T   -> F
+                    T  -> F   
+  
+     p -> q
+     r -> s
+     s -> t
+     t
+     ------
+     :  t        "Fallacy of begging the question"
+
+This invalid argument involves circular reasoning (you must assume that 
+which you are trying to prove).
+
+*******************************************************************************
+Review: An argument is valid if true premises always imply a true conclusion.
+The truth table in a valid argument is a tautology:
+  
+     p1
+     p2
+     p3        ( p1 ^ p2 ^ p3 ^ ... ^ pn ) -> q
+     ...
+     pn
+     ----
+    :  q
+  
+ But what if one the Premises in a valid argument is either false or falsely 
+ identified as true? A valid argument in this case is *unsound.* For example,
+ #
+     Stars exist in outer space. (true)                 p->q
+     Comets are stars. (false premise)                  p
+     Therefore, comets exist in outer space. (M.P.)     :q
+ # 
+     If pigs fly then the moon is made of cheese. (vacuous)   p->q
+     Pigs fly. (false premise)                                p
+     Therefore, the moon is made of cheese  (M.P)            :q
+ #
+     If birds fly then pigs fly. (false premise)             p->q
+     Pigs can't fly. (true)                                   ~q 
+     Therefore, birds can't fly. (M.T.)                      :~p
+ #
+      No swans are black.     (false premise)
+      All ravens are black.   (true)
+      :  No swans are ravens.  (H.S.)
+
+      s: swan   b: black  r: raven
+      s -> ~b                        
+      ~b -> ~r                          
+      -------                              
+      s -> ~r  (Hypothetical Syllogism)
+       
+ The form of the above 4 arguments is valid but all arguments are unsound.
+***************************************************************************
+  
+INFERENCE RULES FOR QUANTIFIED STATEMENTS  (see ch01/inference_rules.txt) 
+  
+          P(c)
+          ----
+         :  Ax P(x)   (if true for random, arbitrary c then true for all x)
+  
+>>> All dogs with webbed feet like to swim. Spot has webbed feet. Spot likes to
+    swim.
+  
+     Universe: all dogs
+     W(x): x has webbed feet     S(x) : x likes to swim
+  
+     Ax ( W(x) -> S(x))    Premise 1
+     W(spot)               Premise 2
+     ------------
+     :  S(spot)
+  
+     W(spot) -> S(spot)    Universal instantiation on Premise 1
+     W(spot)               Premise 2
+    -------------
+    :  S(spot)              modus ponens  VALID
+  
+  
+>>> Someone on the train stole the jewelry.All passengers ate in the dining car.
+    Therefore, someone who ate in the dining car stole the jewelry.
+  
+    Universe: all passengers
+    S(x): x stole jewelry
+    D(x): x ate in dining car  
+  
+    Ex S(x)    Premise 1. 
+    Ax D(x)    Premise 2.
+    ---------------------
+    : Ex (S(x) ^ D(x))
+  
+  
+   1.  Ex S(x)         Premise 1
+   2.     S(c)         existential instantiation
+   3.  Ax D(x)         Premise 2
+   4.     D(c)         universal instantiation       
+   5. S(c) ^ D(c)      conjunction from 2 and 4
+   6. Ex (S(x) ^ D(x)) existential generalization   VALID
+   
+>>> Some activity is better than flying a kite. Eating cake is better than 
+    most activities. Therefore, eating cake is better than flying a kite.
+
+    Universe = {activities that make humans happy}
+    B(x,y)   : activity x is better than activity y
+ 
+    Ex P(x,flying a kite) 
+    Ey P(eating cake,y) 
+    -------------------------
+    :  P(eating cake, flying a kite)
+
+   INVALID. Ex P(x,flying a kite) !== P(eating cake,flying a kite) since
+   eating cake does not have to be the activity.
+
+Example: (from Daniel Dennett's Freedom Evolves) 
+      1. In some deterministic worlds there are avoiders avoiding harms.
+      2. Therefore, in some deterministic worlds some things are avoided.
+      3. Whatever is avoided is avoidable, or evitable.
+      4. Therefore, in some deterministic worlds not everything is inevitable.
+      5. Therefore, determinism does not imply inevitability.
+
+From this argument, can you say that a robot has free will?
+
+
+</pre>
+</body>
+</html>

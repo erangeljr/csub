@@ -1,0 +1,395 @@
+<html> <head> <style type=text/css>
+DIV {margin:3px 0px 10px 3px;padding:4px 10px 5px 15px;border:1px dashed black;
+ font-family: helvetica; font-size: 11pt; font-weight: 500; color: #000;
+ background-color: #DEE; padding-right: 5px; width: 650px; }
+DIV.box { position: relative; float: left; margin: 0px 0px 2px 0px; 
+ padding: 4px; # border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #19193A;
+ background-color: #eee; padding-right: 0px; width: 450px; height: 60px; }
+h5 { background-color: yellow; width: 300px;}
+BODY { margin: 2% 15% 5% 5%; font-family: helvetica; background-color: white;
+  color: 19193A; font-size: 11pt; font-weight: 500;} </STYLE> </head>
+<body> <h2> CMPS 2120 Lecture Notes - Introduction to Predicate Logic</h2>
+</h2>
+<b>resources:</b><br>
+<a href="http://people.hofstra.edu/Stefan_Waner/RealWorld/logic/logicintro.html"
+>intro to logic</a><p>
+We cannot assign a truth value to a statement such as<pre>
+    x + 3 = 5 </pre>
+unless we know the value of x. The statement as written is not a proposition.
+ If x=2 then the statement is a proposition with value true.  If x=3
+ then the statement is a proposition with value false. Likewise, the statement  <pre>
+   Birds can fly </pre>
+is not a proposition since some 
+ birds can fly and some birds (e.g., emus) cannot.
+ It would be useful to make assertions 
+ such as  "Some birds can fly" (T) or "Not all birds can fly" (T)
+  or "All birds can fly" (F).
+<p>
+Predicate (First Order) logic is an extension to propositional logic
+ that allows us to reason about such assertions. The
+ following constructs are needed to do so: <pre>
+<div>
+ Variables: x,y,z,...  that denote the "subjects" in a statement
+
+ Predicates: claims about variable(s), denoted by P, Q, R, ... "P: > 3"
+
+ Predicate functions: a predicate applied to variable(s), denoted by P(x), 
+ Q(y), R(x,y), etc. "P(x): x < 7"
+
+ Quantifiers: defines the number of values of a variable that must exist for
+ the claim to be true: existential (for some x), denoted by &exist; and 
+ universal (for all x), denoted by &forall;
+
+ A universe of discourse (domain) for variable(s); e.g. &exist;x x + 3 = 5 is 
+ true over the domain of integers but false over the domain of odd integers. 
+
+ With these additions, we can reason about statements such as x + 3 = 5.
+
+ Example:
+ P(x): x + 3 = 5, over the domain of positive integers.
+
+ &exist;x P(x) means "For some positive integer x, x+3=5 is true."  
+ 
+ &exist;x P(x) is TRUE since P(2) is TRUE. 
+
+ &forall;x P(x) means "For all positive integers x, x+3=5 is true." 
+
+ &forall;x P(x) is FALSE since P(3) is FALSE.
+</div>
+</pre>
+<h3>Negation of existential quantifiers</h3>
+
+  To show that &forall;x P(x) is false, you need only one counterexample:<pre>
+  &forall;x P(x) is FALSE because P(5) is FALSE: 5+3=5  </pre>
+
+  Thus, the negation of the universal quantifer is: <pre>
+    ~&forall;x P(x) &equiv; &exist;x ~P(x)      De Morgan's Law  </pre>
+ 
+To show that &exist;x P(x) is false, show that P(x) is never true. Thus,
+  negation of the existential quantifier is: <pre>
+     ~&exist;x P(x) &equiv; &forall;x ~P(x)      De Morgan's Law </pre>
+
+ Example in English:
+<div> <pre> 
+ Universe of discourse: All doors in SCI III.
+ P(x): Door x is open.
+
+ &forall;x P(x): "All doors in SCI III are open."
+
+ ~&forall;x P(x): "It is not the case that all the doors are open."
+
+     is equivalent to 
+
+  &exist;x ~P(x): "Some door is closed."
+
+  De Morgan's applied to the existential quantifier:
+
+  &exist;x P(x): "Some door is open."
+
+  ~&exist;x P(x): "It is not the case that some door is open."
+ 
+       is equivalent to
+
+  &forall;x ~P(x): "All doors are closed."
+</pre> </div>
+ 
+<h3>Logical Connectives in Predicate Logic</h3>
+ &exist;x P(x) ^ &exist;y Q(y), where x and y are integers, means:
+
+   "P is true for some integer x and Q is true for some integer x." 
+
+  Note that x and y could be bound to the same value. 
+
+  All logical operators may be used in predicate logic with the same order of 
+  precedence as in propositional logic.
+
+  Quantifiers take precedence over all logical operators. For example, <pre>
+     &forall;x P(x) v Q(x)  </pre>
+
+  stated more precisely is<pre>
+ (&forall;x P(x)) v Q(x)  # not a proposition since last x is unbound</pre>
+
+  and not <pre>
+   &forall;x (P(x) v Q(x)).  </pre>
+  
+  In general, use parenthesis to avoid confusion.
+
+<h3>Bound and Free Variables</h3>
+ 
+  A variable is either within the scope of a quantifier (bound to a value
+  in the domain) or is free (unbound).
+
+  In the statement <pre>
+      &exist;x P(x,y) </pre>
+
+ x is within the scope of the existential quantifier &exist;. Variable
+ y is not within the scope of a quantifer. This statement is
+ is not a proposition until y has a quantifier and is bound to a value.
+<p>
+The same variable name may refer to different variable bindings if the
+ variables are in different scopes. Thus, in the statement  <pre>
+      &exist;x P(x) ^ &forall;x Q(x) </pre>
+ 
+the x in P(x) is within the scope of &exist; and will be bound to a variable 
+in that context. The second x in Q(x) is bound to a value within
+ the scope of the quantifier &forall;.  If x and y are from the 
+ same Universe of Discourse, x and y may be bound to the same value or to
+ different values.
+
+<p>
+ Likewise, the statement 
+<pre>    &exist;x P(x) ^ &exist;x Q(x)  </pre>
+  means "For some x, P(x) is true and for some x (the
+  value of which may or may not be the same as used in the first x) 
+ Q(x) is true."
+<p>
+  Whereas, in this statement 
+    <pre>       &exist;x (P(x) ^ Q(x))  </pre>
+
+ x is bound to the same value since both x's are within the scope of
+ one existential quantifier &exist;. This statement means
+ <p>
+   "For some x, P(x) and Q(x) is true."   (x has one value)
+<p>
+  Another example of scoping, where x ranges over the integers, 
+    <pre>     P(x) : x > 2        Q(x) : x < 2  </pre>
+  This statement  
+   <pre>       &exist;x (P(x) <-> Q(x)) </pre>
+  means <pre> "For some x, x > 2 is true if and only if x < 2 is true." </pre>
+  On the other hand, this statement  <pre>
+       &exist;xP(x) <-> &exist;xQ(x) </pre>
+  means  
+"For some x, x > 2 is true if and only if for some 
+ x, x < 2 is true" (x may or may not be bound to the same value) 
+ <p>
+ In conclusion, the use of two different variable names; e.g., 
+ <pre>   &exist;x P(x) &and; &forall;y Q(y) </pre>
+ does not prevent x and y from being bound to the same value.
+ Once you understand these scoping rules you will understand the
+ following equivalences.
+<p>
+<div><pre>
+ DISTRIBUTION RULES FOR STATEMENTS WITH TWO PREDICATES  
+
+ &forall;x(P(x) &and; Q(x))  &equiv; &forall;xP(x) &and; &forall;xQ(x)
+ &forall;x(P(x) v Q(x)) !&equiv; &forall;xP(x) v &forall;xQ(x)
+
+
+ &exist;x(P(x) v Q(x))  &equiv; &exist;xP(x) v &exist;xQ(x)
+ &exist;x(P(x) &and; Q(x)) !&equiv; &exist;xP(x) &and; &exist;xQ(x) </pre>
+</div>
+We can prove the above equivalences. For example, let's try to
+  show that 
+<pre>     &forall;x(P(x) ^ Q(x)) &equiv; &forall;xP(x) ^ &forall;xQ(x).</pre>
+<p>
+We cannot use truth tables with quantifiers but we can express the meaning of 
+the predicates in propositional logic without the quantifiers.
+ Then we just need to show that both expressions 
+ have the same truth values.
+<pre><tt>By definition &forall;x(P(x) ^ Q(x)) means 
+    (P(x_1) ^ Q(x_1)) ^ (P(x_2) ^ Q(x_2)) ^...^ (P(x_n) ^ Q(x_n)), for all x_i in U.
+
+Since ^ is non-associative, remove the parenthesis      
+     P(x_1) ^ Q(x_1) ^ P(x_2) ^ Q(x_2) ^...^ P(x_n) ^ Q(x_n)
+
+and apply the commutative law
+    P(x_1) ^ P(x_2) ^...^ P(x_n) ^ Q(x_1) ^ Q(x_2) ^...^ Q(x_n) <-------------,
+                                                                              |
+Likewise, for all x_i in U, &forall;xP(x) ^ &forall;xQ(x) means                            |
+    (P(x_1) ^ P(x_2) ^ ...^ P(x_n)) ^ (Q(x_1) ^ Q(x_2) ^ ...^ Q(x_n)).        |
+                                                                              |
+Remove the parenthesis.                                                       |
+    P(x_1) ^ P(x_2) ^...^ P(x_n) ^ Q(x_1) ^ Q(x_2) ^...^ Q(x_n)  <------------'
+
+Since the expressions match we are done.
+
+Second Proof.
+Show that &forall;x(P(x) v Q(x)) and &forall;xP(x) v &forall;xQ(x) do not have the same truth
+values. We cannot use truth tables with quantifiers but we can express the 
+meaning of the predicates in logic without the quantifiers.
+
+Expression #1.
+By definition &forall;x(P(x) v Q(x)) means
+   (P(x_1) v Q(x_1)) ^ (P(x_2) v Q(x_2)) ^ ... ^ (P(x_n) v Q(x_n))
+
+Expression #2.
+By definition &forall;xP(x) v &forall;xQ(x) means
+   (P(x_1) ^ P(x_2)) ^ ... ^ P(x_n)) v (Q(x_1) ^ Q(x_2)) ^ ... ^ Q(x_n))
+
+Let P(x_1) be true, P(x_2)..P(x_n) be false, Q(x_1) be false and Q(x_2)..Q(x_n)
+be true. Then #1 is true but #2 is false.
+</pre>
+<div><pre>
+ NEGATIONS OF EXPRESSIONS WITH TWO PREDICATES  
+
+ ~(&forall;x(P(x) &and; Q(x)) &equiv; &exist;x(~P(x) &or; ~Q(x))
+ "Somebody dislikes either peas or carrots."
+
+ ~(&forall;x(P(x) &or; Q(x)) &equiv; &exist;x(~P(x) &and; ~Q(x))
+ "Somebody dislikes both peas and carrots."
+
+
+ ~(&exist;x(P(x) v Q(x)) &equiv; &forall;x(~P(x) &and; ~Q(x))
+ "Everybody dislikes both peas and carrots."
+
+ ~(&exist;x(P(x) &and; Q(x)) &equiv; &forall;x(~P(x) &or; ~Q(x))
+ "Everybody dislikes either peas or carrots."
+</pre></div>
+
+<h3>Example of Distributing Quantifers</h3>
+<div><pre>
+Universe of discourse: all people
+P(x) : x loves carrots
+Q(x) : x loves peas
+
+&exist;xP(x) ^ &exist;yQ(y) ^ x="sam"</pre>
+We know Sam likes peas but we cannot make a stronger claim since 
+ y may or may not be bound to Sam.
+</p>
+<p>
+The implication in Predicate Calculus is powerful; e.g., <pre>
+&forall;x(Q(x) -> x="Sam") means "No one but Sam likes peas." </pre>
+
+In Predicate Calculus we can
+ distribute a universal quantifier over a conjunction
+('&equiv;' means logically equivalent):
+
+<pre> &forall;x(P(x)^Q(x)) &equiv; &forall;xP(x) ^ &forall;xQ(x) </pre>
+
+In English: "Everybody likes peas and carrots" is equivalent to
+ "Everybody likes peas and everybody likes carrots."
+<p>
+We can distribute an existential quantifier over a disjunction:
+<pre>   &exist;x(P(x) v Q(x)) &equiv; &exist;x P(x) v &exist;x Q(x)   </pre>
+
+ "Someone likes peas or carrots" 
+     is equivalent to
+ "Someone likes peas or someone likes carrots."
+</pre>
+<p>
+We CANNOT distribute a universal quantifier across a disjunction:
+
+  <pre>  &forall;x(P(x) v Q(x)) !&equiv; &forall;xP(x) v &forall;xQ(x)   </pre>
+
+ "Everybody likes peas or carrots" does not necessarily mean  
+ "Everybody likes peas or everybody likes carrots."
+<p>
+We CANNOT distribute an existential quantifier over a conjunction:
+
+  <pre>   &exist;x(P(x) ^ Q(x)) !&equiv; &exist;xP(x) ^ &exist;xQ(x)   </pre>
+
+ "Somebody likes peas and carrots" does not necessarily mean 
+ "Somebody likes peas and somebody likes carrots" since the somebody could
+ be a different person in the second statement.
+<p>
+
+We CANNOT distribute a universal or existential
+  quantifier over an implication:
+
+<pre> &forall;x(P(x) -> Q(x)) !&equiv; &forall;x P(x) -> &forall;x Q(x) 
+ 
+ &exist;x(P(x) -> Q(x)) !&equiv; &exist;x P(x) -> &exist;x Q(x) 
+</div></pre>
+
+<h3>Example.</h3>
+
+<div><pre>
+Universe of discourse: students at CSUB
+P(x) = "x is taking 12 units"
+Q(x) = "x has 3.5 GPA"
+</pre>
+&exist;x P(x) reads "for some x P(x) is true"
+ and means "Some student is taking 12 units."
+<p>
+~&exist;x P(x) reads "it is not the case that for some x P(x) is true"
+ and means "No student is taking 12 units."
+<p>
+&forall;x ~P(x)  reads "for all x P(x) is false"  and means
+"No student is taking 12 units."
+<p>
+
+&forall;x P(x)  reads "for all x P(x) is true" and means
+"Everyone is taking 12 units."
+
+<p>
+~&forall;x P(x) reads "It is not the case for all x that P(x) is true" 
+ and means "Not everyone is taking 12 units."
+
+<p>
+&exist;x ~P(x)  reads "For some x P(x) is false" and means
+"Some student is not taking 12 units."
+
+<p>
+~&forall;x~P(x) is the same as &exist;xP(x)
+
+<p>
+&forall;x (P(x) ^ Q(x)) reads "For all x, P(x) and Q(x) are true" and
+ means "All students are taking 12 units and have a 3.5 GPA."
+
+<p>
+&forall;x (P(x) -> Q(x)) "For all x, P(x) implies Q(x).
+If a student takes 12 units he/she will have a 3.5 GPA. 
+
+<p>
+&forall;x P(x) -> &forall;xQ(x) "For all x, P(x) implies that for all x, Q(x).
+If a student takes 12 units, all students will have a 3.5 GPA or
+If a student doesn't take 12 units all students will have a 3.5 GPA.
+(makes no sense)
+
+  
+<p>
+&exist;x (P(x) -> Q(x))  "There is an x, such that P(x) implies Q(x).
+If some student takes 12 units he/she will have 3.5 GPA.
+
+<p>
+&exist;x P(x) -> &exist;x Q(x)  "There is an x, such that P(x) implies there
+                               is an x such that Q(x) is true.
+If some student takes 12 units then some student has a 3.5 GPA or
+if some student doesn't take 12 units then some student has a 3.5 GPA.
+(makes no sense)
+</pre></div>
+
+<h3>Example.</h3>
+
+Is &forall;x(P(x) -> Q(x)) &equiv; &forall;xP(x) -> &forall;xQ(x)?
+
+<pre>
+ Example:
+ Given the universe of discourse: people in {sam,joe}
+ P(x): x is smiling
+ Q(x): x is happy  </pre> 
+
+&forall;x(P(x) -> Q(x)) in English means  "If someone is smiling then
+ that someone is happy."
+<p>
+Assume sam is smiling and happy. If Joe is not happy 
+the implication is still true.
+<p>
+If we distribute the universal quantifier we have 
+
+  <pre> &forall;xP(x) -> &forall;xQ(x)  </pre>
+
+It is a little difficult to translate the meaning into English but roughly
+  this means "If anyone is smiling then everyone is happy (this holds 
+ true for anyone who is smiling). " 
+
+So if Sam is smiling and joe is not happy the implication is false.
+The statements are obviously not equivalent. In summary,
+  the universal quantifer cannot distribute over ->.
+<p>
+The universal quantifer can distribute over ^. Example:
+
+<pre>
+  &forall;xP(x) ^ &forall;xQ(x) &equiv; &forall;x( P(x) ^ Q(x))  
+
+Universe of discourse: all students
+P(x) : know C
+Q(x) : know Java
+</pre>
+In English,
+"All students know C and all students know Java" is the same as
+"All students know C and Java."
+</pre>
+</body>
+</html>

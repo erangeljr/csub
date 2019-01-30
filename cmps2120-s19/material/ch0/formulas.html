@@ -1,0 +1,126 @@
+<html>
+<body>
+<font size =+1> 
+<b>Summation Formulas</b>
+<table border=1 cellspacing=1 cellpadding=3 width="100%">
+<tr><td>
+<b>1. </b>&Sigma; i=a to z, 1 = z - a + 1; </b>&Sigma; i=1 to n, 1 = n  
+</td>
+<td>
+<b>2. </b>&Sigma; i=1 to n, i = 1 + 2 + 3 + . . . + n = 
+
+n(n+1)/2 &asymp; 1/2 n<sup>2</sup><p/> 
+</td></tr>
+<tr><td>
+<b>3. </b>&Sigma; i=1 to n, i<sup>2</sup> = 
+1<sup>2</sup> + 2<sup>2</sup> + 3<sup>2</sup> +  . . . + 
+n<sup>2</sup> = <pre> 
+          n(n+1)(2n+1)
+          ------------ &asymp; 1/3 n<sup>3</sup> 
+               6</pre>
+
+</td>
+<td>
+<b>4. </b>&Sigma; i=1 to n, i<sup>k</sup> = 
+1<sup>k</sup> + 2<sup>k</sup> + 3<sup>k</sup> +  . . . + n<sup>k</sup> 
+&asymp; <pre>      1
+    ----  n<sup>k+1</sup>
+     k+1</pre>
+
+</td></tr>
+<tr><td>
+<b>5. </b>&Sigma; i=0 to n, a<sup>i</sup> =  1 + a + . . . a<sup>n</sup> = <pre>
+      a<sup>n+1</sup> - 1
+      -------- (a &ne; 1)  
+       a - 1 </pre>
+
+</td>
+<td>
+<b>5a. </b> &Sigma; i=0 to n, 2<sup>i</sup> = 2<sup>n+1</sup> - 1 
+<p><font size=-1>(This is the value of a binary number of size n+1 bits, with all bits flipped on.)</font>
+</td></tr>
+<tr><td>
+<b>6. </b> &Sigma; i=1 to n, i 2<sup>i</sup> = 1 * 2 + 2 * 2<sup>2</sup> + . . . + n * 2<sup>n</sup> = 
+ <br>&nbsp;&nbsp;&nbsp; (n - 1)2<sup>n+1</sup> + 2
+
+</td>
+<td>
+<b>7. </b> &Sigma; i=1 to n, 1/i = 1/1 + 1/2 + 1/3 + . . . + 1/n  &asymp; ln n +
+ &gamma;, <br>where &gamma; &asymp; 0.5772 . . . (Euler's constant)   
+
+</td></tr>
+<tr><td>
+<b>8. </b> &Sigma; i=1 to n, lg i &asymp; n lg n , where lg is log base 2 
+<td>&nbsp;</td>
+</tr>
+</table>
+<p>
+<b>Modular Arithmetic Formulas,</b>
+<font size=-1>where n, m are integers, and p is a positive integer </font>
+<table border = 1 cellspacing=1 cellpadding=10 width="100%">
+<tr><td>
+
+n mod m = 1 is also n - 1 mod m = 0<br>
+Example: 5 mod 4 = 1 == 4 mod 4 = 0.
+
+</td> <td>
+<b>Product Rule. </b> (n * m) mod p = ((n mod p) * (m mod p)) mod p<br>
+<b> Additive Rule.</b> (n + m) mod p = (n mod p + m mod p) mod p
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+</td> </tr> </table>
+<p><b>Log and Exponentiation Rules
+<table border=1 cellspacing=1 cellpadding=10 width="100%">
+<tr><td>
+ log<sub>a</sub>(n) = log<sub>a</sub>(b) * log<sub>b</sub>(n) <br>
+log2 (10) = 3.0129996
+</td><td> 
+if n=2^k then k = lg n
+</td>
+<tr>
+<td>
+log(n^k) = k log (n)
+</td>
+<td>
+log(nm) = log (m) + log (n)
+</td>
+</tr>
+<tr><td>
+p<sup>m(n-1)</sup> p<sup>m</sup> = p<sup>mn</sup> 
+</td>
+<td>
+p<sup>m</sup>p<sup>n</sup> = p<sup>m+n</sup>  
+</td>
+</tr>
+</table>
+<p>Floor and Ceiling Formulas
+<table border=1 cellspacing=1 cellpadding=10 width="100%">
+<tr><td>
+floor(n/2) + ceiling(n/2) = n, for all integers n
+</td><td>
+ floor(x+n) = floor(x) + n and ceil(x+n) = ceil(x) + n, 
+                                                for real x and integer n 
+
+</td></tr>
+<tr><td>
+ceil(lg(n + 1)) = floor(lg n) + 1
+</td>
+<td>
+b = floor (lg n) + 1,  where b is the number of bits in the binary representation of n 
+</td></tr>
+</table>
+<p>Miscellaneous Stuff 
+<table border=1 cellspacing=1 cellpadding=10 width="100%">
+<tr><td>
+Stirling's approx. for n! is  
+  (n/3)^n < n! < (n/2)^n for n >= 6. 
+</td></tr>
+</table>
+</body>
+</html>

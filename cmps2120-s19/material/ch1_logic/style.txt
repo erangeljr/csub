@@ -1,0 +1,16 @@
+<style type=text/css>
+DIV.ans {
+ margin: 3px 0px 10px 3px; padding: 4px; border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #777;
+ background-color: #DEE; padding-right: 5px; height: 50px; width: 600px;
+}
+
+DIV.box { position: relative; float: left; margin: 0px 0px 2px 0px; 
+ padding: 4px; 
+ # border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #19193A;
+ background-color: #eee; padding-right: 0px; width: 450px; height: 60px; }
+h5 { background-color: yellow; width: 300px;}
+BODY { margin: 2% 15% 5% 5%; font-family: helvetica; background-color: white;
+  color: 19193A; font-size: 10pt; font-weight: 500;}
+</STYLE>

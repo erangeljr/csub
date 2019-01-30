@@ -1,0 +1,116 @@
+=============================================================================
+notation: '==' is logical equivalence; '->' is implication; '^' is AND; 
+'v' is OR; '~' is NOT; '<->' is biconditional; XOR is exclusive or
+Precedence Order (highest to lowest): () NOT AND OR -> <-> 
+=============================================================================
+ identity laws         p ^ T == p              p v F == p
+-----------------------------------------------------------------------------
+ domination laws       p v T = T               p ^ F = F
+-----------------------------------------------------------------------------
+ negation laws         p v ~p == T             p ^ ~p == F 
+-----------------------------------------------------------------------------
+ idempotent laws       p v p == p              p ^ p == p 
+-----------------------------------------------------------------------------
+ commutativity       (p ^ q) == (q ^ p)        (p v q) == (q v p) 
+------------------------------------------------------------------------------
+ associativity  (p ^ q) ^ r == p ^ (q ^ r)     (p v q) v r == p v (q v r)
+------------------------------------------------------------------------------
+ double negation elimination     ~(~p) == p 
+------------------------------------------------------------------------------
+ contraposition                  p -> q == ~q -> ~p 
+------------------------------------------------------------------------------
+ implication elimination         p -> q == ~p v q
+-------------------------------------------------------------------------------
+ biconditional elimination       p <-> q == (p -> q) ^ (q -> p) 
+-------------------------------------------------------------------------------
+ De Morgan    ~( p ^ q) == ~p v ~q       ~( p v q) == ~p ^ ~ q
+-------------------------------------------------------------------------------
+ distributivity of ^ over v and v over ^
+   p ^ (q v r) == (p ^ q) v ( p ^ r)
+   p v (q ^ r) == (p v q) ^ (p v r) 
+-------------------------------------------------------------------------------
+ absorption                     p v (p ^ q ) == p           p ^ (p v q) == p
+-------------------------------------------------------------------------------
+            Rules of Inference for Propositional and Predicate Logic
+ ':' is therefore; 'v' is "OR"; '~' is NOT; '^' is AND; '->' is implication
+-------------------------------------------------------------------------------
+   p  
+   q               Conjunction (Conj.) 	
+-----------
+: p ^ q
+  	
+   p -> q          Modus Ponens (M.P.)  
+   p  
+----------
+:  q
+  	
+   p -> q          Modus Tollens (M.T.)  
+   ~q  
+----------
+: ~p
+  	
+  p -> q           Hypothetical Syllogism (H.S.) 	
+  q -> r  
+----------
+: p -> r
+  	
+   p v q           Disjunctive Syllogism (D.S.) 	
+   ~ p  
+----------
+:  q
+  	
+ (p -> q) ^ (r -> s)  Constructive Dilemma (C.D.) 	
+  p v r  
+---------------------
+: q v s
+  	
+   p -> q            Absorption (Abs.) 	
+---------------
+:  p -> (p ^ q)  
+ 
+   p ^ q             Simplification (Simp.) 	
+-----------
+: p
+  	
+   p                 Addition (Add.) 	
+-----------
+: p v q
+  	
+    p v q            Resolution (Res.)
+   ~p v r
+-----------
+:   q v r
+
+Fallacy of affirming the consequence (or conclusion)    
+p -> q
+q
+-------
+p        
+
+Fallacy of denying the antecedent (or hypothesis) 
+p -> q
+~p
+-------
+~q        
+                Rules of Inference for Quantified Statements 
+-------------------------------------------------------------------------------
+Given Universe of Discourse = U and c member of U
+Universal Instantiation  
+   Ax P(x)
+----------- 
+:  P(c) for some element c
+
+Universal Generalization 
+   P(c) for an arbitrary c
+----------
+:  Ax P(x) 
+
+Existential Instantiation
+   Ex P(x)
+-----------
+:  P(c) for some element c
+
+Existential Generalization 
+   P(c) for an arbitrary c
+----------
+:  Ex P(x) 

@@ -1,0 +1,59 @@
+                   TABLE OF LOGICAL EQUIVALENCES 
+
+  notation: == logical equivalence; -> implication; ^ AND; v OR; ~ NOT; 
+  <-> biconditional; XOR exclusive or; Precedence high to low: () ~ ^ v -> <-> 
+  =============================================================================
+  IDENTITY LAWS        
+     p ^ T == p                  
+     p v F == p
+  DOMINATION LAWS
+     p v T = T                    
+     p ^ F = F
+  NEGATION LAWS
+     p v ~p == T
+     p ^ ~p == F 
+  IDEMPOTENT LAWS
+     p v p == p                  
+     p ^ p == p 
+  COMMUTATIVITY
+    (p ^ q) == (q ^ p)     
+    (p v q) == (q v p) 
+  ASSOCIATIVITY
+    (p ^ q) ^ r == p ^ (q ^ r)      
+    (p v q) v r == p v (q v r)
+  DOUBLE NEGATION ELIMINATION
+      ~(~p) == p 
+  CONTRAPOSITION
+      p -> q == ~q -> ~p 
+  IMPLICATION ELIMINATION
+      p -> q == ~p v q
+  BICONDITIONAL ELIMINATION
+    p <-> q == (p -> q)^(q -> p) == (~p v q)^(~q v p) == (~p ^ ~q) v (q ^ p) 
+  DE MORGAN'S
+   ~( p ^ q) == ~p v ~q       
+   ~( p v q) == ~p ^ ~ q
+  DISTRIBUTIVITY OF ^ OVER v AND v OVER ^
+    p ^ (q v r) == (p ^ q) v ( p ^ r)
+    p v (q ^ r) == (p v q) ^ (p v r) 
+  ABSORPTION
+    p v (p ^ q) == p
+    p ^ (p v q) == p
+
+ EQUIVALENCES FOR QUANTIFIERS
+    Ax (P(x) ^ Q(x)) == Ax P(x) ^ Ax Q(x)
+    Ax (P(x) v Q(x)) !== Ax P(x) v Ax Q(x)
+
+    Ex (P(x) v Q(x)) == Ex P(x) v Ex Q(x)
+    Ex (P(x) ^ Q(x)) !== Ex P(x) ^ Ex Q(x)
+
+    AxAy P(x,y) == AyAx P(x,y)  
+   ~(AxAy P(x,y)) == ExEy ~P(x,y)  
+
+    ExEy P(x,y) == EyEx P(x,y)   
+   ~(ExEy P(x,y)) == AxAy ~P(x,y)
+
+    AxEy P(x,y) !== EyAx P(x,y)
+   ~(AxEy P(x,y)) == ExAy ~P(x,y)
+
+    ExAy P(x,y) !== AyEx P(x,y)
+   ~(ExAy P(x,y)) == AxEy ~P(x,y)

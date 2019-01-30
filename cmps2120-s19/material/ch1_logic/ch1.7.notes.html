@@ -1,0 +1,259 @@
+<html>
+<body>
+<h3>CMPS 2120 Week 3 Lecture Notes - More Proof Strategies</h3>
+<pre>
+<b>EXAMPLE 1</b>
+
+Show: If a != b, and a and b are real numbers, then (a + b)/2 > sqrt(ab).
+
+Step 1. Remove division and sqrt operators to make inequality easier to work with.
+
+       (a + b)/2 > sqrt(ab)
+       (a + b) > 2(sqrt(ab))
+       (a + b)^2 > 2(sqrt(ab))^2
+       (a + b)^2 > 4ab
+
+Step 2. Make one side of the inequality zero. Why? Because you can more easily
+        show that something is > 0.
+
+       (a + b)^2 > 4ab
+       (a + b)^2 - 4ab > 4ab - 4ab
+        a^2 + 2ab + b^2 - 4ab > 0 
+
+Step 3. Simplify.
+ 
+       a^2 + 2ab + b^2 - 4ab > 0 
+       a^2 - 2ab + b^2 > 0 
+       (a-b)(a-b) > 0 
+       (a-b)^2 > 0 
+
+Step 4. <b>Proof by cases</b>.
+        By problem definition, a != b. Thus a-b will never be zero.
+
+        Case 1. a-b is some real number less than zero.
+        Then (a-b)^2 will be a positive number thus greater than zero.
+
+        Case 2. a-b is some real number greater than zero.
+        Then (a-b)^2 will be a positive number thus greater than zero.
+
+        Thus, (a-b)^2 will always be > 0. qed.
+
+
+<b>EXAMPLE 2</b>
+
+Provide a <b>proof by contradiction</b> to show that any integer of the form k(k+1) 
+has a factor of 2 (i.e., the product of consecutive integers is even). 
+
+Restated as an implication:
+
+     "If n = k(k+1) then n is even."
+
+Try to show n = k(k+1) and n is odd.
+      
+If n is odd then k(k+1) does not have a factor of 2. Then neither of the two 
+integers k and k+1 can be even. BUT k and k+1 are consecutive integers so one 
+must be even. Since this is a contradition the original premise must be true. 
+
+
+<b>EXAMPLE 3</b>
+
+Note: to say that x is not divisible by y means that x does not have a
+factor of y.
+
+Show that if n is not divisible by 2 or 3 then (n^2)-1 is divisible by 24, 
+for all n in {5,6,7,....}.
+
+The numbers we are talking about are:  5, 7, 11, 13, 17, 19, 23, ...
+Sanity check:  (5^2)-1 = 24. 8 | 24. 
+
+Step 1.
+To say that an integer n is not divisible by 2 or 3 means that n is not 
+divisible by 2 AND n is not divisible by 3. These are integers not divisible
+by 2*3=6. Thus n and can be expressed as follows: 
+    6k + 1 
+    6k + 2 // skip since this is divisible by 2
+    6k + 3 // skip since divisible by 3
+    6k + 4 // skip since divisible by 2 
+    6k + 5 
+
+We omit 6k + 2, 6k + 3, 6k + 4 since these integers are divisible by 2 or 3.
+
+Assume n is not divisible by 2 or 3. Show that (n^2)-1 has a factor of 24.
+
+Do a <b>proof by cases</b>.
+
+Case 1. n = 6k+1. Show (6k+1)^2 - 1 has a factor of 24.
+
+      (6k+1)^2 - 1
+    = 36k^2+12k+1 - 1 
+    = 36k^2+12k
+    = 12(3k^2 + k)
+    = 12(k(3k+1))
+    If k is odd then k(3k+1) will be even and have a factor of 2.
+    If k is even then k(3k+1) has a factor of 2.
+    In either case the expression has a factor of 24.
+
+Case 2. n= 6k+5. Show (6k+5)^2 - 1 has a factor of 24.
+
+     (6k+5)^2 - 1
+    =  36k^2+60k+25 - 1
+    = 36k^2 + 60k + 24
+    = 12(3k^2 +5k + 2)
+    = 12(3k+2)(k+1) 
+    If k is odd then k + 1 is even and the expression has a factor of 24.
+    If k is even then 3k + 2 is even and the expression has a factor of 24. 
+    qed.
+
+
+<b>EXAMPLE 4</b>
+
+Use a <b>proof by contradiction</b> to show that there is no solutions for x and y 
+to the equation
+
+     4xy - 2x + 2y - 1 = 100, for x and y in {1,2,3,...}. 
+
+We do not know what the solution is, but we do know that we want the left-hand
+side of the equation to be even. So let's work with that.
+ 
+Re-state the problem in this form as an implication:
+
+    If 4xy - 2x + 2y - 1 is an odd number there is no solution to 
+    4xy - 2x + 2y - 1 = 100, for x and y in {1,2,3,...}.
+
+Do a proof by contradiction; i.e., try to show that 4xy - 2x + 2y - 1 is odd.
+
+        4xy - 2x + 2y - 1 = 2(2xy - x + y) - 1.
+
+But 2(2xy - x + y) is even, which means that the entire expression is odd.
+If the expression is odd then 4xy - 2x + 2y - 1 can't be even. This is a 
+contradiction. Thus the original claim must be true. 
+
+
+<b>EXAMPLE 4</b>
+
+Do an <b>indirect proof</b>. The problem restated as an implication:
+
+"If you pick all possible values of x and y in {1,2,3,...}
+                then you will not find a solution to 4xy - 2x + 2y - 1 = 100."
+
+  The problem restated as ~q -> ~p.
+ 
+"If there is some solution to 4xy - 2x + 2y - 1 = 100
+                         then x and y will NOT be in {1,2,3,...}."
+
+ Assume there is a solution to 4xy - 2x + 2y - 1 = 100.
+                         Show that solution is not in {1,2,3,....}
+ 
+  The solution to (4xy - 2x + 2y - 1) must be even since 100 is even. 
+  4xy - 2x + 2y - 1 = 2(2xy - x + y) - 1. This is the form of an odd integer.
+  But there is no odd integer that equals an even integer in {1,2,3,...}. QED.
+
+
+<b>EXAMPLE 5</b>
+
+Show that the product of two odd integers is an odd integer.
+
+Express in mathematical terms as an inference:
+   
+     If n and m are odd then n*m is odd.
+
+Use a <b>direct proof</b>. If n and m are odd then n = 2k + 1 and m = 2j + 1.
+Then
+  nm = (2k + 1)(2j + 1).
+     = 4jk + 2k + 2j + 1
+     = 2(2jk + k + j) + 1. QED.
+
+
+<b>EXAMPLE 6</b>
+
+Show that there is a solution to
+    4xy - 2x + 2y - 1 = 17, x and y in {1,2,3...}
+
+The LHS is odd and the RHS is odd, so this is not as easy as the previous
+problem. But 4xy - 2x + 2y - 1 can be factored into (2x + 1)(2y - 1). 
+Since both terms are odd integers, and the product of two odd integers is an 
+odd integer (shown above), there could be a solution in integers. So start
+trying a few and you see that x=8, y=1 is a solution
+
+       (2*8 + 1)(2*1-1) = 17.
+
+
+<b>EXAMPLE 7</b>
+
+Prove or disprove: For p > 23, if p is prime then p + 2 is not prime.
+
+Solution: <b>Do an exhaustive proof</b>.
+Start writing prime numbers; search past 23 until you find a counterexample
+The first counterexample is 29 and 31. 41 and 43 also work.
+
+2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
+79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 
+163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241,
+
+
+<b>EXAMPLE 8</b>
+
+Show that the sum of any two consecutive integers is odd.
+
+Two consecutive integers can be represented as k and k+1. The sum of k + k+1 
+is 2k + 1. By the definition of an odd integer, this is odd.
+
+
+<b>EXAMPLE 9</b>
+
+Show that m mod n = m - nq, q >=0.  
+   m mod n = r, where m = nq + r, q >=0, 0 &lt; r &lt; n, and m > n.  
+   r = m - nq.
+   Thus, 
+   m mod n = m - nq, q >=0.  
+
+(By this definition, for m &lt; n, m mod n = m - 0; e.g. 3 mod 4 = 3.)
+
+
+<b>EXAMPLE 10</b>
+
+Defintions: 
+--------------------------------------------------------------------
+1. m mod n = m - nq, q >= 0.  
+2. m mod n = m, for m &lt; n; e.g. 4 mod 10 = 4.  
+3. Two integers m and n are congruent mod x if (m mod x) = (n mod x).
+4. m mod n is congruent to 0 mod d if (m mod n) mod d = 0.
+--------------------------------------------------------------------
+
+"Show that if m and n share a common factor of d then (m mod n) is congruent
+ to 0 mod d, m > n and m, n in {1,2,3....}."
+
+By the premise, if m and n share a common factor d then m=dk and n=dj, for 
+some integers k,j. Thus, 
+
+  Show (dk mod dj) is congruent to 0 mod d.
+
+By the definition of congruency, (dk mod dj) is congruent to 0 mod d if
+  (dk mod dj) mod d = 0
+By the definition of mod, 
+  dk mod dj = dk - djq, q >= 0 
+Substituting this into the original equation:
+  (dk - djq) mod d = 0
+Factor out d:
+  d(k - jq) mod d = 0. qed.
+
+A few more problems using modular arithmetic.
+
+Show that 76 is congruent to 25 mod 3.
+(76 mod 3) = (25 mod 3)
+         1 = 1, true.
+
+Show that there is a solution for 
+   (x^2 + 3x + 3) mod 2 = 1.
+
+Subtract 1 from both sides:
+   (x^2 + 3x + 2) mod 2 = 0 
+Factor:
+   [(x+1)(x+2)] mod 2 = 0 
+Note that (x+1) and (x+2) are consecutive integers. Thus (x+1)(x+2) must have
+a factor of 2. 
+
+</pre>
+</body>
+</html>
+

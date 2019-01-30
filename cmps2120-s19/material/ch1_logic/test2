@@ -1,0 +1,5 @@
+program test is 
+  var k,m: integer;
+begin
+   k := if k <= 3 then 5 + 2 else m * 3
+end

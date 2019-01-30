@@ -1,0 +1,9 @@
+program test is 
+   var s,k : integer;
+begin
+   k := begin
+       k := 3.125;
+       write k + 1
+   return k * 3
+   end
+end

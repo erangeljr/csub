@@ -1,0 +1,65 @@
+
+                       ********************** 
+                       *   INFERENCE RULES  *
+                       ********************** 
+
+
+  : is therefore; 'v' is OR; ~ is NOT; ^ is AND; -> is implication
+  ------------------------------------------------------------------------
+
+  CONJUNCTION     p                      ABSORPTION     p -> q  
+                  q                                     ---------------
+                  --                                    :  p -> (p ^ q)  
+                  : p^q
+ --------------------------------------------------------------------------
+
+  MODUS           p -> q                 MODUS          p -> q  
+  PONENS          p                      TOLLENS        ~q  
+                  ------                                ------- 
+                  : q                                   : ~p
+ --------------------------------------------------------------------------
+      	
+  HYPOTHETICAL    p->q                   DISJUNCTIVE    p v q  
+  SYLLOGISM       q->r                   SYLLOGISM      ~ p  
+                  ----                                  ------ 
+                  : p->r                                : q
+ --------------------------------------------------------------------------
+      	
+  SIMPLIFICATION  p                      ADDITION       p  
+                  q 
+                  ---                                   -------
+                  : p                                   : p v q
+ --------------------------------------------------------------------------
+	
+ CONSTRUCTIVE     (p->q) ^ (r->s)        RESOLUTION     p v q
+ DILEMMA          p v r                                ~p v r
+                  --------------                        -------
+                  : q v s                               : q v r
+ --------------------------------------------------------------------------
+
+ FALLACY OF       p->q                   FALLACY OF     p->q
+ AFFIRMING THE    q                      DENYING THE    ~p 
+ CONSEQUENCE      -----                  ANTECEDENT     ------ 
+                  : p                                   : ~q
+ --------------------------------------------------------------------------
+ 
+ RULES FOR QUANTIFIED STATEMENTS, for Universe U and c and x in U
+    
+ Universal Instantiation        Ax P(x)
+                                ------- 
+                                : P(c) for an arbitrary c
+ --------------------------------------------------------------------------
+    
+ Universal Generalization       P(c) for an arbitrary c
+                                ---------
+                                : Ax P(x) 
+    
+ --------------------------------------------------------------------------
+ Existential Instantiation      Ex P(x)
+                                -------
+                                : P(c) for a particular c
+    
+ --------------------------------------------------------------------------
+ Existential Generalization     P(c) for a particular c
+                                ---------
+                                : Ex P(x) 

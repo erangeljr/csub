@@ -1,0 +1,359 @@
+<html>
+<body>
+<h2>CMPS 2120 Week 01 Lecture Notes - Propositional Logic</h2>
+<b>resources:</b><br>
+<a href="http://www.zweigmedia.com/RealWorld/logic/logicintro.html">
+intro to logic</a><br>
+<a href="../../aima/aima_readme.txt">List logic engine (setup)</a><br>
+
+
+<h3> Propositional Logic </h3>
+ 
+ <pre>
+ Propositional Logic is a mathematical system consisting of
+
+ o Propositions (denoted by p,q,...), logical connectives (~,^,v,->,<->) and
+   truth values (T and F).
+ 
+   Def: A proposition is any statement that can be evaluated to true or false.
+   Which of the following are propositions?
+ 
+   2 + 2 = 4  (yes-can be evaluated to true so this is a proposition)
+   2 + 2 = 5  (yes-can be evaluated to false so it is a proposition)
+   x + 1 = 5  (no, since x is not bound to a particular value)
+   x + y = z  (no, since the variables are not bound to values)
+   Come to class at 3:30.  (not a proposition, this is an imperative statement)
+   See Jack run.  (no-not a proposition)
+   The moon is made of cheese. (yes-this is a proposition)
+ 
+ o Logical connectives (Boolean operators) are operations on propositions:
+   AND  <b>^  &</b>  conjunction
+   OR   <b>v  |</b>  disjunction
+   XOR  <span style="font-size:22px">&#x2295;</span>
+   NOR  not or (the negation of OR) 
+   NOT  <b>~  !  &#x00ac;</b> negation
+   CONDITIONAL <b>->  =></b> implication, implies
+   BICONDITIONAL <b><->  <=></b>  if and only if (IFF)
+   LOGICAL EQUIVALENCE  <b>:<=>   <span style="font-size:18px">&#x2261;</span></b>  (truth table result columns are same)
+ 
+ Precedence Order (highest to lowest):
+ 1. ()
+ 2. NOT
+ 3. AND
+ 4. OR XOR NOR
+ 5. ->  conditional
+ 6. <-> biconditional
+ 
+
+
+
+ Logical connectives are defined by truth tables:
+ 
+ p: the ball is blue
+ q: the ball is green
+ 
+ 
+ Ex: AND "The ball is blue and green."
+  
+ p q | p AND q
+ ----+--------
+ T T      T
+ T F      F 
+ F T      F 
+ F F      F 
+ 
+ Ex: NAND "The ball is not blue and green."
+  
+ p q | p NAND q
+ ----+---------
+ T T      F  
+ T F      T 
+ F T      T 
+ F F      T 
+ 
+ Ex: p NAND q :<=> ~(p AND q) :<=> ~p OR ~q  (:<=> means logically equivalent)
+ 
+ p q | ~(p AND q) | ~p OR ~q
+ ----+------------+----------
+ T T | F    T     | F  F   F
+ T F | T    F     | F  T   T
+ F T | T    F     | T  T   F
+ F F | T    F     | T  T   T
+ ----+------------+-------------
+       ^               ^
+       \---------------/  &lt;&lt;== Note that the result columns match.
+ 
+ 
+ Ex: OR "The ball is blue or green."
+ 
+ p q | p OR q
+ ----+------
+ T T     T
+ T F     T 
+ F T     T 
+ F F     F
+ 
+ Ex: XOR "The ball is either blue or green."
+ p q | p XOR q
+ ----+--------
+ T T      F 
+ T F      T 
+ F T      T 
+ F F      F 
+ 
+ Ex: NOR "The ball is not blue or green."
+ p q | p NOR q
+ ----+--------
+ T T      F 
+ T F      F 
+ F T      F 
+ F F      T 
+ 
+ Ex: p NOR q :<=> ~(p OR q) :<=> ~p AND ~q  (:<=> means logically equivalent)
+ p q | ~(p OR q)  | ~p AND ~q
+ ----+------------+----------
+ T T | F   T      | F   F  F
+ T F | F   T      | F   F  T
+ F T | F   T      | T   F  F
+ F F | T   F      | T   T  T
+ ----+------------+----------
+       ^                ^
+       |                |   &lt;&lt;==  Result columns match
+       \----------------/
+ 
+-------------------------------------------------------------------------------
+Propositions can be arranged into an implication using ->
+      For example p -> q  means p implies q
+      p is the premise      (hypothesis, antecedent)
+      q is the consequence  (conclusion)
+-------------------------------------------------------------------------------
+
+ Ex: "If you follow the map exactly you will find the location."
+     p = you follow the map exactly
+     q = you will find the location
+
+ p q | p -> q
+ ----+-------
+ T T     T
+ T F     F
+ F T     T 
+ F F     T 
+ 
+ Why does a false antecedent result in a true implication regardless of the 
+ value of the consequence? This sample implication might help:
+ 
+      "If n is a perfect square then n is not prime."
+ 
+ This implication is true for all n, whether n is a perfect square or not.  Now
+ substitute 3 for n:
+ 
+    "If 3 is a perfect square then 3 is not prime."   (F -> F)
+ 
+ The original implication is still true although the antecedent and consequence 
+ in this particular case are both false.
+
+
+Another example:
+ 
+    A politician says, "If the economy improves, a hospital will be built."
+
+    If the economy sags, and a hospital is built     (F -> T)
+    If the economy sags, and a hospital is not built (F -> F)
+
+    The politician did not lie as long as the economy doesn't improve.
+
+	If the economy booms, and a hospital is not built     (T -> F)
+
+	The politician lied.
+
+
+Another example:
+ 
+ p: A chemical is safe for children.
+ q: A chemical is safe for adults.
+ p -> q: If a chemical is safe for children then it is safe for adults.
+ 
+ What if a chemical is not safe for children? The original implication says
+ nothing about this. Whether or not the chemical is safe for adults, p->q is 
+ still true.
+ 
+ Example F -> F
+ Arsenic is not safe for children or adults. This has nothing to do with the
+ original implication.
+ 
+ Example F -> T 
+ Valium is not safe for children but it is for adults. Again, this does not
+ impact the truth value of the original implication.
+ 
+ ##
+ To be logically equivalent means the result columns of the respectivie
+ truth tables match. 
+ 
+ p -> q is logically equivalent to ~p v q:
+ 
+    p q  p -> q    ~p v q
+    ------------+--------
+    T T    T    |    T  
+    T F    F    |    F 
+    F T    T    |    T 
+    F F    T    |    T 
+ 
+ Biconditional: 
+  
+    p q | p <-> q |  p->q AND q->p
+    ----+---------+--------------
+    T T |   T     |  T    T   T
+    T F |   F     |  F    F   T
+    F T |   F     |  T    F   F
+    F F |   T     |  T    T   T
+ 
+ Bitwise logical operators can be applied to bit strings (one bit at a time):
+ 
+       10101
+  XOR  11111  &lt;= flips the bits in 10101 
+       -----
+       01010   
+ 
+       101111
+  AND  111000 &lt;= masks the first 3 least significant bits in 101111
+       ------
+       101000   
+ 
+ ----------------------------------------------------------------------
+ Given p -> q,   ('p implies q' or 'p infers q')
+            p is the antecedent and q is the consequence
+           ~p v q is logically equivalent to p -> q
+           ~q -> ~p is the contrapositive and equivalent to p -> q 
+            Def: Contra means 'in opposition to'
+ 
+            q -> p  is the converse and NOT equivalent to p -> q 
+           ~p -> ~q is the inverse of p->q and is equivalent to q -> p 
+  
+                  "p is sufficient for q"
+                  "q is necessary for p"
+ 
+ Observations.
+    The contrapositive and the conditional are logically equivalent.
+    The converse and inverse are logically equivalent. The inverse is the 
+    contrapositive of the converse. Both q->p and ~p->~q are fallacies.
+    'p is sufficient for q' means that given p->q, when p is true, q is true.
+    'q is necessary for p' means given p->q, for p to be true, q must be true.
+ 
+ -----------------------------------------------------------------------------
+ # "A good rain is our only hope for a good crop."
+ 
+ English is a bit imprecise, but the closest interpretation is 
+ "A good rain is necessary for a good crop."
+ Thus, 
+ "A good crop implies a good rain." 
+ p: a good crop 
+ q: a good rain 
+ 
+ To say that "A good rain implies a good crop" is a stronger statement that 
+ doesn't exactly match the meaning of the original statement.
+ -----------------------------------------------------------------------------
+ # Express in English the following:
+ 
+   p: I buy a lotto ticket.
+   q: I win the jackpot.
+ 
+   p -> q     If I buy a lotto ticket then I win the jackpot.
+   ~p -> ~q   If I don't buy a lotto ticket then I don't win the jackpot.
+   q -> p     If I win the jackpot then I bought a lotto ticket.
+   ~q -> ~p   If I don't win the jackpot then I didn't buy a lotto ticket.
+ 
+  In order, the above statements are the implication, inverse, converse and 
+  contrapositive.
+ 
+  Show that the contrapositive and the implication are equivalent:
+ 
+    p q  p -> q   ~q -> ~p
+    ----+-------+---------
+    T T    T        T
+    T F    F        F
+    F T    T        T
+    F F    T        T
+ 
+ 
+  Show that the inverse and converse are equivalent:
+ 
+    p q  q -> p   ~p -> ~q
+    ------------------------
+    T T    T        T
+    T F    T        T 
+    F T    F        F 
+    F F    T        T
+    
+  
+ # Express in p and q and logical connectives.
+ 
+   p: I win the jackpot.
+   q: I buy a lotto ticket.
+ 
+   I buy a lotto ticket, but I don't win the jackpot.
+   q ^ ~p  
+ 
+   To win the jackpot I must buy a lotto ticket.
+   (Buying a lotto ticket is necessary to win the jackpot.)
+   p -> q 
+  
+   If I win the jackpot I know you bought a lotto ticket. 
+  (Winning the jackpot is sufficient for buying a lotto ticket.)
+   p -> q  
+ 
+   I will win the jackpot if I buy a ticket and if I win the jackpot I bought
+   a ticket.
+   (Winning a jackpot is necessary and sufficient for buying a lotto ticket.)
+  
+   p <-> q
+ 
+ # ~(p -> q) is logically equivalent to p ^ ~q:
+ 
+    p q  ~(p -> q) |  p ^ ~q 
+    ---------------+---------
+    T T    F          F       
+    T F    T          T       
+    F T    F          F 
+    F F    F          F
+ 
+ By logical equivalences:
+    ~(p -> q)  == ~(~p v q)
+               == p ^ ~q     (De Morgan's Law) 
+ 
+ # Express in logic:
+   p: enter the gate
+   q: security clearance
+ 
+   You cannot enter the gate unless you have a security clearance.
+   (Having a security clearance is NECESSARY to enter the gate.)
+ 
+   This is p -> q.
+ 
+   If you enter the gate you have a security clearance.
+   (Entering the gate is sufficient for having a security clearance.)
+ 
+   This is also p -> q.
+   
+   Now try this: 
+   p: enter the gate
+   q: security clearance
+   r: under 21
+ 
+   If you are under 21 you must have a security clearance to enter the gate.
+   (If you are under 21 and you don't have a security clearance then you cannot 
+    enter the gate.)
+ 
+   (r ^ ~q) ->  ~p 
+ 
+    OR:
+   If you are under 21 then a security clearance is necessary to enter the gate.
+ 
+   This is:
+   r -> (p -> q) 
+ 
+   (r ^~q) -> ~p AND r -> (p -> q) are logically equivalent (see proof below).
+ 
+ 
+</pre>
+</body>
+</html> 

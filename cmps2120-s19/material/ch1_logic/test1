@@ -1,0 +1,8 @@
+program test is 
+begin
+   repeat 
+      s := 5.25;
+      k := 'a'; 
+      k := #\a
+   until s =< 4.5
+end

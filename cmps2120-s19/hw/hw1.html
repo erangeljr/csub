@@ -1,11 +1,615 @@
-<!doctype HTML>
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Homework 1</title>
-    </head>
-    <body>
-        Chapter 1: Review Questions <br>
-        1 - 29 pg. 24 <br>
-        DUE: 9/13/2018
-    </body>
-</html>
+<body>
+<style>
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: helvetica;
+		font-size: 10pt;
+		font-weight: 500;
+		color: #000;
+		background:#bdf;
+		padding-right: 20px;
+		height: auto;
+	}
+	BODY {
+		margin: 2% 5% 5% 5%;
+		font-family: arial;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<BODY>
+<H3> CMPS 2120 Assignment 1 - "Propositional Logic & Logical Equivalences"</H3>
+Please do the problems on paper with a pencil and eraser.<br>
+Try each problem without looking at the hint, for more learning.<br>
+<br>
+When a hint is blank, work out the problem on your own.<br>
+We will review these on lab day.<br>
+<br>
+
+<table bgcolor=white border=1 cellpadding=10><tr><td>
+			<pre>'|' , 'v' (OR)  '~' , '!' (NOT) '^' (AND) -> , => (conditional)
+<-> , <=> (biconditional) == (logical equivalence)
+Precedence of Logical Operators: () NOT, AND, OR, ->, <-> 
+
+p -> q means p is sufficient for q, and q is necessary for p.
+'q is necessary for p' means Given p -> q, p is true only if q is true.
+'p is sufficient for q' means Given p -> q, q is true if p is true.
+Converting English to Boolean logic:
+  'you know', 'sure', 'good enough', 'therefore' often mean sufficient  
+  'must', 'only if', 'in order for' mean necessary 
+   AND is expressed in English as 'and', 'but', 'nevertheless'
+   Exclusive or (XOR) in English is 'either p or q but not both'.
+</td></tr></table>
+
+<h3><span style="background-color:yellow;">Propositional Logic</span></h3>
+
+
+
+1. Assume the following propositions.
+<pre>
+   p: the election is decided.
+   q: the votes have been counted.
+</pre>
+
+a) The inverse of p->q is ~p -> ~q. Write the inverse in English.
+<input type="button" value="hint" onClick="xb[ 1]^=1; zzz('x1', (xb[ 1])?'':
+'If the election has not been decided then the votes have not been counted.<br> The inverse is not equivalent to the original implication - to assume so is a fallacy.'
+);"><div id="x1"></div><br>
+
+b) The converse of p -> q is q->p. Write the converse in English.
+<input type="button" value="hint" onClick="xb[ 2]^=1; zzz('x2', (xb[ 2])?'':
+'<br><br>'
+);"><div id="x2"></div><br>
+
+c) Write the contrapositive of p->q in English. (contrapositive is ~q->~p)
+<input type="button" value="hint" onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+'If the votes have not been counted then the election is not decided.<br>The contrapositive <b>IS</b> logically equivalent to the original implication.'
+);"><div id="x3"></div><br>
+
+d) Express this logical statement in English: ~q v ( ~p ^ q )
+<input type="button" value="hint" onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+'<br><br>'
+);"><div id="x4"></div><br>
+
+2. Assume these propositions. 
+<pre>
+    p: You get an A on the final exam.
+    q: You do every exercise in this book.
+    r: You get an A in this class.
+</pre>
+Express this sentence using p, q, r and logical connectives:
+"You get an A on the final but you did not do every exercise in the book;
+nevertheless, you get an A in the class." 
+<input type="button" value="hint" onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+'p ^ ~q ^ r; there is no implication in this sentence because *but* and *nevertheless* do not mean necessary or sufficient; these English words are expressed by AND.'
+);"><div id="x5"></div><br>
+
+
+
+3. Is this biconditional true or false?
+<pre>
+   1 + 1 = 3 if and only if pigs can fly.
+</pre>
+<input type="button" value="hint" onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+'<br><br>'
+);"><div id="x6"></div><br>
+
+
+4. Express the following sentence as an implication.
+<pre>
+	It is raining only if there are clouds in the sky.
+</pre>
+<input type="button" value="hint" onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+'If it is raining then there are clouds in the sky; i.e., clouds is necessary for rain.'
+);"><div id="x7"></div><br>
+
+
+5. Assume p->q, where 
+<pre>
+   p: I stay up late
+   q: I sleep until noon
+</pre>
+
+a) State the converse of p -> q in English. 
+<input type="button" value="hint" onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+'<br><br>'
+);"><div id="x8"></div><br>
+
+b) State the contrapositive of p -> q in English.
+<input type="button" value="hint" onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+'~q -> ~p: If I do not sleep until noon then I do not stay up late.'
+);"><div id="x9"></div><br>
+
+c) State the inverse of p -> q in English.
+<input type="button" value="hint" onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+'<br><br>'
+);"><div id="x10"></div><br>
+
+d) Remove the implication in p->q and express the statement in English.  
+<input type="button" value="hint" onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+'p -> q == ~p v q: I do not stay up late or I sleep until noon.'
+);"><div id="x11"></div><br>
+
+
+6. Construct a truth table for these expressions.
+<pre>
+	a)   p XOR (p v q)
+</pre>
+<input type="button" value="hint" onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+'<br><br>'
+);"><div id="x12"></div><br>
+<pre>
+   b) (p ^ q) -> (p v q)
+</pre>
+<input type="button" value="hint" onClick="xb[13]^=1; zzz('x13',(xb[13])?'':
+' <pre>\
+p q (p ^ q) -> (p v q) <br>\
+T T    T    T     T  <br>\
+T F    F    T     T  <br>\
+F T    F    T     T  <br>\
+F F    F    T     F  <br>\
+       ^    *     ^ <br>\
+ the result column (top to bottom) is: T T T T (a tautology)</pre>  '
+);"><div id="x13"></div><br>
+
+
+7. Evaluate this expression by applying bitwise XOR (<u>V</u>) and bitwise AND (&amp;).
+<pre>
+   (01010 <u>V</u> 11011) &amp; 11000
+</pre> 
+<input type="button" value="hint" onClick="xb[14]^=1; zzz('x14',(xb[14])?'':
+'<br><br>'
+);"><div id="x14"></div><br>
+
+
+8. Express the following sentences in logic using p and q and logical 
+   connectives assuming the following definitions: 
+
+<pre>
+	p = The election is decided.
+	q = The votes have been counted.
+</pre>
+  
+a) The votes have been counted but the election has not been decided.
+<input type="button" value="hint" onClick="xb[15]^=1; zzz('x15',(xb[15])?'':
+' q ^ ~p '
+);"><div id="x15"></div><br>
+
+
+b) The election is decided only if the votes have been counted.
+<input type="button" value="hint" onClick="xb[16]^=1; zzz('x16',(xb[16])?'':
+'<br><br>'
+);"><div id="x16"></div><br>
+
+
+c) The votes must be counted in order for the election to be decided.  
+<input type="button" value="hint" onClick="xb[17]^=1; zzz('x17',(xb[17])?'':
+'p -> q  ; this expresses that q is necessary for p'
+);"><div id="x17"></div><br>
+
+
+d) Since the election has been decided, the votes must have been counted.
+<input type="button" value="hint" onClick="xb[18]^=1; zzz('x18',(xb[18])?'':
+'<br><br>'
+);"><div id="x18"></div><br>
+
+
+
+
+
+
+
+
+
+
+9. Write these propositions using p, q, and r and logical connectives assuming
+<pre>
+	p: You get an A on the final.
+	q: You do every exercise.
+	r: You get an A in the class.
+</pre>
+  
+a) You get an A in the class but you did not do every exercise.
+<input type="button" value="hint" onClick="xb[19]^=1; zzz('x19',(xb[19])?'':
+'r ^ ~q  '
+);"><div id="x19"></div><br>
+
+
+b) You get an A in the class only if you do every exercise or get an A on the final. 
+<input type="button" value="hint" onClick="xb[20]^=1; zzz('x20',(xb[20])?'':
+'<br><br>'
+);"><div id="x20"></div><br>
+
+
+c) To get an A in this class you must get an A on the final exam.
+<input type="button" value="hint" onClick="xb[21]^=1; zzz('x21',(xb[21])?'':
+'r -> p (getting an A on the final is necessary to get an A in the class)'
+);"><div id="x21"></div><br>
+
+
+d) If you get an A in the class you know you got an A on the final.
+<input type="button" value="hint" onClick="xb[22]^=1; zzz('x22',(xb[22])?'':
+'<br><br>'
+);"><div id="x22"></div><br>
+
+
+e) You cannot get an A in the class without getting an A on the final.
+<input type="button" value="hint" onClick="xb[23]^=1; zzz('x23',(xb[23])?'':
+'r -> p ; Hint: This sentences means p is necessary for r. '
+);"><div id="x23"></div><br>
+
+
+f) It is possible to get an A on the final and not get an A in the class.
+<input type="button" value="hint" onClick="xb[24]^=1; zzz('x24',(xb[24])?'':
+'<br><br>'
+);"><div id="x24"></div><br>
+
+
+
+g) To get an A in this class you must get an A on the final, and 
+   if you get an A on the final you know you get an A in the class.
+<input type="button" value="hint" onClick="xb[25]^=1; zzz('x25',(xb[25])?'':
+' This is (r->p)^(p->r), which is the biconditional: r <-> p. <br>In English: getting an A on the final is both necessary and sufficient to get an A in the class'
+);"><div id="x25"></div><br>
+
+
+
+
+
+
+
+10. Given this implication
+<pre>
+	If it snows tonight, then I will stay at home.
+		p: It will snow tonight
+		q: I will stay at home
+</pre>
+
+
+
+a) State the converse in English.
+<input type="button" value="hint" onClick="xb[26]^=1; zzz('x26',(xb[26])?'':
+'<br><br>'
+);"><div id="x26"></div><br>
+
+
+b) State the contrapositive in English.
+<input type="button" value="hint" onClick="xb[27]^=1; zzz('x27',(xb[27])?'':
+'Contrapositive: If I do not stay at home, then it will not snow tonight. '
+);"><div id="x27"></div><br>
+
+
+c) State the inverse in English.
+<input type="button" value="hint" onClick="xb[28]^=1; zzz('x28',(xb[28])?'':
+'<br><br>'
+);"><div id="x28"></div><br>
+
+
+d) Is the inverse of the implication the contrapositive of its converse?
+<input type="button" value="hint" onClick="xb[29]^=1; zzz('x29',(xb[29])?'':
+'YES.'
+);"><div id="x29"></div><br>
+
+
+
+11. Construct the truth table for 
+<pre>
+a) p -> ~p
+<input type="button" value="hint" onClick="xb[30]^=1; zzz('x30',(xb[30])?'':
+'<br><br>'
+);"><div id="x30"></div>
+b)  p <-> ~p
+<input type="button" value="hint" onClick="xb[31]^=1; zzz('x31',(xb[31])?'':
+'\
+p  p <-> ~p  <br>\
+T  T  F   F  <br>\
+F  F  F   T ; the result column is F F '
+);"><div id="x31"></div>
+</pre>
+
+
+
+
+12. Which phrase in the sentence below is the antecedent? 
+<pre>
+"I must eat breakfast in order to run five miles."
+<input type="button" value="hint" onClick="xb[32]^=1; zzz('x32',(xb[32])?'':
+'<br><br>'
+);"><div id="x32"></div>
+</pre>
+
+
+13. Evaluate this expression by applying bitwise AND (&) and bitwise OR (|):
+<pre>
+110001 & (001011 | 011011)
+</pre>
+<input type="button" value="hint" onClick="xb[33]^=1; zzz('x33',(xb[33])?'':
+'<pre>\
+   001011      110001 <br>\
+ | 011011    & 011011 <br>\
+   ------      ------ <br>\
+   011011      010001 <--- final answer</pre>\
+You apply the operator bit by bit. It does not matter which direction since there is no overflow.'
+);"><div id="x33"></div><br>
+
+
+<h3><span style="background:#ff5;">&nbsp;Logical Equivalences&nbsp;</span></h3>
+<!--
+<a href="./aima/readme.txt">Using the Lisp Logic Engine</a><br>
+-->
+<a href="http://highered.mcgraw-hill.com/sites/0072880082/student_view0/chapter1/interactive_demonstration_applet__truth_tables_.html" target="_blank">Rosen Truth Table Applet</a> 
+<p/>
+
+
+
+
+14. Construct a truth table for the logical statement below. Hint: this is the
+     biconditional applied to the associative law of the disjunction. 
+      <pre>    (( p v q) v r) <-> (p v (q v r))  </pre>
+<input type="button" value="hint" onClick="xb[34]^=1; zzz('x34',(xb[34])?'':
+'<br><br>'
+);"><div id="x34"></div><br>
+
+The next three questions pertain to this logical statement, call it S: 
+<pre>
+	(~p  ^  (p v q)) -> q
+</pre>
+
+
+
+15. First use a truth table to show that S is a tautology.
+<input type="button" value="hint" onClick="xb[35]^=1; zzz('x35',(xb[35])?'':
+'<pre>\
+p q  (~p  ^  (p v q)) -> q  <br>\
+T T    F  F     T     T  T  <br>\
+T F    F  F     T     T  F  <br>\
+F T    T  T     T     T  T  <br>\
+F F    T  F     F     T  F  <br>\
+                      *     <br>\
+S is a tautology since the result column for  (~p ^ (p v q)) -> q is all T.\
+</pre>'
+);"><div id="x35"></div><br>
+
+
+16. Now in English explain why S is a tautology. Hint: Explain why the 
+    antecedent can never be true when the conseqence q is false.  
+<input type="button" value="hint" onClick="xb[36]^=1; zzz('x36',(xb[36])?'':
+'<br><br>'
+);"><div id="x36"></div><br>
+
+
+17. Is the following a correct application of logical equivalences to statement
+	S, where S is defined as: (~p ^ (p v q)) -> q?
+<pre>
+   (~p ^ (p v q)) -> q  == ~(~p ^ (p v q)) v q        by Implication elimination
+                        == (p v ~(p v q)) v q         by De Morgan's
+                        == (p v (~p ^ ~q)) v q        by De Morgan's
+                        == ((p v ~p) ^ (p v ~q)) v q  by Distribution 
+                        == (T ^ (p v ~q)) v q         by Negation Law 
+                        == (p v ~q) v q               by Identity Law 
+                        == p v (~q v q)               by Commutativity
+                        == p v T                      by Negation Law 
+                        == T                          by Domination Law
+</pre>
+<input type="button" value="hint" onClick="xb[37]^=1; zzz('x37',(xb[37])?'':
+'Yes - there are no errors and S is a tautology.'
+);"><div id="x37"></div><br>
+
+
+
+
+
+
+
+18. Explain why (p v q) v (~p ^ ~q) is a tautology. 
+<input type="button" value="hint" onClick="xb[38]^=1; zzz('x38',(xb[38])?'':
+'<br><br>'
+);"><div id="x38"></div><br>
+
+
+19. Use a truth table to show that (p <-> q) and ((p^q)v(~p^~q)) are logically 
+    equivalent. 
+<input type="button" value="hint" onClick="xb[39]^=1; zzz('x39',(xb[39])?'':
+'<pre>\
+p q (p <-> q)  <-> ((p ^ q) v (~p ^ ~q)) <br>\
+T T     T       T      T    T     F      <br>\
+T F     F       T      F    F     F      <br>\
+F T     F       T      F    F     F      <br>\
+F F     T       T      F    T     T      <br>\
+                *                        </pre>\
+The biconditional is a tautology so the two expressions are equivalent.'
+);"><div id="x39"></div><br>
+
+
+20. Use a truth table to show that p->q and ~q->~p are logically equivalent.
+  (Show that the biconditional of the two expressions is a tautology.)
+<input type="button" value="hint" onClick="xb[40]^=1; zzz('x40',(xb[40])?'':
+'<br><br>'
+);"><div id="x40"></div><br>
+
+
+21. An expression is satisfiable if at least one assignment of truth values 
+    makes the expression true. Is the statement below satisfiable? Optional:
+    Use the lisp validity function to confirm your answer is correct by pasting 
+	this into the Lisp logic engine:
+<pre>
+(validity "( P | Q | ~R ) ^ ( P | ~Q | ~S ) ^ (P | ~R | ~S) ^ (~P | ~Q | ~S) ^ (P | Q | ~S)") 
+
+Statement:
+( p v q v ~r )^( p v ~q v ~s )^(p v ~r v ~s)^(~p v ~q v ~s)^( p v q v ~s)
+</pre>
+<input type="button" value="hint" onClick="xb[41]^=1; zzz('x41',(xb[41])?'':
+' SATISFIABLE'
+);"><div id="x41"></div><br>
+
+
+22. Find an assignment of p, q, r and s to make the expression above true. It
+    is not as difficult as you may think. Don't use brute force or a truth
+    table. There are 2^4 = 16 different assignments so that would be messy.
+    Instead, reason it out. Note that the expression is a
+    conjunction of disjunctions. Therefore, each cause in the expression must 
+    be in order for the entire thing to be true. In addition, only one member
+	of each needs needs to be true.
+<pre>
+       1             2                3                4                 5
+( p | q | ~r ) ^ ( p | ~q | ~s )^(p | ~r | ~s) ^ (~p | ~q | ~s) ^ ( p | q | ~s)
+</pre>
+<input type="button" value="hint" onClick="xb[42]^=1; zzz('x42',(xb[42])?'':
+'<br><br>'
+);"><div id="x42"></div><br>
+
+
+23. Confirm by a truth table that these two expressions are equivalent:
+		 Expression 1. (p^q)^r  Expression 2. p^(q^r)
+<input type="button" value="hint" onClick="xb[43]^=1; zzz('x43',(xb[43])?'':
+'<pre>\
+p q r  (p^q)^ r  <->  p^(q^r)<br>\
+T T T    T  T T   T    T     <br>\
+T T F    T  F F   T    F     <br>\
+T F T    F  F T   T    F     <br>\
+T F F    F  F F   T    F     <br>\
+F T T    F  F T   T    F     <br>\
+F T F    F  F F   T    F     <br>\
+F F T    F  F T   T    F     <br>\
+F F F    F  F F   T    F     <br>\
+            *          *     <br>\
+Yes-the two expressions are equivalent since the result columns marked by <br/>\
+asterisks are identical: T F F F F F F F; note that the biconditional of <br/>\
+the two expressions is a tautology - another confirmation that the two <br/>\
+ expressions are logically equivalent.</pre>'
+);"><div id="x43"></div><br>
+
+
+24. Construct a truth table for this expression. Is it a tautology?
+<pre>
+	(p ^ ( p -> q)) -> q
+</pre>
+<input type="button" value="hint" onClick="xb[44]^=1; zzz('x44',(xb[44])?'':
+'<br><br>'
+);"><div id="x44"></div><br>
+
+
+
+25. Construct a truth table for this expression. Is it a tautology?  
+<pre>
+	( ~p ^ (p -> q) ) -> ~q
+</pre>
+<input type="button" value="hint" onClick="xb[45]^=1; zzz('x45',(xb[45])?'':
+'<pre>\
+p q ( ~p ^ (p -> q) ) -> ~q <br>\
+T T    F F    T       T   F <br>\
+T F    F F    F       T   T <br>\
+F T    T T    T       F   F <br>\
+F F    T T    T       T   T <br>\
+                      *     <br>\
+No. This is not a tautology since the result column is T T F T. <br>\
+To be a tautology, the result column must be all T.</pre>'
+);"><div id="x45"></div><br>
+
+
+26. Use logical equivalences to show that the expression below is NOT a 
+    tautology by simplifying the expression to something obviously not always
+    true.
+<pre>
+	(~p^(p->q)) -> ~q
+</pre>
+<input type="button" value="hint" onClick="xb[46]^=1; zzz('x46',(xb[46])?'':
+'<br><br>'
+);"><div id="x46"></div><br>
+
+
+27. Is the statement below a tautology? In other words, are the
+  two expressions logically equivalent on either side of the bicondition 
+  equivalent?
+<pre>
+	~((p v q) ^ ~(p ^ q)) <-> (p <-> q)
+</pre>
+
+First construct a truth table. The definition of XOR is (p v q) ^ ~(p ^ q).
+What are the result columns and are they identical?
+<input type="button" value="hint" onClick="xb[47]^=1; zzz('x47',(xb[47])?'':
+'<pre>\
+p q  ~((p v q) ^ ~(p ^ q)) <-> (p <-> q)  <br>\
+---------------------------------------   <br>\
+T T  T    T    F   F  T     T    T        <br>\
+---------------------------------------   <br>\
+T F  F    T    T   T  F     T    F        <br>\
+---------------------------------------   <br>\
+F T  F    T    T   T  F     T    F        <br>\
+---------------------------------------   <br>\
+F F  T    F    F   T  F     T    T        <br>\
+---------------------------------------   <br>\
+     *                           *        <br>\
+</pre>\
+Yes, the result columns marked with asterisks are identical: T,F,F,T \
+ thus the biconditional is a tautology.'
+);"><div id="x47"></div><br>
+
+	Now use logical equivalences to show the same thing.
+     
+<input type="button" value="hint" onClick="xb[48]^=1; zzz('x48',(xb[48])?'':
+'<br><br>'
+);"><div id="x48"></div><br>
+
+
+28. Is the compound statement below satisfiable? OPTIONAL: Use the Lisp logic 
+    engine to check your work.
+<pre>
+       1           2           3           4           5           6
+   (~p|~q|r) ^ (~p|q|~s) ^ (p|~q|~s) ^ (~p|~r|~s) ^ (p|q|~r) ^ (p|~r|~s)
+</pre>
+<input type="button" value="hint" onClick="xb[49]^=1; zzz('x49',(xb[49])?'':
+'YES- satisfiable. r=FALSE satisfies 4,5,6; q=FALSE \
+  satisfies 1,3; p=FALSE satisfies 2; the value of s does not matter.'
+);"><div id="x49"></div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+</BODY>
+</HTML>

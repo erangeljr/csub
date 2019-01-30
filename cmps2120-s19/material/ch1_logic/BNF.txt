@@ -1,0 +1,40 @@
+BNF for a simple programming language
+
+<program> ::= program <identifier> is <block>
+<block> ::= <declaration seq> begin <command seq> end
+<declaration seq> ::= e | <declaration> <declaration seq>
+<declaration> ::= var <variable list> : <type> ;
+<type> ::= integer | boolean
+<variable list> ::= <variable> | <variable>, <variable list>
+<command seq> ::= <command> | <command> ; <command seq>
+<command> ::= <variable> := <expr> | skip
+   | read <variable> | write <integer expr>
+   | while <boolean expr> then <command seq> end if
+   | if <boolean expr> then <command seq> else <command seq> end if
+   |  repeat <command seq> until <boolean expr>    
+
+<expr> ::=  <integer expr> | <boolean expr> | <char expr>
+    | if <boolean expr> then <integer expr> else <integer expr>
+    | begin <command seq> return <expr> end
+
+<integer expr> ::= <term> | <integer expr> <weak op> <term>
+<term> ::= <element> | <term> <strong op> <element>
+<element> ::= <numeral> | <float> | <variable> | ( <integer expr> ) | -<element>
+<boolean expr> ::= <boolean term> | <boolean expr> or <boolean term>
+<boolean term> ::= <boolean element>  
+                   | <boolean term> and <boolean element>  
+<boolean element> ::= true | false | <variable> | <comparison>
+                      | not ( <boolean expr> ) | ( <boolean expr> )
+<comparison> ::= <integer expr> <relation> <integer expr>
+<variable> ::= <identifier>
+<relation> ::= <= | < | = | > | >= | <>
+<weak op> ::= + | -
+<strong op> ::= * | /
+<identifier> ::= <letter> | <identifier> <letter> |  <identifier> <digit> 
+<letterseq> ::= <letter> | <letter> <letterseq>
+<string> ::= "<letterseq>"
+<letter> ::= a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p
+             | q | r | s | t | u | v | w | x | y | z 
+<numeral> ::= <digit> | <digit><numeral> 
+<float> ::= <numeral> . <numeral>
+<digit> ::= 0  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9

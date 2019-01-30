@@ -1,0 +1,290 @@
+<html> <body>
+<h3>CMPS 2120 Week 1 Lecture Notes - Logical Equivalences</h3> 
+<b>resources:</b><br>
+<a href="./logical_equivs.txt">table of logical equivalences</a><br>
+<a href="http://people.hofstra.edu/Stefan_Waner/RealWorld/logic/logicintro.html"
+>into to logic</a><br>
+<pre>
+*************************
+* Logical Equivalences  *
+*************************
+
+If the truth table for logical expression S matches the truth table for 
+logical expression T then S and T are logically equivalent.
+
+Once you prove equivalence by a truth table, you can use those equivalences 
+in other proofs:
+ 
+## Show that ((r ^~q) -> ~p) is logically equivalent to (r -> (p -> q)).
+  (r ^ ~q) -> ~p   
+  ~(r ^ ~q) v ~p    Implication elimination.
+  (~r v q ) v ~p    De Morgan's
+  ~r v ( q  v ~p)   Associativity 
+   r -> ( q v ~p)   Implication equivalence 
+   r -> (~p v q)    Associativity
+   r -> (p -> q)    Implication equivalence
+
+Some defs: 
+If expression S is always true then S is a tautology. Ex:  p -> p
+
+If expression S is always false then S is a contradiction. Ex: p ^ ~p
+
+Two expressions S and T are logically equivalent if S <=> T is a tautology.
+
+## Use a truth table to show that ~(p<->q) :<=> p <-> ~q.
+
+  p q p<->q ~(p<->q)  :<=> p <-> ~q
+  ---------------------------------
+  T T  T     F            F 
+  T F  F     T            T
+  F T  F     T            T
+  F F  T     F            F
+
+
+## Show that this implication is a tautology by a truth table and by logical
+  equivalences. (To show that a logical statement is a tautology, reduce the
+  statement to a tautology; e.g., q -> q or T.)
+
+   (~p ^ (p v q)) -> q
+
+  By truth table.
+  p q  ~p  ^ (p v q) -> q
+  ------------------------
+  T T   F  F   T       T   
+  T F   F  F   T       T
+  F T   T  T   T       T
+  F F   T  F   F       T
+
+By logical equivalences.
+  (~p ^ (p v q))       -> q            
+  (~p ^ p) v (~p ^ q)) -> q    Distributive law
+      F    v (~p ^ q)  -> q    Contradiction
+             (~p ^ q)  -> q    Identity law 
+             ~(~p ^ q) v  q    Implication elimination   
+                p v ~q v  q    De Morgan's
+               p v (~q v q)    De Morgan's
+                     p v  T    Negation law 
+                          T    Domination law
+
+ 
+## Show that this implication is a tautology.
+
+    ((p -> q) ^ (q->r)) -> (p->r) 
+
+   By truth table.                 *
+   p q r  ( ( ~p v q) ^ (~q v r )) -> (~p v r)
+   T T T        T    T     T       T      T         
+   T T F        T    F     F       T      F
+   T F T        F    F     T       T      T
+   T F F        F    F     T       T      F
+   F T T        T    T     T       T      T
+   F T F        T    F     F       T      T
+   F F T        T    T     T       T      T
+   F F F        T    T     T       T      T
+
+  Show by logical reasoning.
+  Since an implication is a tautology if p -> p, convert the antecedent into 
+  p->r.
+
+   Original implication.
+   ((p->q) ^ (q->r)) -> (p->r) 
+   Antecedent.
+   (p -> q) ^ (q->r) :<=> (~p v q) ^ (~q v r)      Implication elimination
+
+   By applying logical reasoning to (~p v q) ^ (~q v r), we can eliminate q. 
+   There are two cases for q. If q then r must be true. If ~q then ~p. In 
+   logic this is r OR ~p, which is p->r.
+
+## Show that this implication is a tautology.
+
+   (p ^ (p->q)) -> q
+
+   By truth table.
+   p q   (p ^ (p->q)) -> q 
+   T T      T   T     T
+   T F      F   F     T 
+   F T      F   T     T 
+   F F      F   T     T 
+
+   Now show by logical equivalences.
+   Start with the antecedent. 
+   (p ^ (p->q)) :<=> (p ^ (~p v q))      Implication elimination
+                     (p ^ ~p) v (p ^ q)  Distributing ^ over v
+                         F   v (p ^ q)   Negation Law 
+                                p ^ q    Identity Law
+
+   Plug this into the earlier Boolean expression:
+   (p ^ q) -> q 
+   
+   Simplify.             
+   (p ^ q) -> q   == ~(p ^ q) v q    Implication Elimination
+                  == (~p v ~q) v q   De Morgan's
+                  == ~p v (~q v q)   Associativity
+                  == ~p v T          Negation Laws
+                  == T               Domination Law 
+
+   Since the entire expression reduces to T, qed. 
+ 
+## Show that this implication is a tautology.
+
+  ((p v q) ^ (p->r) ^ (q->r)) -> r 
+
+By logical equivalences.
+
+  ((p v q) ^ (p->r) ^ (q->r)) -> r 
+  ~((p v q) ^ (p->r) ^ (q->r))) v r 
+  ~(p v q) v ~(p->r) v ~(q->r) v r 
+  (~p ^ ~q) v ~(~p v r) v ~(~q v r) v r 
+  (~p ^ ~q) v (p ^ ~r) v (q ^ ~r) v r 
+  (~p ^ ~q) v (p ^ ~r) v (r v (q ^ ~r))
+  (~p ^ ~q) v (p ^ ~r) v ((r v q) ^ (r v ~r))
+  (~p ^ ~q) v (p ^ ~r) v ((r v q) ^ T)
+  (~p ^ ~q) v (p ^ ~r) v (r v q) 
+  (~p ^ ~q) v ((p ^ ~r) v r) v q) 
+  (~p ^ ~q) v (r v (p ^ ~r)) v q) 
+  (~p ^ ~q) v ((r v p) ^ (r v ~r)) v q) 
+  (~p ^ ~q) v ((r v p) ^ T) v q) 
+  (~p ^ ~q) v r v p v q 
+  ((~p ^ ~q) v p) v r v q 
+  (p v (~p ^ ~q)) v r v q 
+  ((p v ~p) ^ (pv~q)) v r v q 
+  (T ^ (pv~q)) v r v q 
+  p v ~q v r v q 
+  p v (q v ~q) v r 
+  p v T v r 
+  T 
+ 
+  By Truth Table (converted into syntax for Lisp program).
+                                              *
+  p q r   ((( P | Q) ^ (P => R)    ^  (Q=>R)) => R)
+  T T T        T    T     T       T    T     T      
+  T T F        T    F     F       F    F     T
+  T F T        T    T     T       T    T     T 
+  T F F        T    F     F       F    T     T 
+  F T T        T    T     T       T    T     T 
+  F T F        T    T     T       F    F     T 
+  F F T        F    F     T       F    T     T
+  F F F        F    F     T       F    T     T 
+                                             
+  Use logical reasoning to show this is a tautology:
+  [(p v q) ^ (p->r) ^ (q->r)] -> r 
+  First reduce antecent:
+  (p v q) ^ (p->r) ^ (q->r)] == (p v q) ^ (~p v r) ^ (~q v r)
+
+  We now have this hypothesis and conclusion:
+
+  (p v q) ^ (~p v r) ^ (~q v r) -> r
+
+  To prove that this is a tautology, show that the hypothesis can never be true
+  when the conclusion is false.  Thus, reason what happens when ~r?
+  If ~r, then for the hypothesis to be true, ~p and ~q must be true. But if
+  ~p and ~q, then the hypothesis is false. Since this is not possible, this
+  statement is always true.
+
+## Use logical equivalences to show whether the following is true:
+             p v (p ^ ~q) v q  :<=> p
+
+   p v (p ^ ~q) v q :<=>((p v p) ^ (p v ~q)) v q       distributivity
+                        (   p    ^ (p v ~q)) v q       idempotent
+                         q v (p ^ (p v ~q))            commutativity
+                        (q v p) ^ (q v (p v ~q))       distributivity
+                        (q v p) ^ (q v ~q v p)         associativity
+                        (q v p) ^ (   T   v p)         domination
+                        (q v p) ^ (T)                  negation
+                        q v p                         can't reduce farther! 
+                       NOT TRUE.
+
+  By truth table.
+                      *         *
+   p q   p v (p ^ ~q) v  q  ==  p
+   T T   T T    F     T  T      T
+   T F   T T    T     T  F      T
+   F T   F F    F     T  T      F
+   F F   F F    F     F  F      F  NOT EQUIVALENT!
+
+##
+11. Show that ((p|q)^(~p|r))->(q|r) is a tautology by 1) a truth table,
+    2) logical reasoning and 3) logical equivalences.
+
+  Reasoning:
+  ((p|q)^(~p|r)) -> (q|r) == ~((p|q)^(~p|r)) | (q|r)   By condition elimination
+                          == ~(p|q) | ~(~p|r) | (q|r)  By De Morgan's
+                          == (~p ^ ~q) | ~(~p|r) | (q|r) By De Morgan's
+                          == (~p ^ ~q) | (p ^ ~r) | (q|r) By De Morgan's
+                                A           B         C
+
+   You can now prove this is a tautology if you show that there is no
+   assignment of truth values for p,q and r such that A, B and C are all false.
+   In order for A to be FALSE and C not true, p must be true. If p is
+   true, then in order for B not to be true r must be true. But if r is
+   true then C is true. Thus, there is NO assignment of values in which
+   one of the statements will not be true. QED.
+
+   Truth table:
+   +-+-+-+-----+--+------+------------+-----+-------------------+
+   |p|q|r|(p|q)|~p|(~p|r)|(p|q)^(~p|r)|(q|r)|(p|q)^(~p|r)->(q|r)|
+   +-+---+-----+--+------+------------+-----+-------------------+
+   |T|T|T|  T  |F |   T  |     T      |  T  |         T         |
+   +-+-+-+-----+--+------+------------+-----+-------------------+
+   |T|T|F|  T  |F |   F  |     F      |  T  |         T         |
+   +-+-+-+-----+--+------+------------+-----+-------------------+
+   |T|F|T|  T  |F |   T  |     T      |  T  |         T         |
+   +-+-+-+-----+--+------+------------+-----+-------------------+
+   |T|F|F|  T  |F |   F  |     F      |  F  |         T         |
+   +-+-+-+-----+--+------+------------+-----+-------------------+
+   |F|T|T|  T  |T |   T  |     T      |  T  |         T         |
+   +-+-+-+-----+--+------+------------+-----+-------------------+
+   |F|T|F|  T  |T |   T  |     T      |  T  |         T         |
+   +-+-+-+-----+--+------+------------+-----+-------------------+
+   |F|F|T|  F  |T |   T  |     F      |  T  |         T         |
+   +-+-+-+-----+--+------+------------+-----+-------------------+
+   |F|F|F|  F  |T |   T  |     F      |  F  |         T         |
+   +-+-+-+-----+--+------+------------+-----+-------------------+
+
+   By logical equivalences:
+   ((p v q)^(~p v r)) -> (q v r)
+   ~((p v q)^(~p v r)) v (q v r)                Implication Elimination
+   (~(P v q) v ~(~p v r)) v (q v r)             De Morgan's
+   (~p ^ ~q) v (~~p ^ ~r) v (q v r)             De Morgan's
+   (~p ^ ~q) v (p ^ ~r) v (q v r)               Double Negation
+   (~p ^ ~q) v (r v (p ^ ~r)) v q               Associativity of OR
+   (~p ^ ~q) v ((r v p) ^ (r v ~r)) v q         Distributivity of OR over AND
+   (~p ^ ~q) v ((r v p) ^ T) v q                Negation Law
+   (~p ^ ~q) v (r v p) v q                      Identity Law
+   q v (~p ^ ~q) v (r v p)                      Communitivity of OR
+   ((q v ~p) ^ (q v ~q)) v (r v p)              Distributivity of OR over AND
+   ((q v ~p) ^ T) v (r v p)                     Negation Law
+   (q v ~p)  v (r v p)                          Identity Law
+   (p v ~p)  v r v p                            Associativity Law
+    T  v r v p                                  Negation 
+    T                                           Domination
+
+## A boolean expression S is in conjunctive normal form (CNF) if S is a
+   conjunction of clauses where each clause is a disjunction of literals 
+   (p,q,r,s,...) and where the not operator is used only as part of a 
+   literal. Example of CNF:
+            (p v q) ^ (-q ) ^ (r v ~s) ^ (r v q v t)
+
+   You can convert any Boolean expression into CNF by applying logical 
+   equivalences. You often need to simply apply De Morgan and distribute OR 
+   over AND.
+   Example.
+         (a ^ b v c) == (a v c) ^ (b v c)    (distribute c over a ^ b)
+  
+  Example.
+          r v ~(p v q)  
+  r v (~p ^ ~q)  == (r v ~p ) ^ (r v ~q )  (apply De Morgan and distribute r)
+
+  Example.
+          (p ^ q) v (r ^ ~s)
+  In this case you need to distribute a clause:
+     (p  v (r ^ ~s)) ^ (q v (r ^ ~s)) 
+     (p  v r) ^ (p v ~s) ^ (q v r) ^ (q v ~s)   Distributivity.
+
+Many common problems in computer science (scheduling, graph coloring, and
+planning) can be represented as CNF expressions. Solving the problem becomes 
+one of "satisfying" the expression by assigning values (true or false) to each 
+one of the variables (literals) so that the entire expression is true. The
+complexity of the problem is relative to the number of variables and the 
+number of clauses.
+
