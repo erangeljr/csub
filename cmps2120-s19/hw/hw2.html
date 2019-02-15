@@ -1,0 +1,748 @@
+<HTML>
+<head>
+<STYLE type=text/css>
+	DIV {
+		font-weight: normal;
+		font-family: helvetica;
+		font-size: 11pt;
+		color: red;
+		padding-left: 4px;
+		padding-right: 20px;
+		padding-top: 5px;
+		margin-top: 2px;
+		height: auto;
+		background-color: #eed;
+		border: 1px dotted black;
+	}
+	BODY {
+		font-family: helvetica;
+		margin: 2% 5% 5% 5%;
+		background-color:#f8f8f8;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 12pt;
+	}
+    b { font-weight: 900; }
+    code { font-family: monospace; }
+    pre { font-family: monospace; font-size: 10pt; }
+    input { background:#ed8; }
+    h3 {
+        font-size: 12pt;
+        font-weight: 600;
+        font-family: serif;
+        padding-top: 4px;
+        padding-bottom: 6px;
+    }
+    sup {
+        vertical-align: super;
+        font-size: smaller;
+    }	
+</STYLE>
+<script type="text/javascript">
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+</head>
+<BODY>
+<H3>CMPS 2120 - Assignment 2 - Predicate Logic & Inference Rules</H3>
+
+<p>On paper with pencil and eraser please.</p>
+
+
+<a href="./Material/ch1_logic/ch1.4.notes.html">Chapter: 1.4</a><br> 
+<a href="./Material/ch1/logical_equivs.txt">logical equivalences</a> & 
+<a href="./Material/ch1/inference_rules.txt">inference rules</a><br>
+<h3><span style="background:#ff0">&nbsp;Predicate Logic&nbsp;</span></h3>
+
+
+1. Let N(x) be "x has visited North Dakota." Let U = students at CSUB.
+    Express each of these quantifications in English.
+<br>
+a) &forall;x N(x)
+
+<input type="button" value="hint" onClick="xb[ 1]^=1; zzz('x1', (xb[ 1])?'':
+'All students have visited North Dakota.'
+);"><div id="x1"></div><br>
+
+b) ~(&exist;x N(x))
+<input type="button" value="hint" onClick="xb[ 2]^=1; zzz('x2', (xb[ 2])?'':
+'Applying DeMorgans this is &forall;x~N(x): \
+No student has visited North Dakota.<br>\
+Write this in a different form below.<br><br>'
+);"><div id="x2"></div><br>
+
+ 
+2. P(x): x has a cat. Q(x): x has a dog. R(x): x has a ferret. The universe 
+    of discourse is all students in class. Write in predicate logic:<br>
+a) Some student in your class has a dog, a cat, and a ferret.
+<input type="button" value="hint" onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+'A typical mistake is to assume the following statement \
+is logically equivalent:<br>\
+&exist;x P(x) ^ &exist;x Q(x) ^ &exist;x R(x).\
+&lt;--- NOT EQUIVALENT.<br><br>\
+What is the correct statement form?<br><br>'
+);"><div id="x3"></div><br>
+
+b) Everyone in your class has a dog, a cat, or a ferret.
+<input type="button" value="hint" onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+'&forall;x(P(x) v Q(x) v R(x))<br/>\
+A typical mistake is to assume the following statement is\
+ logically equivalent: <br>\
+&forall;x P(x) v &forall;x Q(x) v &forall;x R(x). NOT EQUIVALENT!'
+);"><div id="x4"></div><br>
+
+  
+3. Determine the truth value of these statements if the universe of discourse
+    is all rational numbers; i.e., can the statement be satisfied?
+	<br>
+a) &exist;x(x^3 = -1)   
+<input type="button" value="hint" onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+'TRUE.<br>\
+What value will satisfy the statement?<br><br>'
+);"><div id="x5"></div><br>
+
+
+b) &exist;x(x^4 < x^2)
+<input type="button" value="hint" onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+'True.<br>This is satisfied by x = 1/2.'
+);"><div id="x6"></div><br>
+
+
+  
+4. Assume the universe of discourse of P(x) consists of x in {1,2,3}. Rewrite 
+    these propositions with disjunctions or conjunctions (remove quantifiers).
+	<br>
+a) &exist;xP(x)
+<input type="button" value="hint" onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+' P(1) v P(2) v P(3)'
+);"><div id="x7"></div><br>
+
+b) &forall;xP(x)
+<input type="button" value="hint" onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+'P(1) ^ P(2) ^ P(3)'
+);"><div id="x8"></div><br>
+
+
+
+5. Express the <b>negation</b> of these propositions using quantifiers and then in 
+    English. The universe is all drivers and P(x) is x obeys the speed limit. 
+	<br>
+a) Some drivers do not obey the speed limit.
+<input type="button" value="hint" onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+'The original statement is: &exist;x~P(x). The negation of &exist;x~P(X) is \
+ ~(&exist;~P(x)).<br>\
+ Moving the negation inside the quantifier leaves us with:<br>\
+ &forall;x P(x).<br>\
+State the expression in English please.\
+<br><br>'
+);"><div id="x9"></div><br>
+
+
+b) All Swedish movies are serious. The universe is all Swedish movies. The 
+   predicate P(x) means movie x is serious.
+<input type="button" value="hint" onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+'the negation is: ~&forall;x P(x). Move the negation inside the \
+ quantifier:<br>\
+ &exist;x~P(x); \
+ <br>\
+ State in English please: '
+);"><div id="x10"></div><br>
+
+
+  
+6. Which of these is an accurate translation of a system specification where 
+    the predicate P(x,y) is "x is in state y" and the universe of x and y is
+    all systems and all possible states, respectively:
+            &exist;xP(x,open) | &exist;xP(x,diagnostic)
+	<br>
+    A. Some system is in an open state or some system is in a diagnostic state.
+	<br>
+    B. There is some system that is either open or is in a diagnostic state. 
+	<br>
+    C. Both are accurate 
+<input type="button" value="hint" onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+'C - the meaning is the same since you can distribute the existential quantifier over OR'
+);"><div id="x11"></div><br>
+
+  
+7. Remove quantifiers and express the meaning in logic. Assume U = {a,b,c}
+	<br>
+a) &forall;x(P(x) ^ Q(x)) 
+<input type="button" value="hint" onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+'&forall;x(P(x) ^ Q(x)) means (P(a) ^ Q(a)) ^ (P(b) ^ Q(b)) ^ (P(c) ^ Q(c))'
+);"><div id="x12"></div><br>
+
+  
+b) &forall;xP(x) ^ &forall;xQ(x) 
+<input type="button" value="hint" onClick="xb[13]^=1; zzz('x13',(xb[13])?'':
+'Try it yourself please.<br><br>'
+);"><div id="x13"></div><br>
+
+  
+c) &forall;x(P(x) v Q(x)) 
+<input type="button" value="hint" onClick="xb[14]^=1; zzz('x14',(xb[14])?'':
+'(P(a) v Q(a)) ^ (P(b) v Q(b)) ^ (P(c) v Q(c))'
+);"><div id="x14"></div><br>
+
+  
+d) &forall;xP(x) v &forall;xQ(x)  
+<input type="button" value="hint" onClick="xb[15]^=1; zzz('x15',(xb[15])?'':
+'Try it yourself please.<br><br>'
+);"><div id="x15"></div><br>
+
+
+  
+8. Using your answer to (c) and (d) above, show why &forall;x(P(x) v Q(x)) and
+     &forall;xP(x) v &forall;xQ(x) are not logically equivalent. 
+<input type="button" value="hint" onClick="xb[16]^=1; zzz('x16',(xb[16])?'':
+'Let P(a), Q(b) and P(c) be true. Let everything else be false. \
+ Then &forall;x(P(x) v Q(x)) is true but &forall;x P(x) v &forall;xQ(x) is false. <br/>\
+ Thus not equivalent.'
+);"><div id="x16"></div><br>
+
+ 
+9. Show why &exist;x(P(x)^Q(x)) and &exist;xP(x) ^ &exist;xQ(x) are not equivalent. 
+<input type="button" value="hint" onClick="xb[17]^=1; zzz('x17',(xb[17])?'':
+'The first statement means P(x)and Q(x) must be true for                 <br>\
+the same x. The second statement is true if P(a) and Q(b) are true, where<br>\
+`a` and `b` are not necessarily the same value. Shown here:              <br>\
+ If you remove the quantifier from &exits;x(P(x)^Q(x)) you have:               <br>\
+      (P(a)^Q(a)) | (P(b)^Q(b)) |  (P(c)^Q(c)).                          <br>\
+ If you remove the quantifier from  &exist;x P(x)^ &exist;xQ(x) you have:            <br>\
+    (P(a) | P(b) | P(c)) ^  (Q(a) | Q(b) | Q(c))                         <br>\
+ These are not equivalent because P(a), Q(b) will make the second true   <br>\
+ while the first is false.'
+);"><div id="x17"></div><br>
+
+
+   
+10. An expression is in conjunctive normal form (CNF) if E is a conjunction of 
+    clauses, where each clause is a disjunction of literals and where the not 
+    operator is only present as part of a literal.
+	<br>
+	Example of a valid CNF: (p v q) ^ (~q ) ^ (r v ~s) ^ (r v q v t)  
+    Convert each of the following into CNF.
+	<br>
+	Hint: distribute OR over AND.  
+	<br>
+	<br>
+a. (p ^ q) v r
+<input type="button" value="hint" onClick="xb[18]^=1; zzz('x18',(xb[18])?'':
+'Distribute v over ^ to get CNF: (r v p) ^ (r v q). '
+);"><div id="x18"></div><br>
+
+b. ~(p v q)  v  r
+<input type="button" value="hint" onClick="xb[19]^=1; zzz('x19',(xb[19])?'':
+'Step 1. Apply DeMorgan : ~(p v q) v r == (~p ^ ~q) v r           <br>\
+Step 2. Distribute v over ^: (~p ^ ~q) v r == (r v ~p ) ^ (r v ~q )'
+);"><div id="x19"></div><br>
+
+c. (p ^ q) v (r ^ s) 
+<input type="button" value="hint" onClick="xb[20]^=1; zzz('x20',(xb[20])?'':
+'Step 1. Distribute OR (r^s) over (p ^ q): (p v (r ^ s))^(q v (r ^ s))<br>\
+Step 2. Distribute v over ^ twice: (p v r) ^ (p v s) ^ (q v r) ^ (q v s)'
+);"><div id="x20"></div><br>
+
+
+d. (a ^ b v ~c)  ^ ( d v ~e ) v f   // AND takes precedence over OR
+<input type="button" value="hint" onClick="xb[21]^=1; zzz('x21',(xb[21])?'':
+'Add parentheses to clearly show that \
+AND takes precedence over OR:              <br>\
+(((a ^ b) v ~c ) ^ ( d v ~e )) v f         <br>\
+(((a v ~c) ^ (b v ~c )) ^ (d v ~e)) v f  = <br>\
+((a v ~c) ^ (b v ~c )) ^ (d v ~e)) v f  =  <br>\
+((a v ~c v f ) ^ (b v ~c v f)) ^ (d v ~e v f))'
+);"><div id="x21"></div><br>
+
+
+
+<h3><span style="background-color:yellow"> Predicate Logic with Nested Quantifiers </span></h3>
+11. If the universe of discourse for x and y is the set S = {1,2,3},
+	<br>
+	P(x,y) establishes relationships between 2-tuples in the set S x S: 
+	<br>
+    {(1,1), (1,2), (1,3), (2,1), (2,2), (2,3), (3,1), (3,2), (3,3)}
+	<br>
+    Rewrite these propositions by removing quantifers and using &or; and &and;.
+	<br>
+	<br>
+a) &exist;x P(x,3)  
+<input type="button" value="hint" onClick="xb[22]^=1; zzz('x22',(xb[22])?'':
+'The existential quantifier corresponds to OR, thus \
+Ex P(x,3) is equivalent to P(1,3) v P(2,3) v P(3,3)'
+);"><div id="x22"></div><br>
+  
+b) &forall;y P(1,y)  
+<input type="button" value="hint" onClick="xb[23]^=1; zzz('x23',(xb[23])?'':
+'The universal quantifier corresponds to AND, thus \
+Ay P(1,y) is equivalent to P(1,1) ^ P(1,2) ^ P(1,3) '
+);"><div id="x23"></div><br>
+ 
+c) If &forall;x &forall;y P(x,y) is true, how many elements are there for which P(x,y) is true?
+<input type="button" value="hint" onClick="xb[24]^=1; zzz('x24',(xb[24])?'':
+'The universal quantifier corresponds to AND in set theory, <br>\
+ thus the solution set contains all possible tuples of S x S, which is 9 '
+);"><div id="x24"></div><br>
+
+ 
+12. Let P(x,y) be the statement "student x has taken class y," where the
+    universe of discourse for x is all students at CSUB and for y is all CS 
+    courses at CSUB. Express each of these quantifications in English. 
+	<br>
+	<br>
+a) &exist;x &exist;y P(x,y)
+<input type="button" value="hint" onClick="xb[25]^=1; zzz('x25',(xb[25])?'':
+'Some student has taken a CS class. '
+);"><div id="x25"></div><br>
+
+b) &exist;x &forall;y P(x,y)
+<input type="button" value="hint" onClick="xb[26]^=1; zzz('x26',(xb[26])?'':
+'Some student has taken all CS courses at CSUB.'
+);"><div id="x26"></div><br>
+  
+c) &forall;x &exist;y P(x,y)
+<input type="button" value="hint" onClick="xb[27]^=1; zzz('x27',(xb[27])?'':
+'All students have taken at least one CS course.'
+);"><div id="x27"></div><br>
+
+
+  
+13. Translate the following into English. The universe of discourse is all
+    integers. State whether the statement is valid (always true), satisfiable 
+    (true for at least one assignment of values), or not satisfiable (never 
+    true). Recall that an expression is valid if it is a tautology.
+	<br>
+	<br>
+a) &exist;x &forall;y (x + y = y)   
+<input type="button" value="hint" onClick="xb[28]^=1; zzz('x28',(xb[28])?'':
+'For some integer x and for all y (x + y = y) is true;<br/>\
+ i.e., all integers have the same additive identity. <br/>\
+ Satisfiable since that number is 0. Not valid since it only works for 0'
+);"><div id="x28"></div><br>
+  
+b) &forall;y&exist;x(x + y = y) 
+<input type="button" value="hint" onClick="xb[29]^=1; zzz('x29',(xb[29])?'':
+'For all integers y there is some integer x, such <br/>\
+that (x + y = y).<br> ;i.e., all integers have an additive identity.<br/>\
+ VALID since all integers have one and Satisfiable since that number is 0.'
+);"><div id="x29"></div><br>
+  
+c)  &forall;y&forall;x(x + y = y) 
+<input type="button" value="hint" onClick="xb[30]^=1; zzz('x30',(xb[30])?'':
+'This is SATISFIABLE for x=0 but it is not VALID since \
+ it is not satisfiable for all values.'
+);"><div id="x30"></div><br>
+
+
+ 
+14. Let F(x,y) be "x fools y" and U = all people in class. The location of the 
+    variable determines its relationship to the predicate - not whether it is x
+    or y. F(x,y) is "x fools y" and F(y,x) is "y fools x". Express in logic: 
+	<br>
+	<br>
+a) Everybody can fool Fred.
+<input type="button" value="hint" onClick="xb[31]^=1; zzz('x31',(xb[31])?'':
+'&forall;x F(x,Fred) '
+);"><div id="x31"></div><br>
+  
+b) Evelyn can fool everybody.
+<input type="button" value="hint" onClick="xb[32]^=1; zzz('x32',(xb[32])?'':
+'&forall;xF(Evelyn,x) OR &forall;yF(Evelyn,y) - Note that \
+ the actual name of the variable does not matter - it is the location in \
+ the predicate that matters!'
+);"><div id="x32"></div><br>
+  
+c) Everybody can fool somebody.
+<input type="button" value="hint" onClick="xb[33]^=1; zzz('x33',(xb[33])?'':
+'Try this yourself.'
+);"><div id="x33"></div><br>
+
+d) No one can fool everybody.            
+<input type="button" value="hint" onClick="xb[34]^=1; zzz('x34',(xb[34])?'':
+'Try this yourself.'
+);"><div id="x34"></div><br>
+  
+e) Everyone can be fooled by somebody.                
+<input type="button" value="hint" onClick="xb[35]^=1; zzz('x35',(xb[35])?'':
+'Try this yourself.'
+);"><div id="x35"></div><br>
+  
+f) No one can fool both Fred and Jerry.
+<input type="button" value="hint" onClick="xb[36]^=1; zzz('x36',(xb[36])?'':
+'Try this yourself.'
+);"><div id="x36"></div><br>
+
+g) Nancy can fool at least two people.
+<input type="button" value="hint" onClick="xb[37]^=1; zzz('x37',(xb[37])?'':
+'Try this yourself.'
+);"><div id="x37"></div><br>
+
+h) Nancy can fool exactly two people.
+<input type="button" value="hint" onClick="xb[38]^=1; zzz('x38',(xb[38])?'':
+'Try this yourself.'
+);"><div id="x38"></div><br>
+  
+i) Nancy can fool no more than two people.
+<input type="button" value="hint" onClick="xb[39]^=1; zzz('x39',(xb[39])?'':
+'Try this yourself.'
+);"><div id="x39"></div><br>
+  
+j) No one can fool himself or herself.
+<input type="button" value="hint" onClick="xb[40]^=1; zzz('x40',(xb[40])?'':
+'Try this yourself.'
+);"><div id="x40"></div><br>
+
+  
+15. Let Q(x,y) be "x + y = x - y." If the universe of discourse x and y is the
+    set of integers, what are the truth values for the following predicates?
+	<br>
+	<br>
+a) &exist;xQ(x,2)
+<input type="button" value="hint" onClick="xb[41]^=1; zzz('x41',(xb[41])?'':
+'This is FALSE since there is no integer x that solves x + 2 = x - 2.'
+);"><div id="x41"></div><br>
+ 
+b) &exist;y&forall;xQ(x,y)
+<input type="button" value="hint" onClick="xb[42]^=1; zzz('x42',(xb[42])?'':
+'This is TRUE since Q(x,y) is true for y = 0. '
+);"><div id="x42"></div><br>
+
+ 
+16. Rewrite each statement to move the negations next to the predicates.
+	<br>
+	<br>
+a) ~(&exist;y &exist;xP(x,y))
+<input type="button" value="hint" onClick="xb[43]^=1; zzz('x43',(xb[43])?'':
+'&forall;y&forall;x~P(x,y)'
+);"><div id="x43"></div><br>
+
+b) ~(&forall;x &exist;y P(x,y))
+<input type="button" value="hint" onClick="xb[44]^=1; zzz('x44',(xb[44])?'':
+'&exist;x &forall;y ~P(x,y)'
+);"><div id="x44"></div><br>
+
+  
+17. AIRLINE PROBLEM. Express each sentence in predicate logic, assuming
+	<pre>
+    p is in P, where P = {all passengers at LAX}
+    f is in F, where F = {all flights at LAX}
+    a is in A, where A = {all airlines at LAX}
+	
+    T(p,f): passenger p takes flight f.
+    O(a,f): airline a offers flight f.</pre>
+
+a) "Some passenger has taken all flights offered by some airline."
+<input type="button" value="hint" onClick="xb[45]^=1; zzz('x45',(xb[45])?'':
+'&exist;p &exista &forall;f (O(a,f) -> T(p,f)) ALSO OK: &exist;a &exist;p &forall;f (O(a,f)->T(p,f)).\
+<br/> &exist;p &forall;f &exist;a (O(a,f) -> T(p,f)) is not correct since you must bind \
+ *a* to a particular airline. '
+);"><div id="x45"></div><br>
+ 
+b) "Some passenger has taken some flight on all airlines."
+<input type="button" value="hint" onClick="xb[46]^=1; zzz('x46',(xb[46])?'':
+'&exist;p &forall;a &exist;f (O(a,f) ^ T(p,f)) <br/> you do not need an implication \
+ since the relationship is 1-to-many between passengers and airlines.'
+);"><div id="x46"></div><br>
+
+c) "There is some flight that all passengers have taken."
+<input type="button" value="hint" onClick="xb[47]^=1; zzz('x47',(xb[47])?'':
+'&exist;f &forall;p T(p,f).'
+);"><div id="x47"></div><br>
+
+d) "There is some airline that all passengers have flown on."
+<input type="button" value="hint" onClick="xb[48]^=1; zzz('x48',(xb[48])?'':
+'&exist;a &forallp &exist;f (O(a,f) ^ T(p,f). '
+);"><div id="x48"></div><br>
+<br>
+
+
+
+<h3><span style="background-color:yellow;">Inference Rules</span></h3>
+
+Give the name of the syllogism used in these arguments and state whether the
+argument is valid or invalid.
+<br>
+<br>
+
+18. If an animal is a bird then it has wings. Pooh doesn't have wings so Pooh
+    is not a bird. 
+<input type="button" value="hint" onClick="xb[49]^=1; zzz('x49',(xb[49])?'':
+'Modus Tollens (M.T.) valid'
+);"><div id="x49"></div><br>
+
+
+19. Roos live in Austrialia and roos are marsupials. Roos are marsupials. 
+<input type="button" value="hint" onClick="xb[50]^=1; zzz('x50',(xb[50])?'':
+'Simplification. valid'
+);"><div id="x50"></div><br>
+
+
+20. If Linda is an excellent swimmer then she can work as a lifeguard. Linda is
+    an excellent swimmer. I conclude she can work as a lifeguard.
+<input type="button" value="hint" onClick="xb[51]^=1; zzz('x51',(xb[51])?'':
+'Modus Ponens (M.P.) valid '
+);"><div id="x51"></div><br>
+
+
+
+21. If x^2 is irrational, then x is irrational. Since x is irrational, we 
+    conclude that x^2 must be irrational. 
+<input type="button" value="hint" onClick="xb[52]^=1; zzz('x52',(xb[52])?'':
+'Please do this yourself...<br><br>'
+);"><div id="x52"></div><br>
+
+
+22. If x^2 is irrational, then x is irrational. Since x^2 is not irrational, 
+    we conclude that x must be not be irrational either. 
+<input type="button" value="hint" onClick="xb[53]^=1; zzz('x53',(xb[53])?'':
+'fallacy of denying the antecedent; p -> q does not mean ~p -> ~q '
+);"><div id="x53"></div><br>
+
+
+23. You could win a dollar. Therefore, you could win a dollar or you could
+    win a million dollars.
+<input type="button" value="hint" onClick="xb[54]^=1; zzz('x54',(xb[54])?'':
+'Valid. Addition.'
+);"><div id="x54"></div><br>
+
+
+24. The ball is orange or it is blue. The ball is red or it is not orange. 
+    Therefore, the ball is blue or red.  
+<input type="button" value="hint" onClick="xb[55]^=1; zzz('x55',(xb[55])?'':
+'Valid. Resolution.'
+);"><div id="x55"></div><br>
+
+
+
+25. If the sky is falling then Chicken Little is sane. If the moon is made of 
+    cheese then the cow jumps over it. The sky is falling or the moon is made 
+    of cheese. Therefore, Chicken Little is sane or the cow jumps over the moon.
+<input type="button" value="hint" onClick="xb[56]^=1; zzz('x56',(xb[56])?'':
+'Please do this yourself...<br><br>'
+);"><div id="x56"></div><br>
+
+
+26. This question refers to this argument: 
+	<pre>
+    "If it does not rain or it is not foggy then the sailing race will be 
+    held and the lifesaving demo will go on. If the sailing race is held then
+    the trophy will be awarded. The trophy was not awarded. Therefore,
+    it rained and it is foggy." Assume:
+     r: It rains
+     f: It is foggy
+     s: Sailing Race will be held
+     d: Demo will go on  
+     t: Trophy will be awarded</pre>
+
+a) Express premise #1 in propositional logic.
+<input type="button" value="hint" onClick="xb[57]^=1; zzz('x57',(xb[57])?'':
+'(~r v ~f) -> (s ^ d)'
+);"><div id="x57"></div><br>
+
+b) Express premise #2 in propositional logic.
+<input type="button" value="hint" onClick="xb[58]^=1; zzz('x58',(xb[58])?'':
+'   s -> t    '
+);"><div id="x58"></div><br>
+
+c) Express premise #3 in propositional logic. 
+<input type="button" value="hint" onClick="xb[59]^=1; zzz('x59',(xb[59])?'':
+'   ~t      '
+);"><div id="x59"></div><br>
+
+d) Express the entire argument and the conclusion in propositional logic.
+<input type="button" value="hint" onClick="xb[60]^=1; zzz('x60',(xb[60])?'':
+'Please do this yourself...<br><br>'
+);"><div id="x60"></div><br>
+
+
+   
+27. Apply inference rules and equivalences to show whether the argument above 
+    is valid or not.  (Valid means true premises lead to a true conclusion.)
+<input type="button" value="hint" onClick="xb[61]^=1; zzz('x61',(xb[61])?'':
+'Step1. ~(~r v ~f) v (s ^ d) by Imp.Elim. on P1 (premise 1).   <br>\
+Step2. (r ^ f) v (s ^ d) by DeMorgan on Step1.                 <br>\
+Step3. ~s by M.T. on P2 and P3                                 <br>\
+Step4. ((r ^ f) v (s ^ d)) ^ ~s by Conjunc. on Step2 and Step3.<br>\
+Step5. (~s ^ r ^ f) v (~s ^ s^ d) by Distrib. on Step4         <br>\
+Step6.(~s ^ r ^ f) v (F ^ d) by Negation Law on Step5.         <br>\
+Step7. (~s ^ r ^ f) v F by Domination Law on Step 6.           <br>\
+Step8. r ^ f by Simplification on Step 7; VALID '
+);"><div id="x61"></div><br>
+
+
+<pre>
+28. The premises and conclusion in an argument might be expressed as statements 
+    from predicate calculus. If so, you must convert the quantified statement 
+    into a proposition to apply the inference rules. You then convert the 
+    quantified statement back into a logical statement. See the inference rules
+    for quantifiers <a href="./Material/cheat_sheet1.html">here.</a> Assume:
+    "Everyone enrolled in CSUB has lived in a dormitory. Mia has never lived 
+    in a dormitory. Therefore, Mia is not enrolled in CSUB."
+
+    Let the universe of discourse U be {all people in Bakersfield}. Let P(x) 
+    mean x is enrolled at CSUB and Q(x) mean x lives in a dormitory.
+
+    Express the argument using predicate logic then provide a proof to show 
+    whether the argument is valid or invalid.  
+</pre>
+<input type="button" value="hint" onClick="xb[62]^=1; zzz('x62',(xb[62])?'':
+'Premise 1. &forall;x(P(x) -> Q(x)) <br/>\
+ Premise 2. ~Q(Mia)<br/>-----------------------<br/>Conclusion. ~P(Mia)  <br/>\
+ Proof: Step 1. P(Mia) -> Q(Mia) (Universal instantiation) <br/>\
+Step 2. ~P(Mia) (M.T.) VALID.'
+);"><div id="x62"></div><br>
+
+
+<pre>
+29. Given the argument: 
+
+   "All convertible cars are fun to drive. Pooh's car is not a convertible, 
+   therefore Pooh's car is not fun to drive."
+   Let the universe of discourse U be all cars. Let the predicates be 
+   P(x): x is a convertible and
+   Q(x): x is fun to drive 
+</pre>
+a) Express the argument using predicate logic.  
+<input type="button" value="hint" onClick="xb[63]^=1; zzz('x63',(xb[63])?'':
+'Premise 1.&forall;x(P(x) -> Q(x))   <br>\
+Premise 2. ~P(Pooh)                  <br>\
+-------------------------            <br>\
+Conclusion: ~Q(Pooh)'
+);"><div id="x63"></div><br>
+
+b) Use logical equivalences to determine if the argument is valid or invalid. 
+<input type="button" value="hint" onClick="xb[64]^=1; zzz('x64',(xb[64])?'':
+'Step 1. &forall;x(P(x) -> Q(x)) &equiv; \
+ P(Pooh) -> Q(Pooh)  (Universal Instantiation on Premise 1)<br>\
+ We are left with:                                         <br>\
+ P1. P(Pooh) -> Q(Pooh)                                    <br>\
+ P2. ~P(Pooh) <br/> To conclude \
+~Q(Pooh) from P1 and P2 is the Fallacy of denying the antecedent'
+);"><div id="x64"></div><br>
+
+
+
+<pre>
+30. Use logical equivalences to determine if the argument below is valid.
+    "Out of all theatre on Broadway, Pooh likes all the musicals. Pooh likes 
+    Wit, therefore Wit is a musical." Assume:
+    PoohLikes(x): "Pooh likes x"
+    Musical(x): "x is musical."
+    U={all performances on Broadway}  
+</pre>
+
+a) First express the argument in predicate logic    
+<input type="button" value="hint" onClick="xb[65]^=1; zzz('x65',(xb[65])?'':
+'<tt> &forall;x(Musical(x) -> PoohLikes(x))  <br>\
+PoohLikes(Wit)                               <br>\
+-------------------------------              <br>\
+.:. Musical(Wit) '
+);"><div id="x65"></div><br>
+
+b) Apply logical equivalences to show the argument as valid or invalid.
+<input type="button" value="hint" onClick="xb[66]^=1; zzz('x66',(xb[66])?'':
+'<tt>&forall;x(Musical(x) -> PoohLikes(x)) &equiv;\
+Musical(Wit) -> PoohLikes(Wit) by \
+ Universal instantiation on Premise 1. <br>\
+ We are left with:                     <br>\
+P1. Musical(Wit) -> PoohLikes(Wit)     <br>\
+P2. PoohLikes(Wit)                     <br>\
+-------------------------------        <br>\
+.:. Musical(Wit)                       <br>\
+This is the fallacy of affirming the consequence'
+);"><div id="x66"></div><br>
+
+
+
+<pre>
+31. In this argument the Universe of Discourse is all cartoon characters.  
+    "Someone is shorter than Mickey. Donald is shorter than someone. It follows
+    that Donald is shorter than Mickey." What is wrong with the argument, 
+    expressed below in predicate form? 
+    Shorter(x,y) be "x is shorter than y." 
+    P1. Ex Shorter(x,Mickey) 
+    P2. Ex Shorter(Donald,x)
+    ------------------------ 
+   &amp;therefore; Shorter(Donald,Mickey) 
+</pre>
+<input type="button" value="hint" onClick="xb[67]^=1; zzz('x67',(xb[67])?'':
+'To come to the conclusion you would need to translate P2 into\
+ Shorter(Donald,Mickey) by applying Existential Instantiation. But this <br/>\
+ is not a correct application of\
+ Existential Instantiation since you cannot select any arbitrary value <br/>\
+but a value that you know to be true. Since this step is incorrect, <br/>\
+the entire argument is invalid.'
+);"><div id="x67"></div><br>
+
+
+32. If you don't believe you will fall off the roof then you won't fall off.
+    Therefore, if you think you are going to fall off the roof then you will. 
+	<br>
+	<br>
+
+a) express the argument in propositional logic  
+<input type="button" value="hint" onClick="xb[68]^=1; zzz('x68',(xb[68])?'':
+' p (do not believe) -> q (do not fall off). \
+ ~p (believe) therefore ~q (you fall off).'
+);"><div id="x68"></div><br>
+
+
+b) State whether the argument is valid. If invalid, name the fallacy. 
+<input type="button" value="hint" onClick="xb[69]^=1; zzz('x69',(xb[69])?'':
+'this is the fallacy of denying the antecedent.'
+);"><div id="x69"></div><br>
+
+
+<pre>
+33. This argument is from the Death Scene in Princess Bride. Re-write Premise 1
+    using "If" and "then". Then state whether Vinzinni's argument is valid. If 
+    invalid, name the fallacy. 
+
+    P1. Only a fool would reach for the goblet put before him.
+    P2. I am not a fool.
+    ---------------------
+    : I will not reach for the goblet put before me.
+</pre>
+<input type="button" value="hint" onClick="xb[70]^=1; zzz('x70',(xb[70])?'':
+'Valid or not? Please state your reasoning and rule used.<br><br>'
+);"><div id="x70"></div><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+ 
+
+<!--
+<input type="button" value="hint" onClick="xb[71]^=1; zzz('x71',(xb[71])?'':
+);"><div id="x71"></div><br>
+<input type="button" value="hint" onClick="xb[72]^=1; zzz('x72',(xb[72])?'':);"><div id="x72"></div><br>
+<input type="button" value="hint" onClick="xb[73]^=1; zzz('x73',(xb[73])?'':);"><div id="x73"></div><br>
+<input type="button" value="hint" onClick="xb[74]^=1; zzz('x74',(xb[74])?'':);"><div id="x74"></div><br>
+<input type="button" value="hint" onClick="xb[75]^=1; zzz('x75',(xb[75])?'':);"><div id="x75"></div><br>
+<input type="button" value="hint" onClick="xb[76]^=1; zzz('x76',(xb[76])?'':);"><div id="x76"></div><br>
+<input type="button" value="hint" onClick="xb[77]^=1; zzz('x77',(xb[77])?'':);"><div id="x77"></div><br>
+<input type="button" value="hint" onClick="xb[78]^=1; zzz('x78',(xb[78])?'':);"><div id="x78"></div><br>
+<input type="button" value="hint" onClick="xb[79]^=1; zzz('x79',(xb[79])?'':);"><div id="x79"></div><br>
+<input type="button" value="hint" onClick="xb[80]^=1; zzz('x80',(xb[80])?'':);"><div id="x80"></div><br>
+<input type="button" value="hint" onClick="xb[81]^=1; zzz('x81',(xb[81])?'':);"><div id="x81"></div><br>
+<input type="button" value="hint" onClick="xb[82]^=1; zzz('x82',(xb[82])?'':);"><div id="x82"></div><br>
+<input type="button" value="hint" onClick="xb[83]^=1; zzz('x83',(xb[83])?'':);"><div id="x83"></div><br>
+<input type="button" value="hint" onClick="xb[84]^=1; zzz('x84',(xb[84])?'':);"><div id="x84"></div><br>
+<input type="button" value="hint" onClick="xb[85]^=1; zzz('x85',(xb[85])?'':);"><div id="x85"></div><br>
+<input type="button" value="hint" onClick="xb[86]^=1; zzz('x86',(xb[86])?'':);"><div id="x86"></div><br>
+<input type="button" value="hint" onClick="xb[87]^=1; zzz('x87',(xb[87])?'':);"><div id="x87"></div><br>
+<input type="button" value="hint" onClick="xb[88]^=1; zzz('x88',(xb[88])?'':);"><div id="x88"></div><br>
+<input type="button" value="hint" onClick="xb[89]^=1; zzz('x89',(xb[89])?'':);"><div id="x89"></div><br>
+-->
+
+</body>
+</html>

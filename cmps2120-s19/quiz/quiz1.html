@@ -1,0 +1,386 @@
+
+<!DOCTYPE html>
+<html>
+<head> 
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<STYLE type=text/css>
+	BODY {
+		margin: 2% 8% 5% 5%;
+		font-family: helvetica;
+		font-size: 10pt;
+		font-weight: 400;
+		background-color: #FFF;
+		color: #111;
+	}
+	DIV {
+		/*      top right bottom left*/
+		margin: 0px 20px 0px 0px;
+		padding:4px 0px 2px 5px;
+		font-family: helvetica;
+		font-size: 10pt;
+		font-weight: 900;
+		color: #222;
+		background: #eb5;
+	}
+	.Q {
+		margin:0px 20px 4px 0px;
+		padding:0px 1px 2px 2px;
+		font-family: courier new;
+		font-size: 10pt;
+		font-weight: 400;
+		background:#fffff5;
+		color:#000;
+		border:1px solid #ddd;
+	}
+	pre {
+		margin: 0px;
+		/*padding:0px;*/
+	}
+	.bottom {
+		margin: 15px 8px 15px 0px;
+		padding: 8px;
+		font-weight: 400;
+		border: 3px dashed #973;
+		color: #000;
+		background: #fc7;
+	}
+</STYLE>
+
+
+
+<script type="text/javascript" language="JavaScript">
+var a = new Array();
+//==================
+var nQuestions = 10;
+//==================
+var MAX_QUESTIONS = 15;
+var qMessage = "ALL QUESTIONS ANSWERED.";
+//questions start at 1
+for (var i=1; i<=MAX_QUESTIONS; i++) a[i] = 0;
+
+function Verify() {
+	var answered = 0;
+	var skipped  = 0;
+	var err_str  = " YOU SKIPPED: "; 
+	var index    = 0;
+	for (var i=1; i<=nQuestions; i++) {
+		if (a[i] == 0 ) {
+			//0 means questions not answered yet
+			skipped++;
+			if (skipped > 1)
+				err_str = err_str + ",";
+			err_str = err_str + i;
+		} else {
+			answered++;
+		}
+	}
+	document.q.a1.value = a[ 1];
+	document.q.a2.value = a[ 2];
+	document.q.a3.value = a[ 3];
+	document.q.a4.value = a[ 4];
+	document.q.a5.value = a[ 5];
+	document.q.a6.value = a[ 6];
+	document.q.a7.value = a[ 7];
+	document.q.a8.value = a[ 8];
+	document.q.a9.value = a[ 9];
+	document.q.aa.value = a[10];
+	document.q.ab.value = a[11];
+	document.q.ac.value = a[12];
+	document.q.ad.value = a[13];
+	document.q.ae.value = a[14];
+	document.q.af.value = a[15];
+	document.q.skipped.value    = skipped;
+	document.q.answered.value   = answered;
+	document.q.nQuestions.value = nQuestions;
+	if (skipped == 0) {
+		document.q.err_str.value = qMessage;
+	} else {
+		document.q.err_str.value = err_str;
+	}
+}
+function checkEmpty() {
+	var btn = document.getElementById("SQ");
+	btn.disabled = true;
+	if (document.getElementById("I0").value != qMessage) return;
+	if (document.getElementById("I1").value == "") return;
+	if (document.getElementById("I2").value == "") return;
+	if (document.getElementById("I2").value.length != 3) return;
+	if (document.getElementById("I3").value == "") return;
+	btn.disabled = false;
+}
+function cbox(doc, qnum, bnum) {
+	var p2 = 1;
+	for (var i=0; i<bnum; i++) p2 *= 2;
+	if (doc[bnum].checked) {
+		doc[bnum].value='1';
+		a[qnum] |= p2;
+	} else {
+		doc[0].value='0';
+		a[qnum] &= (~p2);
+	}
+}
+</script>
+</head>
+
+<body onLoad="javascript:document.forms[0].reset();
+		document.getElementById('SQ').disabled=true;"
+		onUnload="javascript:document.forms[0].reset()">
+
+
+<h3>CMPS-2120 Discrete Structures  Quiz-1</h3>
+<pre>
+There can be multiple correct answers per question.
+  +2 for each correct answer selected.
+  -1 for each incorrect answer selected.
+
+</pre>
+
+<form id="q" name="q" autocomplete="off" 
+  onkeypress="return event.keyCode != 13;"
+  METHOD="POST" ACTION="./q.php">
+
+<INPUT TYPE="hidden" NAME="subject"    VALUE="2120Quiz">
+<INPUT TYPE="hidden" NAME="quizno"     VALUE="1">
+<input type="hidden" name="answered"   value="0" size="3">
+<input type="hidden" name="skipped"    value="0" size="3">
+<INPUT TYPE="hidden" NAME="a1"         VALUE="">
+<INPUT TYPE="hidden" NAME="a2"         VALUE="">
+<INPUT TYPE="hidden" NAME="a3"         VALUE="">
+<INPUT TYPE="hidden" NAME="a4"         VALUE="">
+<INPUT TYPE="hidden" NAME="a5"         VALUE="">
+<INPUT TYPE="hidden" NAME="a6"         VALUE="">
+<INPUT TYPE="hidden" NAME="a7"         VALUE="">
+<INPUT TYPE="hidden" NAME="a8"         VALUE="">
+<INPUT TYPE="hidden" NAME="a9"         VALUE="">
+<INPUT TYPE="hidden" NAME="aa"         VALUE="">
+<INPUT TYPE="hidden" NAME="ab"         VALUE="">
+<INPUT TYPE="hidden" NAME="ac"         VALUE="">
+<INPUT TYPE="hidden" NAME="ad"         VALUE="">
+<INPUT TYPE="hidden" NAME="ae"         VALUE="">
+<INPUT TYPE="hidden" NAME="af"         VALUE="">
+<INPUT TYPE="hidden" NAME="nQuestions" VALUE="0">
+<p>
+<INPUT TYPE="reset" VALUE="StartOver" STYLE="background:#fc7"> 
+</p>
+
+
+
+<DIV id="Q1Area">QUESTION 1</DIV>
+<DIV class="Q">
+<pre>
+Let p and q be defined as follows:
+
+   p: Your alarm goes off.
+   q: You wake up.
+
+Which statement below is logically equivalent to p -> q?
+
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 0);">A. If your alarm doesn't go off then you do not wake up.
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 1);">B. Either your alarm does not go off or you wake up.
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 2);">C. If you do not wake up then your alarm did not go off.
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 3);">D. If you are awake then your alarm went off.
+</pre>
+</div>
+
+
+<DIV id="Q2Area">QUESTION 2</DIV>
+<div class="Q">
+<pre>
+Let p and q be defined as follows:
+
+   p: You work out.
+   q: You are strong.
+
+Which statement is logically equivalent to p -> q?
+
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 0);">A. One sure way to be strong is to work out.
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 1);">B. You did not work out so you must be weak. 
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 2);">C. You cannot work out without being strong.
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 3);">D. You can work out and not be strong.
+</pre>
+</div>
+
+
+
+
+<DIV id="Q3Area">QUESTION 3</DIV>
+<div class="Q">
+<pre>
+Let expression <b>S</b> be defined as:
+
+   (p ^ ~(p ^ q)) -> q
+
+Which statement is true concerning <b>S</b>?
+
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 0);">A. S is a tautology.
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 1);">B. S is a contradiction.
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 2);">C. S is logically equivalent to (~p v q) ^ (~p v p) v q.
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 3);">D. The premise is logically equivalent to (p ^ ~q) v (p ^ ~p).
+</pre>
+</div>
+
+
+
+
+<DIV id="Q4Area">QUESTION 4</DIV>
+<div class="Q">
+<pre>
+Let <b>S</b> be this expression:
+
+   "You must say the password to get into the club."
+
+Which statement is logically equivalent to <b>S</b>?
+
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 0);">A. If you get into the club then you said the password.
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 1);">B. If you say the password then you get into the club.
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 2);">C. If you don't say the password then you don't get into the club.
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 3);">D. If you don't get into the club then you didn't say the password.
+</pre>
+</div>
+
+
+
+
+<DIV id="Q5Area">QUESTION 5</DIV>
+<div class="Q">
+<pre>
+Let <b>S</b> be defined as this logical expression:
+
+   ((~p v r) ^ (p ^ q)) -> r
+
+Which statement is true concerning <b>S</b>?
+
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 0);">A. S is a tautology.
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 1);">B. S is a contradiction.
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 2);">C. S is logically equivalent to (p ^ ~r) v (~p v ~q) v r.
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 3);">D. S is logically equivalent to (~p ^ r) v ~q.
+</pre>
+</div>
+
+
+<DIV id="Q1Area">QUESTION 1</DIV>
+<DIV class="Q">
+<pre>
+Let P(x) be the statement "x comes to class", where the domain for x consists
+of students in 2120 class.
+Choose any quantifications below that express the following:
+
+Some 2120 student always shows up for class, but there is never
+perfect attendance.
+
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 0);">A. &exist;xP(x) &and; &not;&forall;xP(x)
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 1);">B. &exist;xP(x) &or; &not;&forall;xP(x)
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 2);">C. &exist;x&forall;x(P(x) &and; &not;P(x))
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 3);">D. &exist;xP(x) &and; &exist;x&not;P(x)
+</pre>
+</div>
+
+<DIV id="Q2Area">QUESTION 2</DIV>
+<div class="Q">
+<pre>
+For S1, S2 shown below, let the Universe of Discourse be {Clair,Osten,Kev}.
+Let P be defined as "likes ping pong" and Q defined as "likes pool"
+
+        S1. &exist;x(P(x) &or; Q(x))      S2. &exist;xP(x) &or; &exist;xQ(x)
+
+Choose the true statement below. 
+
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 0);">A. S2 being true indicates that Osten likes ping pong or pool.
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 1);">B. If S1 were false you know Clair dislikes ping pong and pool.
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 2);">C. S1 and S2 are logically equivalent.
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 3);">D. Everyone likes ping pong.
+</pre>
+</div>
+
+<DIV id="Q3Area">QUESTION 3</DIV>
+<div class="Q">
+<pre>
+For S1, S2 shown below, let the Universe of Discourse be {Clair,Osten,Kev}.
+Let P be defined as "likes ping pong" and Q defined as "likes pool"
+
+    S1. &exist;x(P(x) &and; Q(x))      S2. &exist;xP(x) &and; &exist;xQ(x)
+
+Choose the true statement below.
+
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 0);">A. If S1 were false then Osten either dislikes ping pong or dislikes pool.
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 1);">B. S1 and S2 are logically equivalent.
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 2);">C. S1 being true indicates that Kev likes ping pong and pool.
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 3);">D. S2 being true indicates that only 1 person doesn't like ping pong or pool.
+</pre>
+</div>
+
+<DIV id="Q4Area">QUESTION 4</DIV>
+<div class="Q">
+<pre>
+Let P(x,y) mean "Student x takes class y."
+Let U for x be {Mike, Mitch, Mimi}.
+Let U for y be {cs295, cs312, cs335}.
+
+Choose the true statement below.
+
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 0);">A. If &exist;x&forall;y P(x,y) then Mike is taking at least one class.
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 1);">B. If &exist;y&forall;x P(x,y) then Mike, Mitch & Mimi are taking a course together.
+<!--
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 2);">
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 3);">
+-->
+</pre>
+</div>
+
+<DIV id="Q5Area">QUESTION 5</DIV>
+<div class="Q">
+<pre>
+Note: &exist; can mean "there exists"
+                 "there is at least one"
+                 "for some"
+
+</pre>
+
+<pre>
+SIMILAR TO AIRLINE PROBLEM.
+Assume,
+s is in S, where S = {all students at CSUB}
+a is in A, where A = {all android smart phones}
+p is in P, where P = {all phone providers}
+
+    T(s,a): student s has phone a.
+    O(p,a): provider p offers phone a. 
+
+What is the meaning of this?
+
+    &exist;s &exist;p &forall;a ((O(p,a) -> T(s,a))
+
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 0);">A. Some student has has all phones offered by all providers.
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 1);">B. Some student has all phones offered by some provider.
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 2);">C. One or more students have all phones offered by some provider.
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 3);">D. At least one phone is owned by all students.
+</pre>
+</div>
+
+
+
+<!--
+<DIV id="QbArea">QUESTION 11</DIV>
+<div class="Q">
+<pre>
+
+<input type="checkbox" name="Qb" value="0" onClick="cbox(document.q.Qb, 11, 0);">
+<input type="checkbox" name="Qb" value="0" onClick="cbox(document.q.Qb, 11, 1);">
+<input type="checkbox" name="Qb" value="0" onClick="cbox(document.q.Qb, 11, 2);">
+<input type="checkbox" name="Qb" value="0" onClick="cbox(document.q.Qb, 11, 3);">
+<input type="checkbox" name="Qb" value="0" onClick="cbox(document.q.Qb, 11, 4);">
+</pre>
+</div>
+-->
+</div>
+
+<!--
+<div name="info" id="info" style="background-color:#FFF;"> </div>
+<div name="answersinfo" id="answersinfo"> </div>
+-->
+
+</form>
+</body>
+</html>
+
+
