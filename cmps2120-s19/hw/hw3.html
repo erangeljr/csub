@@ -1,0 +1,345 @@
+
+<HTML>
+    <head>
+    <STYLE type=text/css>
+        DIV {
+            font-weight: normal;
+            font-family: helvetica;
+            font-size: 11pt;
+            color: red;
+            padding-left: 4px;
+            padding-right: 20px;
+            padding-top: 5px;
+            margin-top: 2px;
+            height: auto;
+            background-color: #eed;
+            border: 1px dotted black;
+        }
+        BODY {
+            font-family: helvetica;
+            margin: 2% 5% 5% 5%;
+            background-color:#f8f8f8;
+            color: #19193A;
+            font-weight: normal;
+            font-size: 12pt;
+        }
+        b { font-weight: 900; }
+        code { font-family: monospace; }
+        pre { font-family: monospace; font-size: 10pt; }
+        input { background:#ed8; }
+        h3 {
+            font-size: 12pt;
+            font-weight: 600;
+            font-family: serif;
+            padding-top: 4px;
+            padding-bottom: 6px;
+        }
+        sup {
+            vertical-align: super;
+            font-size: smaller;
+        }	
+    </STYLE>
+    <script type="text/javascript">
+        var xb = [0];
+        for (var i=0; i<200; i++) xb[i] = 1;
+        function zzz(doc, text) {
+            document.getElementById(doc).innerHTML=text; 
+        }
+    </script>
+    </head>
+    <BODY>
+    <H3>CMPS 2120 - Assignment 3 - Inference Rules</H3>
+    
+    <p>On paper with pencil and eraser please.</p>
+    
+    
+    <a href="../material/ch1_logic/ch1.4.notes.html">Chapter: 1.4</a><br> 
+    <a href="../material/ch1_logic/logical_equivs.txt">logical equivalences</a> & 
+    <a href="../material/ch1_logic/inference_rules.txt">inference rules</a><br>
+    <h3><span style="background-color:yellow;">Inference Rules</span></h3>
+    
+    Give the name of the syllogism used in these arguments and state whether the
+    argument is valid or invalid.
+    <br>
+    <br>
+    
+    1. If an animal is a bird then it has wings. Pooh doesn't have wings so Pooh
+        is not a bird. 
+    <input type="button" value="hint" onClick="xb[49]^=1; zzz('x49',(xb[49])?'':
+    'Modus Tollens (M.T.) valid'
+    );"><div id="x49"></div><br>
+    
+    
+    2. Roos live in Austrialia and roos are marsupials. Roos are marsupials. 
+    <input type="button" value="hint" onClick="xb[50]^=1; zzz('x50',(xb[50])?'':
+    'Simplification. valid'
+    );"><div id="x50"></div><br>
+    
+    
+    3. If Linda is an excellent swimmer then she can work as a lifeguard. Linda is
+        an excellent swimmer. I conclude she can work as a lifeguard.
+    <input type="button" value="hint" onClick="xb[51]^=1; zzz('x51',(xb[51])?'':
+    'Modus Ponens (M.P.) valid '
+    );"><div id="x51"></div><br>
+    
+    
+    
+    4. If x^2 is irrational, then x is irrational. Since x is irrational, we 
+        conclude that x^2 must be irrational. 
+    <input type="button" value="hint" onClick="xb[52]^=1; zzz('x52',(xb[52])?'':
+    'Please do this yourself...<br><br>'
+    );"><div id="x52"></div><br>
+    
+    
+    5. If x^2 is irrational, then x is irrational. Since x^2 is not irrational, 
+        we conclude that x must be not be irrational either. 
+    <input type="button" value="hint" onClick="xb[53]^=1; zzz('x53',(xb[53])?'':
+    'fallacy of denying the antecedent; p -> q does not mean ~p -> ~q '
+    );"><div id="x53"></div><br>
+    
+    
+    6. You could win a dollar. Therefore, you could win a dollar or you could
+        win a million dollars.
+    <input type="button" value="hint" onClick="xb[54]^=1; zzz('x54',(xb[54])?'':
+    'Valid. Addition.'
+    );"><div id="x54"></div><br>
+    
+    
+    7. The ball is orange or it is blue. The ball is red or it is not orange. 
+        Therefore, the ball is blue or red.  
+    <input type="button" value="hint" onClick="xb[55]^=1; zzz('x55',(xb[55])?'':
+    'Valid. Resolution.'
+    );"><div id="x55"></div><br>
+    
+    
+    
+    8. If the sky is falling then Chicken Little is sane. If the moon is made of 
+        cheese then the cow jumps over it. The sky is falling or the moon is made 
+        of cheese. Therefore, Chicken Little is sane or the cow jumps over the moon.
+    <input type="button" value="hint" onClick="xb[56]^=1; zzz('x56',(xb[56])?'':
+    'Please do this yourself...<br><br>'
+    );"><div id="x56"></div><br>
+    
+    
+    9. This question refers to this argument: 
+        <pre>
+        "If it does not rain or it is not foggy then the sailing race will be 
+        held and the lifesaving demo will go on. If the sailing race is held then
+        the trophy will be awarded. The trophy was not awarded. Therefore,
+        it rained and it is foggy." Assume:
+         r: It rains
+         f: It is foggy
+         s: Sailing Race will be held
+         d: Demo will go on  
+         t: Trophy will be awarded</pre>
+    
+    a) Express premise #1 in propositional logic.
+    <input type="button" value="hint" onClick="xb[57]^=1; zzz('x57',(xb[57])?'':
+    '(~r v ~f) -> (s ^ d)'
+    );"><div id="x57"></div><br>
+    
+    b) Express premise #2 in propositional logic.
+    <input type="button" value="hint" onClick="xb[58]^=1; zzz('x58',(xb[58])?'':
+    '   s -> t    '
+    );"><div id="x58"></div><br>
+    
+    c) Express premise #3 in propositional logic. 
+    <input type="button" value="hint" onClick="xb[59]^=1; zzz('x59',(xb[59])?'':
+    '   ~t      '
+    );"><div id="x59"></div><br>
+    
+    d) Express the entire argument and the conclusion in propositional logic.
+    <input type="button" value="hint" onClick="xb[60]^=1; zzz('x60',(xb[60])?'':
+    'Please do this yourself...<br><br>'
+    );"><div id="x60"></div><br>
+    
+    
+       
+    10. Apply inference rules and equivalences to show whether the argument above 
+        is valid or not.  (Valid means true premises lead to a true conclusion.)
+    <input type="button" value="hint" onClick="xb[61]^=1; zzz('x61',(xb[61])?'':
+    'Step1. ~(~r v ~f) v (s ^ d) by Imp.Elim. on P1 (premise 1).   <br>\
+    Step2. (r ^ f) v (s ^ d) by DeMorgan on Step1.                 <br>\
+    Step3. ~s by M.T. on P2 and P3                                 <br>\
+    Step4. ((r ^ f) v (s ^ d)) ^ ~s by Conjunc. on Step2 and Step3.<br>\
+    Step5. (~s ^ r ^ f) v (~s ^ s^ d) by Distrib. on Step4         <br>\
+    Step6.(~s ^ r ^ f) v (F ^ d) by Negation Law on Step5.         <br>\
+    Step7. (~s ^ r ^ f) v F by Domination Law on Step 6.           <br>\
+    Step8. r ^ f by Simplification on Step 7; VALID '
+    );"><div id="x61"></div><br>
+    
+    
+    <pre>
+    11. The premises and conclusion in an argument might be expressed as statements 
+        from predicate calculus. If so, you must convert the quantified statement 
+        into a proposition to apply the inference rules. You then convert the 
+        quantified statement back into a logical statement. See the inference rules
+        for quantifiers <a href="./Material/cheat_sheet1.html">here.</a> Assume:
+        "Everyone enrolled in CSUB has lived in a dormitory. Mia has never lived 
+        in a dormitory. Therefore, Mia is not enrolled in CSUB."
+    
+        Let the universe of discourse U be {all people in Bakersfield}. Let P(x) 
+        mean x is enrolled at CSUB and Q(x) mean x lives in a dormitory.
+    
+        Express the argument using predicate logic then provide a proof to show 
+        whether the argument is valid or invalid.  
+    </pre>
+    <input type="button" value="hint" onClick="xb[62]^=1; zzz('x62',(xb[62])?'':
+    'Premise 1. &forall;x(P(x) -> Q(x)) <br/>\
+     Premise 2. ~Q(Mia)<br/>-----------------------<br/>Conclusion. ~P(Mia)  <br/>\
+     Proof: Step 1. P(Mia) -> Q(Mia) (Universal instantiation) <br/>\
+    Step 2. ~P(Mia) (M.T.) VALID.'
+    );"><div id="x62"></div><br>
+    
+    
+    <pre>
+    12. Given the argument: 
+    
+       "All convertible cars are fun to drive. Pooh's car is not a convertible, 
+       therefore Pooh's car is not fun to drive."
+       Let the universe of discourse U be all cars. Let the predicates be 
+       P(x): x is a convertible and
+       Q(x): x is fun to drive 
+    </pre>
+    a) Express the argument using predicate logic.  
+    <input type="button" value="hint" onClick="xb[63]^=1; zzz('x63',(xb[63])?'':
+    'Premise 1.&forall;x(P(x) -> Q(x))   <br>\
+    Premise 2. ~P(Pooh)                  <br>\
+    -------------------------            <br>\
+    Conclusion: ~Q(Pooh)'
+    );"><div id="x63"></div><br>
+    
+    b) Use logical equivalences to determine if the argument is valid or invalid. 
+    <input type="button" value="hint" onClick="xb[64]^=1; zzz('x64',(xb[64])?'':
+    'Step 1. &forall;x(P(x) -> Q(x)) &equiv; \
+     P(Pooh) -> Q(Pooh)  (Universal Instantiation on Premise 1)<br>\
+     We are left with:                                         <br>\
+     P1. P(Pooh) -> Q(Pooh)                                    <br>\
+     P2. ~P(Pooh) <br/> To conclude \
+    ~Q(Pooh) from P1 and P2 is the Fallacy of denying the antecedent'
+    );"><div id="x64"></div><br>
+    
+    
+    
+    <pre>
+    13. Use logical equivalences to determine if the argument below is valid.
+        "Out of all theatre on Broadway, Pooh likes all the musicals. Pooh likes 
+        Wit, therefore Wit is a musical." Assume:
+        PoohLikes(x): "Pooh likes x"
+        Musical(x): "x is musical."
+        U={all performances on Broadway}  
+    </pre>
+    
+    a) First express the argument in predicate logic    
+    <input type="button" value="hint" onClick="xb[65]^=1; zzz('x65',(xb[65])?'':
+    '<tt> &forall;x(Musical(x) -> PoohLikes(x))  <br>\
+    PoohLikes(Wit)                               <br>\
+    -------------------------------              <br>\
+    .:. Musical(Wit) '
+    );"><div id="x65"></div><br>
+    
+    b) Apply logical equivalences to show the argument as valid or invalid.
+    <input type="button" value="hint" onClick="xb[66]^=1; zzz('x66',(xb[66])?'':
+    '<tt>&forall;x(Musical(x) -> PoohLikes(x)) &equiv;\
+    Musical(Wit) -> PoohLikes(Wit) by \
+     Universal instantiation on Premise 1. <br>\
+     We are left with:                     <br>\
+    P1. Musical(Wit) -> PoohLikes(Wit)     <br>\
+    P2. PoohLikes(Wit)                     <br>\
+    -------------------------------        <br>\
+    .:. Musical(Wit)                       <br>\
+    This is the fallacy of affirming the consequence'
+    );"><div id="x66"></div><br>
+    
+    
+    
+    <pre>
+    14. In this argument the Universe of Discourse is all cartoon characters.  
+        "Someone is shorter than Mickey. Donald is shorter than someone. It follows
+        that Donald is shorter than Mickey." What is wrong with the argument, 
+        expressed below in predicate form? 
+        Shorter(x,y) be "x is shorter than y." 
+        P1. Ex Shorter(x,Mickey) 
+        P2. Ex Shorter(Donald,x)
+        ------------------------ 
+       &amp;therefore; Shorter(Donald,Mickey) 
+    </pre>
+    <input type="button" value="hint" onClick="xb[67]^=1; zzz('x67',(xb[67])?'':
+    'To come to the conclusion you would need to translate P2 into\
+     Shorter(Donald,Mickey) by applying Existential Instantiation. But this <br/>\
+     is not a correct application of\
+     Existential Instantiation since you cannot select any arbitrary value <br/>\
+    but a value that you know to be true. Since this step is incorrect, <br/>\
+    the entire argument is invalid.'
+    );"><div id="x67"></div><br>
+    
+    
+    15. If you don't believe you will fall off the roof then you won't fall off.
+        Therefore, if you think you are going to fall off the roof then you will. 
+        <br>
+        <br>
+    
+    a) express the argument in propositional logic  
+    <input type="button" value="hint" onClick="xb[68]^=1; zzz('x68',(xb[68])?'':
+    ' p (do not believe) -> q (do not fall off). \
+     ~p (believe) therefore ~q (you fall off).'
+    );"><div id="x68"></div><br>
+    
+    
+    b) State whether the argument is valid. If invalid, name the fallacy. 
+    <input type="button" value="hint" onClick="xb[69]^=1; zzz('x69',(xb[69])?'':
+    'this is the fallacy of denying the antecedent.'
+    );"><div id="x69"></div><br>
+    
+    
+    <pre>
+    16. This argument is from the Death Scene in Princess Bride. Re-write Premise 1
+        using "If" and "then". Then state whether Vinzinni's argument is valid. If 
+        invalid, name the fallacy. 
+    
+        P1. Only a fool would reach for the goblet put before him.
+        P2. I am not a fool.
+        ---------------------
+        : I will not reach for the goblet put before me.
+    </pre>
+    <input type="button" value="hint" onClick="xb[70]^=1; zzz('x70',(xb[70])?'':
+    'Valid or not? Please state your reasoning and rule used.<br><br>'
+    );"><div id="x70"></div><br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+     
+    
+    <!--
+    <input type="button" value="hint" onClick="xb[71]^=1; zzz('x71',(xb[71])?'':
+    );"><div id="x71"></div><br>
+    <input type="button" value="hint" onClick="xb[72]^=1; zzz('x72',(xb[72])?'':);"><div id="x72"></div><br>
+    <input type="button" value="hint" onClick="xb[73]^=1; zzz('x73',(xb[73])?'':);"><div id="x73"></div><br>
+    <input type="button" value="hint" onClick="xb[74]^=1; zzz('x74',(xb[74])?'':);"><div id="x74"></div><br>
+    <input type="button" value="hint" onClick="xb[75]^=1; zzz('x75',(xb[75])?'':);"><div id="x75"></div><br>
+    <input type="button" value="hint" onClick="xb[76]^=1; zzz('x76',(xb[76])?'':);"><div id="x76"></div><br>
+    <input type="button" value="hint" onClick="xb[77]^=1; zzz('x77',(xb[77])?'':);"><div id="x77"></div><br>
+    <input type="button" value="hint" onClick="xb[78]^=1; zzz('x78',(xb[78])?'':);"><div id="x78"></div><br>
+    <input type="button" value="hint" onClick="xb[79]^=1; zzz('x79',(xb[79])?'':);"><div id="x79"></div><br>
+    <input type="button" value="hint" onClick="xb[80]^=1; zzz('x80',(xb[80])?'':);"><div id="x80"></div><br>
+    <input type="button" value="hint" onClick="xb[81]^=1; zzz('x81',(xb[81])?'':);"><div id="x81"></div><br>
+    <input type="button" value="hint" onClick="xb[82]^=1; zzz('x82',(xb[82])?'':);"><div id="x82"></div><br>
+    <input type="button" value="hint" onClick="xb[83]^=1; zzz('x83',(xb[83])?'':);"><div id="x83"></div><br>
+    <input type="button" value="hint" onClick="xb[84]^=1; zzz('x84',(xb[84])?'':);"><div id="x84"></div><br>
+    <input type="button" value="hint" onClick="xb[85]^=1; zzz('x85',(xb[85])?'':);"><div id="x85"></div><br>
+    <input type="button" value="hint" onClick="xb[86]^=1; zzz('x86',(xb[86])?'':);"><div id="x86"></div><br>
+    <input type="button" value="hint" onClick="xb[87]^=1; zzz('x87',(xb[87])?'':);"><div id="x87"></div><br>
+    <input type="button" value="hint" onClick="xb[88]^=1; zzz('x88',(xb[88])?'':);"><div id="x88"></div><br>
+    <input type="button" value="hint" onClick="xb[89]^=1; zzz('x89',(xb[89])?'':);"><div id="x89"></div><br>
+    -->
+    
+    </body>
+    </html>
+    

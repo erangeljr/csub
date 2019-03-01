@@ -1,0 +1,209 @@
+
+<HTML>
+    <head>
+    <STYLE type=text/css>
+        DIV {
+            font-weight: normal;
+            font-family: helvetica;
+            font-size: 11pt;
+            color: red;
+            padding-left: 4px;
+            padding-right: 20px;
+            padding-top: 5px;
+            margin-top: 2px;
+            height: auto;
+            background-color: #eed;
+            border: 1px dotted black;
+        }
+        BODY {
+            font-family: helvetica;
+            margin: 2% 5% 5% 5%;
+            background-color:#f8f8f8;
+            color: #19193A;
+            font-weight: normal;
+            font-size: 12pt;
+        }
+        b { font-weight: 900; }
+        code { font-family: monospace; }
+        pre { font-family: monospace; font-size: 10pt; }
+        input { background:#ed8; }
+        h3 {
+            font-size: 12pt;
+            font-weight: 600;
+            font-family: serif;
+            padding-top: 4px;
+            padding-bottom: 6px;
+        }
+        sup {
+            vertical-align: super;
+            font-size: smaller;
+        }	
+    </STYLE>
+    <script type="text/javascript">
+        var xb = [0];
+        for (var i=0; i<200; i++) xb[i] = 1;
+        function zzz(doc, text) {
+            document.getElementById(doc).innerHTML=text; 
+        }
+    </script>
+    </head>
+    <BODY>
+    <H3>CMPS 2120 - Assignment 4 - Intro. to Proofs </H3>
+    
+    <p>On paper with pencil and eraser please.</p>
+    
+    
+    <a href="../material/ch1_logic/ch1.4.notes.html">Chapter: 1.4</a><br> 
+    <a href="../material/ch1_logic/logical_equivs.txt">logical equivalences</a> & 
+    <a href="../material/ch1_logic/inference_rules.txt">inference rules</a><br>
+    <h3><span style="background-color:yellow;">Inference Rules</span></h3>
+    
+    Give the name of the syllogism used in these arguments and state whether the
+    argument is valid or invalid.
+    <br>
+    <br>
+    
+    1. If an animal is a bird then it has wings. Pooh doesn't have wings so Pooh
+        is not a bird. 
+    <input type="button" value="hint" onClick="xb[49]^=1; zzz('x49',(xb[49])?'':
+    'Modus Tollens (M.T.) valid'
+    );"><div id="x49"></div><br>
+    
+    
+    2. Roos live in Austrialia and roos are marsupials. Roos are marsupials. 
+    <input type="button" value="hint" onClick="xb[50]^=1; zzz('x50',(xb[50])?'':
+    'Simplification. valid'
+    );"><div id="x50"></div><br>
+    
+    
+    3. If Linda is an excellent swimmer then she can work as a lifeguard. Linda is
+        an excellent swimmer. I conclude she can work as a lifeguard.
+    <input type="button" value="hint" onClick="xb[51]^=1; zzz('x51',(xb[51])?'':
+    'Modus Ponens (M.P.) valid '
+    );"><div id="x51"></div><br>
+    
+    
+    
+    4. If x^2 is irrational, then x is irrational. Since x is irrational, we 
+        conclude that x^2 must be irrational. 
+    <input type="button" value="hint" onClick="xb[52]^=1; zzz('x52',(xb[52])?'':
+    'Please do this yourself...<br><br>'
+    );"><div id="x52"></div><br>
+    
+    
+    5. If x^2 is irrational, then x is irrational. Since x^2 is not irrational, 
+        we conclude that x must be not be irrational either. 
+    <input type="button" value="hint" onClick="xb[53]^=1; zzz('x53',(xb[53])?'':
+    'fallacy of denying the antecedent; p -> q does not mean ~p -> ~q '
+    );"><div id="x53"></div><br>
+    <br>
+    
+    <H3>CMPS 2120 - Homework - Sets</H3>
+
+    1. For this question
+     let A = {2,4,6}, B = {2,6}, C = {4,6}, and D = {{4,6},8}.  Of sets
+     A, B, C, which are subsets of each other?
+    <input type="button" value="check" onClick="xb[ 1]^=1; zzz('x1', (xb[ 1])?'':
+    'Each set is a subset of itself; B is a \
+     subset of A; C is a subset of A.'
+    );"><div id="x1"></div><br>
+    
+    
+    2. Determine whether these statements are true or false.<p>
+    a) {} is in {{}}
+    <input type="button" value="check" onClick="xb[ 2]^=1; zzz('x2', (xb[ 2])?'':
+    'true.'
+    );"><div id="x2"></div><br>
+    
+    b) {{}} is in {{}}
+    <input type="button" value="check" onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+    'false. ( the first set is a subset of the second but not a member ) '
+    );"><div id="x3"></div><br>
+    
+    
+    
+    3. Find the smallest sets A and B such that A is a member of B and A is a 
+       subset of B.
+    <input type="button" value="check" onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+    'A = {}     B = {{}}'
+    );"><div id="x4"></div><br>
+    
+    4. Let A = {5}. Find the smallest set B such that A is a member of B and A 
+        is a subset of B
+    <input type="button" value="check" onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+    'A = {5}    B = {{5}, 5}'
+    );"><div id="x5"></div><br>
+    
+    5. What is the cardinality of sets A,B and C shown below?
+    <pre>    A={}     B={{}}    C={a,{a},{a,{a}}}     </pre>
+    <input type="button" value="check" onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+    '|A|=0. |B|=1.  |c|=3. '
+    );"><div id="x6"></div><br>
+    
+    
+    
+    6. Determine whether each of these sets is the power set of a set. If so, 
+        provide the set. Hints: The power set of S, denoted P(S), contains all 
+        possible subsets of S. The cardinality of P(S), denoted |P(S)| is the 
+        number of subsets in P(S). |P(S)| is 2^|S|, thus always a power of 2.
+    <br>
+    a) {} 
+    <input type="button" value="check" onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+    'No. The null set is a subset of every set so the power set cannot be empty.'
+    );"><div id="x7"></div><br>
+    
+    b) {{}, {a},{{},a}}
+    <input type="button" value="check" onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+    'No. This cannot be a power set since it contains 3 elements (the cardinality of a power set is a power of 2).'
+    );"><div id="x8"></div><br>
+    
+    c) {{}, {a}, {b}, {a,b}}
+    <input type="button" value="check" onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+    'Yes, this is the power set of {a, b}'
+    );"><div id="x9"></div><br>
+    
+    
+    7. The members in a Cartesian product are tuples, where each tuple represents
+    all possible permutations of the element in the original sets. (There may
+    be duplicate members in a tuple). 
+    Given A = {1,2,3} and B={1,2,3}, give all members in the set A x B.
+    <input type="button" value="check" onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+    '{(1,1), (1,2), (1,3), (2,1), (2,2), (2,3), (3,1), (3,2), (3,3)}'
+    );"><div id="x10"></div><br>
+    
+    
+    8. Given A = {1,2,3}, B={1,2} and C={5}, give all members in the set A x B x C.
+    <input type="button" value="check" onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+    '{(1,1,5), (1,2,5), (2,1,5), (2,2,5), (3,1,5), (3,2,5)}'
+    );"><div id="x11"></div><br>
+    
+    
+    
+    
+    9. Describe the set of the Cartesian product A x B, where A is the set of 
+        courses offered by the math department and B is the set of math professors.
+        If there are 5 professors and 7 courses how may 2-tuples are in A X B?
+    <input type="button" value="check" onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+    '35. The set of all ordered pairs x,y where x is all courses and \
+     y is all math professors.'
+    );"><div id="x12"></div><br>
+    
+    a)  What is the cardinality of A x B?
+    <input type="button" value="check" onClick="xb[13]^=1; zzz('x13',(xb[13])?'':
+    'The cardinality of A x B is |A| * |B|, which is the number of \
+    courses * number of professors'
+    );"><div id="x13"></div><br>
+    
+    
+    
+    10. Let S = { a, b, c }. What is the power set of S?
+    <input type="button" value="check" onClick="xb[14]^=1; zzz('x14',(xb[14])?'':
+    'P(S) = {{}, {a}, {b}, {c}, {a,b}, {a,c}, {b,c}, {a,b,c}}<br/>\
+    The power set of S is the set of all subsets that can be constructed out of S.'
+    );"><div id="x14"></div><br>
+    
+    
+    
+    </body>
+    </html>
+    
