@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html>
+<head> 
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<STYLE type=text/css>
+	BODY {
+		margin: 2% 8% 5% 5%;
+		font-family: helvetica;
+		font-size: 10pt;
+		font-weight: 400;
+		background-color: #FFF;
+		color: #111;
+	}
+	DIV {
+		/*      top right bottom left*/
+		margin: 0px 20px 0px 0px;
+		padding:4px 0px 2px 5px;
+		font-family: helvetica;
+		font-size: 10pt;
+		font-weight: 900;
+		color: #222;
+		background: #eb5;
+	}
+	.Q {
+		margin:0px 20px 4px 0px;
+		padding:0px 1px 2px 2px;
+		font-family: courier new;
+		font-size: 10pt;
+		font-weight: 400;
+		background:#fffff5;
+		color:#000;
+		border:1px solid #ddd;
+	}
+	pre {
+		margin: 0px;
+		/*padding:0px;*/
+	}
+	.bottom {
+		margin: 15px 8px 15px 0px;
+		padding: 8px;
+		font-weight: 400;
+		border: 3px dashed #973;
+		color: #000;
+		background: #fc7;
+	}
+</STYLE>
+
+
+
+<script type="text/javascript" language="JavaScript">
+var a = new Array();
+//==================
+var nQuestions = 10;
+//==================
+var MAX_QUESTIONS = 15;
+var qMessage = "ALL QUESTIONS ANSWERED.";
+//questions start at 1
+for (var i=1; i<=MAX_QUESTIONS; i++) a[i] = 0;
+
+function Verify() {
+	var answered = 0;
+	var skipped  = 0;
+	var err_str  = " YOU SKIPPED: "; 
+	var index    = 0;
+	for (var i=1; i<=nQuestions; i++) {
+		if (a[i] == 0 ) {
+			//0 means questions not answered yet
+			skipped++;
+			if (skipped > 1)
+				err_str = err_str + ",";
+			err_str = err_str + i;
+		} else {
+			answered++;
+		}
+	}
+	document.q.a1.value = a[ 1];
+	document.q.a2.value = a[ 2];
+	document.q.a3.value = a[ 3];
+	document.q.a4.value = a[ 4];
+	document.q.a5.value = a[ 5];
+	document.q.a6.value = a[ 6];
+	document.q.a7.value = a[ 7];
+	document.q.a8.value = a[ 8];
+	document.q.a9.value = a[ 9];
+	document.q.aa.value = a[10];
+	document.q.ab.value = a[11];
+	document.q.ac.value = a[12];
+	document.q.ad.value = a[13];
+	document.q.ae.value = a[14];
+	document.q.af.value = a[15];
+	document.q.skipped.value    = skipped;
+	document.q.answered.value   = answered;
+	document.q.nQuestions.value = nQuestions;
+	if (skipped == 0) {
+		document.q.err_str.value = qMessage;
+	} else {
+		document.q.err_str.value = err_str;
+	}
+}
+function checkEmpty() {
+	var btn = document.getElementById("SQ");
+	btn.disabled = true;
+	if (document.getElementById("I0").value != qMessage) return;
+	if (document.getElementById("I1").value == "") return;
+	if (document.getElementById("I2").value == "") return;
+	if (document.getElementById("I2").value.length != 3) return;
+	if (document.getElementById("I3").value == "") return;
+	btn.disabled = false;
+}
+function cbox(doc, qnum, bnum) {
+	var p2 = 1;
+	for (var i=0; i<bnum; i++) p2 *= 2;
+	if (doc[bnum].checked) {
+		doc[bnum].value='1';
+		a[qnum] |= p2;
+	} else {
+		doc[0].value='0';
+		a[qnum] &= (~p2);
+	}
+}
+</script>
+</head>
+
+<body onLoad="javascript:document.forms[0].reset();
+		document.getElementById('SQ').disabled=true;"
+		onUnload="javascript:document.forms[0].reset()">
+
+
+<h3>CMPS-2120 Quiz-2 Rules of Inference</h3>
+<pre>
+There can be multiple correct answers per question.
+  +2 for each correct answer selected.
+</pre>
+
+<form id="q" name="q" autocomplete="off" 
+  onkeypress="return event.keyCode != 13;"
+  METHOD="POST" ACTION="./q.php">
+
+<INPUT TYPE="hidden" NAME="subject"    VALUE="2120Quiz">
+<INPUT TYPE="hidden" NAME="quizno"     VALUE="3">
+<input type="hidden" name="answered"   value="0" size="3">
+<input type="hidden" name="skipped"    value="0" size="3">
+<INPUT TYPE="hidden" NAME="a1"         VALUE="">
+<INPUT TYPE="hidden" NAME="a2"         VALUE="">
+<INPUT TYPE="hidden" NAME="a3"         VALUE="">
+<INPUT TYPE="hidden" NAME="a4"         VALUE="">
+<INPUT TYPE="hidden" NAME="a5"         VALUE="">
+<INPUT TYPE="hidden" NAME="nQuestions" VALUE="0">
+<p>
+<INPUT TYPE="reset" VALUE="StartOver" STYLE="background:#fc7"> 
+</p>
+
+
+
+<DIV id="Q1Area">QUESTION 1</DIV>
+<DIV class="Q">
+<pre>
+Study the following argument.
+
+   1. Only computer science majors take a discrete structures course.
+   2. Julie is majoring in computer science.
+   ------------------------------------------------------------------
+   &there4;  Julie is taking a discrete structures course.
+
+What is true?
+
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 0);">A. This argument is valid.
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 1);" >B. All cs majors take discrete structures.
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 2);" checked>C. This argument is invalid.
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 3);">D. This argument clearly defies the affirmation.
+</pre>
+</div>
+
+<DIV id="Q2Area">QUESTION 2</DIV>
+<div class="Q">
+<pre>
+Analyze the argument below.
+
+   1. You can major in computer science if and only if you take 2120.
+   2. You are taking 2120.
+   ------------------------------------------------------------------
+   &there4;  You can major in computer science.
+
+What is true?
+
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 0);">A. Invalid argument, affirming the conclusion.
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 1);" checked>B. This argument has validity.
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 2);">C. Premise 2 should read, "You are not taking 2120."
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 3);">D. I'm going to change my major to Art.
+</pre>
+</div>
+
+<DIV id="Q3Area">QUESTION 3</DIV>
+<div class="Q">
+<pre>
+Scrutinize the following argument.
+
+   1. I play my best golf when my mind is blank and I'm loose as a goose.
+   2. I'm not feeling loose at all.
+   ----------------------------------------------------------------------
+   &there4;  I will not play my best golf.
+
+What is true?
+
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 0);">A. This argument is valid.
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 1);">B. Invalid because one of the premises is false. 
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 2);">C. Premise 1 is too complex for analysis.
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 3);" checked>D. Invalid because you are denying the hypothesis.
+</pre>
+</div>
+
+<DIV id="Q4Area">QUESTION 4</DIV>
+<div class="Q">
+<pre>
+Here is a statement:
+
+   I either work or I sit and relax.
+
+Which below is logically equivalent?
+
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 0);" checked>A. I work or I sit, and I work or I relax.
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 1);">B. I work and I sit, or I work and I relax.
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 2);">C. If I work, then I don't sit and I relax.
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 3);" checked>D. If I don't work, then I sit and I relax.
+</pre>
+</div>
+
+<DIV id="Q5Area">QUESTION 5</DIV>
+<div class="Q">
+<pre>
+I like to sit, relax, eat, sleep, etc.
+Look at the following statement and decide what it implies.
+
+   I either eat or I relax, and I either don't eat or I sleep.
+
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 0);">A. I relax and I sleep.
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 1);" checked>B. I either relax or I sleep.
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 2);" checked>C. If I eat then I sleep.
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 3);">D. Eating does not relax me.
+</pre>
+</div>
+
+
+
+
+
+<!--
+<div name="info" id="info" style="background-color:#FFF;"> </div>
+<div name="answersinfo" id="answersinfo"> </div>
+-->
+
+</form>
+</body>
+</html>
+
+
