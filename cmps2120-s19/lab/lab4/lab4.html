@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+	<style>
+		body {
+		padding-left: 10px;
+		color: #000;
+	}
+	h2 { font-family:'Arial',sans-serif; font-size:2.0em; color:#999; }
+	h3 {
+		font-family:'Arial',sans-serif; font-size:1.6em;
+		color:#114;
+		margin:2px; padding-top:6px;
+	}
+	.box_border {
+		border:4px solid #abc; width:600px; padding-left:8px;
+	}
+	.thin_border {
+		border:1px solid #abc; width:800px; padding-left:8px;
+	}
+    .console {
+        padding-left:10px;
+        background:#222;
+        color:#afa;
+        border:4px solid #66a;
+        width:600px;
+    }
+	p { width:800px; }
+	</style>
+
+<h2>CMPS-224  Lab 4  Sets in Python</h2>
+Eddie Rangel<br>
+Department of Computer and Electrical Engineering and Computer Science<br>
+California State University, Bakersfield<br>
+
+<p>
+<h3>Introduction</h3>
+<b>Goals</b>:
+ Understand how sets work in Python 3.
+</p>
+
+<p>
+<b>Resources</b>:
+ Python 3 Documentation <a href="https://docs.python.org/3/">Documentation</a>
+ Python Lab 3 <a href="./">Materials</a>
+</p>
+
+<p>
+<b>Files Needed</b>:
+</p>
+
+<p>
+    You use the open function in Python to open a file. The open function creates a file object and associates it with a file on the disk. Here is the general format of how the open function is used:
+</p>
+<p>
+    <pre class="console">
+    
+        file_variable = open(filename, mode)
+    
+    </pre>
+</p>
+<p>
+    As an example, suppose the file customers.txt contains customer data, and we want to open it for reading. Here is an example of how we would call the open function:
+</p>
+<p>
+    <pre class="console">
+    
+        customer_file = open('customers.txt', 'r')
+    
+    </pre>
+</p>
+<p>
+    Suppose we want to create a file named sales.txt and write data to it. Here is an example of how we would call the open function:
+</p>
+<p>
+    <pre class="console">
+    
+        sales_file = open('sales.txt', 'w')
+    
+    </pre>
+</p>
+<p>
+    Write a program that opens a specified text file then displays a list of all the unique words found in the file.
+
+    Hint: Store each word as an element of a set.
+</p>
+<p>
+    <pre class="console">
+    
+    input_file = open(input_name, 'r')
+    text = input_file.read()
+    words = text.split()
+    
+    </pre>
+</p>
+
+
+
+<p>
+<h3>What to turn in</h3>
+Show the programs running to me or our TA. 
+</p>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>	
+</body>
+</html>
+

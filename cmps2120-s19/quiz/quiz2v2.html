@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html>
+<head> 
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<STYLE type=text/css>
+	BODY {
+		margin: 2% 8% 5% 5%;
+		font-family: helvetica;
+		font-size: 10pt;
+		font-weight: 400;
+		background-color: #FFF;
+		color: #111;
+	}
+	DIV {
+		/*      top right bottom left*/
+		margin: 0px 20px 0px 0px;
+		padding:4px 0px 2px 5px;
+		font-family: helvetica;
+		font-size: 10pt;
+		font-weight: 900;
+		color: #222;
+		background: #eb5;
+	}
+	.Q {
+		margin:0px 20px 4px 0px;
+		padding:0px 1px 2px 2px;
+		font-family: courier new;
+		font-size: 10pt;
+		font-weight: 400;
+		background:#fffff5;
+		color:#000;
+		border:1px solid #ddd;
+	}
+	pre {
+		margin: 0px;
+		/*padding:0px;*/
+	}
+	.bottom {
+		margin: 15px 8px 15px 0px;
+		padding: 8px;
+		font-weight: 400;
+		border: 3px dashed #973;
+		color: #000;
+		background: #fc7;
+	}
+</STYLE>
+
+
+
+<script type="text/javascript" language="JavaScript">
+var a = new Array();
+//==================
+var nQuestions = 10;
+//==================
+var MAX_QUESTIONS = 15;
+var qMessage = "ALL QUESTIONS ANSWERED.";
+//questions start at 1
+for (var i=1; i<=MAX_QUESTIONS; i++) a[i] = 0;
+
+function Verify() {
+	var answered = 0;
+	var skipped  = 0;
+	var err_str  = " YOU SKIPPED: "; 
+	var index    = 0;
+	for (var i=1; i<=nQuestions; i++) {
+		if (a[i] == 0 ) {
+			//0 means questions not answered yet
+			skipped++;
+			if (skipped > 1)
+				err_str = err_str + ",";
+			err_str = err_str + i;
+		} else {
+			answered++;
+		}
+	}
+	document.q.a1.value = a[ 1];
+	document.q.a2.value = a[ 2];
+	document.q.a3.value = a[ 3];
+	document.q.a4.value = a[ 4];
+	document.q.a5.value = a[ 5];
+	document.q.a6.value = a[ 6];
+	document.q.a7.value = a[ 7];
+	document.q.a8.value = a[ 8];
+	document.q.a9.value = a[ 9];
+	document.q.aa.value = a[10];
+	document.q.ab.value = a[11];
+	document.q.ac.value = a[12];
+	document.q.ad.value = a[13];
+	document.q.ae.value = a[14];
+	document.q.af.value = a[15];
+	document.q.skipped.value    = skipped;
+	document.q.answered.value   = answered;
+	document.q.nQuestions.value = nQuestions;
+	if (skipped == 0) {
+		document.q.err_str.value = qMessage;
+	} else {
+		document.q.err_str.value = err_str;
+	}
+}
+function checkEmpty() {
+	var btn = document.getElementById("SQ");
+	btn.disabled = true;
+	if (document.getElementById("I0").value != qMessage) return;
+	if (document.getElementById("I1").value == "") return;
+	if (document.getElementById("I2").value == "") return;
+	if (document.getElementById("I2").value.length != 3) return;
+	if (document.getElementById("I3").value == "") return;
+	btn.disabled = false;
+}
+function cbox(doc, qnum, bnum) {
+	var p2 = 1;
+	for (var i=0; i<bnum; i++) p2 *= 2;
+	if (doc[bnum].checked) {
+		doc[bnum].value='1';
+		a[qnum] |= p2;
+	} else {
+		doc[0].value='0';
+		a[qnum] &= (~p2);
+	}
+}
+</script>
+</head>
+
+<body onLoad="javascript:document.forms[0].reset();
+		document.getElementById('SQ').disabled=true;"
+		onUnload="javascript:document.forms[0].reset()">
+
+
+<h3>CMPS-2120 Quiz-2 v2 Rules of Inference</h3>
+<pre>
+There can be multiple correct answers per question.
+  +2 for each correct answer selected.
+</pre>
+
+<form id="q" name="q" autocomplete="off" 
+  onkeypress="return event.keyCode != 13;"
+  METHOD="POST" ACTION="./q.php">
+
+<INPUT TYPE="hidden" NAME="subject"    VALUE="2120Quiz">
+<INPUT TYPE="hidden" NAME="quizno"     VALUE="3">
+<input type="hidden" name="answered"   value="0" size="3">
+<input type="hidden" name="skipped"    value="0" size="3">
+<INPUT TYPE="hidden" NAME="a1"         VALUE="">
+<INPUT TYPE="hidden" NAME="a2"         VALUE="">
+<INPUT TYPE="hidden" NAME="a3"         VALUE="">
+<INPUT TYPE="hidden" NAME="a4"         VALUE="">
+<INPUT TYPE="hidden" NAME="a5"         VALUE="">
+<INPUT TYPE="hidden" NAME="nQuestions" VALUE="0">
+<p>
+<INPUT TYPE="reset" VALUE="StartOver" STYLE="background:#fc7"> 
+</p>
+
+
+
+<DIV id="Q3Area">QUESTION 3</DIV>
+<div class="Q">
+<pre>
+For S1, S2 shown below, let the Universe of Discourse be {Clair,Osten,Kev}.
+Let P be defined as "likes ping pong" and Q defined as "likes pool"
+
+    S1. &exist;x(P(x) &and; Q(x))      S2. &exist;xP(x) &and; &exist;xQ(x)
+
+Choose the true statement below.
+
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 0);">A. If S1 were false then Osten either dislikes ping pong or dislikes pool.
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 1);">B. S1 and S2 are logically equivalent.
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 2);">C. S1 being true indicates that Kev likes ping pong and pool.
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 3);">D. S2 being true indicates that only 1 person doesn't like ping pong or pool.
+</pre>
+</div>
+
+<DIV id="Q4Area">QUESTION 4</DIV>
+<div class="Q">
+<pre>
+Let P(x,y) mean "Student x takes class y."
+Let U for x be {Mike, Mitch, Mimi}.
+Let U for y be {cs295, cs312, cs335}.
+
+Choose the true statement below.
+
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 0);">A. If &exist;x&forall;y P(x,y) then Mike is taking at least one class.
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 1);">B. If &exist;y&forall;x P(x,y) then Mike, Mitch & Mimi are taking a course together.
+<!--
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 2);">
+<input type="checkbox" name="Q4" value="0" onClick="cbox(document.q.Q4, 4, 3);">
+-->
+</pre>
+</div>
+
+<DIV id="Q5Area">QUESTION 5</DIV>
+<div class="Q">
+<pre>
+Note: &exist; can mean "there exists"
+                 "there is at least one"
+                 "for some"
+
+</pre>
+
+<pre>
+SIMILAR TO AIRLINE PROBLEM.
+Assume,
+s is in S, where S = {all students at CSUB}
+a is in A, where A = {all android smart phones}
+p is in P, where P = {all phone providers}
+
+    T(s,a): student s has phone a.
+    O(p,a): provider p offers phone a. 
+
+What is the meaning of this?
+
+    &exist;s &exist;p &forall;a ((O(p,a) -> T(s,a))
+
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 0);">A. Some student has has all phones offered by all providers.
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 1);">B. Some student has all phones offered by some provider.
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 2);">C. One or more students have all phones offered by some provider.
+<input type="checkbox" name="Q5" value="0" onClick="cbox(document.q.Q5, 5, 3);">D. At least one phone is owned by all students.
+</pre>
+</div>
+
+<DIV id="Q6Area">QUESTION 6</DIV>
+<div class="Q">
+<pre>
+Which of the following is the conjunctive normal form of this statement?
+
+	(~p v ~q) -> ~r
+
+<input type="checkbox" name="Q6" value="0" onClick="cbox(document.q.Q6, 6, 0);">A. (~p &or; r) &and; (~q &or; r)
+<input type="checkbox" name="Q6" value="0" onClick="cbox(document.q.Q6, 6, 1);">B. (p &or; r) &or; (q &or; r)
+<input type="checkbox" name="Q6" value="0" onClick="cbox(document.q.Q6, 6, 2);">C. (p &and; ~r) &or; (q &and; ~r)
+<input type="checkbox" name="Q6" value="0" onClick="cbox(document.q.Q6, 6, 3);">D. (p &or; ~r) &and; (q &or; ~r)
+</pre>
+</div>
+
+<DIV id="Q7Area">QUESTION 7</DIV>
+<div class="Q">
+<pre>
+Let F(x,y) be "x can fool y."
+Let U for x and y be all people in a class. 
+
+	&exist;x F(Nancy,x) &and; &exist;y F(Nancy,y) means what?
+
+<input type="checkbox" name="Q7" value="0" onClick="cbox(document.q.Q7, 7, 0);">A. Nancy can fool at least one person and it could be herself.
+<input type="checkbox" name="Q7" value="0" onClick="cbox(document.q.Q7, 7, 1);">B. Nancy can fool at least two people besides herself. 
+<input type="checkbox" name="Q7" value="0" onClick="cbox(document.q.Q7, 7, 2);">C. Nancy can fool at least two people. 
+<input type="checkbox" name="Q7" value="0" onClick="cbox(document.q.Q7, 7, 3);">D. Nancy can fool exactly one person.
+</pre>
+</div>
+<!--
+<div name="info" id="info" style="background-color:#FFF;"> </div>
+<div name="answersinfo" id="answersinfo"> </div>
+-->
+
+</form>
+</body>
+</html>
+
+
