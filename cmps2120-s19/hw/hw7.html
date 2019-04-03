@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html>
+<style type=text/css>
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: helvetica;
+		font-size: 10pt;
+		font-weight: 500;
+		color: #000;
+		background-color: white;
+		padding-right: 20px;
+		height: auto;
+	}
+	body {
+		margin: 2% 15% 5% 5%;
+		font-family: helvetica;
+		background-color: #dfd;
+		color: #19193A;
+		font-size: 10pt;
+		font-weight: 500;
+	}
+    b { font-weight: 900; }
+    code { font-family: monospace; }
+    pre { font-family: monospace; font-size: 10pt; }
+    input { background:#ed8; }
+    h3 {
+        font-size: 12pt;
+        font-weight: 600;
+        font-family: serif;
+        padding-top: 4px;
+        padding-bottom: 6px;
+    }
+    sup {
+        vertical-align: super;
+        font-size: smaller;
+    }	
+</style>
+<script type="text/javascript">
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+<h3>
+CMPS 2120 - Assignment 8 - "Algorithms on Integers"
+</h3>
+
+<a href="http://www.wolframalpha.com">wolfram alpha</a><br>
+<a href="http://www.googleguide.com/calculator.html">google calc help</a><br>
+<a href="http://media.techtarget.com/searchEnterpriseLinux/downloads/WGC_Chapter_3.pdf">binary arithmetic and bit operations</a><br>
+<a href="../Material/ch3_algorithms/code.cpp">code.cpp</a><br>
+<a href="http://www.squarebox.co.uk/hcalc.html">hex calculator</a><br>
+<a href="http://www.easycalculation.com/hexa-decimal-binary.php">hex-dec-bin converter</a>
+<br>
+<br>
+
+
+1. Convert 321 from decimal to binary notation.
+<input type="button" value="check" onClick="xb[ 1]^=1; zzz('x1', (xb[ 1])?'':
+' 1 0100 0001; one strategy - write down the \
+powers of 2 from 0 to the largest power of 2 in 321, \
+ which is 2^8, 256. Subtract the largest numbers until \
+ you hit 0, filling in a 1 in the correct slot: 321-256=65; 65-64=1;  1-1=0.'
+);"><div id="x1"></div><br>
+
+
+2. Convert 11011 from binary into decimal notation.
+<input type="button" value="check" onClick="xb[ 2]^=1; zzz('x2', (xb[ 2])?'':
+' 1 1011;  2^0 + 2^1 + 2^3 + 2^4 = 1   + 2   +  8  +  16 = 27'
+);"><div id="x2"></div><br>
+
+
+3. Convert 1101110 from binary into hexadecimal notation.
+<input type="button" value="check" onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+'6E; moving from right to left, divide the binary number into chunks of 4 bits: 0110 1110; convert each chunk into decimal, then into hex. 0110 is 6 and 1110 is 14, thus 6E '
+);"><div id="x3"></div><br>
+
+
+4. Convert 306 from octal into binary notation.
+<input type="button" value="check" onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+'   011 000 110; Moving from right to left, convert each octal digit into its 3 bit binary number. 6 is 110; 0 is 000; 3 is 011 '
+);"><div id="x4"></div><br>
+
+
+5. Use the Fast Exponentiation algorithm to evaluate 3^33 with the fewest 
+    number of multiplication operations. How many operations did it take?
+   (don't actually compute 3^33 - just give the # of operations)
+<input type="button" value="check" onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+'6; these are the operations: <br>\
+3^1*3^1=3^2;                  <br>\
+3^2*3^2=3^4;                  <br>\
+3^4*3^4=3^8;                  <br>\
+3^8*3^8=3^16;                 <br>\
+3^16*3^16=3^32;               <br>\
+This took 5 operations. Now multiply 3^32 * 3^1 = 3^33. The total is 6.<br>\
+The formula is floor(lg(33)) = 5. Now add in the number of \
+ bits that are flipped in the binary representation of the exponent minus 1.\
+ The final answer is 5+2-1=6.'
+);"><div id="x5"></div><br>
+
+
+6. Use the Modular Exponentiation algorithm to find 123^9 mod 101. This 
+algorithm relies on the product rule of modular arithmetic:
+<pre>    a*b mod m = (a mod m * b mod m) mod m</pre>
+The algorithm first converts the exponent into binary and 123^1001 to a 
+product of the powers of 2. Since 9 is 1001 in binary, 123^9 is the 
+product of 123 raised to each of the appropriate powers of 2:
+<pre>    123^8 * 123^1 = 123^9</pre>
+
+a) Each term is first repeatedly reduced mod 101 by squaring the 
+    result of the previous power of 2. Complete the process started here:
+<pre>    123^1 mod 101 = 22</pre>
+<input type="button" value="check" onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+'123^2 mod 101 = 22^2 mod 101 = 484 mod 101 = 80<br/>\
+     123^4 mod 101 = 80^2 mod 101 = 6400 mod 101 = 37 <br/>\
+     123^8 mod 101 = 37^2 mod 101 = 1369 mod 101 = 56 '
+);"><div id="x6"></div><br>
+
+
+b) The final result answer is mod 101 of the product of the terms 
+    that have a 1 in the binary number of the exponent. To save work here, you
+    can take the modulo of intermediate products as you compute the modulo of 
+    all appropriate terms. Complete this step.
+<input type="button" value="check" onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+'The appropriate terms are those corresponding to the binary<br/>\
+ representation of 9, which is 1001.<br/>\
+ That is (123^8 mod 101) = 56 and (123^1 mod 101) = 22. (22*56) mod 101 is<br/>\
+   FINAL ANSWER = 20. '
+);"><div id="x7"></div><br>
+
+
+7. Complete the Euclidean algorithm to find gcd(277, 123) using this algorithm:
+<pre>
+      gcd(m,n)
+        if n = 0 return m
+        else return gcd(n,m mod n)
+
+      gcd(277,123) = gcd(123,277 mod 123)
+      gcd(123,31)  = gcd(31,123 mod 31) 
+      . . . </pre>
+<input type="button" value="check" onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+' 1. gcd(31,30)=gcd(30,31 mod 30); gcd(30,1) = gcd(1,30 mod 1); gcd(1,0) = 1 '
+);"><div id="x8"></div><br>
+
+
+8. Perform this binary operation: 10111 + 11010 
+<input type="button" value="check" onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+'   110001 '
+);"><div id="x9"></div><br>
+
+
+9. Perform this binary operation: 1110 * 1010 
+<input type="button" value="check" onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+'   10001100'
+);"><div id="x10"></div><br>
+
+
+10. Perform this binary operation: 11101 - 10010 
+<input type="button" value="check" onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+'   1011'
+);"><div id="x11"></div><br>
+
+
+11. Perform this hexadecimal operation: FFA303 - A4
+<input type="button" value="check" onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+'    FFA25F'
+);"><div id="x12"></div><br>
+
+
+12. Perform this binary operation: 10001111  *  100 
+<input type="button" value="check" onClick="xb[13]^=1; zzz('x13',(xb[13])?'':
+' left shift by 2 digits: 1000111100 '
+);"><div id="x13"></div><br>
+
+
+13. Perform this binary operation:  10001111  / 10 
+<input type="button" value="check" onClick="xb[14]^=1; zzz('x14',(xb[14])?'':
+' right shift by 1 digit: 1000111 <br/>\
+ Note that you lose the \
+ least significant bit (the remainder).'
+);"><div id="x14"></div><br>
+
+
+14. Convert this binary number into decimal:  10111.101
+<input type="button" value="check" onClick="xb[15]^=1; zzz('x15',(xb[15])?'':
+'  23 +  1/2 + 1/8  = 23 5/8'
+);"><div id="x15"></div><br>
+
+
+
+
+
+</body>
+</html>
+
+

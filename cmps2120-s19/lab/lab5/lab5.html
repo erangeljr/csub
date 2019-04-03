@@ -24,7 +24,7 @@
         background:#222;
         color:#afa;
         border:4px solid #66a;
-        width:600px;
+        width:800px;
     }
 	p { width:800px; }
 	</style>
@@ -55,7 +55,7 @@ Understand time complexity of search algorithms in python.
     The program then should call a function that uses the binary search algorithm to locate the same value. It should also keep count of the number of comparisons it makes. Display these values on the screen.
 </p>
 <p>
-    Function Header for Lineara Search
+    Function Header for Linear Search
 </p>
 <p>
     <pre class="console">
@@ -65,13 +65,61 @@ Understand time complexity of search algorithms in python.
     </pre>
 </p>
 <p>
+    Psuedo Code Implementation of a Linear Search
+</p>
+<p>
+    <pre class="console">
+        function linear_search(a1, a2,...,an: distinct integers, x: search_key)
+            i := 1
+            n := size of list
+            while (i &le; n and x != ai)
+                i := i + 1
+            if i &le; n then location := i
+            else location := 0
+            return location{location is the subscript of the term that equals x, 
+                                or is 0 if x is not found}
+
+    </pre>
+</p>
+<p>
     Function Header for Binary Search
 </p>
 <p>
     <pre class="console">
     
-        def binary_search(lst, n, x):
+        def binary_search(lst, x):
     
+    </pre>
+</p>
+<p>
+    Call Sort on your list before you send it to the Binary Search function
+</p>
+<p>
+    <pre class="console">
+    
+        mylist.sort()
+    
+    </pre>
+</p>
+
+<p>
+    Psuedo Code Implementation of a Binary Search
+</p>
+<p>
+    <pre class="console">
+        function binary search(a1,a2,..., an: increasing integers, x: search_key)
+            i := 1 {i is the left endpoint of interval}
+            j := n {j is right endpoint of interval}
+
+            while i &lt; j
+                m := (i + j)/2 Use the floor of the value   
+                if x &gt; am then i := m + 1
+                else j := m
+                if x = ai then location := i
+                else location := 0
+                return location{location is the subscript i of the term ai equal to x, 
+                                    or 0 if x is not found} 
+
     </pre>
 </p>
 

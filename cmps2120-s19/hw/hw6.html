@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html>
+<style type=text/css>
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: helvetica;
+		font-size: 10pt;
+		font-weight: 500;
+		color: #000;
+		background-color: white;
+		padding-right: 20px;
+		height: auto;
+	}
+	body {
+		margin: 2% 15% 5% 5%;
+		font-family: helvetica;
+		background-color: #fed;
+		color: #19193A;
+		font-size: 10pt;
+		font-weight: 500;
+	}
+	input {
+		background:#ec7;
+	}
+    b { font-weight: 900; }
+    code { font-family: monospace; }
+    pre { font-family: monospace; font-size: 10pt; }
+    input { background:#ed8; }
+    h3 {
+        font-size: 12pt;
+        font-weight: 600;
+        font-family: serif;
+        padding-top: 4px;
+        padding-bottom: 6px;
+    }
+    sup {
+        vertical-align: super;
+        font-size: smaller;
+    }	
+</style>
+<script type="text/javascript">
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+<h3>
+CMPS 2120 - HW 6 - "Big-O Notation"
+</h3>
+
+<a href="../material/ch3_algorithms/ch3.2.notes.html">big-oh lecture notes</a><br>
+<a href="../material/ch3_algorithms/ch3.4-5.notes.html">integer numbers lecture notes</a><br>
+
+<h4> ASYMPTOTICS and BIG-O NOTATION</h4> 
+
+
+
+
+1. State if each function is little-o(n<sup>2</sup>), big-o(n<sup>2</sup>), big-theta(n<sup>2</sup>) or
+big-omega(n<sup>2</sup>).  
+<pre>
+   In each case find the limit of f(n)/g(n) as n -> oo and where g(n) = n<sup>2</sup>.
+   For little-oh &omicron;, the limit must be zero.
+   For big-oh &Omicron;, the limit must be zero or a non-zero constant.
+   For big-theta &Theta;, the limit must be a non-zero constant.
+   For big-omega &Omega;, the limit must be a non-zero constant or infinity.
+</pre>
+   Hints: Simplify your function first. Drop constants since as n->oo 
+   constants will not matter. Then drop terms that are strictly less than 
+   another term.
+<br>
+
+   a) f(n) = 17n + 11
+
+<input type="button" value="check" onClick="xb[1]^=1; zzz('x1',(xb[1])?'':
+'Step 1. simplify to 17n+11 n by removing the constants. Step 2. Find the ratio of n/n<sup>2</sup>. n/n<sup>2</sup> = 1/n. 1/n approaches 0 as n ->oo, thus the ratio is 0 and n is strictly less than n<sup>2</sup>. f(n) is little-o(n<sup>2</sup>).' 
+);"><div id="x1"></div><br>
+<br>
+
+
+
+
+
+
+b) f(n) = n<sup>2</sup> + 1000 + log n
+<input type="button" value="check" onClick="xb[2]^=1; zzz('x2',(xb[2])?'':
+'Step 1. Simplify to n^2. You can drop the constant term and \
+the log n term since log n is strictly less than n<sup>2</sup>. Since the ratio as \
+n -> oo of n<sup>2</sup>/n<sup>2</sup> = 1 (a constant) you know that \
+f(n) is big-theta n<sup>2</sup>. big-oh(n<sup>2</sup>) and big-omega would also be correct \
+but not giving you as much information.'
+);"><div id="x2"></div><br>
+<br>
+
+
+
+   c) f(n) = n log n 
+<input type="button" value="check" onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+'n log n/n^2 = log n/n. Since log n is strictly \
+less than n, f(n)  is little-o of n<sup>2</sup>. big-o(n<sup>2</sup>) is also correct.'
+);"><div id="x3"></div><br>
+
+d) f(n) = (n<sup>4</sup> + n<sup>3</sup>)/ 2
+<input type="button" value="check" onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+'We can simplify (n<sup>4</sup> + n<sup>3</sup>)/2 to n<sup>4</sup> without losing any important \
+information. We assume that n<sup>4</sup> dominates n<sup>2</sup>, but we can prove it as  \
+follows: <br> <tt><pre>\
+			   n<sup>4</sup>   <br>\
+n->o-o --- = infinity.<br>\
+			   n<sup>2</sup>. <br></pre>\
+Since the ratio of the two functions approaches infinity we know that \
+the function on top dominates the function on bottom. \
+Thus f(n) is &Omega;(n<sup>2</sup>)'
+);"><div id="x4"></div><br>
+
+
+
+e) f(n) = 2<sup>n</sup>
+<input type="button" value="check" onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+'Since any exponential function with base > 1 is strictly greater than any polynomial function, f(n) is big-omega of n<sup>2</sup>.'
+);"><div id="x5"></div><br>
+
+
+
+   f) f(n) = floor(n) * ceil(n)
+<input type="button" value="check" onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+'For evaluating growth order, ceiling(n) and floor(n) can both be restated as n. Thus f(n) is n<sup>2</sup> and is big-theta of n<sup>2</sup>.'
+);"><div id="x6"></div><br>
+
+
+g) f(n) = n<sup>2</sup> log n
+<input type="button" value="check" onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+'The ratio of  f(n)/g(n) as n->oo is log n, thus f(n) is big-omega of n<sup>2</sup>. '
+);"><div id="x7"></div><br>
+
+
+h) f(n) = (n<sup>3</sup> + 2n) / (2n + 1) 
+<input type="button" value="check" onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+' Simplify the numerator in f(n) to n^3. Simplify the \
+denominator in f(n) to n. Then f(n) is n<sup>3</sup>/n, \
+which is n<sup>2</sup>. \
+Since n<sup>2</sup>/n<sup>2</sup> = 1, f(n) is big-theta of n<sup>2</sup>. '
+);"><div id="x8"></div><br>
+
+
+2. Find the smallest and simplest complexity class g(n) for the following 
+    functions so that f(n) is O(g(n)). 
+<pre>
+	a) f(n) = 2n<sup>2</sup> + n<sup>3</sup> log n
+	b) f(n) = 3n<sup>5</sup> + (log n)<sup>4</sup></pre>
+<input type="button" value="check" onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+'The smallest complexity class for 2n<sup>2</sup> + n<sup>3</sup> log n is n<sup>3</sup> log n. \
+You cannot remove the log n in the function since \
+f(n) is NOT O(n<sup>3</sup>). The smallest complexity class \
+for 3n<sup>5</sup> + (log n)<sup>4</sup> is n<sup>5</sup>. You can remove (logn)<sup>4</sup> since n dominates log n.'
+);"><div id="x9"></div><br>
+
+
+Give a big-oh estimate for each of these functions. For the function g in
+your estimate "f(n) is O(g(n))", use the simplest function possible
+  of smallest order (Your function may or may not be in the list of 
+  usual suspects: 1,lgn,nlgn,n<sup>2</sup>,n<sup>3</sup>,2<sup>n</sup>,n!).
+<br>
+<br>
+
+
+3. f(n) = (n<sup>3</sup> + n<sup>2</sup> log n)(log n + 1) + (17 log n + 19)(n<sup>3</sup> + 2)
+<input type="button" value="check" onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+'f(n) is O(n<sup>3</sup> log n); (n<sup>3</sup> + n<sup>2</sup> log n)(log n) + (17 log n)(n<sup>3</sup>) = n<sup>3</sup> (log n) + n<sup>3</sup> (log n) = n<sup>3</sup> (log n)'
+);"><div id="x10"></div><br>
+
+
+
+4. f(n) = (n<sup>n</sup> + n2<sup>n</sup> + 5<sup>n</sup>)(n! + 5<sup>n</sup>)
+<input type="button" value="check" onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+'f(n) is O(n<sup>n</sup> n!); (n<sup>n</sup> + n2<sup>n</sup> + 5<sup>n</sup>) is n<sup>n</sup>; (n! + 5<sup>n</sup>) is n!; (n<sup>n</sup>)(n!) cannot be reduced since they are in different efficiency classes.'
+);"><div id="x11"></div><br>
+
+
+
+ Assume g(n)= n. Determine if the following functions are
+  big-omega of g(n), big-theta of g(n), both or neither.  Recall:
+  If you have two functions f(n) and g(n), f(n) is big-theta of g(n)
+  if f(n) and g(n) have comparable
+  growth rates; i.e., f(n)/g(n) is a nonzero constant.
+ f(n) is big-omega of g(n) if f(n) has a comparable or a faster
+ growth rate as g(n); e.g., f(n)/g(n) is a nonzero constant or infinity
+<br>
+<br>
+
+5. f(n) = 10
+<input type="button" value="check" onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+' Neither. A constant function is little-oh(n) or big-oh(n),\
+ but it is not big-omega (n) or big-theta(n).'
+);"><div id="x12"></div><br>
+
+
+6. f(n) = 3n + 7
+<input type="button" value="check" onClick="xb[13]^=1; zzz('x13',(xb[13])?'':
+'   Both. This function can be reduced to n.'
+);"><div id="x13"></div><br>
+
+
+7. f(n) = n<sup>2</sup> + n + 1
+<input type="button" value="check" onClick="xb[14]^=1; zzz('x14',(xb[14])?'':
+'big-omega(n) but NOT big-theta(n); this function can be reduced to n<sup>2</sup> which grows faster than n.  '
+);"><div id="x14"></div><br>
+
+
+8. f(n) = 5 log n 
+<input type="button" value="check" onClick="xb[15]^=1; zzz('x15',(xb[15])?'':
+'Neither. This function reduces to log n, which grows slower than n. '
+);"><div id="x15"></div><br>
+
+
+9. What does it mean for a function to be big-oh(n<sup>2</sup>)?
+<input type="button" value="check" onClick="xb[16]^=1; zzz('x16',(xb[16])?'':
+'This means that the growth rate of the function is either less than or the same as the the growth rate of n<sup>2</sup>.'
+);"><div id="x16"></div><br>
+
+
+10. The product of the first n odd positive integers is &lt; n!. (T / F)
+<input type="button" value="check" onClick="xb[17]^=1; zzz('x17',(xb[17])?'':
+' FALSE. Say n=5. 5! = 120. 1*3*5*7*9 is larger than 120. '
+);"><div id="x17"></div><br>
+
+
+11. What does it mean for a function f to be big-omega (n<sup>2</sup>)?<pre>
+	A. the efficiency of f is not as good as n<sup>2</sup>
+	B. the efficiency of f is no worse than n<sup>2</sup>
+	C. the best efficiency that f can have is n<sup>2</sup></pre>
+
+<input type="button" value="check" onClick="xb[18]^=1; zzz('x18',(xb[18])?'':
+'C ; big-omega gives you best case efficiency - if the question \
+ was big-Oh instead of big-omega, the answer would be B since big-Oh gives \
+ you best case efficiency.'
+);"><div id="x18"></div><br>
+
+
+</body>
+</html>
+
