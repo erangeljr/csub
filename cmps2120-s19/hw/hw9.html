@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html>
+<style type=text/css>
+	body {
+		margin: 2% 15% 5% 5%;
+		font-family: helvetica;
+		background-color: #fed;
+		color: #19193A;
+		font-size: 10pt;
+		font-weight: 500;
+	}
+	div {
+		margin:3px;
+		padding:4px;
+		border: 1px dashed black;
+		margin:2px;
+		background-color:#fda;
+		color:           #db9;
+		padding-left:10px;
+		height:auto;
+	}
+    b { font-weight: 900; }
+    code { font-family: monospace; }
+    pre { font-family: monospace; font-size: 10pt; }
+    input { background:#ed8; }
+    h3 {
+        font-size: 12pt;
+        font-weight: 600;
+        font-family: serif;
+        padding-top: 4px;
+        padding-bottom: 6px;
+    }
+    sup {
+        vertical-align: super;
+        font-size: smaller;
+    }
+</style>
+<script type="text/javascript">
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+<b>CMPS 2120 - Assignment 9 - Counting</b><br>
+<br>
+Due Tuesday May 2nd<br>
+A few more problems could be added to the end of this page.<br>
+
+
+<h3> The Basics of Counting </h3>
+Express large numbers in exponential or factorial notation (e.g. 24<sup>6</sup> , 14!).
+<br>
+
+1. There are four major auto routes from Boston to Detroit and 
+   six from Detroit to Los Angeles. How many major auto routes are 
+   there from Boston to Los Angeles via Detroit?
+<input type="button" value="check" onClick="xb[15]^=1; zzz('x15',(xb[15])?'':
+'4 * 6 = 24'
+);"><div id="x15"></div><br>
+
+
+2. How many bit strings are there of length six or less? (include the empty
+   string)
+<input type="button" value="check" onClick="xb[16]^=1; zzz('x16',(xb[16])?'':
+'127; 2<sup>6</sup> + 2<sup>5</sup> + 2<sup>4</sup> + 2<sup>3</sup> + 2<sup>2</sup> + 2<sup>1</sup> + 2<sup>0</sup> = [ 2<sup>i</sup> = 2<sup>7</sup>-1 = 127'
+);"><div id="x16"></div><br>
+
+
+For the next questions, assume set S = {1,2,3,...999}. How many numbers in S are
+<br>
+<br>
+
+
+3. divisible by 7? 
+<input type="button" value="check" onClick="xb[17]^=1; zzz('x17',(xb[17])?'':
+'142;  n_integers divisable by 7 is floor(999/7) = 142  '
+);"><div id="x17"></div><br>
+
+
+4. divisible by 7 but not by 11?
+<input type="button" value="check" onClick="xb[18]^=1; zzz('x18',(xb[18])?'':
+'130; INCLUDE divisable by 7: floor(999/7) = 142 ; EXCLUDE divisible by 7 AND 11 = floor(999/77) = 12;142 - 12 = 130  '
+);"><div id="x18"></div><br>
+
+
+5. divisible by both 7 and 11?
+<input type="button" value="check" onClick="xb[19]^=1; zzz('x19',(xb[19])?'':
+'n_integers divisible by 7 AND 11 = floor(999/77) = 12 '
+);"><div id="x19"></div><br>
+
+
+6. divisible by either 7 or 11 ? 
+<input type="button" value="check" onClick="xb[20]^=1; zzz('x20',(xb[20])?'':
+'220;  INCLUDE divisable by 11: floor(999/11) = 90 ;INCLUDE divisable by 7: floor(999/7) = 142;  EXCLUDE divisible by 7 AND 11 = floor(999/77) = 12 ;90 + 142 - 12 = 220'
+);"><div id="x20"></div><br>
+
+
+7. divisible by exactly one of 7 and 11? (this is XOR so exclude twice)
+<input type="button" value="check" onClick="xb[21]^=1; zzz('x21',(xb[21])?'':
+'208; INCLUDE divisable by 7: floor(999/7) = 142;INCLUDE divisable by 11: floor(999/11)=90; EXCLUDE divisible by 7 AND 11=floor(999/77)=12; EXCLUDE divisible by 7 AND 11:floor(999/77)=12;  142+90-12-12=208'
+);"><div id="x21"></div><br>
+
+
+8. divisible by neither 7 nor 11 ?
+<input type="button" value="check" onClick="xb[22]^=1; zzz('x22',(xb[22])?'':
+'779; This is the cardinality of the difference between the universal set and the set containing div 7 or div 11. INCLUDE universal set = 999; EXCLUDE divisable by either 7 or 11  = 220; 999 - 220 = 779'
+);"><div id="x22"></div><br>
+
+
+9. From above...
+   How many numbers in S are have distinct digits? (this excludes numbers such as 11,22,33,...101,etc.)
+   Hint: fix the leftmost digit first since it cannot be zero.
+<input type="button" value="check" onClick="xb[23]^=1; zzz('x23',(xb[23])?'':
+'738; INCLUDE numbers with 3 distinct digits: 9(all digits except zero)*9(all digits except the leftmost digit and including zero)*8(all digits except the first two)=648 ; INCLUDE 2 distinct digits: 9*9 =81 ; INCLUDE 1 distinct digits: 9;  648+81+9=738'
+);"><div id="x23"></div><br>
+
+<br>
+<br>
+*Beware - this problem is tricky.
+<br>
+<br>
+
+
+10. From above...
+    How many numbers in S have distinct digits and are even?
+    Hint: it is easier to count odds 
+    since zero is not a final digit in an odd. For 3 digit numbers, start by 
+    fixing the rightmost digit, then fix the leftmost digit, then finally fix
+    the middle digit. 
+<input type="button" value="check" onClick="xb[24]^=1; zzz('x24',(xb[24])?'':
+'373; <br>\
+There are floor(999/2) = 499 even integers in {1,...,999}<br>\
+Subtract off triple digit evens with dups: {222,444,666,888}: 499-4=495.<br>\
+Subtract off triple digit evens ending with 2 dups: {x00,x22,x44,x66,x88};<br>\
+You cannot start with zero and cannot reuse digit: 8*5=40; 495-40=445.<br>\
+Subtract off triple digit evens have 2 dups at outer: {2x2,4x4,6x6,8x8};<br>\
+You can use with zero but cannot reuse digit: 9*4=36; 445-36=419.<br>\
+Subtract off triple digit evens with 2 dups at head: {22x,44x,66x,88x};<br>\
+You can have a zero but cannot reuse digit: 8*4=36; 419-36=373.<br>\
+Easier method:<br>\
+The odd numbers with 3 distinct digits: 8*8*5=320; <br>\
+odd with 2 distinct digits: 8*5=40; <br>\
+odd with 1 distinct digit: 5; Total odd: 320+40+5=365; <br>\
+Subtract from all possible numbers with distinct digits (738): 738-365=373.'
+);"><div id="x24"></div><br>
+
+
+11. How many license plates can be made using either three digits followed by 
+   three letters or three letters followed by three digits?
+<input type="button" value="check" onClick="xb[25]^=1; zzz('x25',(xb[25])?'':
+'10<sup>3</sup>*26<sup>3</sup> + 10<sup>3</sup>*26<sup>3</sup>'
+);"><div id="x25"></div><br>
+
+<br>
+<br>
+The next questions count various strings from the set S of English letters, 
+where the cardinality of S is 26.
+<br>
+<br>
+
+
+12. How many strings of size 8 if letters can be repeated?
+<input type="button" value="check" onClick="xb[26]^=1; zzz('x26',(xb[26])?'':
+'26<sup>8</sup>'
+);"><div id="x26"></div><br>
+
+
+13. How many strings of size 8 if no letter can be repeated?
+<input type="button" value="check" onClick="xb[27]^=1; zzz('x27',(xb[27])?'':
+'26!/(26-8)!  = 26*25*24*23*22*21*20*19  (the falling powers of 26<sup>8</sup>)'
+);"><div id="x27"></div><br>
+
+
+14. How many strings of size 8 that start with X, if letters can be repeated?
+<input type="button" value="check" onClick="xb[28]^=1; zzz('x28',(xb[28])?'':
+'Fix X into the first position; the remaining 7 positions can be any of the 26 letters: 1*26*26*26*26*26*26 = 26<sup>7</sup>'
+);"><div id="x28"></div><br>
+
+
+15. How many strings of size 8 start with X, if no letter can be repeated?
+<input type="button" value="check" onClick="xb[29]^=1; zzz('x29',(xb[29])?'':
+'25!/(25-7)! = 1*25*24*23*22*21*20*19   (the falling powers of 25<sup>7</sup>)'
+);"><div id="x29"></div><br>
+
+
+16. How many strings of size 8 start and end with X, if leters can be repeated?
+<input type="button" value="check" onClick="xb[30]^=1; zzz('x30',(xb[30])?'':
+'26<sup>6</sup>'
+);"><div id="x30"></div><br>
+
+
+17. How many different functions are there from a set with 10 elements to a
+    set of 2 elements? to a set of 3 elements?
+<input type="button" value="check" onClick="xb[31]^=1; zzz('x31',(xb[31])?'':
+'(a) 2<sup>1</sup>0 ; (b) 3<sup>1</sup>0 '
+);"><div id="x31"></div><br>
+
+
+18. How many subsets of a set with 100 elements have more than one element?
+<input type="button" value="check" onClick="xb[32]^=1; zzz('x32',(xb[32])?'':
+'The power set of S has 2<sup>1</sup>00 elements. Of those, 100 have 1 element and 1 has 0 elements, Thus, 2<sup>1</sup>00 - 101'
+);"><div id="x32"></div><br>
+
+<br>
+<br>
+ The next problems involve counting permutations. Express your answer
+ in permutation form.
+ In how many ways can a photographer at a wedding arrange 6 people in a row
+ from a group of 10 people, where the bride and the groom are among these
+ 10 people, if
+<br>
+<br>
+
+
+19. the bride must be in the picture?
+<input type="button" value="check" onClick="xb[33]^=1; zzz('x33',(xb[33])?'':
+'90720; 1*9*8*7*6*5 + 9*1*8*7*6*5 + 9*8*1*7*6*5 + 9*8*7*1*6*5 + 9*8*7*6*1*5 + 9*8*7*6*5*1 =6*(9*8*7*6*5)=90720 '
+);"><div id="x33"></div><br>
+
+
+20. both the bride and the groom must be in the picture?
+<input type="button" value="check" onClick="xb[34]^=1; zzz('x34',(xb[34])?'':
+'There are 6 ways to fix the bride and 5 remaining ways to fix the groom: = 5 * 6 (8*7*6*5)  '
+);"><div id="x34"></div><br>
+
+
+21. exactly one of the bride and the groom is in the picture?
+<input type="button" value="check" onClick="xb[35]^=1; zzz('x35',(xb[35])?'':
+'Include ways for bride w/o groom: 6*(8*7*6*5*4*1)= 40,320; Include ways for groom w/o bride: 6*(8*7*6*5*4*1)=40,320; 40,320 + 40,320 = 80,640'
+);"><div id="x35"></div><br>
+
+
+22. either the bride or groom but not both ?
+<input type="button" value="check" onClick="xb[36]^=1; zzz('x36',(xb[36])?'':
+'same as above; INCLUDE ways for bride=6*(9*8*7*6*5*1); INCLUDE ways for groom=6*(9*8*7*6*5*1); EXCLUDE TWICE ways for both bride and groom=2*5*(8*7*6*5)*6 =2*6*(9*8*7*6*5*1)-(2*5*8*7*6*5*6)=181440-100800=80,640     '
+);"><div id="x36"></div><br>
+<br>
+<br>
+
+
+23. Let S = {2,4,6,8,10,12}. How many subsets of S contain elements whose sum
+ is at most 18 (the classic knapsack problem) if you include the empty
+  knapsack?  How many potential knapsacks are there?
+<input type="button" value="check" onClick="xb[37]^=1; zzz('x37',(xb[37])?'':
+'There are 2^<sup> </sup>potential knapsacks: |P(S)|.  There are \
+ 27 viable knapsacks: 1 the null set; 6 with 1 element: {2},{4},{6}... ; 13 with 2 elements; 7 with 3  elements'
+);"><div id="x37"></div><br>
+</body>
+</html>
+
+

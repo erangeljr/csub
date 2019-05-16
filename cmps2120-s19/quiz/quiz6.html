@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html>
+<head> 
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<STYLE type=text/css>
+	BODY {
+		margin: 2% 8% 5% 5%;
+		font-family: helvetica;
+		font-size: 10pt;
+		font-weight: 400;
+		background-color: #FFF;
+		color: #111;
+	}
+	DIV {
+		/*      top right bottom left*/
+		margin: 0px 20px 0px 0px;
+		padding:4px 0px 2px 5px;
+		font-family: helvetica;
+		font-size: 10pt;
+		font-weight: 900;
+		color: #222;
+		background: #eb5;
+	}
+	.Q {
+		margin:0px 20px 4px 0px;
+		padding:0px 1px 2px 2px;
+		font-family: courier new;
+		font-size: 10pt;
+		font-weight: 400;
+		background:#fffff5;
+		color:#000;
+		border:1px solid #ddd;
+	}
+	pre {
+		margin: 0px;
+		/*padding:0px;*/
+	}
+	.bottom {
+		margin: 15px 8px 15px 0px;
+		padding: 8px;
+		font-weight: 400;
+		border: 3px dashed #973;
+		color: #000;
+		background: #fc7;
+	}
+</STYLE>
+
+</head>
+
+<body onLoad="javascript:document.forms[0].reset();
+		document.getElementById('SQ').disabled=true;"
+		onUnload="javascript:document.forms[0].reset()">
+
+
+<h3>CMPS 2120 Quiz-6 "Integers, Number Systems"</h3>
+
+There can be multiple correct answers per question.<br>
+ 1 for each correct answer selected.<br>
+<br>
+Choose all correct answers.<br>
+
+</pre>
+
+<form id="q" name="q" autocomplete="off" 
+  onkeypress="return event.keyCode != 13;"
+  METHOD="POST" ACTION="./q.php">
+
+<INPUT TYPE="hidden" NAME="subject"    VALUE="2120Quiz">
+<INPUT TYPE="hidden" NAME="quizno"     VALUE="7">
+<input type="hidden" name="answered"   value="0" size="3">
+<input type="hidden" name="skipped"    value="0" size="3">
+<INPUT TYPE="hidden" NAME="a1"         VALUE="">
+<INPUT TYPE="hidden" NAME="a2"         VALUE="">
+<INPUT TYPE="hidden" NAME="a3"         VALUE="">
+<INPUT TYPE="hidden" NAME="a4"         VALUE="">
+<INPUT TYPE="hidden" NAME="a5"         VALUE="">
+<INPUT TYPE="hidden" NAME="a6"         VALUE="">
+<INPUT TYPE="hidden" NAME="a7"         VALUE="">
+<INPUT TYPE="hidden" NAME="a8"         VALUE="">
+<INPUT TYPE="hidden" NAME="a9"         VALUE="">
+<INPUT TYPE="hidden" NAME="aa"         VALUE="">
+<INPUT TYPE="hidden" NAME="ab"         VALUE="">
+<INPUT TYPE="hidden" NAME="ac"         VALUE="">
+<INPUT TYPE="hidden" NAME="ad"         VALUE="">
+<INPUT TYPE="hidden" NAME="ae"         VALUE="">
+<INPUT TYPE="hidden" NAME="af"         VALUE="">
+<INPUT TYPE="hidden" NAME="nQuestions" VALUE="0">
+<p>
+<INPUT TYPE="reset" VALUE="StartOver" STYLE="background:#fc7"> 
+</p>
+
+
+
+<DIV id="Q1Area">QUESTION 1</DIV>
+<DIV class="Q">
+<pre>
+    Show all the permutations of our president's initials, DJT.
+</pre>
+</div>
+
+
+
+<DIV id="Q2Area">QUESTION 2</DIV>
+<div class="Q">
+<pre>
+    How many different permutations are there of the set S = {3,1,4,1,5,9,2,6}?
+</pre>
+</div>
+
+
+
+<DIV id="Q3Area">QUESTION 3</DIV>
+<div class="Q">
+<pre>
+    How many permutations of {C,S,U,B,A,K} end with K?
+</pre>
+</div>
+
+
+<DIV id="Q1Area">QUESTION 4</DIV>
+<DIV class="Q">
+<pre>
+    How many 3-letter initials can people have, if no letters are repeated?
+</pre>
+</div>
+
+
+
+<DIV id="Q2Area">QUESTION 5</DIV>
+<div class="Q">
+<pre>
+    How many bit strings are there of length 9?
+</pre>
+</div>
+<DIV id="Q2Area">QUESTION 6</DIV>
+<div class="Q">
+<pre>
+    How many strings of three decimal digits do not contain the same digit three
+    times?
+</pre>
+</div>
+<DIV id="Q2Area">QUESTION 7</DIV>
+<div class="Q">
+<pre>
+    How many different bit strings of length 8 end with a bit of 1?
+</pre>
+</div>
+<DIV id="Q2Area">QUESTION 8</DIV>
+<div class="Q">
+<pre>
+    How many different hexadecimal numbers can be represented using just two
+    hexadecimal digits, with no duplicate digits?
+</pre>
+</div>
+<DIV id="Q2Area">QUESTION 9</DIV>
+<div class="Q">
+<pre>
+    Two random numbers from 0 to 1000 are drawn. What is the probability that
+    the first number drawn is less than 600 and the second number drawn is less
+    than the first number? Show at least 4 decimal places of precision
+</pre>
+</div>
+<DIV id="Q2Area">QUESTION 10</DIV>
+<div class="Q">
+<pre>
+    How many positive integers between 100 and 299 are not divisible by 4?
+</pre>
+</div>
+
+
+
+</form>
+</body>
+</html>
+
+

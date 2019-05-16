@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+	<style>
+		body {
+		padding-left: 10px;
+		color: #000;
+	}
+	h2 { font-family:'Arial',sans-serif; font-size:2.0em; color:#999; }
+	h3 {
+		font-family:'Arial',sans-serif; font-size:1.6em;
+		color:#114;
+		margin:2px; padding-top:6px;
+	}
+	.box_border {
+		border:4px solid #abc; width:600px; padding-left:8px;
+	}
+	.thin_border {
+		border:1px solid #abc; width:800px; padding-left:8px;
+	}
+    .console {
+        padding-left:10px;
+        background:#222;
+        color:#afa;
+        border:4px solid #66a;
+        width:800px;
+    }
+	p { width:800px; }
+	</style>
+
+<h2>CMPS-224  Lab 7  Counting with Python</h2>
+Eddie Rangel<br>
+Department of Computer and Electrical Engineering and Computer Science<br>
+California State University, Bakersfield<br>
+
+<p>
+<h3>Introduction</h3>
+<b>Goals</b>:
+Look at a how programs can process the data held in files and list. 
+</p>
+
+<p>
+<b>Resources</b>:
+ Python 3 Documentation <a href="https://docs.python.org/3/">Documentation</a><br/>
+ Python Lab 7 <a href="./">Materials</a>
+</p>
+
+<p>
+<b>Files Needed</b>: <a href="./USPopulation.txt">USPopulation.txt</a><br/>
+The file contains the midyear population of the United States, in thousands, 
+during the years 1950 through 1990. The first line in the file contains the 
+population for 1950, the second line contains the population for 1951, and so forth.
+</p>
+
+<p>
+Write a program that reads a file&rsquo;s contents into a list. The program should then display the following: <br/>
+The average annual change in population during the time period.<br/>
+The year with the greatest increase in population during the time period.<br/>
+The year with the smallest increase in population during the time period.<br/>
+    
+</p>
+<p>
+    Code to open a file and read its contents into a list.
+</p>
+<p>
+    <pre class="console">
+        # Open the file for reading.
+        input_file = open('USPopulation.txt', 'r')
+        
+        # Read all the lines in the file into a list.
+        yearly_population = input_file.readlines()
+        
+    </pre>
+</p>
+<p>
+    Pseudocode 
+    </p>
+    <p>
+        <pre class="console">
+        Open File
+        Read in contents into a list
+        Convert each element in list into a numerical data type
+        Calculate the change in population size for each two years
+        Set initial values for comparisons
+        Evaluate the next element 
+            Update as necessary
+        Calculate Average Chnange by dividing the total change by the number of years
+        </pre>
+    </p>
+<p>
+    <pre class="console">
+        # Setup variables
+        yearly_change = []
+        change = 0.0
+        total_change = 0.0
+        average_change = 0.0
+        greatest_increase = 0.0
+        smallest_increase = 0.0
+        greatest_year = 0
+        smallest_year = 0
+    
+        # Constant for the base year
+        BASE_YEAR = 1950        
+    </pre>
+</p>
+<p>
+    Conditions of Satisfactions
+</p>
+<p>
+    <pre class="console">
+        The average annual change in population during the time period is 2,443.88
+        The year with the greatest increase in population was 1955
+        The year with the smallest increase in population was 1967
+    </pre>
+</p>
+
+
+<p>
+<h3>What to turn in</h3>
+Show the programs running to me or our TA. 
+</p>
+</body>
+</html>
+

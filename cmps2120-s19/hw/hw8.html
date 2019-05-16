@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html>
+<style type=text/css>
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: helvetica;
+		font-size: 10pt;
+		font-weight: 500;
+		color: #000;
+		background-color: white;
+		padding-right: 20px;
+		height: auto;
+	}
+	body {
+		margin: 2% 15% 5% 5%;
+		font-family: helvetica;
+		background-color: #dfd;
+		color: #19193A;
+		font-size: 10pt;
+		font-weight: 500;
+	}
+    b { font-weight: 900; }
+    code { font-family: monospace; }
+    pre { font-family: monospace; font-size: 10pt; }
+    input { background:#ed8; }
+    h3 {
+        font-size: 12pt;
+        font-weight: 600;
+        font-family: serif;
+        padding-top: 4px;
+        padding-bottom: 6px;
+    }
+    sup {
+        vertical-align: super;
+        font-size: smaller;
+    }	
+</style>
+<script type="text/javascript">
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+<h3>
+CMPS 2120 - Homework 8 - "Mathematical Induction"
+</h3>
+
+
+<h4> MATHEMATICAL INDUCTION </h4>
+<a href="../material/ch4_induction/ch4.3.notes.html">Recursion Notes</a><br/>
+<a href="../material/ch4_induction/strong-induction.html">Induction Notes</a><br/>
+<a href="https://www.khanacademy.org/math/trigonometry/seq_induction/proof_by_induction/v/proof-by-induction" target="_blank">khan academy proof by induction<a/><p>
+
+In an inductive proof your job is to prove that some proposition P holds true
+for all n, where n is a member of S, a well-ordered subset of the set of 
+ integers. The underlying argument is "if P(k) then P(k+1), for some arbitrary k in S." (The variable is k by convention.) You then use a direct proof:
+Assume P(k) and show P(k+1). P(k) is the Inductive Hypothesis (IH). 
+Showing P(k+1) holds given P(k) is the Inductive Step (IS). Finally, to 
+show P holds true for all n, give a concrete case using the first element in 
+ S; generally P(0) or P(1). This is the Basis.  
+<p>
+1. Find a formula for the sum of the first n even positive integers<pre>
+           n
+     P(n): &Sigma;  2i    
+           i=1  </pre>
+   by generalizing on the trick shown here for n=6. <pre>
+   1   2   3   4   5    6
+   2 + 4 + 6 + 8 + 10 + 12 = 2(6+1)*6/2 = (6+1)6 = 42 
+   |   |   |___|   |    |
+   |   |___________|    |
+   |____________________|
+            14
+</pre>
+<input type="button" value="hint" onClick="xb[16]^=1; zzz('x16',(xb[16])?'':
+' P(n): n^2 + n, n>=1. '
+);"><div id="x16"></div><br>
+
+
+
+2. Use mathematical induction to prove proposition P shown here:<pre>
+           n
+     P(n): &Sigma;  2i   =  n^2 + n, n >=1 
+           i=1  </pre>
+Be sure to include the Basis, the Inductive Hypothesis (IH) and the Inductive Step (IS).
+<input type="button" value="hint" onClick="xb[17]^=1; zzz('x17',(xb[17])?'':
+' Basis. P(1)=2; 1^2+1=2. &#10003; <br>\
+IH. P(k): summation i from 1 to k of 2i = k^2 + k<br>\
+IS. Assume P(k) show P(k+1): summation i from 1 to k+1 = (k+1)^2 + (k+1)<br>\
+We can split up the summation over k+1 into:<br>\
+(Summation i from 1 to k of 2i) + 2(k+1) <br>\
+We can plug in the IH and we are left with:<br>\
+(k^2 + k) + 2(k + 1)<br>\
+=k^2 + 3k + 2 <br> \
+= (k + 1)(k+2). QED'
+);"><div id="x17"></div><br>
+
+
+3. Find a formula for  1/(1*2)  + 1/(2*3) + ... +  1/n(n+1), n>=1 by finding
+    a pattern that you can generalize on. Below is the pattern of 
+ values for n=6: 
+<pre>
+       1     2       3     4      5
+      1/2    1/6    1/12   1/20   1/30  
+      1/2    4/6    9/12   48/60  50/60 
+      1/2    2/3    3/4    4/5    5/6 </pre>
+<input type="button" value="hint" onClick="xb[18]^=1; zzz('x18',(xb[18])?'':
+' P(n): The summation from i=1 to n of 1/(i(i+1)) = n/(n+1)'
+);"><div id="x18"></div><br>
+
+
+4. Use mathematical induction to prove 
+   1/(1*2) + 1/(2*3) + ... + 1/n(n+1) = n/(n+1).
+<pre>
+   This is a summation, which is:
+     n
+     &Sigma;   1/(i(i+1))
+     i=1 </pre>
+<input type="button" value="hint" onClick="xb[19]^=1; zzz('x19',(xb[19])?'':
+' Basis. P(1): 1/(1*2)= 1/2 = 1/(1+1). &#10003;     <br>\
+IH. Assume P(k): Summation of i=1 to k of 1/(i(i+1)) = k/(k+1). <br>\
+IS. Show P(k+1): Summation of i=1 to k+1 of 1/(i(i+1)) = (k+1)/(k+2).<br>\
+Split up summation and replace summation of i+1 to k with IH: <br>\
+=  k/(k+1) +  1/((k+1)(k+2)) (by IH)<br>\
+Combine terms. <br>\
+= (k^2 +2k +1)/((k+1)(k+2)) <br>\
+Factor.<br> \
+ = (k+1)(k+1)/((k+1)(k+2)) <br>\
+Simplify.<br>\
+ = (k+1)/(k+2). qed.'
+);"><div id="x19"></div><br>
+
+
+5. Use mathematical induction to prove that n! < n^n, for n > 1.<pre>
+       P(n): n! < n^n, n > 1.  </pre> 
+
+<input type="button" value="hint" onClick="xb[20]^=1; zzz('x20',(xb[20])?'':
+'Basis. P(2): 2 < 2^2. &#10003; <br>\
+IH. P(k): k! < k^k.<br>\
+IS. Assume P(k). show P(k+1): (k+1)! < (k+1)^(k+1)<br>\
+Rewrite P(k+1) as: (k+1)k! < (k+1)(k+1)^k<br>\
+Remove (k+1) from both sides leaves this: k! < (k+1)^k.<br>\
+By IH k! < k^k, so clearly k! must be less than (k+1)^k. '
+);"><div id="x20"></div><br>
+
+
+6. Use mathematical induction to prove <pre>
+       1*2*3 + 2*3*4 + ... + n(n+1)(n+2) =  n(n+1)(n+2)(n+3)/4  
+    In other words:
+      n
+      &Sigma; i(i+1)(i+2) = n(n+1)(n+2)(n+3)/4, n >= 1.
+      i=1
+</pre>
+<input type="button" value="hint" onClick="xb[21]^=1; zzz('x21',(xb[21])?'':
+' <tt><pre>\
+      n<br>\
+P(n): &Sigma; i(i+1)(i+2) = n(n+1)(n+2)(n+3)/4, n>=1<br>\
+      i=1  <p>\
+Basis. P(1)=1*2*3=2*3*4/4;6=6. &#10003;<br>\
+IH. Assume P(k): Summation from 1 to k of i(i+1)(i+2) = k(k+1)(k+2)(k+3)/4.<br>\
+IS. Show P(k+1): Summation from 1 to k+1 of i(i+1)(i+2) = k+1(k+2)(k+3)(k+4)/4.<p/>\
+                    k <br>\
+Split up summation: &Sigma; i(i+1)(i+2) + (k+1)(k+2)(k+3) // separate out k+1 term<br>\
+                    i=1 <br>\
+Replace P(k) with IH: k(k+1)(k+2)(k+3)/4 + (k+1)(k+2)(k+3)<br>\
+Get a common denominator in right term: <br>\
+= k(k+1)(k+2)(k+3)/4 + 4(k+1)(k+2)(k+3)/4 <br>\
+Combine terms: <br>\
+= [k(k+1)(k+2)(k+3) + 4(k+1)(k+2)(k+3)]/4 <br>\
+Simplify:<br>\
+= [(k+4)(k+1)(k+2)(k+3)]/4 <br>\
+= (k+1)(k+2)(k+3)(k+4)/4. qed.'
+);"><div id="x21"></div><br>
+
+
+7. Observation: 6 divides n^3 - n for n = 2, 3, 4: 8-2=6; 27-3=24; 64-4=60.
+    Use mathematical induction to show that 6 divides n^3 - n, 
+    for all n >= 2. First provide a mathematical equation using the mod 
+    operator to express "6 divides n^3 - n."
+<input type="button" value="hint" onClick="xb[22]^=1; zzz('x22',(xb[22])?'':
+'   (n^3 -n ) % 6 = 0 (% is the symbol for the mod operator)'
+);"><div id="x22"></div><br>
+
+
+8. Now prove 6 | n^3 - n, n >= 2, using induction. 
+<input type="button" value="hint" onClick="xb[23]^=1; zzz('x23',(xb[23])?'':
+' Basis. P(2):(8-2)%6=0. &#10003;<br>\
+IH. Assume k^3-k % 6 = 0. <br>\
+IS. Show (k+1)^3 - (k+1) % 6 = 0<p>(k+1)^3-(k+1)% 6 =0<p>\
+k^3 + 3k^2 + 3k+1-k-1 % 6=0<p>k^3-k + 3k^2 + 3k % 6 =0<p>\
+k^3-k + 3(k^2+k) % 6 =0<p>(k^3-k) + 3(k(k+1))% 6 =0.<p>\
+ The first term is true by IH. \
+The second term has a factor of 6 since k(k+1) is even.'
+);"><div id="x23"></div><br>
+<br>
+</body>
+</html>
+
+
