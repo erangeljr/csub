@@ -127,7 +127,7 @@ function cbox(doc, qnum, bnum) {
 		onUnload="javascript:document.forms[0].reset()">
 
 
-<h3>CMPS 2120 Quiz-7 "Algorithms, Big-Oh, etc."</h3>
+<h3>CMPS 2120 Quiz-4 "Algorithms, Big-Oh, etc."</h3>
 
 There can be multiple correct answers per question.<br>
  +2 for each correct answer selected.<br>
@@ -171,9 +171,9 @@ Choose all correct answers.<br>
 <pre>
 Choose all functions below that are big-Oh(n<sup>2</sup>).
 
-<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 0);">A. (n(n+1))/2
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 0);" checked>A. (n(n+1))/2
 <input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 1);">B. 5n<sup>3</sup> + 3n<sup>2</sup> + 20 lg n
-<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 2);">C. lg(n<sup>3</sup>)
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 2);" checked>C. lg(n<sup>3</sup>)
 <input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 3);">D. n lg(n<sup>n</sup>) 
 </pre>
 </div>
@@ -186,9 +186,9 @@ Choose all functions below that are big-Oh(n<sup>2</sup>).
 Choose all functions below that are big-theta(2<sup>n</sup>).
 
 <input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 0);">A. 3<sup>n</sup>
-<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 1);">B. 2<sup>(2n)</sup>/2<sup>n</sup>
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 1);" checked>B. 2<sup>(2n)</sup>/2<sup>n</sup>
 <input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 2);">C. (2<sup>n</sup>)(2<sup>n</sup>)
-<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 3);">D. 2(2<sup>(n-1)</sup>)
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 3);" checked>D. 2(2<sup>(n-1)</sup>)
 </pre>
 </div>
 
@@ -202,9 +202,9 @@ Given that f(n) models the complexity of an algorithm
 
 What is true concerning the efficiency of f(n)?
 
-<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 0);">A. It could be better than n<sup>3</sup>.
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 0);" checked>A. It could be better than n<sup>3</sup>.
 <input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 1);">B. It is always better than an algorithm that is big-omega(n<sup>3</sup>).
-<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 2);">C. It might be similar to an algorithm that is little-oh(n<sup>3</sup>).
+<input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 2);" checked>C. It might be similar to an algorithm that is little-oh(n<sup>3</sup>).
 <input type="checkbox" name="Q3" value="0" onClick="cbox(document.q.Q3, 3, 3);">D. It is worse than n<sup>3</sup>.
 </pre>
 </div>
@@ -219,8 +219,8 @@ What is true?
 
 <input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 0);">A. If B is a single 1 followed by n zeros then B's decimal value is 2<sup>(n+1)</sup>.
 <input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 1);">B. If B's 2 rightmost bits are ones, then B has a factor of 3.
-<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 2);">C. If B is length n and holds all 1's, then B + B = 2<sup>(n+1)</sup> - 2.
-<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 3);">D. If B is length n, the largest decimal value that B could hold is 2<sup>n</sup> - 1.
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 2);" checked>C. If B is length n and holds all 1's, then B + B = 2<sup>(n+1)</sup> - 2.
+<input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 3);" checked>D. If B is length n, the largest decimal value that B could hold is 2<sup>n</sup> - 1.
 <input type="checkbox" name="Q1" value="0" onClick="cbox(document.q.Q1, 1, 4);">E. If B's rightmost bit is a 1, then B is even.
 </pre>
 </div>
@@ -237,8 +237,8 @@ Assume you are computing A + B.
 What is true?
 
 <input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 0);">A. If you carry 1 into place 2<sub>(i+1)</sub> then place 2<sub>i</sub> in the sum will always be 1.
-<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 1);">B. If A and B hold 1 in place 2<sub>i</sub> then you will carry 1 into place 2<sub>(i+1)</sub>.
-<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 2);">C. The sum of the bits in place 2<sub>i</sub> plus its carry could be 3.
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 1);" checked>B. If A and B hold 1 in place 2<sub>i</sub> then you will carry 1 into place 2<sub>(i+1)</sub>.
+<input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 2);" checked>C. The sum of the bits in place 2<sub>i</sub> plus its carry could be 3.
 <input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 3);">D. If A and B are both odd then the rightmost bit in the sum will be 1.
 <input type="checkbox" name="Q2" value="0" onClick="cbox(document.q.Q2, 2, 4);">E. If A and B are both odd then the rightmost 2 bits in the sum will be 10.
 </pre>
