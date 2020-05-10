@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<style>
+	table {
+		padding:0px;
+		margin:auto;
+	}
+	tr {
+		padding:0px;
+		margin:0px;
+		border:1px solid #555;
+	}
+	td {
+		padding:0px;
+		padding-left:4px;
+		margin:0px;
+		border:1px solid #555;
+	}
+	th {
+		padding:2px;
+		margin:0px;
+		border:1px solid #555;
+		font-family:arial
+	}
+	.z  { background:#fd7; }
+	.at { background:#baa; }
+	.v  { background:#1cf; }
+	.a  { background:#5e5; }
+	.t  { background:#ee5; }
+	.s  { background:#ea6; }
+	.k  { background:#eee; }
+	.gp { background:#ddd; }
+	.sp { background:#6e7; }
+	.fp { background:#8bf; }
+	.ra { background:#faf; }
+</style>
+<body>
+<center>MIPS Registers</center>
+
+<table>
+<tr>
+<th>Register<br>Number 
+<th>Alternative<br>Name 
+<th>Description
+
+<tr class="z">
+<td>0
+<td>$zero
+<td>Always the value 0.
+
+<tr class="at">
+<td>1
+<td>$at
+<td><b>a</b>ssembler <b>t</b>emporary, reserved by the assembler.
+
+<tr class="v">
+<td>2
+<td>$v0
+<td rowspan="2">(<b>v</b>alues) from expression evaluation and function results.
+<tr>
+<td>3
+<td>$v1
+
+<tr class="a">
+<td>4
+<td>$a0
+<td rowspan="4">$a0 - $a3<br>
+(<b>a</b>rguments) First four parameters for subroutine.<br>
+Not preserved across procedure calls 
+<tr>
+<td>5
+<td>$a1
+<tr>
+<td>6
+<td>$a2
+<tr>
+<td>7
+<td>$a3
+
+<tr class="t">
+<td>8
+<td>$t0
+<td rowspan="8">$t0 - $t7<br>
+(<b>t</b>emporaries) Caller saved if needed. Subroutines 
+can use w/out saving.<br>
+<u>Not preserved</u> across procedure calls. 
+<tr>
+<td>9
+<td>$t1
+<tr>
+<td>10
+<td>$t2
+<tr>
+<td>11
+<td>$t3
+<tr>
+<td>12
+<td>$t4
+<tr>
+<td>13
+<td>$t5
+<tr>
+<td>14
+<td>$t6
+<tr>
+<td>15
+<td>$t7
+
+<tr class="s">
+<td>16
+<td>$s0
+<td rowspan="8">$s0 - $s7<br>
+(<b>s</b>aved values) - Callee saved.<br>
+A subroutine using one of these must save original 
+and restore it before exiting.<br>
+<u>Preserved</u> across procedure calls.
+<tr>
+<td>17
+<td>$s1
+<tr>
+<td>18
+<td>$s2
+<tr>
+<td>19
+<td>$s3
+<tr>
+<td>20
+<td>$s4
+<tr>
+<td>21
+<td>$s5
+<tr>
+<td>22
+<td>$s6
+<tr>
+<td>23
+<td>$s7
+
+<tr class="t">
+<td>24
+<td>$t8
+<td rowspan="2">$t8 - $t9<br>
+(<b>t</b>emporaries) Similar to $t0 - $t7 above.
+<tr>
+<td>25
+<td>$t9
+
+<tr class="k">
+<td>26
+<td>$k0
+<td rowspan="2">$k0 - $k1<br>reserved for use by the interrupt/trap handler.
+<tr>
+<td>27
+<td>$k1
+
+<tr class="gp">
+<td>28
+<td>$gp
+<td><b>g</b>lobal <b>p</b>ointer. Points to middle of 64K block of memory in the static data segment. 
+
+<tr class="sp">
+<td>29
+<td>$sp
+<td><b>s</b>tack <b>p</b>ointer. Points to the top of the stack.
+
+<tr class="fp">
+<td>30
+<td>$fp or $s8</div>
+<td><b>s</b>aved value or <b>f</b>rame <b>p</b>ointer. Preserved across procedure calls.
+
+<tr class="ra"> 
+<td>31
+<td>$ra
+<td><b>r</b>eturn <b>a</b>ddress 
+
+</table>
+    
+</div>
+<br><br><br><br><br><br><br><br>
+</body>
+</html>
+

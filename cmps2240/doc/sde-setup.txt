@@ -1,0 +1,74 @@
+ 
+             Guide tO Setting Up and Using SDE MIPS Lite
+ 
+ This guide explains how to setup and use MIPS Technologies SDE (Software 
+ Development Environment) Lite version 6.0 under Linux. 
+ 
+ Step 1. Set up the environment to run SDE Lite. The period at the start of the 
+ command below tells the shell to "source" the script; i.e., to read and 
+ execute the commands in the *current* shell environment.  
+ 
+    $ . /usr/local/sde6/bin/sdeenv.sh   # this is a period followed by a space
+ 
+ Step 2. Create a directory structure and copy files into it. You may want your 
+ sde directory to be under the directory for cs224 but it can be anywhere.
+ 
+    $ mkdir sde
+    $ chmod og-rx sde
+    $ cd sde
+    $ sdemklocal
+    $ ln -s sde-6.06.01/examples/make.mk
+ 
+ When you are finished your directory structure will look like this (you will 
+ create the your-dirs directories later): 
+ 
+                                  sde
+                          ______/  |  \_____ ______
+                         /         |        \     \ 
+                        /          |         \     \
+                  sde-6.06.01   make.mk    hello   lab01
+                     /    \
+                    |      |
+                   kit  examples
+ 
+ Each time you log into sleipnir you will need to run this script again: 
+ 
+    $ . /usr/local/sde6/bin/sdeenv.sh  
+  
+ Alternatively, add the above command (without the dot) to your .bash_profile 
+ file in your root directory so that the script is automatically executed when 
+ you log in (the entire command including the dot). Any assembly code you write
+ for sde must exist in a subdirectory under the sde directory. Code in another 
+ location will not assemble properly.
+ 
+ Now you are ready to test SDE with "Hello World" in MIPS assembly. 
+
+
+ FIRST. Make a directory under sde called hello. Copy these files into hello.
+ 
+    $ mkdir hello
+    $ cd hello 
+    $ cp /home/fac/donna/public_html/cs224/examples/sde/hello/hello.s .
+    $ cp /home/fac/donna/public_html/cs224/examples/sde/hello/Makefile .
+  
+ Alternatively, you can also paste the Makefile and hello.s files from 
+ 
+    http://www.cs.csub.edu/~donna/cs224/examples/sde/hello/
+ 
+ to like-named files in your hello directory. Just note that when pasting in vi 
+ on sleipnir, first turn off indenting from within vi: 
+ 
+    :set paste
+ 
+ When you are done pasting, you can turn indenting back on for coding using:
+ 
+    :set nopaste
+ 
+ Once you have copied Makefile and hello.s, compile and run the assembly with 
+ the following two commands:
+ 
+    $ sde-make
+    $ sde-run helloram
+ 
+ If sde-make fails, check that your directory structure is set up correctly. If 
+ hello is not a subdirectory of under sde, then sde-make will fail.
