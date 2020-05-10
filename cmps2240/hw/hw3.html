@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+	
+<h3>CMPS-2240 Homework 3: Assemblers, Linkers & Loaders -
+Creating the Process Image </h3>
+<br>
+
+<p>
+<div class="notes" style="width:200px;height:100px">
+Refer to as needed:<br/>
+<ul class="a">
+	<li><a href="./units_of_measure.html">
+		CS Units of Measure</a></li> 
+	<li><a href="./doc/mips32-instruc-set.pdf">
+		MIPS32 ISA</a></li>
+	<li><a href="./doc/mips-quick-guide.txt">
+		MIPS quick guide</a></li>
+</ul>
+</div>
+</p>
+<br>
+
+<p>
+All questions except #7 are taken from 
+<a href="./doc/HP_AppenA.pdf">Appendix A.1 - A.5</a>.
+Read A.1-A.5 completely before starting homework.
+Do not worry about references in the Appendix to chapters in the text, we will
+cover that material as needed.
+</p>
+<br>
+<br>
+1. What is a pseudoinstruction?
+<div id="x11"></div><br>
+
+
+2. List the duties of a linker. What is the name of the Unix linker?
+<div id="x12"></div><br>
+
+
+3. Describe the steps by which an executable is loaded into memory
+    under Unix? (This is also typical of most OSs.)
+<div id="x13"style="height:80px"></div><br>
+
+
+4. Draw a picture of how a program is 
+    loaded in memory (AppenA shows MIPS which is fairly typical).
+    Include the stack, the heap, the text segment and the data segment. 
+<div id="x14"style="height:250px"></div><br>
+
+
+5. Where does the MIPS global pointer register ($gp) point and what is $gp 
+    used for?
+<div id="x15"></div><br>
+
+
+6. Why is the maximum size of a program's stack and the size of each stack 
+    frame not necessarily known at compile time?
+<div id="x16"></div><br>
+
+
+7. Little-endian (little-end in first) and big-endian (big-end in first) refer 
+    to the order in which chunks (one byte or two bytes) of a word 
+    are loaded into memory. Little refers to the "little end" (smallest value) 
+    of a number; i.e., the "little end" of 
+    347 decimal is 7. The "big end" of 342 decimal is 3 (since the value of
+    that digit is 300). In little-endian the least significant chunk is loaded
+    into lowest memory address. Consider a 2-byte unsigned integer 
+    with binary and hex representations shown here:
+<pre>
+           1100_0111 1111_0101  0xB7_F5
+</pre>
+    Assuming a machine with an 8-bit data bus (memory is loaded one byte at
+    a time), the little end is the least significant btye (F5)
+    and the big end is the most significant btye (B7).
+    Show the order of bytes in both little-endian and big-endian.
+<div id="x17"style="height:140px"></div><br>
+
+
+8. Write MIPS code for a subroutine <b>get_int</b> that reads an integer from the keyboard and echos it to the display and stores the result into $v0.
+<div id="x18"style="height:80px"></div><br>
+
+9. Write MIPS code for a subroutine <b>to_neg</b> that takes the value in $a0
+and converts it to negative, two's compliment. Assume that the value in $a0 is
+positive (don't do any input error checking). Store the result into $v0.
+<div id="x19"style="height:80px"></div><br>
+
+10. How do each of these commands modify the program counter?<br>
+<pre>
+          a. jr
+          b. jal
+          c. j
+</pre>
+<div id="x20"style="height:80px"></div><br>
+
+
+
+
+
+
+
+
+
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>

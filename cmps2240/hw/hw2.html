@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+	
+<h3>CMPS-224 Homework 2: Assemblers, Linkers & Loaders -
+Creating the Process Image </h3>
+<br>
+
+<p>
+<div class="notes" style="width:200px;height:100px">
+Refer to as needed:<br/>
+<ul class="a">
+	<li><a href="../units_of_measure.html">
+		CS Units of Measure</a></li> 
+	<li><a href="../doc/mips32-instruc-set.pdf">
+		MIPS32 ISA</a></li>
+	<li><a href="../doc/mips-quick-guide.txt">
+		MIPS quick guide</a></li>
+</ul>
+</div>
+</p>
+<br>
+
+<p>
+All questions except #17 are taken from 
+<a href="../doc/HP_AppA.pdf">Appendix A.1 - A.5</a>.
+Read A.1-A.5 completely before starting homework.
+Do not worry about references in the Appendix to chapters in the text, we will
+cover that material as needed.
+</p>
+<br>
+<br>
+
+
+1. How does assembly language differ from machine language?
+<div id="x1"style="height:80px"></div><br>
+
+
+2. Code written in  a high-level language (C/Java/Python) can, in theory,
+    be ported to a different architecture without modifying the source. An 
+    assembly language program, on the other hand, is specific to a certain 
+    architecture; i.e., a MIPS assembly program will only assemble on
+    a MIPS architecture, x86 assembly is for Intel architectures, etc. Why is 
+    assembly not portable unless you use a cross-assembler?
+<div id="x2"style="height:80px"></div><br>
+
+
+3. Define the terms <i>assembler</i>, <i>macro</i>, and <i>object file</i>. 
+<div id="x3"></div><br>
+
+
+4. What is the difference between a compiler and an assembler? Compare GNU C 
+    compiler and GNU gas assembler under Linux as a specific example.
+<div id="x4"style="height:80px"></div><br>
+
+
+5. What are the disadvantages to writing in assembly language versus 
+    writing in a high-level language?
+<div id="x5"style="height:80px"></div><br>
+
+
+6. Define the terms <i>external label</i>, <i>local label</i>, 
+ and <i>forward reference</i> in the context of assembly language. How 
+ do these concepts differ from a high-level language context?
+<div id="x6"style="height:80px"></div><br>
+
+
+7. How does an assembler handle forward references? 
+<div id="x7"></div><br>
+
+
+8. List two important differences between assembly language 
+    and a high-level language such as C in terms of code writability.
+<div id="x8"></div><br>
+
+
+9. List the primary sections of an object file under Unix.
+<div id="x9"></div><br>
+
+
+10. What is an assembler directive? Give an example of one and explain what
+    it does.
+<div id="x10"style="height:80px"></div><br>
+
+
+
+
+
+
+
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>
