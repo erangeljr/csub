@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0052)https://www.cs.csub.edu/~melissa/cs376-f14/lab6.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 376 - Lab 6</title>
+</head>
+<body>
+<h3>Lab 6 - Sample Shell and Telnet Programs</h3>
+Due: Friday by 12:30pm
+<p>
+In <a href="./lab5.html" target="_blank">Lab 5</a>, a "dummy" shell was spawned
+by your simple daemon since your daemon did not authenticate users. This was
+done for security reasons to prevent unauthorized users from accessing your
+files. You also used the <code>telnet</code> command to connect to your daemon.
+In this lab, we will be looking at code which implements a more realistic shell
+and which investigates the telnet protocol.
+</p><p>
+Create a new directory for this lab (important so that the tarball does not
+overwrite vcrec.c, vcsend.c and other files you have created in previous labs).
+Download and untar the networking code provided by Dr. Marc Thomas using the 
+commands:
+</p><pre>wget http://www.cs.csubak.edu/~eddie/cmps3620/code/lab6/cs376_lab_code.tar.gz
+tar -xvzf cs376_lab_code.tar.gz
+</pre>
+The two files of interest for this lab are <code>s_sh.c</code> (the shell
+program) and <code>s_tlnt.c</code> (a verbose telnet client). Compile these
+two programs with the following command:
+<pre>make telnet
+</pre>
+For the shell program, you can run the shell with the command 
+<code>./s_sh</code> and then interact with the shell using regular 
+stdin (the keyboard) and stdout (the screen). It is VERY IMPORTANT that you 
+do NOT compile this in the same directory as Lab 5, to prevent simple daemon 
+from using this version of s_sh for its shell. This shell is a multi-platform
+program which parses commands and command options, runs the commands and 
+displays the results. This program can parse a few commands such as cd, dir 
+and pwd. It also supports one * or ? wildcard per line. The comments section 
+at the top of the file lists more details on the capacity of this shell program. 
+<p>
+Some interesting things to look at in the code for <code>s_sh.c</code> is how
+it parses the typed command, how it spawns the system binaries for certain 
+commands, how it stores a history of typed commands and how it implements 
+internal commands. This mimics much of what a regular shell program, such as 
+bash, would do. 
+</p><p>
+The telnet program <code>s_tlnt</code> is also a multi-platform program. It
+gives more information about the telnet process than the regular telnet client
+does. The telnet protocol allows one to have a plaintext (unencrypted, SSH by
+comparison is encrypted) TCP connection which can support virtual terminals.
+It was widely used in the early days of the Internet for logging into remote
+sites and is still widely used for debugging other plaintext protocols such as 
+how we used it for Lab 5.
+</p><p>
+Some interesting things to look at in the <code>s_tlnt.c</code> code are 
+<code>process_esc()</code> and the <code>commandmode</code> jump target in 
+<code>main()</code>. The <code>process_esc()</code> function interprets basic 
+VT100/ANSI escape sequences. VT100 and ANSI are standards to control the 
+placement of the cursor on a text screen, colors, reverse colors, blinking 
+text, clearing the screen and other such functionality needed to create basic 
+text-based graphical interfaces. If you use Pine, you've seen VT100 and ANSI 
+in action. 
+</p><p>
+The <code>commandmode</code> jump target can be reached by pressing 
+CTRL-T (the "escape character") while the program is running. This will bring
+up the <code>s_tlnt</code> prompt. Your connection will still be active
+in the background while you give commands to the <code>s_tlnt</code> program. 
+You can "close" an active connection, "return" to an active connection, "open" 
+a new connection, set <code>s_tlnt</code> parameters, access a "help" screen 
+and see the "status" at the <code>s_tlnt</code> prompt. The parameters can 
+enable features which will give more information about the data being passed
+across the network, such as VT100 codes.
+</p><p>
+The command to start <code>s_tlnt</code> is:
+</p><pre>s_tlnt [-v] [-snoopy] hostname port</pre>
+The v option will turn on verbose, which will give you detailed information
+about the execution of the program. You can also set "verbose" or "noverbose" 
+at the <code>s_tlnt</code> prompt. The snoopy option activates transparent 
+mode, which gives information about telnet arbitration and shows all control 
+and 8bit characters. Telnet arbitration is a negociation process that occurs
+between your telnet client and the server to set options such as echoing the
+text you type or whether to use half-duplex or full-duplex communication. The
+negociation process consists of one side presenting an option (IAC DO) 
+and the other side either accepting (IAC WILL) or rejecting (IAC WONT) 
+the option. 
+You can set "snoopy" or "nosnoopy" at the 
+<code>s_tlnt</code> prompt. 
+<p>
+</p><h4>Lab Writeup</h4>
+Answer these questions as the writeup for your lab.
+<ol>
+<li>Why does <code>s_sh</code> watch for the SIGCLD (SIG_CHLD) signal?
+</li><li>How are the internal commands in <code>s_sh</code> implemented? 
+</li><li>In <code>process_esc</code> in <code>s_tlnt</code>, basic ANSI/VT100 
+    support is provided. Read the comments at the start of this function. 
+    How do you think Pine provides a "graphical" text interface using these
+    escape sequences?
+</li><li>Why does <code>s_tlnt</code> also contain code to parse a command line?
+    Hint: Think about when does <code>s_tlnt</code> provides a shell-like
+    prompt to the user.
+</li><li>Notice that both the <code>s_sh</code> and <code>s_tlnt</code> source
+    code files contain references to the code being able to run on multiple
+    platforms, such as Windows or Linux. How is this done within the source
+    code files?
+</li></ol>
+
+
+</body></html>

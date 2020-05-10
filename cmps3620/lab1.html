@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0052)https://www.cs.csub.edu/~melissa/cs376-f14/lab1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 376 - Lab 1</title>
+</head>
+
+<body>
+<h3>Lab 1 - Command Line Networking Tools</h3>
+Due: Tuesday by 4:00pm
+<p>
+The purpose of this lab is to become familiar with standard command-line
+TCP/IP tools that can be used in Unix/Linux systems (with equivalents on
+other operating systems).
+</p><p>
+There are several command line tools in Unix/Linux systems that can give 
+you information about certain aspects of TCP/IP networking. This lab will
+investigate the following tools:
+</p><dl>
+<dt>dig</dt>
+<dd>This tool gives you information about DNS (domain name) records. The
+most simple use of dig is to look up the IP address for a given domain 
+name or vis versa. It can also give you much more information, such as the
+"start of authority" (soa) or "mail exchanger" (mx) for the domain. 
+<p>
+Examples:
+</p><blockquote>
+dig www.google.com
+<br>
+dig -x 136.168.201.112
+<br>
+dig soa www.cs.csub.edu
+<br>
+</blockquote>
+See "man dig" for more information.
+</dd>
+<dt>ping</dt>
+<dd>This tool sends a query to the destination server to see if it is still
+responding to packets. A response to ping means the destination is online.
+Ping will tell you how long it took for the packets to travel if there is a
+response. If there is no response, the server may be offline or just blocking
+ping requests. See "man ping" for more information.
+<p>
+Usage: ping &lt;IP | domain name&gt;
+</p></dd>
+<dt>traceroute</dt>
+<dd>This tool attempts to determine the route taken to the destination machine
+and how long it takes to travel to each node along the route. It is helpful
+for determining where network connectivity is lost when one cannot connect to
+a remote machine or for seeing where lag is occuring when a connection is
+laggy. See "man traceroute" for more information.
+<p>
+Usage: tracreroute &lt;IP | domain name&gt; <br>
+       traceroute -n &lt;IP | domain name&gt;
+</p></dd>
+</dl>
+Log in to Sleipnir and try these tools. Give different domain names and IP
+addresses to each one to see what happens. 
+
+<h4>Writeup</h4>
+Answer the following questions and upload the writeup to your Moodle account.
+Use only plain text, Open Office or PDF formats for your writeup.
+<ol>
+<li>Write a paragraph about what happened when you tried using these tools
+with various domain names and IP addresses as suggested above. 
+</li><li>The dig command can be used to obtain information from the DNS records 
+for a given domain name or IP address. What is the output for the following 
+commands and what is the difference between them?
+<ol type="a">
+<li>dig www.cs.csub.edu
+</li><li>dig soa www.cs.csub.edu
+</li></ol>
+</li><li>You are getting probes from some host in the 209.9.244.* (Class C) network. Which of the following commands will find the Start of Authority record for that network (the answer section will have an authority server that is NOT a root name server)?
+<ol type="a">
+<li>dig soa 224.9.209.in-addr.arpa
+</li><li>dig soa 209.9.224
+</li></ol>
+</li><li>You are attempting to connect to ftp.foo.com and get the error message<br>
+--- unknown host ftp.foo.com --- <br>
+What is the likely problem and what commands would you use to investigate the problem?
+</li><li>Suppose instead you got the message<br>
+Trying 208.207.151.35 ... <br>
+... Connection timed out. <br>
+How does this differ from the previous error message? What could be causing the issue? How would you investigate it?
+</li></ol>
+
+
+</body></html>

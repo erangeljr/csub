@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0052)https://www.cs.csub.edu/~melissa/cs376-f14/lab8.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 376 - Lab 8</title>
+</head>
+<body>
+<h3>Lab 8 - Secure Shell (SSH) Protocol</h3>
+Due: Friday by 12:30pm
+<p>
+One network security related protocol not mentioned in the book is the SSH 
+protocol. This protocol allows encrypted shell sessions and encrypted file 
+transfer sessions between the client and server. One issue in unsecure LANs
+is that others can sniff your password (and anything sent between the client
+and server) when you use a plaintext application such as telnet or FTP. SSH 
+provides an encrypted alternative to these applications so that sniffing is
+not as easy. Note: as with any cryptographic protocol, if someone figures 
+out how to break the underlaying cryptographic algorithms, they can recover 
+the plaintext from the encrypted session. 
+</p><p>
+The two main developers of SSH servers are 
+<a href="http://www.ssh.com/">Tectia (formerly SSH Communications Security)</a>
+and <a href="http://www.openssh.com/">OpenSSH</a>. The original SSH code was 
+written by Tatu Ylönen and released freely. Tatu Ylönen went on
+to form SSH Communications Security, which is a proprietary company. It
+changed its name to Tectia Corporation in 2010. OpenSSH was developed from 
+Tatu Ylönen's free code and is open source. The OpenSSH server is widely 
+used by many Unix/Linux based servers.
+</p><p>
+There are also many free SSH clients for various platforms, such as the Putty 
+program for Windows. Most Linux distributions use the client software provided 
+by OpenSSH. There are also proprietary SSH clients for a variety of platforms.
+</p><p>
+Like many network related protocols, SSH was developed first then standardized.
+IETF formed a working group called secsh to develop the RFCs. The working
+group has now dissolved. The main RFCs out of that working group are:
+</p><ul>
+<li><a href="http://www.ietf.org/rfc/rfc4253.txt">RFC 4253 - The Secure Shell (SSH) Transport Layer Protocol</a>
+</li><li><a href="http://www.ietf.org/rfc/rfc4251.txt">RFC 4251 - The Secure Shell (SSH) Protocol Architecture</a>
+</li><li><a href="http://www.ietf.org/rfc/rfc4252.txt">RFC 4252 - The Secure Shell (SSH) Authentication Protocol</a>
+</li><li><a href="http://www.ietf.org/rfc/rfc4250.txt">RFC 4250 - The Secure Shell (SSH) Protocol Assigned Numbers</a>
+</li><li><a href="http://www.ietf.org/rfc/rfc4254.txt">RFC 4254 - The Secure Shell (SSH) Connection Protocol</a>
+</li><li><a href="http://www.ietf.org/rfc/rfc4344.txt">RFC 4344 - The Secure Shell (SSH) Transport Layer Encryption Modes</a>
+</li><li><a href="http://www.ietf.org/rfc/rfc4419.txt">RFC 4419 - Diffie-Hellman Group Exchange for the Secure Shell (SSH) Transport Layer Protocol</a>
+</li><li><a href="http://www.ietf.org/rfc/rfc4432.txt">RFC 4432 - RSA Key Exchange for the Secure Shell (SSH) Transport Layer Protocol</a>
+</li></ul>
+<h4>Assignment</h4>
+Read through the RFCs and answer the following questions. You might also find
+it helpful to read through Chapter 8 of the book, which talks about public
+key encryption, symmetric key encryption and key exchanges.
+<ol>
+<li>Does SSH encrypt the TCP/IP headers or just the payload?
+</li><li>In brief, what is the purpose of including a message digest (MAC)?
+</li><li>What is a key exchange and why is it used in SSH?
+</li><li>Does SSH support public key, symmetric key or both?
+</li><li>Why is Diffie-Hellman key exchange appealing?
+</li></ol>
+
+
+
+</body></html>

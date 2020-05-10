@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			DIV {
+				margin: 3px 0px 10px 3px; padding: 4px;
+				border: 1px dashed black;
+				font-family: helvetica;
+				font-size: 10pt; font-weight: 500; color: #19193A;
+				background-color: #DEE; padding-right: 5px; 
+			}
+			BODY { margin: 2% 15% 5% 5%;
+					font-family: helvetica; background-color: white;
+					color: 19193A; font-size: 10pt; font-weight: 500;
+			}
+			table { table-layout:fixed; width:500px; align: center; }
+			tr { height:50px; }
+			td { height:50px; padding:0px; }
+			span { background-color: yellow; }
+		</style>
+	</head>
+<body>
+<h3>CMPS 224 MIPS Assembly Language Programming - Overview</h3>
+  
+<h3> <span> Assembly Language Statements </span> </h3> 
+
+  Four types
+ <li>Assembler directives
+ <li>Instructions from MIPS Instruction Set
+ <li>Pseudo-Instructions and Macros
+ <li>Comments
+
+ <h4>Assembler Directives</h4>
+  Define segments, allocate memory variables, etc.
+  Non-executable: directives are not part of the instruction set
+<h4>  .DATA directive </h4>
+  Defines the data segment of a program containing data
+  The program's variables should be defined under this directive
+  Assembler will allocate and initialize the storage of variables
+
+<h4>  .TEXT directive </h4> Defines the 
+code segment of a program containing instructions
+
+<h4>  .GLOBL directive </h4>
+  Declares a symbol as global so can be referenced from other files;
+  use this directive to declare main procedure of a program
+ 
+
+  <h4>MIPS Instructions </h4>
+
+  MIPS Assembly language instructions have the format:
+<pre>
+    [label:]   mnemonic   [operands]    [#comment]   </pre>
+Label: (optional)
+  Marks the address of a memory location, must have a colon;
+  Typically appears in data and text segments 
+
+<h4> Mnemonic Opcode</h4>
+  Identifies the operation (e.g. add, sub, etc.)
+
+<h4> Operands</h4>
+  Specify the data required by the operation
+
+  Operands can be registers, memory variables, or constants
+  Most instructions have three operands
+<pre>   L1:  addiu $t0, $t0, 1  #increment $t0 </pre>
+
+<h4> Comments </h4>
+ Single-line comment;
+  Begins with a hash symbol # and terminates at end of line
+
+<pre>
+  # Sample Program Template
+  # Filename:
+  # Author:  
+  # Date:
+  # Description:
+  # Register Usage:
+  ################# Data segment #####################
+  .data
+   . . .
+  ################# Code segment #####################
+  .text
+  .globl main
+  main:                   # main program entry
+   . . .
+  li $v0, 10             # Exit program
+  syscall
+</pre>  
+
+<h3><span> Layout of a Program in Memory </span></h3> 
+
+ 
+  
+ <h4> Data Definition Statement </h4>
+
+  Sets aside storage in memory for a variable
+  May optionally assign a name (label) to the data <pre>
+  Syntax:
+    [name:]  directive  initializer  [, initializer]  . . .
+  
+  var1: .WORD    10
+ </pre> 
+  All initializers become binary data in memory
+
+<h4>  Data Directives </h4>
+<div><pre>
+  .BYTE          # Stores values as 8-bit bytes
+  .HALF          # Stores values as 16-bit values aligned on half-word boundary 
+  .WORD          # stores values as 32-bit values aligned on word boundary
+  .WORD w:n      # Stores values  32-bit value w into n consecutive words 
+                 # aligned on a word boundary.
+  .FLOAT         # Stores values as single-precision floating point
+  .DOUBLE        # Stores values as double-precision floating point
+  .ASCII         # Allocates a sequence of bytes for an ASCII string
+  .ASCIIZ        # .ASCII directive but adds a NULL char at end of string
+
+  .SPACE n       # Allocates space of n uninitialized bytes in the data segment
+  .ALIGN n       # Aligns the next data definition on a 2n byte boundary
+
+</pre></div>
+Strings are null-terminated, as in C 
+Special characters: Newline: \n  Tab:\t    
+  
+<h3>  Memory Alignment </h3>
+
+  Memory is byte addressable and
+ viewed as a contiguous array of bytes with addresses;
+  Byte Addressing: address points to a byte in memory;
+  Words occupy 4 consecutive bytes in memory
+<p>
+  MIPS instructions and integers occupy 4 bytes (a word)
+<p>
+Alignment means the address is a multiple of the size; e.g.,
+  Word address should be a multiple of 4 (Least significant 2 bits of 
+  a word aligned address should be 00);
+  Halfword address should be a multiple of 2
+
+<h4>  Symbol Table </h4>
+  Assembler builds a symbol table for labels (variables)
+  Assembler computes the address of each label in data segment
+<pre>
+  Example  Symbol Table
+    .DATA
+    var1:  .BYTE   1, 2,'Z'
+    str1:  .ASCIIZ "My String\n"
+    var2:  .WORD   0x12345678
+    .ALIGN  3
+    var3:  .HALF   1000
+</pre>
+
+<h4> Byte Ordering and Endianness </h4>
+  Processors can order bytes within a word in two ways:
+<p>
+  1) Little Endian Byte Ordering where memory address is the
+  address of least significant byte. Example: Intel IA-32, Alpha
+<p>
+  2) Big Endian Byte Ordering where memory address is the
+ address of most significant byte. Example: SPARC, PA-RISC
+  
+<p>
+  MIPS can operate with both byte orderings 
+  
+  <h3><span>System Calls</span></h3>
+
+  Programs do input/output through system calls
+<p>
+  MIPS provides a special syscall instruction
+  to obtain services from the operating system
+<p>
+  Services are provided in SPIM 
+  using the syscall system services
+<p>
+  Load the service number in register $v0
+<p>
+  Load argument values, if any, in registers $a0, $a1, etc.
+<p>
+  Issue the syscall instruction
+<p>
+  Retrieve return values, if any, from result registers
+
+<div><pre>
+  ####################################################
+  # Reading and Printing an Integer
+  ################# Code segment #####################
+    .text
+    .globl main
+  main:             # main program entry
+    li  $v0, 5      # Read integer
+    syscall         # $v0 = value read
+
+    move  $a0, $v0  # $a0 = value to print
+    li  $v0, 1      # Print integer
+    syscall
+
+    li  $v0, 10     # Exit program
+    syscall
+</pre></div>
+
+<div><pre>
+  ####################################################
+  # Reading and Printing a String
+  #
+  ################# Data segment #####################
+       .data
+  str: .space  10  # array of 10 bytes
+  ################# Code segment #####################
+       .text
+       .globl main
+  main:              # main program entry
+       la  $a0, str  # $a0 = address of str
+       li  $a1, 10   # $a1 = max string length
+       li  $v0, 8    # read string
+       syscall
+       li  $v0, 4    # Print string str 
+       syscall
+       li  $v0, 10   # Exit program
+       syscall
+</pre></div>
+
+<div><pre>
+  ####################################################
+  # Summing three integers
+  #
+  # Objective: Computes the sum of three integers. 
+  #     Input: Requests three numbers.
+  #    Output: Outputs the sum.
+  ################### Data segment ###################
+  .data
+  prompt:  .asciiz     "Please enter three numbers: \n"
+  sum_msg: .asciiz     "The sum is: "
+  ################### Code segment ###################
+  .text
+  .globl main
+  main:
+        la    $a0,prompt   # display prompt string
+        li    $v0,4
+        syscall
+        li    $v0,5        # read 1st integer into $t0
+        syscall
+        move  $t0,$v0
+        li    $v0,5        # read 2nd integer into $t1
+        syscall
+        move  $t1,$v0
+        li    $v0,5        # read 3rd integer into $t2
+        syscall
+        move  $t2,$v0
+        addu  $t0,$t0,$t1  # accumulate the sum  
+        addu  $t0,$t0,$t2
+        la    $a0,sum_msg  # write sum message
+        li    $v0,4
+        syscall
+        move  $a0,$t0      # output sum
+        li    $v0,1
+        syscall
+        li    $v0,10       # exit
+        syscall
+</pre></div>
+<div><pre>
+  #######################################################
+  # Objective: Convert lowercase letters to uppercase
+  #     Input: Requests a character string from the user.
+  #    Output: Prints the input string in uppercase.
+  ################### Data segment #####################
+  .data
+  name_prompt:  .asciiz  "Please type your name: "
+  out_msg:  .asciiz  "Your name in capitals is: "
+  in_name:  .space 31  # space for input string
+  ################### Code segment #####################
+  .text
+  .globl main
+  main:
+        la    $a0,name_prompt  # print prompt string
+        li    $v0,4
+        syscall
+        la    $a0,in_name      # read the input string
+        li    $a1,31           # at most 30 chars + 1 null char
+        li    $v0,8
+        syscall
+        la    $a0,out_msg      # write output message
+        li    $v0,4
+        syscall
+        la    $t0,in_name
+  loop:
+        lb    $t1,($t0)
+        beqz  $t1,exit_loop    # if NULL, we are done
+        blt   $t1,'a',no_change
+        bgt   $t1,'z',no_change
+        addiu $t1,$t1,-32      # convert to uppercase: 'A'-'a'=-32       
+        sb    $t1,($t0)
+  no_change:
+        addiu $t0,$t0,1        # increment pointer 
+        j     loop
+  exit_loop:
+        la    $a0,in_name      # output converted string
+        li    $v0,4
+        syscall
+        li    $v0,10           # exit
+        syscall
+</pre></div>
+  
+  <h3><span>Procedure Calls Using JAL and JR </span></h3>
+
+  Consider a simple procedure <pre>
+         swap(a,10)   </pre>
+  In assembly you must:
+ <li>  Pass address of array a and 10 as arguments
+ <li> Call the procedure swap saving return address $ra
+ <li> Execute procedure swap
+ <li> Return control to the point of origin (return address)
+<div><pre>
+  Address  MIPS Instruction    Assembly Language
+  
+  00400020  lui $1, 0x1001     la   $a0, a
+  00400024  ori $4, $1, 0
+  00400028  ori $5, $0, 10     li   $a1,10
+  0040002C  jal 0x10000f       jal  swap
+
+  00400030  . . .  # return here
+  
+      swap:
+  0040003C   sll $8, $5, 2      sll $t0,$a1,2
+  00400040   add $8, $8, $4     add $t0,$t0,$a0
+  00400044   lw  $9, 0($8)      lw  $t1,0($t0)
+  00400048   lw  $10,4($8)      lw  $t2,4($t0)
+  0040004C   sw  $10,0($8)      sw  $t2,0($t0)
+  00400050   sw  $9, 4($8)      sw  $t1,4($t0)
+  00400054   jr  $31            jr  $ra
+</pre></div>
+  
+  <h3><span>Parameter Passing Conventions</span></h3>
+<p> 
+ Parameter passing is complicated in Assembly since you DO EVERYTHING!
+<p> 
+<li>Place all required parameters in an accessible storage area then 
+ call the procedure 
+<li>  Two types of storage areas used Registers and Memory (stack frame)
+<p>
+<li>  Two common mechanisms of parameter passing
+  Pass-by-value: parameter value is passed
+  Pass-by-reference: address of parameter is passed
+<p>
+<li>  By convention $a0 - $a3 registers are used for passing args 
+<p>
+<li> By convention $v0 - $v1 are used for result values
+<p>
+<li>  Additional arguments/results can be placed on the stack;
+  stack must be used when data cannot fit in registers
+<p>
+<li> Save and restore registers across procedure calls
+  stack is implemented by convention:
+  The stack pointer $sp = $29 (points to top of stack) and
+  The frame pointer $fp = $30 (points to a procedure frame)
+<p>
+ <li>
+  Stack frame 
+ (aka  activation frame or activation record)
+ contains Saved arguments, registers, and local data (if any)
+ <li> Frames are pushed and popped by adjusting 
+  Stack pointer $sp = $29 and Frame pointer $fp = $30
+  Decrement $sp to allocate stack frame, and increment to free
+
+ <h4> Preserving Registers </h4>
+  <li>To preserve registers across a procedure call the stack must be used
+ <li> 
+  Registers modified by the called procedure and
+  Still used by the calling procedure MUST BE SAVED!
+
+<h4><spaN>Caller-saved vs. Callee-saved registers </span>
+</h4>
+  
+ Callee-saved means registers are saved in the called procedure (the callee)
+ upon entry and restored before exit; this is the safest method
+<p>
+  By convention, registers $s0, $s1, ... , $s7 should be preserved by callee
+<p>
+  registers $sp, $fp, and $ra should also be preserved
+<p>
+ Caller-saved means registers are saved by the caller in the
+ caller's stack frame before
+ making a procedure call
+ <p>
+ By convention, registers $t0, ... $t9 should be preserved by caller
+
+<div><pre>
+  ##########################################################
+  #  Selection Sort Procedure
+  #  Objective: Sort array using selection sort algorithm
+  #     Input: $a0 = pointer to first, $a1 = pointer to last
+  #    Output: array is sorted in place
+  ##########################################################
+  sort:
+        addiu  $sp, $sp, -4  # allocate one word on stack
+        sw  $ra, 0($sp)      # save return address on stack
+  top:
+        jal  max             # call max procedure
+        lw  $t0, 0($a1)      # $t0 = last value
+        sw  $t0, 0($v0)      # swap last and max values
+        sw  $v1, 0($a1)
+        addiu  $a1, $a1, -4  # decrement pointer to last
+        bne  $a0, $a1, top   # more elements to sort
+        lw  $ra, 0($sp)      # pop return address
+        addiu  $sp, $sp, 4
+        jr  $ra              # return to caller
+
+  ##########################################################
+  # Max Procedure
+  # Objective: Find the address and value of maximum element
+  #     Input: $a0 = pointer to first, $a1 = pointer to last
+  #    Output: $v0 = pointer to max,   $v1 = value of max
+  ##########################################################
+  max:
+        move  $v0, $a0        # max pointer = first pointer
+        lw  $v1, 0($v0)       # $v1 = first value
+        beq  $a0, $a1, ret    # if (first == last) return
+        move  $t0, $a0        # $t0 = array pointer
+  loop:
+        addi  $t0, $t0, 4     # point to next array element
+        lw  $t1, 0($t0)       # $t1 = value of A[i]
+        ble  $t1, $v1, skip   # if (A[i] &lt;= max) then skip
+        move  $v0, $t0        # found new maximum
+        move  $v1, $t1
+  skip:
+        bne  $t0, $a1, loop # loop back if more elements
+  ret:
+        jr  $ra  
+</pre></div>
+
+<h4> Example of a Tail Recursive Procedure </h4> <pre>
+  /* factorial function */
+  int fact(int n) {
+     if (n &lt; 2)
+        return 1; 
+     else 
+        return (n*fact(n-1));   /* nothing happens after the recursive call */
+  }  </pre>
+
+<div><pre>
+  fact:
+    slti  $t0,$a0,2      # (n &lt; 2)?
+    beq  $t0,$0,else     # if false branch to else
+    li  $v0,1            # $v0 = 1
+    jr  $ra              # return to caller
+  else:
+    addiu  $sp,$sp,-8    # allocate 2 words on stack
+    sw  $a0,4($sp)       # save argument n
+    sw  $ra,0($sp)       # save return address
+    addiu  $a0,$a0,-1    # argument = n-1
+    jal  fact            # call fact(n-1)
+    lw  $a0,4($sp)       # restore argument
+    lw  $ra,0($sp)       # restore return address
+    mul  $v0,$a0,$v0     # $v0 = n*fact(n-1)
+    addi  $sp,$sp,8      # free stack frame
+    jr  $ra              # return to caller
+</pre></div>
+</body>
+
+</html>
+

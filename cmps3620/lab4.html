@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0052)https://www.cs.csub.edu/~melissa/cs376-f14/lab4.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 376 - Lab 4</title>
+</head>
+<body>
+<h3>Lab 4 - Full Duplex Communication</h3>
+Due: Friday by 12:30pm
+<p>
+The purpose of this lab is to take the concept of using select() from 
+<a href="https://www.cs.csub.edu/~melissa/cs376-f14/lab3.html">Lab 3</a> to create an improved version of vcrec and
+vcsend from <a href="https://www.cs.csub.edu/~melissa/cs376-f14/lab2.html">Lab 2</a> that is capable of full duplex
+communication. If you did not complete Lab 2, you can use the official 
+<a href="https://www.cs.csub.edu/~melissa/cs376-f14/solutions/lab2/">solutions</a> as the basis for this lab.
+</p><p>
+In <a href="https://www.cs.csub.edu/~melissa/cs376-f14/lab2.html">Lab 2</a>, you created a half-duplex form of both
+vcrec and vcsend by alternating the code to send data and the code to 
+receive data. So the flow of information was:
+</p><pre>vcsend          vcrec
+send()  -----&gt;  recv()
+recv()  &lt;-----  send()
+send()  -----&gt;  recv()
+recv()  &lt;-----  send()
+</pre>
+For this lab, you are going to alter those send/receive loops in both vcsend 
+and vcrec to instead use <code>select()</code> to determine whether to call 
+<code>send()</code> or <code>recv()</code>. In the setup for 
+<code>select()</code>, tell it to monitor both stdin and the data socket for
+read activities.
+<p>
+You will call <code>send()</code> when there is read activity on standard in, which 
+indicates the user has typed something on the keyboard. If the user has typed 
+just a period (.) on a line by itself that indicates that the user wishes to 
+close the connection so you would close instead of calling <code>send()</code>. 
+</p><p>
+You will call <code>recv()</code> when there is read activity on the data
+socket. If <code>recv()</code> is successful (returns greater than 0), 
+print the data to the screen. Otherwise (returns 0 or negative number), 
+handle as the original vcrec.c handled those return values of 
+<code>recv()</code>.
+</p><p>
+Be sure to prompt the user for input in each iteration of the <code>select()</code>
+loop. The prompt can be any text you choose, but be sure to
+indicate that the user types '.' on a line by itself to close the connection.
+</p><p>
+Test your code by running vcrec in one terminal and then running vcsend in
+a second terminal. You must have two terminals running since both programs 
+will be watching stdin. Have vcsend connect to vcrec's port.
+You should be able to type in either program whenever you want and have the
+data display via stdout on the other program. Both programs should terminate
+when you type '.' on a single line in either program. 
+</p><p>
+Email your new and improved versions of vcsend and vcrec to 
+the instructor.
+</p><p>
+
+
+
+</p></body></html>

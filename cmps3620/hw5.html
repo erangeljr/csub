@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0051)https://www.cs.csub.edu/~melissa/cs376-f14/hw5.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 3260 - Homework 5</title>
+</head>
+
+<body>
+<h3>Homework 5 - Chapter 5</h3>
+<ol>
+<li>In order to deliver IP packets to the destination host on an Ethernet LAN, 
+    the gateway router translates the IP address to a MAC address using ARP. Is
+    ARP part of the data link layer or the network layer?
+</li><li>Do virtual circuit subnets need to use a routing algorithm that finds a 
+    path from any source to any destination? If so, at what point during a 
+    virtual circuit connection would this algorithm be needed?
+</li><li>Under what circumstances might a packet be delivered to the wrong 
+    destination or get lost in transit at the network layer?
+</li><li>A subnet has the same topology as given in Figure 5.13 on page 363. The
+    routers receive the following new link state packets: 
+    (A, SEQ, Age, B 7, E 3), (B, SEQ, Age, A 7, C 4, F 4), 
+    (C, SEQ, Age, B 4, D 5, E 2), (D, SEQ, Age, C 5, F 6), 
+    (E, SEQ, Age, A 3, C 2, F 10), (F, SEQ, Age, B 4, D 6, E 10). 
+    Compute the new shortest path(s) from A to all other routers.
+</li><li>Describe how choke packets and load shedding differ for congestion control
+    in datagram subnets.
+</li><li>Describe how tunneling can be used in a datagram subnet. 
+</li><li>An ISP offers static IP services over DSL. In their advertisement, they
+say they will allocate an 8 address subnet for each subscriber.
+<ol type="a">
+<li>What is the netmask for this subnet? 
+</li><li>Will all 8 addresses be available for use by the user? Explain your answer.
+</li></ol>
+</li><li>A router has received 206.45.68.0/22, 206.45.72.0/22 and 206.45.76.0/22.
+All use the same outgoing line. Can the router aggregate them? If so, give
+the aggregated address. If not, explain why not.
+</li><li>A router has an aggregated block with the address 19.28.0.0/17. A set of
+1024 addresses within that block, 19.28.60.0 to 19.28.63.255, is assigned to
+a different outgoing line than the rest of the block. Will the router have to
+deaggregate 19.28.0.0/17? Explain your answer.
+</li><li>A router has the following entries in its routing table:
+<pre>     Address/mask        Interface
+     138.168.0.0/16      eth0
+     192.168.1.0/24      eth1
+     71.138.209.16/29    eth2
+     default             eth3
+</pre>
+Which interface will be used for packets with the following IP addresses?
+<ol type="a">
+<li>136.168.201.110
+</li><li>71.138.209.157
+</li><li>192.168.1.50
+</li><li>71.138.209.18
+</li></ol>
+</li></ol>
+
+
+
+</body></html>

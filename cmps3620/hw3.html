@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0051)https://www.cs.csub.edu/~melissa/cs376-f14/hw3.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 376 - Homework 3</title>
+</head>
+
+<body>
+<h3>Homework 3 - Chapters 3 and 4</h3>
+Due: Friday October 10, 2014 at 11:55pm
+<p>
+Update: Questions 8-10 deferred to Homework 4 since we won't cover them this week.
+</p><p>
+Answer the following questions. Each question is worth 1 point.
+</p><ol>
+<li>If a packet from the network layer is broken into 10 frames and each frame 
+    has a 20% chance of being corrupted in transit, how many frames on average 
+    will be transmitted before the whole packet is received without error? 
+    Answer this question for the following types of data link protocols:
+    <ol type="a">
+    <li>A data link protocol that does no frame retransmission or error 
+        detection. So if a frame is corrupted in transit, the data link layer
+        will not detect it. The responsibility for error detection and recovery
+        is on the higher layers (ie the network or transport layer will 
+        retransmit the whole packet).
+    </li><li>A data link protocol with error detection that will retransmit a frame
+        that is corrupted in transit using selective repeat.
+   </li></ol>
+    Hint: Use the Binomial Distribution calculations for determining the 
+    probability of success for part (a).
+</li><li>The message 0110 0111 1110 0000 0111 1110 1111 1001 is to be transmitted. 
+    Show the bit sequence for the message if it is encoded using the following 
+    framing methods:
+    <ol type="a">
+    <li>Flag bytes with byte stuffing. FLAG = 0111 1110, ESC = 1110 0000
+    </li><li>Starting and ending flag bits with bit stuffing, FLAG = 0111 1110
+    </li></ol>
+</li><li>The character 'A' is represented in 8-bit ASCII as the bit string 
+    01000001. You are transmitting 'A' with an even-parity Hamming code. 
+    <ol type="a">
+    <li>What is the bit string that is transmitted? Show all work in computing 
+        each check bit, not just the resulting message.
+    </li><li>Suppose that while your answer to part (a) is in transit, bit 7 is 
+        corrupted (it flips to the opposite value). Show how the receiver would
+        detect and correct this error.
+    </li></ol>
+</li><li>Compute the CRC checksum for 0110 0010 1111 1110 divided by the 
+    generator polynomial 1001. Show all work (similar to Figure 3.8 in the 
+    book).
+</li><li>Under what conditions would error correcting codes be preferred 
+    over error detection with retransmission?
+</li><li>What features of the physical line should be considered when choosing a 
+    sending window size for a sliding window protocol? Remember that one 
+    purpose of sliding window is to keep the line in use as much as possible.
+</li><li>Why do most data link protocols put the frame checksum in the 
+    footer instead of in the header?
+<strike>
+</strike></li><li><strike>Describe how the delay and throughput would differ between pure 
+    ALOHA and slotted ALOHA under the following conditions. Which would be 
+    higher? Explain why.
+    <ol type="a">
+    <li>Low load (few stations transmitting)
+    </li><li>High load (many stations transmitting)
+    </li></ol>
+</strike></li><li><strike>Describe how the delay and throughput would differ between 
+    1-persistent CSMA and non-persistent CSMA.
+</strike></li><li><strike>You are designing a network that will use CSMA/CD for contention. 
+    The physical media has the following characteristics: 1.5Mbps, signal 
+    speed is 2/3rds the speed of light and maximum cable length is 500m.
+    <ol type="a">
+    <li>How long would the contention slot have to be?
+    </li><li>What would be the minimum frame size (i.e. how long would a frame have 
+        to be so it takes longer to transmit than the length of a contetion 
+        slot)?
+    </li></ol>
+</strike>
+</li></ol>
+
+
+
+</body></html>

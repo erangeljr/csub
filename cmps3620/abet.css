@@ -1,0 +1,65 @@
+body {
+}
+
+@media print{
+	body { 
+    font-family: "Times New Roman", "Liberation Serif", Times, Serif;
+	  font-size: 12pt; 
+		line-height: 19px;
+	}
+}
+
+#abet-box {
+	padding-top: 0px;
+	padding-bottom: 0px;
+  padding-left: 25px; 
+	padding-right: 25px;
+}
+
+div.abet-label {
+	padding-bottom: 3px;
+	font-weight: bold; 
+}
+
+div.abet-header {
+	position: relative; left: -25px; 
+	padding-top: 7px; padding-bottom: 7px;
+	font-weight: bold; 
+	text-decoration: underline;
+}
+
+div.abet-topheader {
+	text-align: center;
+	padding-bottom: 7px;
+	font-weight: bold; 
+}
+
+table.abet-table {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.abet-table td {
+	padding-right: 20px;
+}
+
+dl.abetdl
+{
+  position: relative;
+  margin: 0;
+  padding: 0;
+	padding-top: 3px;
+}
+
+.abetdl dt
+{
+  font-style: italic;
+}
+
+.abetdl dd
+{
+	padding-bottom: 3px;
+	font-weight: normal;
+}
+

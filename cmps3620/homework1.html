@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<body>
+<link rel="stylesheet" href="./cssReset.css">
+
+<style>
+	a:link    {color:#751;} /* unvisited link */
+	a:visited {color:#e74;} /* visited link */
+	a:hover   {color:#000;background:#ec9;} /* mouse over link */
+	a:active  {color:#0b0;} /* selected link */
+	body {
+		margin: 2% 5% 5% 5%;
+		font-family: serif;
+		background-color: #ffd;
+		color: #19193A;
+		font-weight: normal;
+		font-size: 11pt;
+		line-height:normal;
+	}
+	div {
+		margin: 3px;
+		padding: 4px;
+		border: 1px dashed black;
+		font-family: serif;
+		font-size: 11pt;
+		font-weight: 500;
+		color: #000;
+		background: #bdf;
+		padding-right: 20px;
+		height: auto;
+		height: 60px;
+	}
+	.notes {
+		background-color:papayawhip;
+		width:250px;
+		height:110px;
+	}
+	ul.a {
+		list-style-type:circle;
+		margin-left:26px;
+		line-height:150%;
+		/*color:#000000;*/
+	}
+	ul.b {
+		list-style-type:disc;
+		margin-left:26px;
+		line-height:100%;
+		/*color:#000000;*/
+		color:#664422;
+	}
+	b { font-weight: 900; }
+	code { font-family: monospace; }
+	pre { font-family: monospace; font-size: 10pt; }
+	input { background:#ed8; }
+	h3 {
+		font-size: 12pt;
+		font-weight: 600;
+		font-family: serif;
+		padding-top: 4px;
+		padding-bottom: 6px;
+	}
+	sup {
+	    vertical-align: super;
+	    font-size: smaller;
+	}
+</style>
+
+<script type="text/javascript">
+	//used to toggle hints on/off
+	var xb = [0];
+	for (var i=0; i<200; i++) xb[i] = 1;
+	function zzz(doc, text) {
+		document.getElementById(doc).innerHTML=text; 
+	}
+</script>
+<body>
+	
+	
+<h3>CMPS-224 Homework 1: Binary Arithmetic and Bit Operations</h3>
+Read <a href="http://www.nostarch.com/download/WGC_Chapter_3.pdf">
+Write Great Code, Vol 1, Ch 3 "Binary Arithmetic and Bit Operations"</a> 
+ before starting this homework.
+<p>
+Resources:
+<div class="notes">
+<ul class="a">
+<li><a href="http://www.easycalculation.com/hexa-decimal-binary.php">
+hex-dec-bin converter</a><br>
+<li><a href="http://tfinley.net/notes/cps104/twoscomp.html">
+two's complement notes</a><br>
+<li><a href="http://www.wolframalpha.com/">wolfram</a><br>
+<li><a href="./examples/week1/">week1 examples</a><br>
+<li><a href="http://www.khanacademy.org/science/computer-science/v/binary-numbers">khan academy </a><br>
+</ul>
+</div>
+
+<h3>Arithmetic Operations on Binary and Hexadecimal Numbers</h3>
+<p>
+<a href="http://www.wolframalpha.com/">WolframAlpha</a> 
+ will convert to decimal. Just type the
+ number in the search bar using the standard
+notation: 0x7af (hex), 11011b (binary), 0o373 (octal), where 0x denotes
+ hex, 'b' denotes binary, and 0o denotes octal.</p>
+<br>
+<br>
+
+
+1. Perform these binary operations. Then convert the binary results 
+    into decimal.<pre>
+          1011        1110       0111 0111        1100  
+        + 1110      - 1011     + 0000 1011      - 0101
+          ----        ----       ---------        ---- </pre> 
+<input type="button"value="hint"onClick="xb[ 1]^=1; zzz('x1', (xb[ 1])?'':
+'<pre>\
+           1011        1110       0111 0111        1100   <br>\
+         + 1110      - 1011     + 0000 1011      - 0101   <br>\
+           ----        ----       ---------        ----   <br>\
+          11001        0011       1000 0010         111   <br>\
+check: 11+14=25     14-11=3      119+11=130      12-5=7\
+ </pre>'
+);"><div id="x1"style="height:90px"></div><br>
+
+
+2. Perform these binary operations. Then convert the binary results 
+    into decimal.<pre>
+           1010                 ________
+         x 1001              11 | 10011   (include remainder)
+           ---- </pre>
+<input type="button"value="hint"onClick="xb[ 2]^=1; zzz('x2', (xb[ 2])?'':
+'<pre>\
+                           110   R. 1 <br>\
+      1010             ________       <br>\
+    x 1001          11 | 10011        <br>\
+      ----             -  11          <br>\
+      1010               ---          <br>\
+ + 1010                    11         <br>\
+   -------               - 11         <br>\
+   1011010 (26+64)         --         <br>\
+check: 10*9=90              01        <br>\
+                            check: 19 / 3 = 6 R. 1 </pre>'
+);"><div id="x2"style="height:170px"></div><br>
+
+
+3. Compute these bitwise logical operations. This is C syntax: '&' 
+	is bitwise AND; '|' is bitwise OR; '^' is bitwise XOR; '~' is NOT.
+<pre>
+          11100       11010       11001   ~1     ~0     
+        & 10101     | 10001     ^ 10010   --     --
+          -----       -----       -----
+</pre>
+<input type="button"value="hint"onClick="xb[ 3]^=1; zzz('x3', (xb[ 3])?'':
+'<pre>\
+      11100       11010       11001     ~1    ~0 <br>\
+    & 10101     | 10001     ^ 10010     --    -- <br>\
+      -----       -----       -----      0     1 <br>\
+      10100       11011       01011   <br>\
+</pre>'
+);"><div id="x3"style="height:90px"></div><br>
+
+4. Design a bitwise operation on bit string '101010' that will invert all 
+    the bits (i.e., flip 0 to 1 and 1 to 0). This computation is called
+	the 1's complement.<br>
+<input type="button"value="hint"onClick="xb[ 4]^=1; zzz('x4', (xb[ 4])?'':
+'<pre>\
+    101010  <br>\
+  ^ 111111   note: ^ is bitwise XOR (exclusive or)<br>\
+    ------  <br>\
+    010101 </pre>'
+);"><div id="x4"style="height:90px"></div><br>
+
+5. Design a bitwise operation for any bit string of length 8 that 
+    will *mask* the first 4 bits (i.e. convert the first 4 bits to
+    zeros). For example, on the bit string '1010 1011' you would 
+    end up with '0000 1011'.
+<input type="button"value="hint"onClick="xb[ 5]^=1; zzz('x5', (xb[ 5])?'':
+'<pre>\
+    1010 1011  <br>\
+  & 0000 1111  <br>\
+    ---------  <br>\
+    0000 1011  </pre>'
+);"><div id="x5"style="height:90px"></div><br>
+
+6. Design a bitwise operation for any bit string that will  invert
+    the least significant (rightmost) bit and leave all other bits unchanged. 
+    E.g., 1010 1010 will become 1010 1011 and
+    1010 1011 will become 1010 1010.
+<input type="button"value="hint"onClick="xb[ 6]^=1; zzz('x6', (xb[ 6])?'':
+'This is an exclusive OR operation:<pre>\
+    1010 1010   1010 1011  <br>\
+  ^ 0000 0001  ^0000 0001  <br>\
+    ---------   ---------  <br>\
+    1010 1011   1010 1010  </pre>'
+);"><div id="x6"style="height:90px"></div><br>
+
+7. For what integer values of num is this C condition true?<pre>
+           ((num  & 1) != 0) </pre>
+<input type="button"value="hint"onClick="xb[ 7]^=1; zzz('x7', (xb[ 7])?'':
+'When the parity bit is 1 the condition is true (the parity bit \
+ determines whether an integer is even or odd); i.e., this returns true if an \
+ integer is odd. Examples: <pre>\
+    1101         10100  <br>\
+  & 0001       & 00001  <br>\
+   -----         -----  <br>\
+    0001         00000  </pre>'
+);"><div id="x7"style="height:110px"></div><br>
+
+8. For what integer values of num is this C condition true?<pre>
+           ((num & 15) == 0)  </pre>
+<input type="button"value="hint"onClick="xb[ 8]^=1; zzz('x8', (xb[ 8])?'':
+'The condition returns true if the last 4 bits of num are all zeros. This \
+ occurs for all integers that have a factor of 16; i.e., if 16 divides num:\
+  Examples:<pre>\
+       10000        00000  <br>\
+    &  01111      & 01111  <br>\
+       -----        -----  <br>\
+       00000        00000  </pre>'
+);"><div id="x8"style="height:110px"></div><br>
+
+9. Convert the following binary, decimal or octal numbers into hexadecimal 
+    (base 16). 
+<pre>
+       1010 1110 1001 1100 (binary to hex)
+       11 1001 (binary to hex)
+       31 (decimal to hex)
+       67 (octal to hex)
+</pre>
+<input type="button"value="hint"onClick="xb[ 9]^=1; zzz('x9', (xb[ 9])?'':
+'For base 16 use these 6 additional digit: A (10) \
+B (11), C (12), D(13), E (14) and F(15). \
+Since one hex digit is 4 binary digits (bits), simply convert each 4-bit \
+chunk into its hex digit: <pre>\
+         A   E    9    C    <br>\
+       1010 1110 1001 1100   The hex number is: AE9C.  </pre>\
+If the binary number cannot be evenly divided into 4-bit chunks, pre-pend the \
+leftmost chunk with zeros to make 4 bits: <pre>\
+       11 1001 (binary) = 0011 1001 = 39 (hex)</pre>\
+If the decimal number is close to a power of 2, \
+convert into binary and then into hex: <pre>\
+      31 (decimal) = 100000 - 1 (binary) =  0001 1111 (binary) = 1F (hex)</pre>\
+To convert 67 octal to hex, convert to binary and then to hex. Each octal digit\
+ is 3 bits: <pre>\
+   67 (octal) = 110 111 (binary) = 0011 0111 = 37 (hex)<br>\
+   37 hex = 3x16 + 7 = 55 (decimal). </pre>'
+);"><div id="x9"style="height:210px"></div><br>
+
+10. Assume you want to compare bits 0, 6, 17 and 31 of two 32-bit strings, 
+    where the bit at position zero is the least significant bit. One way 
+    to do this is to AND each string with a mask that will keep the bits 
+    you want to compare and change all other bits to 0. If the resulting
+    integers are equal, then the bits are all the same. What mask do you need?
+    Give your answer in hex. 
+<input type="button"value="hint"onClick="xb[10]^=1; zzz('x10',(xb[10])?'':
+'The 32-bit string looks like this, where 0 denotes the bits you do NOT care\
+ about and 1 denotes the bits you DO want to compare:<pre>\
+    1000 0000 0000 0010 0000 0000 0100 0001  </pre>\
+For each 4-bit chunk in this string, give the value of the \
+position of the 1. The mask you need is thus: 0x80020041 </pre>'
+);"><div id="x10"style="height:90px"></div><br>
+
+11. Use your mask from question #10 to verify that bits 0, 6, 17 and 31 in these
+    two strings do in fact match: <pre>
+          1100 1010 0011 1001 1110 0000 1111 1100    
+          1000 0110 0001 0000 1111 1010 0101 1010  </pre>
+<input type="button"value="hint"onClick="xb[11]^=1; zzz('x11',(xb[11])?'':
+'<pre>\
+       1100 1010 0011 1001 1110 0000 1111 1100 <br>\
+    &  1000 0000 0000 0010 0000 0000 0100 0001 <br>\
+       --------------------------------------- <br>\
+       1000 0000 0000 0000 0000 0000 0100 0000 : 0x80000040 <br>\
+<br>\
+       1000 0110 0001 0000 1111 1010 0101 1010 <br>\
+    &  1000 0000 0000 0010 0000 0000 0100 0001 <br>\
+       --------------------------------------- <br>\
+       1000 0000 0000 0000 0000 0000 0100 0000 : 0x800000040. check. </pre>'
+);"><div id="x11"style="height:180px"></div><br>
+
+12. Perform the following conversions.  <pre>
+           2357 (decimal to binary) 
+           1011 1110 (binary to decimal)
+           347 (octal to decimal) 
+           A1E (hex to decimal)</pre>
+<input type="button"value="hint"onClick="xb[12]^=1; zzz('x12',(xb[12])?'':
+'2357 (decimal). Find the largest power of 2 in 2357. This is 2048 (2^11).\
+  Subtract that from the original number: 2357 - 2048 = 309. Find the largest \
+ power of 2 in 309. This is 256. Subtract 309-256 = 53. Find the largest power\
+ of 2 (32 = 2^5). Subtract. 53-32=21. The largest power of 2 in 21 is 16 (2^4).\
+ Subtract. 21-16=5. The largest power of 2 is 2^2. 5 - 4 = 1. The means you \
+ need 1 in the 1s place (odd). Now enter a 1 in the appropriate power position\
+ in the binary string: 2048 + 256 + 32 + 16 + 4 + 1 =  1001 0011 0101  <p/>\
+  1011 1110b = 255 - 64 - 1 = 190.   <p/>\
+  0o347 = 3x8^2 + 4x8^1 + 7x8^0 =  192 +  32 + 7 = 231   <p/>\
+  0xA1E =  10x16^2 + 1x16^1 + 14 = 2560 + 16 + 14 = 2590.  </pre>'
+);"><div id="x12"style="height:160px"></div><br>
+
+13. Translate -3 (decimal) into its binary representation in two's complement.
+    Assume your machine stores an integer in 8 bits, with bit 7 (the leftmost 
+	bit) as the sign bit where 0 denotes a positive integer; e.g., this is 3:
+<pre>
+        0000 0011
+</pre>
+    Check your work by adding -3 and 3 (you should get all zeros).
+<input type="button"value="hint"onClick="xb[13]^=1; zzz('x13',(xb[13])?'':
+'<pre>\Step 1. reverse all the bits in 3 (000 0011): 1111 1100 <br>\
+Step 2. Add 1 to the result: 1111 1101. <br>\
+  confirm: 0000 0011     3  <br>\
+         + 1111 1101  + -3  <br>\
+           ---------    --- <br>\
+           0000 0000     0  </pre>'
+);"><div id="x13"style="height:100px"></div><br>
+
+14. Modulo (mod or %) is an operation on the set of integers such that m mod 
+    n = m if m &lt; n otherwise m mod n is the remainder of m / n. Examples:
+<pre>
+          (7 mod 9) = 7. (7 mod 3) = 1. (7 mod 7) = 0. (63 mod 9) = 0. 
+          (7 mod 4) = 3. (21 mod 4) = 1.
+</pre>
+   Create a modulo-n counter for n = 16 using only a bitwise AND operation.
+   i.e., construct an operation M(x) that will take any 
+   integer x and
+   only return values y = 0..15. M is also counter, thus if M(x) = 15 then 
+   M(x+1) = 0. For all other values x, if M(x) = y, M(x+1) = y + 1. Test that 
+   your counter is working by applying x = 0, 15, 16 and 17. In modulo-16 the
+   results should be M(0) = 0; M(15) = 15; M(16) = 0; M(17) = 1. Note: there is
+   an error in WCG, Ch.3 pg.52. The note at the top of the page should read:
+<pre>
+      Note: 0x1f = 31 = 2^5 - 1, so n = 32 and m = 5.
+</pre>
+<input type="button"value="hint"onClick="xb[14]^=1; zzz('x14',(xb[14])?'':
+'To produce a modulo-n counter for n = 16 (2^4), simply AND the \
+input value x with 2^4 - 1 (this is 15 decimal, 0xF, 1111b). Check:\
+<pre>\
+x = 0; 0000 & 1111 = 0000. check.<br>\
+x = 15; 0xF & 0xF = 1111 & 1111 = 1111. check. <br>\
+x = 16; 0x10 = 10000 & 01111 = 0000. check. <br>\
+x = 17; 0x11 = 10001 & 01111 = 00001. check.</pre>'
+);"><div id="x14"style="height:110px"></div><br>
+
+15. The syntax for C's shift logical left and shift logical right bit 
+	operations is:
+<pre>
+   E1 &lt;&lt; 2 is E1 left-shifted 2 bits; vacated bits are filled with zeros
+   E1 &gt;&gt; 2 is E1 right-shifted 2 bits; vacated bits are filled with zeros
+</pre>
+    What does this C function accomplish and what is the purpose of m?
+<pre>
+      unsigned int n = 176;  //unsigned int holds a positive integer in 32 bits
+      unsigned int m = 1 &lt;&lt; 31;
+      while (m) {
+        char c = (n &amp; m) ? '1' : '0';
+        write(1,c,1);        // write one character to standard out
+        m = m &gt;&gt; 1;
+      }
+</pre>
+<input type="button"value="hint"onClick="xb[15]^=1; zzz('x15',(xb[15])?'':
+'The code will display the value of n as it is stored in memory, which is \
+ the binary representation of 176 as a 32-bit string. The purpose of m is \
+ to mask off one bit at a time in n.'
+);"><div id="x15"style="height:50px"></div><br>
+
+16. What is the decimal value of m after this shift logical left operation?
+<pre>
+       unsigned int m = 21;
+       m &lt;&lt; 2;   # the 2 means shift left by 2 bits
+</pre>
+<input type="button"value="hint"onClick="xb[16]^=1; zzz('x16',(xb[16])?'':
+'A left shift by x on a positive integer is equivalent to multiplying that \
+integer by 2^x. In this case  21*4 = 84.'
+);"><div id="x16"style="height:40px"></div><br>
+
+17. What is the decimal value of m after these right shift operation? Assume
+integer division so the remainder is lost.
+<pre>
+       unsigned int m = 64;
+       m >> 2;   # shift right 2 bits 
+       unsigned int m = 9;
+       m >> 3;  # shift right 3 bits
+</pre>
+<input type="button"value="hint"onClick="xb[17]^=1; zzz('x17',(xb[17])?'':
+'A right shift by x on a positive integer is equivalent to dividing that \
+ integer by 2^x. In the first case  64/4 = 16. In the second, 9/8 = 1 \
+ (the remainder is lost in integer division)'
+);"><div id="x17"style="height:50px"></div><br>
+
+18. What is the decimal value of m after this left shift operation if negative
+integers are stored in 8 bits and two's complement?
+<pre>
+       int m = -5;
+       m &lt;&lt; 1;
+</pre>
+<input type="button"value="hint"onClick="xb[18]^=1; zzz('x18',(xb[18])?'':
+'<pre>\
+    5:  0000 0101                             <br>\
+   -5:  1111 1011                             <br>\
+-5<<1:  1111 0110  The decimal value is -10.  <br>\
+     +  0000 1010 (10).                       <br>\
+        ---------                             <br>\
+        0000 0000 check.                      </pre>'
+);"><div id="x18"style="height:110px"></div><br>
+
+19. What is the decimal value of m after this right shift operation if negative
+integers are stored in 8 bits and two's complement?
+<pre>
+      int m = -8;
+      m &gt;&gt; 1;
+</pre>
+<input type="button"value="hint"onClick="xb[19]^=1; zzz('x19',(xb[19])?'':
+'<pre>\
+    8:  0000 1000  <br>\
+   -8:  1111 1000  <br>\
+-8>>1:  0111 1100 (12+16+32+64 is clearly not -4). </pre>\
+ A shift right on a negative integer flips the high order (H0)\
+ sign bit so the integer value is not what you would expect.\
+ An arithmetic shift right solves this problem by only \
+ shifting bits past the high order bit. '
+);"><div id="x19"style="height:110px"></div><br>
+
+<!--
+20. What is displayed after executing this C code (see <a href="./examples/week01/structs.c">structs.c</a>):<pre>
+  struct Bits {
+    unsigned int a:1;   // bit field of size 1 bit
+    unsigned int :0 ;   // unnamed bit field of size 0 forces b to be aligned
+    unsigned int b:2;   // named bit field of size 2
+    unsigned int c:3;   // named bit field of size 3 
+  } bits;
+  bits.a = 7; 
+  bits.b = 6; 
+  printf("%d \n", bits.a);
+  printf("%d \n", bits.b);  </pre>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q20Area');
+myArea.innerHTML=
+'Assigning 7 (111b) to a bit field of size 1 truncates all but the  least \
+ significant bit, thus one is assigned to a. Assigning 6 (110b) to a bit field\
+  of size 2 truncates all but the last two bits, thus 2 is assigned to b. \
+ Values  1 and 2 are displayed.'; ">
+
+<DIV class="ans" id="Q20Area" STYLE="background-color: DEE; height:50px;" >&nbsp; </DIV>
+-->
+
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</body>
+</html>
+

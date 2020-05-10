@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0052)https://www.cs.csub.edu/~eddie/cmps3620/lab5.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 376 - Lab 5</title>
+</head>
+<body>
+<h3>Lab 5 - Handling Multiple Clients</h3>
+<p>
+The purpose of this lab is to learn how to handle multiple clients in a 
+TCP/IP server using children processes and signal handling. 
+</p><p>
+For this lab, we will be looking at <code>simple_daemon.c</code> and
+<code>simple_shell.c</code> from the code tarball
+<a href="https://www.cs.csub.edu/~eddie/cmps3620/code/lab5/lab5_files.tgz" target="_blank">lab5_files.tgz</a>. Download
+the tarball with:
+</p><pre>wget http://www.cs.csub.edu/~eddie/cmps3620/code/lab5/lab5_files.tgz
+</pre>
+Compile the program with the command:
+<pre>make daemon
+</pre>
+<p>
+The <code>s_daemon</code> program is a very simple TCP/IP server that will host
+up to MAX_CHILDREN concurrent clients.  The program name comes from a Unix 
+naming convention which calls servers "daemons" (hence many server programs 
+having the letter "d" in their name, such as sshd, named and so on). This is a 
+very simple, unauthenticated, plain-text Internet daemon. 
+</p><p>
+Once a client has connected, <code>s_daemon</code> forks a child process to 
+handle that client. The child process then spawns a <code>s_shell</code> 
+process to interact with the user. The <code>s_shell</code> program is a very 
+limited shell since there is no authentication with this server. We must spawn
+a seperate process to interact with the user because <code>s_daemon</code> can
+only interact with one client at a time in a single-threaded or single process
+mode. <code>s_daemon</code>'s child process handles the data passing over the
+TCP socket while the <code>s_shell</code> process actually processes the data
+and does something semi-useful. 
+</p><p>
+From <code>s_shell</code>'s perspective, it is interacting with the user via
+standard in and standard out, not a socket. This is because 
+<code>s_daemon</code> sends the data it receives from the socket into the
+stdin pipe for <code>s_shell</code>. Likewise, <code>s_daemon</code> reads 
+the data coming off <code>s_shell</code>'s stdout pipe and sends that over
+the socket. This is a division of labor where the daemon focuses purely on
+managing sockets while the shell focuses on interacting with the user. 
+</p><p>
+To start <code>s_daemon</code>, use the command:
+</p><pre>./s_daemon
+</pre>
+<p>
+The program will display the port number to which daemon is bound. Open another 
+terminal and try to telnet to the daemon. For example, if it says it is on
+port number 19234, the command would be:
+</p><pre>telnet localhost 19234
+</pre>
+To end the connection, within the telnet application either give the command
+"quit" or type the keyboard sequence CRTL-]. The "quit" command in 
+<code>s_shell</code> will terminate the connection from the server side.
+The CTRL-] keyboard sequenced causes telnet to suspend the connection and 
+give you a telnet shell which looks like <code>telnet&gt;</code>. From here, 
+you can give the command "close" to terminate the current connection from the 
+client side. Then you can give the command "quit" to exit telnet.
+<p>
+To kill the <code>s_daemon</code> process, return to the terminal you were 
+running it in and give the CTRL-C sequence. <code>simple_daemon.c</code> has a 
+signal handler for CTRL-C which will call <code>parent_terminate()</code>. 
+This function cleans up after the process before exiting.
+</p><p>
+Try running the daemon with just one telnet connection at first. Then run the
+daemon with multiple telnet connections at the same time (you will need one 
+terminal for each connection). Pay attention to what is printed to the daemon 
+terminal when children connect and disconnect. 
+</p><p>
+The process flow is roughly as follows:
+</p><pre>     s_daemon parent              s_daemon child             s_shell process
+     ---------------              --------------             ---------------
+     bind the socket
+     listen on socket
+ --&gt; accept connection
+|    fork child        -------&gt;  dialog_with_client
+ --- repeat                        create pipes
+                                   spawn s_shell  --------&gt;  read from stdin pipe
+                              --&gt;  set up select       |     process command
+                             |     if socket data      |     write to stdout pipe
+                             |       read socket        ---  repeat while not quit
+                             |       send to s_shell
+                             |     if s_shell data
+                             |       read s_shell
+                             |       send to socket
+                              ---  repeat until error
+                                     or exit
+</pre>
+
+<h4>Lab Writeup</h4>
+Answer the following questions as your lab writeup. Submit your answers via
+Moodle.
+<ol>
+<li>Unlike vcrec.c, which could only accept a single connection at a time, 
+    simple_daemon.c can accept multiple connections at once. How does it 
+    accomplish this?
+</li><li>Try giving a CTRL-C in a telnet terminal. Why does this not cause telnet to exit?
+</li><li>What happens when you connect to s_daemon with multiple simultaneous telnet
+    commands? Is there any "overlap" in the commands you type in each s_shell
+    window (i.e. do you get the output for commands typed in another window)?
+</li><li>Which signals will cause simple_daemon.c to exit gracefully via parent_terminate()?
+</li><li>In dialog_with_client(), the actual work of sending and receiving data 
+    from the children processes is done. How does this code tell when you have 
+    terminated the connection by giving the s_shell command "quit"?
+</li><li>What does the child_terminate() function do? How does it differ from the
+    kill_child() function?
+</li><li>Given what you have learned in this lab, how do you think the SSH daemon 
+    on Sleipnir handles an incoming SSH connection from Putty? Hint: look at 
+    the command ps x right after you've logged in to Sleipnir and note what 
+    processes you have running. 
+</li></ol>
+
+
+
+</body></html>

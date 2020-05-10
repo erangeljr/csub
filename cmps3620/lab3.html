@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0052)https://www.cs.csub.edu/~eddie/cmps3620/lab3.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 376 - Lab 3</title>
+</head>
+<body>
+<h3>Lab 3 - Signals and select()</h3>
+Due: Next Friday
+<p>
+In this lab, we will explore two concepts central to many network programs: 
+signal masks and select(). These concepts form the basis of allowing a program
+to use full-duplex communication. Download the code 
+<a href="https://www.cs.csub.edu/~eddie/cmps3620/code/lab3/select.c" target="_blank">select.c</a> 
+to your current directory with the command:
+</p><pre>wget http://www.cs.csub.edu/~eddie/cmps3620/code/lab3/select.c
+</pre>
+Compile and run the code with the commands:
+<pre>gcc -o select select.c
+./select
+</pre>
+<p>
+</p><h4>Part 1: Signals</h4>
+Signals are notifications sent by the operating system or the user to 
+processes. The signals can affect the behavior of the process. For example,
+if you are running a program in the foreground of your shell and you type
+CTRL-C, this sends the SIGINT signal to the process. By default, the process
+will terminate when it receives this signal. The coder can also set up signal
+handlers to change the default behavior of the process when it receives 
+certain specific signals. 
+<p>
+Read the manual page on signals using the following command:
+</p><pre>man 7 signal</pre>
+
+At the start of the code, information about the process's current signal
+mask is printed out. Some signals can either be ignored entirely (blocked)
+or a signal handler can be set up. The signal handler is a function in the
+program which processes the signal. Look at the code and see how SIGCHLD
+and SIGQUIT are blocked while SIGINT is given a signal handler.
+
+<h4>Part 2: select()</h4>
+The purpose of select() is to give the program a way of waiting for I/O events
+or errors from specified file descriptors or sockets. For example, if the user
+types something on the keyboard, this will be an event for the stdin file
+descriptor. If data is waiting on the network socket, i.e. something can be
+read with recv(), then this would also be an I/O event. 
+<p>
+The second part of the program enters a select loop. You can type a string,
+give a control sequence (CTRL-C for SIGINT, CTRL-Z for SIGSTOP, etc) or do
+nothing and wait for select() to time out. If you open a second terminal, you
+can send additional signals to the program using the <code>kill</code>
+command. The program prints out examples of using the <code>kill</code>
+command before printing the prompt.
+</p><p>
+If you type CTRL-Z, you will suspend the process. To bring it back, use the
+following command:
+</p><pre>fg 1
+</pre>
+That will resume the process but not actually print any new prompts. 
+
+<h4>Part 3: Lab Write-Up</h4>
+Answer the following questions in Moodle. You can use either the text box
+or upload a plain text, Open Office or PDF document.
+<ol>
+<li>What is the purpose of SIGCHLD and SIGQUIT according to the man page?
+</li><li>What is the full list of signals marked in <code>show_signals</code> as 
+    important signals? Just give the signals, not their purpose
+</li><li>Pick three signals from Question 2 that you did not describe in Question 1 
+    and describe their purpose.
+</li><li>Look at the man page for <code>sigemptyset</code> and describe its purpose 
+    in this code.
+</li><li>Look at the man page for <code>sigprocmask</code> and describe how it is 
+    used in in this code.
+</li><li>Look at the source code. How is the SIGINT (CTRL-C) signal handler set up
+    in main()?
+</li><li>How does the code tell select() to watch stdin for activity?
+</li><li>One of the issues with Lab 2 is there was no way to check both the socket
+    and the keyboard for data at the same time, so we could only recode the
+    programs to use half-duplex communication. How would you use concepts 
+    explored in this lab to allow full duplex communication between vcrec
+    and vcsend? Describe the general code changes you would need to make, but
+    do not actually code the changes (we will code the changes for next 
+    week's lab). 
+</li></ol>
+
+
+
+</body></html>

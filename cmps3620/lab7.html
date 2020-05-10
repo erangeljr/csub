@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0052)https://www.cs.csub.edu/~melissa/cs376-f14/lab7.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <meta http-equiv="content-type" content="txt/html">
+  <title>CMPS 376 - Lab 7</title>
+</head>
+<body>
+<h3>Lab 7 - TCP Initial Sequence Number Vulnerability</h3>
+Due: Friday by 12:30pm
+<p>
+One issue with the selection of an initial sequence number (ISN) for the TCP 
+connection is spoofing. If the initial sequence number is guessable, an
+attacker can spoof the TCP handshake. The canonical attack has three 
+parties: A the spoofed host, B the hapless server, X the attacker. The
+attacker first floods A to prevent it from receiving messages from B.
+This can be accomplished by any number of denial of service attacks. The
+attacker then connects to B to get sequence number data from B. Let's 
+call this sequence number ISNb. If B is using a sequence number scheme 
+that is easy to guess, the attacker can extrapolate the next sequence 
+number(s) that B will use. Let's call this number ISNb'. The attacker 
+will then connect to B pretending to be A. B will send a reply to A, that 
+will never get there due to the denial of service on A, that contains 
+B's sequence number, z. If the attacker has guessed correctly, z = ISNb'.
+The attacker can then spoof an acknowledgement of ISNb', and B will be
+tricked into thinking it has a connection with A. The flow of events can
+be summarized as follows:
+</p><pre>   X-&gt;A: Flood A                &lt;--- Denial of service
+   X-&gt;B: SYN, ISNx              &lt;--- Attacker makes legitimate connection to B
+   B-&gt;X: SYN, ISNb, ACK(ISNx+1) &lt;--- From ISNb, X can guess next ISN, ISNb'
+   X-&gt;B: Closes connection      &lt;--- Legit connection no longer needed
+   Ax-&gt;B: SYN, ISNx'            &lt;--- From attacker, spoofing A
+   B-&gt;A: SYN, z, ACK(ISNx'+1)   &lt;--- Goes to real A, attacker does not see z, guesses z = ISNb'
+   Ax-&gt;B: ACK(ISNb'+1)          &lt;--- X uses guessed ISNb' to generate ACK
+</pre>
+If the attacker can also guess how B will increment its sequence number during
+the connection, then the attacker can continue sending data to B while posing
+as A. The increment is usually the size of the data that B sends. This can be 
+guessed if the application protocol uses relatively fixed sized responses from
+B for certain input. 
+<p>
+Note that if the attacker can also guess ISNb' without connecting to B (such as 
+if B is using a clock-based sequence number), then the connection from X-&gt;B 
+is not needed and the attacker can skip down to the Ax-&gt;B step. 
+</p><p>
+Also note that the attacker does not even need to be able to see packets traveling 
+from B to A to make this attack succeed. As long as B uses a guessable sequence
+number generator and sends predictably sized responses, the attacker can guess
+the appropriate sequence number to use in the ACK field without any additional
+input. 
+</p><p>
+The following papers, whitepages and advisories give more details about the
+ISN vulnerability:
+</p><ul>
+<li><a href="http://pdos.csail.mit.edu/~rtm/papers/117.pdf">Robert Morris, A Weakness in the 4.2BSD Unix TCP/IP Software</a> - 1985 <br>
+This details the above scenario and how it is particularly easy on the 4.2BSD 
+kernel. The 4.2BSD kernel increments the sequence number by fixed amounts, 
+which makes it easy to guess the next sequence number to be used by the server.
+</li><li><a href="http://csrc.nist.gov/publications/secpubs/ipext.ps">Steve Bellovin, Security Problems in the TCP/IP Protocol Suite</a> - 1989 <br>
+This paper proposes some solutions to the ISN problem. One solution is to use
+randomized increments, since any time-based increments can be guessed. Another
+solution is to use a cryptographic ISN generator with a well-chosen key.
+</li><li><a href="http://www.cert.org/advisories/CA-1995-01.html">CERT Advisory CA-1995-01: IP Spoofing Attacks and Hijacked Terminal Connections</a> - Jan 1995 (original), Sep 1997 (revised) <br>
+This advisory highlights how spoofing can be used to hijack a system or 
+overcome IP-based authentication.
+</li><li><a href="http://www.ietf.org/rfc/rfc1948.txt">RFC 1948: Defending Against Sequence Number Attacks</a> - May 1996 <br>
+This RFC proposes a solution for the ISN selection problem. The solution is
+to have a sequence number space for each connection. This is accomplished by
+adding a hash of the connection information (srcIP, dstIP, srcPort, dstPort)
+to the old ISN generator (timer based). The hash should also include some 
+secret data (not guessable). It does not solve the issue of an attacker that
+can see all of the handshake. Such an attacker can still guess sequence 
+numbers of an ongoing connection.
+</li><li><a href="http://www.kb.cert.org/vuls/id/498440">CERT Vulnerability Note VU#498440: Multiple TCP/IP implementations may use statistically predictable initial sequence numbers</a> - Mar 2001 <br>
+This is an advisory that there is a statistical weakness in using psuedo-random 
+increments to the sequence number.
+</li><li><a href="http://www.cert.org/advisories/CA-2001-09.html">CERT Advisory CA-2001-09: Statistical Weaknesses in TCP/IP Initial Sequence Numbers</a> - May 2001 (original), Feb 2005 (revised) <br>
+This advisory gives more information about the statistical weakness of using 
+pseudo-random increments. It also gives more detailed information about the 
+variations on the attack that can be used. It gives several approaches that 
+can be used to mitigate the problem.
+</li></ul>
+Two interesting whitepapers by Michal Zalewski give a graphical 
+representation of the ISN generator. The author analyzed various ISN generators
+and plotted them on a graph. The more the points in the graph cluster, the
+easier it would be for an attacker to guess the next sequence number. A table
+below each graph also summarizes the attack feasibility for that graph as a
+percentage. The higher the percentage, the more likely an attacker is to be
+able to guess the sequence number. 
+
+The first whitepaper is 
+<a href="http://lcamtuf.coredump.cx/oldtcp/tcpseq.html">Strange Attractors and TCP/IP Sequence Number Analysis</a> 
+published in 2001. 
+
+The second whitepaper is
+<a href="http://lcamtuf.coredump.cx/newtcp/">Strange Attractors and TCP/IP Sequence Number Analysis - One Year Later</a> 
+published in 2002. 
+Read through both of these whitepapers to see the importance of a good initial 
+sequence number.
+<p>
+Another intriguing consequence of this research into ISN predictability is
+using the ISN to fingerprint the system. Even if the operating system has taken
+care to make its ISN unpredictable, if it has a unique ISN generator, it can
+still be identified. Take for example the
+<a href="http://insecure.org/nmap/osdetect/osdetect-methods.html">Nmap
+fingerprinting methods</a>.
+Michal Zalewski also covers this issue in Chapter 10 of his book
+<a href="http://www.oreilly.com/catalog/1593270461/">Silence on the Wire</a>. 
+</p><p>
+</p><h4>Questions</h4>
+Upload the answers to these questions as your lab writeup.
+<ol>
+<li>Look at the graph for Cisco IOS in the original Strange Attractors article 
+and the 2002 followup. How has Cisco's ISN generator changed? Is this change 
+for the better?
+</li><li>Besides Cisco IOS, name three operating systems that performed poorly in
+original Strange Attractors article.
+</li><li>Of the poor performers from Question 2, have any improved their generator
+in the 2002 followup article?
+</li><li>One of the common recommedations in the above articles is to use a 
+cryptographically secure protocol for communication instead of TCP. Give
+your theory as to why this has not become a widespread solution.
+</li><li>Why is the ability to fingerprint a system based on the ISNs a concern?
+</li></ol>
+
+<h3>Additional Information</h3>
+The following is not required to complete the lab, but is interesting to note.
+
+<h4>Similar Weaknesses in Other TCP/IP Fields</h4>
+IPv4 supports packet fragmentation, with the packet identification and the 
+fragment offset used to reconstruct the original packet. The IP specification
+requires that the identification field (ID) be unique for every 
+source/destination/protocol tuple within the maximum packet lifetime setting 
+(typically two minutes). Originally, the specification also recommended that 
+the ID field be uniquely set for all packets, even if they are not fragmented 
+(RFC 6864 from Feb 2013 recommends that unique IDs only be used on fragmented
+packets and allows the ID to be repeated in non-fragmented packets).
+<p>
+Since the specification originally required unique IDs for all packets within
+the maximum packet lifetime, many systems used a very predictable method of
+generating ID values, such as increasing the value by 1 for each new 
+source/destination/protocol tuple. One can use this predictability to 
+gauge how many packets a machine has processed since you last connected to
+them. This can be useful as a side-channel attack to portmap a victim.
+This method is used by Nmap to do their 
+<a href="http://nmap.org/book/idlescan.html">IP ID scan (Idle scan)</a>.
+</p><p>
+Additionally, an attacker can use this predictability to interfer with normal
+fragment reassembly by injecting spoofed packets into the subnet. This can
+cause destruction of data (spurious injected fragments), intentional changes
+to data (specially crafted fragments to overwrite other legitimate fragments),
+or interception of data. See the following paper for more details:
+<a href="http://www.usenix.org/event/woot11/tech/final_files/Gilad.pdf">Fragmentation Considered Vulnerable</a> by Yossi Gilad and Amir Herzburg.
+
+</p><h4>Half-Open Connections and SYN Cookies</h4>
+A popular denial of service attack is to flood a server with spoofed SYN 
+packets and/or to use a botnet to send SYN packets (without spoofing). When 
+the server receives a SYN packet, it stores the connection information in a
+table and then sends out the SYN/ACK. If the SYN/ACK is never responded to
+(with either an ACK or a RST), the entry stays in the table and the table 
+space can be quickly exhausted. This is the basis of a SYN flood attack.
+<p>
+SYN cookies are a way to create the server's ISN such that the server doesn't
+need to store information in the connection table to realize an incoming ACK
+is the last packet of the connection establishment handshake. There is also 
+an extension header (TCP Cookie Transactions) which supports a similar 
+exchange, but it requires both the client and server understand the extension
+header (e.g. it can be easily bypassed by a non-compliant botnet). 
+</p><p>
+The SYN cookie consists of a timestamp (5 bits), an encoded maximum segment
+size (MSS) requested for the transaction (3 bits), and a cryptographic hash 
+computed over the src IP, src port, dest IP, dest port tuple and the timestamp 
+(24 bits). This is sent as the server's chosen ISN. (Note: there is some 
+predictability here because of the timestamp and encoded MSS). When the client
+sends the ACK with the server's ISN+1, the server subtracts 1 and verifies 
+the timestamp and cryptographic hash.
+
+
+
+</p></body></html>
