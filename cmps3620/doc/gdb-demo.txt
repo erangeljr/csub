@@ -1,0 +1,174 @@
+ GDB Demo
+ d meyers
+ 
+ Actual addresses will differ across debugging sessions but the relative
+ location of the text, data, and stack segments will be the same. This demo 
+ uses the source below compiled with: 
+
+    $ gcc -o demo -g gdb-demo.c  
+
+ The -g switch tells the compiler to insert debugging directives. Load the
+ executable into gdb:
+
+    $ gdb demo
+
+ To log your session to gdb.txt:
+  
+     gdb> set logging on
+      ...
+     gdb> set logging off
+
+  Gdb commands used in this session:
+  (gdb) break
+  (gdb) run
+  (gdb) step
+  (gdb) info frame
+  (gdb) info stack
+  (gdb) cont
+  (gdb) finish
+  (gdb) return
+ 
+/* filename: gdb-demo.c */
+
+ # include <stdlib.h> 
+ int x = 3;
+  
+ int fac ( int n ) 
+ {
+    int * iptr = malloc(sizeof(int));
+    *iptr = n; 
+    if ( n <= 1 ) return 1;
+    else return n * fac ( n - 1 );
+ }
+/* end gdb-demo.c */
+ 
+ 
+ GDB SESSION #1:
+    (gdb) break main
+ Breakpoint 1 at 0x4004c3: file gdb-demo.c, line 16.
+    (gdb) break fac
+ Breakpoint 2 at 0x40049f: file gdb-demo.c, line 10.
+    (gdb) run
+ Starting program: /home/fac/donna/public_html/cs224/examples/week02/demo 
+ Breakpoint 1, main () at gdb-demo.c:16
+ 16     fac(x);
+    (gdb) step 
+ Breakpoint 2, fac (n=3) at gdb-demo.c:10
+ 10     if ( n <= 1 ) return 1;
+    (gdb) p &x
+ $1 = (int *) 0x600898
+    (gdb) p &n
+ $2 = (int *) 0x7fffffffe4fc
+    (gdb) cont
+ Continuing.
+ Breakpoint 2, fac (n=2) at gdb-demo.c:10
+ 10     if ( n <= 1 ) return 1;
+    (gdb) p &n
+ $3 = (int *) 0x7fffffffe4dc
+    (gdb) cont
+ Continuing.
+ Breakpoint 2, fac (n=1) at gdb-demo.c:10
+ 10     if ( n <= 1 ) return 1;
+    (gdb) p &n
+ $4 = (int *) 0x7fffffffe4bc
+    (gdb) info stack
+ #0  fac (n=1) at gdb-demo.c:10
+ #1  0x00000000004004b9 in fac (n=2) at gdb-demo.c:11
+ #2  0x00000000004004b9 in fac (n=3) at gdb-demo.c:11
+ #3  0x00000000004004d0 in main () at gdb-demo.c:16
+
+    (gdb) x/i 0x4004d0         # i displays memory in instruction code format
+ 0x4004d0 <main+17>:  mov    $0x0,%eax
+
+    (gdb) p $sp                # sp points to the top of the stack
+ $5 = (void *) 0x7fffffffe4b0
+
+    (gdb) p $fp                # fp points to bottom of current frame (top of
+ $6 = (void *) 0x7fffffffe4c0                                  previous stack)
+
+    (gdb) p $pc                # pc program counter - addr of next instruction
+ $7 = (void (*)()) 0x40049f <fac+11>
+
+    (gdb) x/i 0x40049f         # i displays memory in instruction code format
+ 0x40049f <fac+11>:  cmpl   $0x1,-0x4(%rbp)
+
+    (gdb) info frame
+ Stack level 0, frame at 0x7fffffffe4d0:
+  rip = 0x40049f in fac (gdb-demo.c:10); saved rip 0x4004b9
+  called by frame at 0x7fffffffe4f0
+  source language c.
+  Arglist at 0x7fffffffe4c0, args: n=1
+  Locals at 0x7fffffffe4c0, Previous frame's sp is 0x7fffffffe4d0
+  Saved registers:
+   rbp at 0x7fffffffe4c0, rip at 0x7fffffffe4c8
+    (gdb) info reg
+ rax            0x1  1
+ rbx            0x0  0
+ rcx            0x0  0
+ rdx            0x7fffffffe608  140737488348680
+ rsi            0x7fffffffe5f8  140737488348664
+ rdi            0x1  1
+ rbp            0x7fffffffe4c0  0x7fffffffe4c0
+ rsp            0x7fffffffe4b0  0x7fffffffe4b0
+ r8             0x7ffff7dda300  140737351885568
+ r9             0x7ffff7decdc0  140737351962048
+ r10            0x0  0
+ r11            0x7ffff7a9cb50  140737348488016
+ r12            0x4003b0  4195248
+ r13            0x7fffffffe5f0  140737488348656
+ r14            0x0  0
+ r15            0x0  0
+ rip            0x40049f  0x40049f <fac+11>
+ ....
+    (gdb) quit
+
+ 
+ Observations:
+ Frame #0 (the most recent call) is always at the top of the stack. Memory
+ addresses decrease as you move from the bottom to the top of the stack; the 
+ stack grows from high to low addresses. The text section is here:
+      0x4004d0 <main+17>:  mov    $0x0,%eax
+
+ The size of the current frame is $fp - $sp.
+
+ The global variable x, at address 0x600898, is in the data section.
+ 
+
+GDB SESSION #2:
+This session is also of gcd-demo.c. The purpose of this session is to 
+demonstrate where the heap is located and how the heap grows.
+
+(gdb) p iptr
+$10 = (int *) 0x601050
+(gdb) p &iptr
+$11 = (int **) 0x7fffffffe498
+(gdb) p *iptr
+$12 = 1
+
+
+Breakpoint 1, main () at gdb-demo.c:20
+20     fac(x);
+
+$1 = (int *) 0x600900  # address of text section
+Continuing.
+
+Breakpoint 2, fac (n=3) at gdb-demo.c:12
+$2 = (int *) 0x400400
+$3 = (int **) 0x7fffffffe4f8
+$6 = 3
+Continuing.
+
+Breakpoint 2, fac (n=2) at gdb-demo.c:12
+$7 = (int *) 0x601030
+$8 = (int **) 0x7fffffffe4c8
+$9 = 2
+Continuing.
+
+Breakpoint 2, fac (n=1) at gdb-demo.c:12
+$10 = (int *) 0x601050
+$11 = (int **) 0x7fffffffe498
+$12 = 1
+
+Observations:
+The heap grows from low to high addresses and is located above the text and
+data segments.

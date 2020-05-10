@@ -1,0 +1,254 @@
+<HTML> <HEAD> <TITLE>CMPS 450: HW 07</TITLE> <style type=text/css>
+DIV.ans { margin: 3px 0px 10px 3px; padding: 4px; border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #666;
+ background-color: #DEE; padding-right: 5px; height: 50px; width: 800px; }
+DIV.box { position: relative; float: left; margin: 0px 0px 2px 0px; padding: 
+4px; # border: 1px dashed black; font-family: helvetica; font-size: 10pt; 
+font-weight: 500; color: #19193A; background-color: #eee; padding-right: 0px; 
+width: 450px; height: 60px; } h5 { background-color: yellow; width: 300px;}
+BODY { margin: 2% 15% 5% 5%; font-family: helvetica; background-color: white;
+  color: 19193A; font-size: 10pt; font-weight: 500;}
+</STYLE> </HEAD>
+<BODY background="code.gif" TEXT="#000000" LINK="#FB6A2D" VLINK="#993300" ALINK="#FF6600">
+ <h3>CMPS 450 Week 07: Parsing Techniques, Chapter 4.6</h3>
+
+You do not need to submit anything for this homework. The homework is
+ designed for self-evaluation on the reading material. It is
+  assumed that you know this material as you construct
+ your compiler and before your take-home final exam.
+
+<p>
+<b>resources:</b><br>
+<a href="./ch04c_notes.html">chapter 4.6 lecture notes</a><br>
+ch 4 dragon book<br>
+<h3>   SECTION 4.6  "Bottom-up LR Parsing: Simple LR" </h3>
+<pre class=verbatim>
+01. Give all the viable prefixes for the grammar G 
+       S -> 0S1 | 01
+    A viable prefix for grammar G is a prefix of some right-sentential form that
+    ends no farther right than the end of the handle of that right-sentential
+    form. In shift-reduce parsing of an LR(0) grammar by an LR(0) automaton, 
+    the stack always contains a viable prefix for G. (see Sec 4.6.5 pg 256).
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q1Area');
+myArea.innerHTML=
+'The handles for G are 0S1 and 01.<br/>\
+Since handles can be prefixed by any number of terminals on the stack, the \
+set of <br/> all viable prefixes for G is the set S U T, where <p/>\
+S = { 01, 001, 0001, 00001, ... } and T = { 0S, 00S, 000S, ... } '; ">
+<DIV class='ans' id="Q1Area" STYLE="height:110px; background-color:DEE">&nbsp;
+</DIV>
+02. Construct an SLR (Simple LR) parser for this Grammar G:
+         S -> SS+ | SS* | a
+    An SLR parser is an LR(1) parser. The SLR sets of items and GOTO functions 
+    are the same as those constructed for the LR(0) automaton. An SLR parser 
+    is the implementation of the LR(0) automaton for Grammar G. The language 
+    for this Grammar G is
+         L = { a, aa+,  aa*, aaa++, aaa*+, aaa**, aaa+*, aa+a, aa*a, ... }
+    a) augment the grammar
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q2Area');
+myArea.innerHTML=
+'<tt>S` -> S   <br/>\
+S -> SS+ | SS* | a '; ">
+<DIV class='ans' id="Q2Area" STYLE="height:50px; background-color:DEE"></DIV>
+  b) construct the SLR sets of items for the augmented grammar 
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q1xArea');
+myArea.innerHTML=
+'<tt>The SLR sets of items are the LR(0) items for the augmented grammar: <br/>\
+       S` -> S  = { [S`->.S], [S`->S.] } <br/>\
+       S -> SS+ = { [S->.SS+],[S->S.S+], [S->SS.+], [S->SS+.] } <br/>\
+       S -> SS* = { [S->.SS*],[S->S.S*], [S->SS.*], [S->SS*.] } <br/>\
+       S -> a   = { [S->.a], [S->a.] } '; ">
+<DIV class='ans' id="Q1xArea" STYLE="height:100px; background-color:DEE"></DIV>
+  c) compute the GOTO function for the SLR sets of items
+
+  To compute GOTO, first compute the unique closure set for all sets of items.
+  Compute GOTO for terminals +,*,a, $ and nonterminal S on each of those sets. 
+  Ask yourself what would happen if you encounter +,*,a,$,or S from each 
+  parser state; i.e., which state would you then goto?
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q1cArea');
+myArea.innerHTML='<tt>\
+    I_0    S`->.S    <br/>\
+           S->.SS+     <br/>\
+           S->.SS*      GOTO[I_0,S] = I_2 <br/>\
+           S->.a        GOTO[I_0,a] = I_1    <p/>\
+\
+    I_1    S -> a.  <p/>\
+\
+    I_2    S`->S.       GOTO[I_2,$] = accept <br/>\
+           S->S.S+      GOTO[I_2,S] = I_3 <br/>\
+           S->S.S*      GOTO I_2,a] = I_1 <br/>\
+           S->.a  # a. in this set will result in a shift/reduce conflict <p/>\
+\
+    I_3    S->SS.+      GOTO[I_2,+] =  I_4   <br/>\
+           S->SS.*      GOTO[I_2,*] =  I_5 <p/>\
+\
+    I_4    S->SS+.    <p/>\
+\
+    I_5    S->SS*.        '; ">
+<DIV class='ans' id="Q1cArea" STYLE="height:350px; background-color:DEE"></DIV>
+d) construct the parsing table for the grammar using these conventions: 
+   The initial state 0 is the set of items containing [S` -> .S].
+   Production labels:
+         1. S->SS+   
+         2. S->SS*   
+         3. S->a
+   Stack States:  0 - 5 correspond to Item Collections I_0 - I_5
+   Actions: 's2' means shift stack state 2; 'r3' means reduce by production 3 
+STEP 1. Compute FOLLOW(A) for each nonterminal in G.           
+        FOLLOW(S)={ +, *, a, $}    // S is the only nonterminal.
+ 
+STEP 2. Apply these rules to make shift, reduce decisions and GOTO decisions.
+<div style="border: 1px dashed black; background-color:#EEE;">
+ Rule 1. To make shift decisions, look for Items with a dot followed by a
+         terminal; i.e., foreach GOTO[I_i,a]=I_j, denote ACTION[i,a] as sj.
+         There are 2 such states: .a isin I_0, so ACTION[0,a] is s1. SS.+ 
+         and SS.* are in I_2, so ACTION[2,+] = ACTION[2,*] = s1. 
+
+ Rule 2. To make reduce decisions, look for Items ending in dot; i.e., if 
+         [A->alpha.] isin I_i then set ACTION[i,a] to "reduce A->alpha" for
+         all terminals a in FOLLOW(A). 
+         S->a. isin I_1 and 'a' isin FOLLOW(S), so reduce by S->a (production 
+            rule 3) upon encountering an a.
+         2. S->SS+. isin I_1 and + isin FOLLOW(S) so reduce by S->SS+ (r1)
+         3. S->SS*. isin I_4 and * isin FOLLOW(S) so reduce by S->SS* (r2)
+
+ Rule 3. If [S` -> S.] isin I_i, then set ACTION[i,$] to accept.
+ 
+ Rule 4. If GOTO(I_i, A) = I_j, then GOTO[i,A] = j, where A is a nonterminal. 
+         This rule extends the GOTO function to map State x Nonterminals -> 
+         State; e.g. GOTO[1,N]->2 means from state 1 and nonterminal N, move 
+         to state 2. The GOTO action is used after a reduction to determine what
+         state to push onto the stack; e.g., pop the current state and push 
+         the state number defined by GOTO.
+
+ Rule 5. Anything not filled in by this point is an error state
+</div>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q1dArea');
+myArea.innerHTML='<tt>\
+Parsing Table:   <br/>\
+          |             ACTION            |   GOTO      <br/>\
+          +-------------------------------+---------   <br/>\
+    STATE |   a     +      *      $       |    S       <br/>\
+    ------+-------------------------------+---------    <br/>\
+     0    |  s1                           |    2         <br/>\
+    ------+-------------------------------+---------    <br/>\
+     1    |  r3    r3     r3     r3       |           <br/>\
+    ------+-------------------------------+--------- <br/>\
+     2    |  s1                  accept   |   3     <br/>\
+   -------+-------------------------------+--------- <br/>\
+     3    |         s4     s5             |    <br/>\
+   -------+-------------------------------+--------- <br/>\
+     4    |  r1    r1      r1     r1      | <br/>\
+   -------+-------------------------------+---------  <br/>\
+     5    |  r2    r2      r2     r2      |            <br/>\
+   -------+-------------------------------+--------- '; ">
+<DIV class='ans' id="Q1dArea" STYLE="height:350px; background-color:DEE"></DIV>
+ e) show the actions of your parsing table on input 
+         aa*a+
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q1eArea');
+myArea.innerHTML='<tt>\
+    STACK   |  SYMBOLS | INPUT     | ACTION               <br/>\
+    --------+----------+-----------+---------------       <br/>\
+ 1) 0       |          |   aa*a+$  | shift 1 <br/>\
+ 2) 01      | a        |    a*a+$  | reduce by S->a (pop 1; from 0 goto 2 <br/>\
+ 3) 02      | S        |    a*a+$  | shift 1 <br/>\
+ 4) 021     | Sa       |     *a+$  | reduce by S->a (pop 1; from 2 goto 3 <br/>\
+ 5) 023     | SS       |     *a+$  | shift 5 <br/>\
+ 6) 0235    | SS*      |      a+$  | reduce by S->SS* (pop 5,3,2;from 0 goto 2)<br/>\
+ 7) 02      | S        |      a+$  | shift 1 <br/>\
+ 8) 021     | Sa       |       +$  | reduce by S->a (pop 1; from 2 goto 3)<br/>\
+ 9) 023     | SS       |       +$  | shift 4 <br/>\
+10) 0234    | SS+      |        $  | reduce by S->SS+ (pop 4,3,2;from 0 goto 2)<br/>\
+11) 02      |          |        $  | accept '; ">
+<DIV class='ans' id="Q1eArea" STYLE="height:300px; width:820px; background-color:DEE"></DIV>
+ e) This grammar is technically not SLR. Why?
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q1fArea');
+myArea.innerHTML=
+'This grammar is ambiguous unless you have two symbols of lookahead.<br/>\
+Thus, it is not technically SLR. However, you can get around this <br/>\
+by very carefully constructing the Item collections to prevent any  <br/>\
+shift/reduce conflicts and to force the parser to operate correctly. In  <br/>\
+particular, in I_2, [S->.a] is OK but [S->a.] is not ;although technically<br/>\
+[S->a.] belongs there. Putting both items in the same set will result in a<br/>\
+shift/reduce conflict. You also want to reduce S->a. immediately in all<br/>\
+cases. The SLR parsing table will work with these fixes.  '; ">
+<DIV class='ans' id="Q1fArea" STYLE="height:150px; background-color:DEE">&nbsp;</DIV>
+03. Show that the grammar, where e is epsilon
+        S -> AaAb | BbBa
+        A -> e
+        B -> e
+
+    is LL(1) but not SLR(1).
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q1gArea');
+myArea.innerHTML=
+'L = {ab, ba}   <br/>\
+   Recall that LL(1) is a top-down parser that uses a stack instead of  <br/>\
+   recursive calls and one lookahead token. <br/>\
+<br/>\
+A grammar is LL(1) if for all N -> A | B rules in the grammar, FIRST(A) <br/>\
+and FIRST(B) are disjoint sets. In this grammar, FIRST(A) = {a} and <br/>\
+FIRST(B) = {b}, so G is LL(1).  <br/>\
+<br/>\
+(Aside: If FIRST(A) contains epsilon, you also need to check that FIRST(A)<br/>\
+    and FOLLOW(A) are disjoint. Likewise for FIRST(B).)<br/>\
+<br/>\
+ A grammar G is not SLR(1) if, during a bottom-up parse, an automaton can<br/>\
+ not unambiguously reduce an input string to the starting symbol with one <br/>\
+   lookahead symbol. The problem is a shift/reduce conflict. First note: <br/>\
+<br/>\
+   FOLLOW(A) = {a,b} <br/>\
+   FOLLOW(B) = {a,b} <br/>\
+<br/>\
+  Without constructing the entire automaton,there will be a state I_i that<br/>\
+  contains at least this (for A -> AaAb): <br/>\
+<br/>\
+                     S -> A.aAb    // shift on `a` to Aa.Ab <br/>\
+                     S -> AaA.b    // reduce <br/>\
+                     A -> .e <br/>\
+<br/>\
+On input `a` you get a shift/reduce conflict. Why? Because one possible<br/>\
+option is to shift from I_i to the state containing Aa.Ab and another <br/>\
+option is to reduce A->e. The problem is that Follow(A) contains {a}.  '; ">
+<DIV class='ans' id="Q1gArea" STYLE="height:550px; background-color:DEE">&nbsp; </DIV>
+04. Show that the grammar G
+        S -> S A | A
+        A -> a
+    is SLR(1) but not LL(1).
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q99Area');
+myArea.innerHTML=
+'<tt>L(G) = {a, aa, aaa, aaaa, ... }   <br/>\
+  G is not LL(1) because FIRST(A) = FIRST(S) = {a} (e.g. left recursive). <br/>\
+  G is SLR(1) <br/>\
+<br/>\
+  To show that G is SLR(1) construct the item sets for S`: <br/>\
+ I_0   S`->.S  <br/>\
+       S -> .SA <br/>\
+       S->.A <br/>\
+       A->.a <br/>\
+<br/>\
+  I_1    S`->S.  <br/>\
+         S ->S.A <br/>\
+         S->A.  <br/>\
+         S->a.  <br/>\
+<br/>\
+  I_2    S->SA.  <br/>\
+         S->A.  <br/>\
+         S->a.  <br/>\
+<br/>\
+None of the Item collections I_0 - I_2 will result in a shift/reduce or a <br/>\
+reduce/reduce conflict.  '; "> 
+<DIV class='ans' id="Q99Area" STYLE="height:400px; background-color:DEE">&nbsp;
+</DIV>
+
+
+</body>
+</html>

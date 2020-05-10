@@ -1,0 +1,136 @@
+<HTML> <HEAD> <TITLE>CMPS 450: LAB 02</TITLE> <style type=text/css>
+ body { margin : 2% 10% 4% 10%; } </style> </HEAD> 
+<h3>CMPS 450 - LAB 02 - Introduction to Lex</h3>
+<font color=red>Due: before lab next tuesday </FONT> <p>
+<table bgcolor=silver><tr><td>
+<b>resources:</b><br>
+<a href="./lab02_files/">lab 2 files</a><br>
+<a href="http://flex.sourceforge.net/manual/index.html#Top">Flex Manual</a><br>
+<a href="http://www.thegeekstuff.com/2010/01/awk-introduction-tutorial-7-awk-print-examples/">awk tutorial</a><br>
+<a href="http://flex.sourceforge.net/">download flex</a><br>
+<a href="http://dinosaur.compilertools.net/">Lex & Yacc page</a><br>
+<a href="http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Developer/books/CLanguageRef/sgi_html/index.html">C language ref</a><br>
+<a href="http://www.gnu.org/s/libc/manual/html_node/index.html">GNU libc</a><br>
+<a href="./examples/week02/">examples/week02</a><br>
+</td></tr></table>
+
+<p>
+ You may notice similarities
+ between lex and awk. Aho (co-author of the Dragon book)
+ wrote awk. Lex is based in large part on awk. (<a href="http://www.computerworld.com/s/article/9091419/The_A_Z_of_programming_languages_awk">interview with Aho</a>). Lex was designed to interface with Yacc ( the
+  use of 'yy' in filenames comes from this relationship ).
+	<p>
+	You need to know C to use flex and yacc. 
+	See above links for sample C code and C documentation. 
+	<p>
+The <a href="./examples/week02/README">Lex getting started guide</a> 
+and the <a href="./examples/week02/">examples for week 02</a>
+ should be sufficient to get you started. Review the 
+ <a href="./examples/week02/flex-manpage">flex manpage</a>
+ and documentation from the
+ <a href="http://dinosaur.compilertools.net/">Lex & Yacc page</a> to help
+ you understand these simple lex programs.
+  Copy or wget my examples files into your directory:<pre>
+      $ cp /home/fac/donna/public_html/cs450/examples/week02/* .
+      $ make
+ </pre>
+  Read the source, compile and execute
+  each of the example programs. When you are comfortable with each of
+   these small programs,  start on the following.
+   <p>
+  <h3>Modifying Your First Lexical Scanner</h3>
+
+  You job is to add some additional features to this
+   <a href="./lab02_files/lab02.l">lab02.l scanner</a>.
+	 Copy or wget these files into your lab02 directory: 
+<pre>    $ cp /home/fac/donna/public_html/cs450/lab02_files/* .  </pre>
+   Test with the following:<pre>
+     $ flex lab02.l
+     $ gcc -o lab02 lex.yy.c -lfl
+     $ cat test.cf | ./lab02 </pre>
+If everything is working properly, the flex scanner you just created
+      will read this file  
+   <pre>
+   { a sample program }
+   read x;
+   if 34 < x then
+   result := result * 7;
+   repeat
+     result := result * x;
+   until x = 0;
+   write result
+   end </pre>
+       and display <a href="./lab02_files/outfile">this</a>
+       on the screen.
+       <p>
+<b>Task #1.</b> One problem with the original scanner is that it
+ has a wierd syntax for comments. Modify your scanner so that
+ instead of stripping out comments that look like this
+     <pre> { this is a comment } </pre>
+ you strip out one line C-style comments:
+     <pre> /* this is a C-style comment */ </pre> 
+ See <a href="./examples/week02/comments.l">comments.l</a> for
+ some suggestions on how to do this. For Phase I you will strip
+ out multi-line comments. One line is sufficient for this lab.
+  To test your scanner, replace the comment in test.cf with a C-style comment.
+		  <p>
+
+<b>Task #2.</b> Another problem with the scanner is that it 
+ does not classify the lexemes into their token types.
+ Currently it displays a 3-tuple &lt;lexeme, line, token_num>.
+  Modify the scanner to classify each 
+ token that it encounters into one of the following types:
+  <pre>
+    Identifier
+    Keyword
+    Number
+    Operator
+    Punctuator </pre>
+ For each token, display the text of the token, the token type and the line  
+ number.  Eventually you will construct a 
+symbol table to hold some of this
+ information, but for now spit it out any way you like.
+  Display token information as one token per line - it is easier to read. 
+ At the end of output, display the  total token count.
+</p>
+<p> 
+<b>Task #3.</b> Modify the scanner to accept as a number token 
+  a C floating point constant, defined as  <p>
+
+ "an integer part, a decimal point, a 
+ fraction part, an [eE], and an optionally signed  integer exponent. 
+ The integer and fraction parts both consist of a sequence of digits. 
+ Either the integer part or the fraction part (but not both) can be missing. 
+ Either the decimal point or the [eE] and the exponent (not both) can 
+  be missing. " (C reference manual Ch. 3)
+ 
+ <p>
+Note: this definition allows <pre>
+       7e3
+       7.e3
+       752.  
+       .05e-5
+       73.87 
+       .5
+       5.</pre>
+but does not allow <pre>
+       75
+       .
+       752e </pre>
+Hint: The easiest way to do this may be to use three
+ regexes for your float: {integer}, {fraction}, {exponent}.
+ You do not have to catch everything for the lab but you
+ will for phaseI of the project.
+ For now, test your scanner
+ against floating points numbers such as
+ 34.3e-3 and .5 (from test2.cf). 
+    
+<p> 
+ <b>Task #4.</b> Modify the scanner to accept as an operator token the 
+  two C shorthand assignment operators: += and -=.
+ </p>
+
+ Run your new and improved scanner against <a href="./lab02_files/test2.cf">test2.cf</a> from the lab02_files directory.
+ See <a href="./lab02_files/out">sample output</a>.
+</body>
+</html>

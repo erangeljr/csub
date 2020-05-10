@@ -1,0 +1,282 @@
+<html><body> <style type=text/css> 
+DIV.ans { margin: 3px 0px 10px 3px; padding: 4px; border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #555;
+ background-color: #DEE; padding-right: 5px; height: 50px; width: 730px;
+} DIV.box { position: relative; float: left; margin: 0px 0px 2px 0px; 
+ padding: 4px; # border: 1px dashed black; font-family: helvetica; 
+font-size: 10pt; font-weight: 500; color: #19193A;
+ background-color: #eee; padding-right: 0px; width: 450px; height: 60px; }
+h5 { background-color: yellow; width: 300px;}
+BODY { margin: 2% 15% 5% 5%; font-family: helvetica; background-color: white;
+  color: 19193A; font-size: 10pt; font-weight: 500;}
+</STYLE>
+<h3>CMPS 450 - HW 09 - Ch. 6 "Intermediate Code Generation"</H3> 
+
+Do not submit anything. The homework is
+ designed for self-evaluation on the reading material. It is   assumed that you know this material as you construct
+ your compiler and before your take-home final exam.
+
+<p>
+<a href="http://www.cs.csub.edu/~donna/cs450/ch06_notes.html">ch 6 lecture notes</a><br/>
+<a href="http://gcc.gnu.org/onlinedocs/gccint/Type-Layout.html#Type-Layout">c type layout</a><br/>
+<a href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html">Java Typing</a>
+
+<pre>
+// Dragon Sec 6.1 // 
+01. Construct the DAG for the expression
+
+          (x+y)-(x+y) + b * c 
+
+    where + and - associate to the left and * has precedence over +.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q1Area');
+myArea.innerHTML=
+'                   +           <br/>\
+                  /   \\            <br/>\
+                -      *          <br/>\
+              /  \\     / \\     <br/>\
+              \\  /    b  c        <br/>\
+               +                   <br/>\
+               / \\                 <br/>\
+              x   y '; ">
+<DIV class='ans' id="Q1Area" STYLE="height:180px; background-color:DEE">&nbsp;
+</DIV>
+/// Sec 6.2  ///
+
+02. Translate the following assignment expression 
+       a = b + -(c + d) 
+   into
+    a) an abstract syntax tree  (an abbreviated parse tree)
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q2Area');
+myArea.innerHTML='<tt>\
+          =                       <br/>\
+        /  \\            <br/>\
+       a     +         <br/>\
+           /   \\                <br/>\
+          b     unary_minus       <br/>\
+                  |           <br/>\
+                  +          <br/>\
+                /   \\         <br/>\
+               c     d      '; ">
+<DIV class='ans' id="Q2Area" STYLE="height:180px; background-color:DEE"></DIV>
+  b) 3-address code following the AST above
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q2xArea');
+myArea.innerHTML='<tt>\
+   3-address code following the AST: <br/>\
+       t1 = c + d <br/>\
+       t2 = unary_minus t1 <br/>\
+       t3 = b + t2 <br/>\
+        a = t3 '; ">
+<DIV class='ans' id="Q2xArea" STYLE="height:150px; background-color:DEE"></DIV>
+  c) quadruple 3-address code
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q2yyArea');
+myArea.innerHTML=' <tt><br/>\
+      op              arg_1  arg_2  result   <br/>\
+   0  +               c      d      t1    <br/>\
+   1  unary_minus     t1            t2    <br/>\
+   2  +               b      t2     t3   <br/>\
+   3  =               t3            a '; ">
+<DIV class='ans' id="Q2yyArea" STYLE="height:150px; background-color:DEE"></DIV>
+   d) triple 3-address code
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q3cArea');
+myArea.innerHTML=' <tt>\
+      op              arg_1  arg_2 <br/>\
+   0  +               c      d <br/>\
+   1  unary_minus    (0) <br/>\
+   2  +               b      (1) <br/>\
+   3  =               a      (2)    '; ">
+<DIV class='ans' id="Q3cArea" STYLE="height:150px; background-color:DEE"></DIV>
+// Sec 6.3 //
+
+03. Determine the types and relative addresses for the identifiers in the
+    sequence of C declarations. Assume Gcc conventions for size and that
+    addresses are 4-byte word aligned.
+  
+   float x;
+   struct { float x; double y; } p;
+   struct { int i; char c; } q;
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q88Area');
+myArea.innerHTML='<tt>\
+    name     type   sizeof   relative address <br/>\
+    x        float  4        0 <br/>\
+    p.x      float  4        4 <br/>\
+    p.y      double 8        12 <br/>\
+    q.i      int    4        16 <br/>\
+    q.c      char   1        20 <br/>\
+    q.i      int    4        24 <br/>\
+                             == <br/>\
+    total storage            25 bytes '; ">
+<DIV class='ans' id="Q88Area" STYLE="height:180px; background-color:DEE"></DIV>
+// Sec 6.4 //
+
+The following grammar is an SDT to generate three-address code for expressions.
+This SDT uses the technique of concatenation. The double vertical bar '||' is 
+the concatenation operator for intermediate code fragments.
+
+    Productions             Semantic Rules
+    ===============         ================
+    S -> id = E;            S.code = E.code ||
+                                    gen(top.get(id.lexeme)' '=' E.addr)
+
+    E -> E_1 + E_2          E.addr = new Temp()
+                            E.code = E_1.code || E_2.code ||
+                                    gen(E.addr '=' E_1.addr '+' E_2.addr)
+
+       |  - E_1             E.addr = new Temp()
+                            E.code = E_1.code ||
+                                    gen(E.addr '=' 'minus' E_1.addr)
+
+       | ( E_1 )            E.addr = E_1.addr
+                            E.code = E_1.code
+
+       |  id                E.addr = top.get(id.lexeme)
+                            E.code = ''
+
+04. Add to the SDT support for this production rule:
+         E -> E_1 * E_2.   
+    Do not take into account precedence. Simply insert the new rule and new 
+    semantic actions into the existing grammar. If you were to account for 
+    precedence you would need to change the original grammar, then change all 
+    the semantic rules accordingly.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q01Area'); 
+myArea.innerHTML=' <tt>\
+    Productions             Semantic Rules    <br/>\
+    ===============         ================ <br/>\
+    S -> id = E;            S.code = E.code || <br/>\
+                                    gen(top.get(id.lexeme)` `=` E.addr) <br/>\
+<br/>\
+    E -> E_1 + E_2          E.addr = new Temp() <br/>\
+                            E.code = E_1.code || E_2.code || <br/>\
+                                    gen(E.addr `=` E_1.addr `+` E_2.addr) <br/>\
+<br/>\
+       | E_1 * E_2          E.addr = new Temp() <br/>\
+                            E.code = E_1.code || E_2.code || <br/>\
+                                    gen(E.addr `=` E_1.addr `*` E_2.addr) <br/>\
+<br/>\
+       |  - E_1             E.addr = new Temp() <br/>\
+                            E.code = E_1.code || <br/>\
+                                    gen(E.addr `=` `minus` E_1.addr) <br/>\
+<br/>\
+       | ( E_1 )            E.addr = E_1.addr <br/>\
+                            E.code = E_1.code <br/>\
+       |  id                E.addr = top.get(id.lexeme) <br/>\
+                            E.code = ``   '; ">
+<DIV class='ans' id="Q01Area" STYLE="height:420px; background-color:DEE">
+</DIV>
+The following SDT generates three-address code for expressions *incrementally*. 
+Notice the lack of the concatenation operator.
+
+    Productions             Semantic Rules
+    ===============         ================
+    S -> id = E;            { S.code = gen(top.get(id.lexeme)' '=' E.addr); }
+
+    E -> E_1 + E_2          { E.addr = new Temp();
+                              gen(E.addr '=' E_1.addr '+' E_2.addr); }
+
+       |  - E_1             { E.addr = new Temp();
+                              gen(E.addr '=' 'minus' E_1.addr); }
+
+       | ( E_1 )            { E.addr = E_1.addr; }
+
+       |  id                { E.addr = top.gen(id.lexeme); }
+
+05. Add support for this production rule to the incremental SDT.
+      E -> E_1 * E_2.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q77xArea');
+myArea.innerHTML='<tt>\
+Since you do not need to worry about precedence simply insert this: <br/>\
+     E -> E_1 * E_2          {E.addr = new Temp();    <br/>\
+                               gen(E.addr `=` E_1.addr `*` E_2.addr); }'; ">
+<DIV class='ans' id="Q77xArea" STYLE="height:100px; background-color:DEE">
+</DIV>
+// sec 6.5 //
+06. Translate the expressions below into 3-address code following the general
+    idea of this SDT:
+     E -> E_1 + E_2   { E.type = max(E_1.type, E_2.type);
+                        a_1 = widen(E_1.address, E_1.type, E.type);
+                        a_2 = widen(E_2.address, E_2.type, E.type);
+                        E.addr = new Temp();
+                        gen(E.addr '=' a_1 '+' a_2 ); }   
+
+    Let c and d be char type, s and t type short int, i and j type int, and x 
+    type float. Functions widen and max can handle any of the types in the 
+    hierarchy below, taken from the Java specification for primitive types.
+
+               double
+                 |
+               float
+                 |
+               long
+                 |
+                int
+                /  \
+             short  char
+              |
+             byte
+
+  # widen contents of address a of type t into a value of type w
+  Addr widen ( addr a, type t, type w) {
+          if ( t == w ) return a;
+          else if ( t == integer and w == float ) {
+              temp = new Temp();
+              gen(temp '=' '(float)' a);
+              return temp;
+          }
+          else error;
+   }
+  max(t_1,t_2) returns the larger of the two types t_1 and t_2 or t_1 if equal
+
+a) x = s + c         // x = float; s = short;   c = char 
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q277Area');
+myArea.innerHTML=' <tt>\
+ 1. max(short,char) returns short since both are pairwise convertible <br/>\
+  2. a1=widen(s,short,short) returns s <br/>\
+  3. a2=widen(c,char,short) returns c since char and short are pairwise <br/>\
+     convertible <br/>\
+  4. generate t1 = s + c          <br/>\
+  5. max(float,short) returns float <br/>\
+  6. t2 = (float) t1   // widen generates this code <br/>\
+  7  generate x = t2 <br/>\
+<br/>\
+  3-address code: <br/>\
+    t1 = s + c <br/>\
+    t2 = (float) t1 <br/>\
+    x = t2 '; ">
+<DIV class='ans' id="Q277Area" STYLE="height:280px; background-color:DEE">
+</div> 
+b) i = s + c   # where i=int; s=short; c=char
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q333Area');
+myArea.innerHTML=' <tt>\
+ 3-address code: <br/>\
+    t1 = s + c <br/>\
+    t2 = (int) t1 <br/>\
+    i= t2 '; ">
+<DIV class='ans' id="Q333Area" STYLE="height:150px; background-color:DEE">&nbsp;
+</DIV>
+c) x = (s + c) * (t + i)  # where s,t=short; c=char; i=int; x=float 
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q667Area');
+myArea.innerHTML=' <tt>\
+  3-address code: <br/>\
+     t1 = s + c <br/>\
+     t2 = (int) t <br/>\
+     t3 = t2 + i <br/>\
+     t4 = (int) t1 <br/>\
+     t5 = t2 * t4 <br/>\
+     t6 = (float) t5 <br/>\
+      x = t6      '; ">
+<DIV class='ans' id="Q667Area" STYLE="height:180px; background-color:DEE">&nbsp;
+</DIV>
+
+</body>
+</html>
+

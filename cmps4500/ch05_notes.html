@@ -1,0 +1,294 @@
+html>
+<link rel="stylesheet" type="text/css" href="/~donna/style.css" title="style1">
+<body>
+<h3> Chapter 05 "Syntax-Directed Translation"</h3>
+<h4>CMPS 450 Lecture Notes - Week 7 </h4>
+
+<b>resources:</b><br>
+
+<h4> Ch 5.1 "Syntax-Directed Definitions"</h4>
+
+ An SDD without side-effects
+ (no displaying to the screen, no modifying the symbol table, etc.)
+ is an Attribute Grammar (AG). An SDD is purely a formalism.
+For review refer to <a href="http://www.cs.csub.edu/~donna/cs350/ch03b_notes.html">these notes</a> on AGs from the Programming Languages course.
+
+<pre>
+  SDD Example of a Simple desk calculator
+
+ Grammar 1. 
+ Production Rule      Semantic Rule
+ ===================  ======================
+ 1. L -> E n          L.val = E.val              // final result of the calc
+ 2. E -> E_1 + T      E.val = E_1.val + T.val
+ 3. E -> T            E.val = T.val
+ 4. T -> T_1 * F      T.val = T_1.val * F.val
+ 5. T -> F            T.val = F.val
+ 6. F -> ( E )        F.val = E.val
+ 7. F -> digit        F.val = digit.lexval      // returned by the lexer
+
+</pre>
+  Since all attributes are synthesized Grammar 1 is
+ an S-Attributed Definition. The parse tree can be 
+  decorated with synthesized attributes in a single bottom-up parse.
+<p>
+ Inherited attributes, on the other hand,
+  flow left-to-right and top to bottom in
+ a parse tree. The parse tree must be decorated in
+ a top-down fashion for inherited attributes. Since by default yacc
+ does not easily support inheritied attributes we will not cover them.
+ <p> 
+  An example of 
+ <a href="http://www.cs.csub.edu/~donna/cs350/example03b.txt">decorating a parse tree</a>.
+<p>
+  If the underlying grammar is LL-parsable and the SDD is L-attributed 
+  you can easily use an LL parser.  If the underlying grammar is LR-parsable 
+ and the SDD is S-attributed you can easily use an LR parser.
+ <p> 
+A similar example that uses both inherited and synthesized attributes
+ is this expression grammar suitable for top-down parsing:
+<pre>
+  PRODUCTION        SEMANTIC RULE
+ 1. T -> F T'       T'.inh = F.val               // inherited
+                    T.val = T'.syn               // synthesized
+ 2. T' -> * F T'_1  T'_1.inh = T'.inh * F.val    // inherited
+ 3. T' -> epsilon   T'.syn = T'.inh              // synthesized
+ 4. F -> digit      F.val = digit.lexval         // intrinsic
+
+ The annotated Parse Tree for 3 * 5:
+
+                    T.val = 15  (synthesized)
+                    /       \
+               F.val=3       T'.inh=3
+                  |          T'.syn=15
+                  |        /  |        \
+          digit.lexval=3  *   F.val=5  T'_1.inh = 15
+                              |        T'_1.syn = 15
+                              |               |
+                      digit.lexval=5        epsilon   
+</pre>
+<h4> Ch 5.4 "Syntax-Directed Translation Schemes"</h4>
+
+ Syntax-Directed Translation (SDT) is a complementary
+ formalism to Syntax-Directed Defintions (SDD). 
+ An SDT is a context-free grammar with "program fragments"
+ called semantic actions embedded within production bodies.  
+ Fragments can appear anywhere within a production body.
+ In this fashion, an SDT can "implement" an SDD.
+ <p>
+ The desk calculator from 
+ lab03 <a href="./lab03_files/calc.y">(see ./lab03_files/calc.y)</a> 
+ implements an SDT (Syntax Directed Translation). The parser 
+ generates its output (the evaluation of an expression) by following
+ the way in which S-attributes are decorated up the parse tree. 
+  The final output of the SDT in calc.y
+  is the computation of the input
+ expression. This SDT works because an infix expression
+ is evaluated by traversing the expression tree of the grammar
+ as you would in a bottom up parse. Values can be easily
+ synthesized up the tree during the parse. 
+ The actual value of each terminal first
+ is assigned at 
+ the leaf from the scanner. From that point on,
+ as an operation is applied to the terminals, the
+  result is trickled up the tree to the LHS nonterminal of a
+ production rule, and so on and so forth. The final value of
+ the expression is synthesized up to the root
+ from the expression below it.
+<p>
+ Because attributes are assigned during the parse,
+ the calc.y SDT does not have to actually build the parse tree. 
+ The parse tree is 'built' as you follow the inherent behavior of the parser 
+ and by computing the result of the expression as you go.
+ Sometimes, however, you need to actually
+  build a parse tree. After the parse you can perform traversals
+ on the tree. For example, you
+ could build  an
+ abstract syntax tree (abt) during the parse and then
+ calculate the expression by following 
+ a left-to-right depth-first traversal.
+ <p>
+
+Def. A syntax-directed translation scheme (SDT) is a context-free
+ grammar with program fragments embedded within production bodies. The
+ program fragments are called <i>semantic actions</i>. Any SDT can by
+ implemented by building the parse tree first
+ and then performing the actions in an inorder, preorder or postorder
+  traversal. The AST of an expression tree is done by
+ a postorder traversal.
+<p>
+<pre><tt> E -> E + T | T
+ T -> T * E | num 
+
+ input:  8 * 7 + 6
+   
+          E
+          |
+          T
+       /  |  \
+      T   *   E 
+      |     / | \
+      8    E  +  T
+           |     |
+           T     6 
+           |     
+           7        </tt></pre>
+ 
+ SDTs are often implemented without explicitly
+ building the underlying parse tree.  An example is
+ the yacc calculator  which implements a postfix SDT
+ by an LR parser. It is postfix 
+  because all actions occur at 
+ the right ends of production bodies. An action is
+  executed as the RHS of the
+ production rule (the body)
+ is reduced to the head of that production. 
+
+ (see <a href="./lab03_files/calc.y">calc.y</a>)
+
+ A BNF grammar G for expression statements as implemented
+ in the calcular for + and * only is
+  shown here (precedence rules are also omitted):<pre>
+
+         S -> E
+         E -> E + E  | E * E | D 
+ </pre>
+  To turn G into an SDT means adding a semantic action to the
+ end of the production body of the rules. Shown here:  <pre>
+
+         S -> E        { printf("%f\n",$1); }
+
+         E -> E + E    { $$ = $1 + $3; }
+              | 
+              E * E    { $$ = $1 * $3; }
+              | 
+              D        // note the lack of a semantic action here
+
+         D -> [0..9]   { $$ = $1; base = ($1==0) ? 8 : 10; } </pre>
+  The semantic actions are shown in this parse tree of 3 + 5 * 7:
+<pre>
+                         S  print 38
+                         |                        
+                         E = 3+35
+                       / |  \
+                     E   +  E=5*7
+                     |      / | \
+                     D=3   E  *  E  
+                     |     |     |
+                     3     D=5   D=7
+                           |     |
+                           5     7 
+</pre>
+  Note: There is no semantic action for the rule E -> D. The value of
+ E is synthesized from D in the production E -> D and D -> [0..9].
+ Similarly, the value of S in S->E is synthesized from E -> E + E.  
+  <p>
+  The final evaluation of E is performed by trickling the
+ attributes up in an postorder traversal of
+ the syntax tree. 3 is hit first in the traversal but
+ 5 * 7 =  35 is evaluated first since the '+' 
+ operation cannot be performed until 5 * 7 is evaluated. When
+ 5 * 7 is evaluated its result is trickled up to its parent
+ and then 3 + 35 can be evaluated.
+
+  <p>
+ In summary, postfix SDTs (e.g. S-attributed SDDs)
+  can be implemented during LR parsing by 
+ simply placing the actions at the right ends of the productions.
+ You do not need to build an explicit parse tree since bottom-up
+ left-to-right scan parsing decorates the tree in the correct order. The
+ attributes of each grammar symbol are available on the parsing
+  stack at the right time during a reduction. This 
+ only works so nicely because all the attributes are synthesized.
+ <p>
+
+ Not all SDTs  can be implemented by relying on the inherent behavior
+ of the parser. Additionally, you can parse 
+ an L-attributed SDD by a top-down recursive  descent parser but
+ but possibly not by an LR parser using parsing tables.
+ <p> 
+
+<h4> Ch 5.5 "Implementing L-Attributed SDDs"</h4>
+
+ You have a few choices with L-Attributed SDDs: 
+ <p>
+ 1. Build a parse tree and annotate
+<p>
+ 2. Build a parse tree, add actions, and execute the actions in preorder.
+ This approach works for any L-attributed definition.
+  
+ <p>
+
+ <p>
+ <b> L-Attributed SDDs and LL Parsing</b>
+
+<p>
+ LL parsing is parsing based on a leftmost derivation
+  that relies on a stack rather than on recursive  calls.
+ <p>
+ You can perform the actions of
+ an SDT during LL parsing by extending the
+ parsing stack to hold data needed for attribute evaluation (typically
+ copies of attributes that were assigned somewhere else in the parse tree).
+ Two principles manage attributes on the stack:
+ <p>
+ 1. Inherited attributes of nonterminal A are placed in the stack
+ record that represents the nonterminal. The code to evaluate these
+ attributes will usually be represented by an action-record immediately above
+ the stack record for A.
+ <p>
+ 2. Synthesized attributes for a nonterminal A are placed in a
+ separate synthesize-record that is immediately below the record for
+ A on the stack.
+ <p>
+ If you have an L-attributed SDD based on an LL-grammar, you
+ can adapt the grammar to compute the same SDD on the new grammar during
+ an LR parse. Use this trick:
+<pre> <tt>
+1. Start with the SDT which embeds actions before each nonterminal to
+   compute inherited attributes and actions at the end of productions to
+   compute synthesized attributes.
+
+2. Add a marker nonterminal in place of each embedded action. Make each
+   marker unique. Each marker is a production Q -> e.
+
+3. Modify the action 'a' if marker nonterminal M replaces it in some
+   production A -> alpha { a } beta, and associate with M -> e and action
+   a' that
+
+   a) copies, as inherited attributes of M, any attributes of A or symbols
+      of alpha that action a needs.
+
+   b) Computes attributes in the same way as a, but makes those attributes
+      be synthesized attributes of M
+</pre></tt>
+
+
+<h3> Ch 5 "Terminology"</h3>
+
+ An   <u>Annotated Parse Tree</u> (or decorated parse tree) is a parse
+ tree that displays the values of all attributes.
+ <p>
+ A <u>Dependency Graph </u> shows the flow of information in a parse tree.
+ Such a graph characterizes the possible orders in which
+ you can evaluate the attributes - such an ordering is a topological sort.
+ A topological sort is a legal evaluation order of the attributes.
+ Obviously, there can be no cycles in the graph.
+ <p>
+ An <u>S-Attributed Definition</u> is an attribute grammar that utilizes
+ only synthesized attributes. S-attributed grammars can be evaluated
+ in a single bottom-up pass. S-attributed is a proper subset
+ of L-attributed.  Bison/yacc supports S-attributed grammars.
+<p>
+ An <u>L-Attributed Definition</u> is an attribute grammar that utilizes
+ both synthesized and inherited attributes, where inheritance can occur
+ only from above (the head) or from siblings to the left of a node
+ in the parse tree.
+ L-attributed grammars can be evaluated in a single DFS top-down pass.
+ Bison supports L-attributed grammars. Efficiency is reduced since
+ the value of the left sibling's attribute is is not known until after
+ the right sibling is evaluated. Assigning an inherited attribute involves
+ 2 passes.
+<p>
+</body>
+</html>

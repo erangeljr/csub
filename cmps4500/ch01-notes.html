@@ -1,0 +1,265 @@
+<html> <link rel="stylesheet" type="text/css" href="./notes.css" title="style1">
+<body> <h4>CMPS 450 Lecture Notes </h4>
+<h3> Chapter 01 Introduction to Compilers</h3>
+"There are 10,000 maintenance programmers to every compiler writer." - 
+ <a href="https://www.thc.org/root/phun/unmaintain.html">hOw2rit.UnManTanaBu1_C0d3</a> (a tip of the hat to our canadian coders)
+
+<p>
+<b>Resources.</b><br/>
+ o <a href="./examples/week01/binding.c">C code demonstrating binding</a><br>
+ o two C programs - <a href="./examples/week01/scope1.c">scope1.c</a> and
+ <a href="./examples/week01/scope2.c">scope2.c</a> to demonstrate scope<br>
+ o a C++ program to demonstrate <a href="./examples/week01/params-cpp.cpp">parameter passing</a><br>
+ o the <a href="http://techpubs.sgi.com/library/dynaweb_docs/0650/SGI_Developer/books/CLanguageRef/sgi_html/index.html">C Language Reference Manual</a><br>
+
+
+<h3>Compilers v. Interpreters v. Hybrids </h3>
+
+Top 5 languages 
+in <a href="http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html">TIOBE Index</a> are compiled or hybrid. 
+
+<pre>
+               .----------. -> assembly code -> assembler
+ source code ->| compiler |                     |               
+  model        |          | or                  v 
+ (C/C++ etc)   '----------' ----------> machine code ----> executable 
+
+
+                 .-------------.
+ script model -> | interpreter | -> execution via interpreter line by line
+  (PHP/Perl)     |             |    (or something close to line by line)
+    etc.         '-------------'
+
+                 
+            .------------. 
+ hybrid  -> | translator | -> bytecode (Java) -> JIT compilation; execution
+  model     |            |    or CIL (.NET)      through virtual machine
+            '------------'                       environment JRE/.NET 
+                                                
+</pre>
+<h5>PORTABILITY</h5>
+<li>scripts can run on any machine where the interpreter is installed
+<li>bytecode/CIL - "write it once run it everywhere" -
+ with the correct runtime engine  as portable as scripts
+<li>compiled languages must be recompiled on new platform or with a
+ cross-compile; gcc has been ported to every major architecture 
+
+<h5>PERFORMANCE</h5>
+
+A tricky issue. For most user applications Java is good enough. However,
+ for obvious reason no kernel would be
+  written or even partially written in Java. For simple
+ web applications (NOT healthcare.gov or amazon.com)
+ short scripts in a scripting language are good enough.
+<p>
+<li>Java is as fast or faster than C++ for many applications (<a href="http://www.stefankrause.net/wp/?p=4">see Java vs. C benchmark</a>)
+<br/>
+<li>scripting languages such as PHP are
+  *insanely* slow compared to bytecode or compiled code
+
+<h5>FOOTPRINT (memory usage, etc.)</h5>
+<li>compiled code has the smallest footprint hands-down
+<li>bytecode has largest footprint (Java takes 17 times the size of resident
+    memory as a similar C++ program)
+<pre>                    VIRT   RES SHR
+32382 donna  20   0 16.1g  17m 8188 S  99.9  0.0   0:56.40 java              
+2410 donna   20   0 11876  980  824 R  99.9  0.0   0:15.56 c++   </pre>
+
+<h5>DEVELOPMENT TIME</h5>
+<li>scripting languages - perfect for "quick and dirty" small jobs
+<li>compiled languages - C, as the de facto systems language, was designed
+ for low-level programming- not so good for user-friendly interfaces 
+<li>bytecode languages - same time as compiled languages since you must
+ translate then execute during development 
+    
+<h3>Linux Gcc Source to Execution </h3>
+<pre>
+    gcc source program
+          |
+          v
+       <a href="./examples/week01/hello.c">hello.c</a>
+          |
+          v
+   .---------------.
+1. | Preprocessor  |  
+   '---------------'   
+          | 
+          v
+     hello.c    # preprocessor additions/modifcations
+     <a href="./examples/week01/hello.pre">gcc -E hello.c </a>
+          |
+          v
+   .-------------.
+2. |  compiler   |
+   '-------------'
+          |
+          v
+      hello.s   # assembly code - specific to architecture
+      <a href="./examples/week01/hello_helios.s">gcc -S hello.c</a> Sparc 
+      <a href="./examples/week01/hello_sleipnir.s">gcc -S hello.c</a> Intel
+          |
+          v           
+   .-------------.
+3. |  assembler  |  
+   '-------------'
+          |
+          v
+       <a href="./examples/week01/hello.o.dump.txt">hello.o</a>  # platform dependent object file - under Linux it is
+          |     # relocatable machine code ELF (executable and linkable format)
+          |     # hexdump hello.o
+          v
+   .-------------.
+4. |   linker    |
+   '-------------'
+          |
+          v
+        hello   # executable dynamically linked file with glibc etc.
+          |
+          v
+   .-------------.
+5. |   loader    |  
+   '-------------'
+          |
+          v
+ hello image loaded into virtual memory for execution
+
+
+Each of the 5 above steps:
+
+1.   $ gcc -E hello.c
+2.   $ gcc -S hello.c
+3.   $ as -o hello.o hello.s
+4.   $ ld /usr/lib/crt1.o  /usr/lib/crti.o /usr/lib/crtn.o  -o hello hello.o -lc
+5.   $ ./hello   
+
+</pre>
+<a href="./Code/gcc-4.5.0/gcc/gimple.def">/gcc/gimple.def</a> (from gcc 4.5)<br/>
+<a href="ftp://gcc.gnu.org/pub/gcc/summit/2003/GENERIC%20and%20GIMPLE.pdf">GIMPLE</a><br/>
+<a href="http://en.wikibooks.org/wiki/GNU_C_Compiler_Internals/GNU_C_Compiler_Architecture">gcc compiler internals</a>
+
+<h3>THE GNU GCC COMPILER EXPANDED</h3>
+<pre>
+      COMPILER FRONT END
+     ,--------------------,
+     |      Phase I       |   o tokenizes source  
+     |  Lexical Analysis  |   o constructs symbol table 
+     |     (Scanner)      |   
+     '--------------------'
+               |             
+               V 
+     ,----------------------,
+     |      Phase II        |  o parses tokenized source 
+     |    Syntax Analysis   |  o constructs abstract syntax tree (AST)
+     |      (Parser)        |
+     '----------------------'
+
+               |
+               V 
+     ,----------------------,
+     |     Phase III        |  o applies context-sensitive rules 
+     |  Static Semantic     |    to decorated AST 
+     |     Checking         |  o converts AST into 3-address code 
+                               
+     '----------------------'
+               |
+               V 
+    <a href="./examples/week01/hello.c.004t.gimple">GIMPLE 3-address code</a>
+               |
+               V    
+        COMPILER MIDDLE END
+     ,------------------------,
+     | Optimization passes    |
+     |Translation from GIMPLE | 
+     |       into RTL         |
+     '------------------------' 
+               |
+               V 
+      Register Transfer Language 
+             
+               |
+               V 
+        COMPILER BACK END
+      ,----------------------,
+      | Translation into     |
+      | platform dependent   |
+      | assembly code        |
+      |                      |
+      | Final optimization   |
+      | of assembly code     |
+      '----------------------'
+
+DETAILED EXAMPLE FOR GCC-LIKE COMPILER.
+
+<div style="width: 45%; padding: 5px; border: 1px black dashed;">
+           // assume by default variables are integers
+           x = y + 7.5;
+
+              |                       Symbol Table
+        LEXICAL ANALYZER             ,--,---+------, 
+              |                      |1 | x |  int |
+              V                      |--,---+------|
+                                     |2 | y |  int |
+   [id,1] [=] [id,2] [+] [7.5]       '--'---'------'
+
+              |
+       SYNTAX ANALYZER
+              |
+              V
+
+             [=] 
+           /    \
+      [id,1]     [+] 
+                 /  \
+             [id,2]  7.5 
+
+              |
+       SEMANTIC ANALYZER
+              |
+              V
+
+             [=] 
+           /    \
+      [id,1]     [+] 
+                 /  \
+             [id,2]  float2int(7.5)
+
+              |
+   INTERMEDIATE CODE GENERATOR   (3-address code)
+              |
+              V 
+        t1 = float2int(7.5)
+        t2 = id2 + t1
+        id1 = t2
+              
+              |
+      MIDDLE END CODE OPTIMIZER
+              |
+              V
+
+       t1 = float2int(7.5)
+       id1 = id2 + t1
+
+              |
+      BACK END CODE GENERATOR   (platform dependent assembly)
+              |
+              V
+
+        li  $t1, 7        # this example is MIPS
+        la  $t2, id1        
+        la  $t3, id2
+        lw  $t4, 0($t3)  
+        add $t5, $t1, $t4 
+        sw  $t5, 0($t2)
+
+</div>
+ </pre>
+
+The rest of this chapter relies on concepts from
+ programming languages; in particular, the lexicon, typing,
+  and how functions are implemented. Read the following:
+<p>
+o <a href="./language-basicsI.html">PL Concepts I</a>
+<p>
+o <a href="./language-basicsII.html">PL Concepts II</a>
+</body>
+</html>

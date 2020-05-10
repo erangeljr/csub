@@ -1,0 +1,348 @@
+<html> <body> <head> <style type=text/css>
+DIV.ans { margin: 3px 0px 10px 3px; padding: 4px; border: 1px dashed black;
+font-family: helvetica; font-size: 10pt; font-weight: 500; color: #777;
+background-color: #DEE; padding-right: 5px; height: 50px; width: 700px; }
+DIV.box { position: relative; float: left; 
+margin: 0px 0px 2px 0px; padding: 4px; # border: 1px dashed black;
+font-family: helvetica; font-size: 10pt; font-weight: 500; color: #19193A;
+background-color: #eee; padding-right: 0px; width: 450px; height: 60px; }
+BODY { margin: 2% 15% 5% 5%; font-family: helvetica; background-color: white;
+  color: 19193A; font-size: 10pt; font-weight: 500;}
+</STYLE>
+</head> <body>
+<h3>CMPS 450 LAB 01: Introduction to Regular Expressions</h3>
+<h3>DUE: before lab next tuesday</h3>
+<b>resources:</b><br>
+<a href="./examples/week01/regex.html">regular languages & regular expressions</a><br>
+<a href="./doc/regex-manpage.txt">posix regex manpage</a><br>
+<a href="./doc/regex7-manpage.txt">regex (7) manpage</a><br>
+<a href="http://www.regular-expressions.info/">RE basics</a><br>
+<a href="http://docs.python.org/howto/regex.html">Python RE HOWTO</a><br>
+<a href="http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html">IEEE Std 1003.1-2001, Section 9.4</a> BREs and EREs<BR>
+<a href="http://briancarper.net/blog/vim-regexes-are-awesome">vim regexes are awesome<br>
+<a href="http://publib.boulder.ibm.com/infocenter/zos/v1r12/index.jsp?topic=%2Fcom.ibm.zos.r12.bpxa600%2Fbpxza68010.htm">REs in Lex</a>
+<p>
+<span style="background-color:yellow">WHAT TO SUBMIT FOR THIS LAB</span> <p>
+You do not need to submit your work for the exercises below. You should
+ complete them if you are not already familiar with regular expressions.
+ For submission you will write a rather complex regex and insert it
+ into a perl script that I provide.
+ Copy the perl script <a href="./lab01_files/lab01">lab01</a> and 
+ <a href="./lab01_files/data">data file</a> into your directory:
+ <pre>   $ cp /home/fac/donna/public_html/cs450/lab01_files/lab01 . 
+   $ cp /home/fac/donna/public_html/cs450/lab01_files/data . 
+</pre>
+ The lab01 script needs to be executed so make sure you 
+ put 700 permissions on the file.
+ Your job is to replace the existing regex in the perl script with another
+ regex that will display the first 6 lines
+ of <a href="./lab01_files/data">data</a> and none of the remaining 
+ lines. Make your regex as simple as possible. For credit your
+ regex CANNOT contain actual words.
+<p> Submit your script as an attachment to <code> donna@cs.csub.edu </code>
+
+<h3><span style="background-color:#EEE;">Exercises</span> </h3>
+You can test your REs in vim, perl or at the command line using grep. In vim 
+you must either escape metacharacters such as +,|,(,% or prepend your regexes 
+with \v. E.g., this regex treats '(' like a substring metacharacter without 
+escaping it:  <pre>
+    64,79s/\v.*(it|ing|the).*/DONE/  </pre>
+When you have tested your regex in vim, hit ESC u to undelete. You can also 
+ use this tool: <a href="http://www.rubular.com">www.rubular.com</a>.
+Use <a href="./lab01_files/lab01.txt">this file</a> to test your solutions.
+<pre>
+01. Write the shortest possible RE that matches all items (the entire string) 
+    in the first set but none in the second set. It is possible to use no more 
+    than 2 ascii characters in your RE. 
+
+    pit         
+    spot        
+    spate       
+    slap two    
+    respite
+
+    pt
+    Pot
+    peat
+    part
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q1Area');
+myArea.innerHTML=
+' /.*p.t.*/ <br/>\
+Note: if you want your RE to match the entire string you must<br/>\
+include .* at the front and .* at the end.'; ">
+<DIV class='ans' id="Q1Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+02. Write an RE that matches all items in the first set but none in the second
+    set. Write the shortest RE possible.
+
+   rap them    
+   tapeth      
+   apth        
+   wrap/try    
+   sap tray    
+   87ap9th     
+   apothecary  
+
+   aleht
+   happy them
+   tarpth
+   Apt
+   peth
+   tarreth
+   ddapdg
+   apples
+   shape the
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q2Area');
+myArea.innerHTML=
+'/.*ap[^pd].*[^e]$/ <br/>\
+Sample test for vim: 25,41s/\v.*ap[^pd].*/DONE/'; ">
+<DIV class='ans' id="Q2Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+03. Give an RE that matches all items in the first set but none in the second.
+    Write the shortest RE possible.
+
+   affgfking   
+   rafgkahe    
+   bafghk      
+   baffgkit    
+   affgfking   
+   rafgkahe    
+   bafghk      
+   baffg kit   
+
+   fgok
+   a fgk
+   affgm
+   afffhk
+   fgok
+   afg.K
+   aff gm
+   afffhgk
+
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q3Area');
+myArea.innerHTML=
+'<tt> /.*aff?g.?k.*/   <br/>\
+This language is zero or more chars followed by a followed by  <br/>\
+1 or 2 fs followed by g followed by zero or 1 chars followed by k <br/>\
+followed by zero or more chars. <p/>\
+Another solution:<br/>\
+/.*af+g[^mo.]*/'; ">
+<DIV class='ans' id="Q3Area" STYLE="height:150px; background-color:DEE">&nbsp;
+</DIV>
+04. Give an RE that matches all items in the first set but none in the second.
+
+   assumes word senses.  Within        
+   does the clustering. In the         
+   but when? It was hard to tell       
+   he arrive." After she had           
+   mess! He did not let it             
+   it wasn't hers!' She replied        
+   always thought so.) Then            
+
+   in the U.S.A., people often
+   John?", he often thought, but
+   weighed 17.5 grams
+   well ... they'd better not
+   A.I. has long been a very
+   like that", he thought
+   but W. G. Grace never had much
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q4Area');
+myArea.innerHTML=
+' /.*(it|ing|It|Af|so.).*/   <br/>\
+For vim:  64,79s/\v.*(it|ing|It|Af|so\.).*/DONE/ '; ">
+<DIV class='ans' id="Q4Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+05. Which of the following entire strings match this regex?
+            /a(ab)*a/
+   a) abababa
+   b) aaba
+   c) aabbaa
+   d) aba
+   e) aabababa
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q5Area');
+myArea.innerHTML=
+' b, e '; ">
+<DIV class='ans' id="Q5Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+06. Which of the following entire strings match this regex?
+           /ab+c?/
+   a) abc
+   b) ac
+   c) abbb
+   d) bbc
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q6Area');
+myArea.innerHTML=
+' a, c '; ">
+<DIV class='ans' id="Q6Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+07. Which of the following entire strings match this regex?
+            /a.[bc]+/
+   a) abc
+   b) abbbbbbbb
+   c) azc
+   d) abcbcbcbc
+   e) ac
+   f) asccbbbbcbcccc
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q7Area');
+myArea.innerHTML=
+' a, b, c, d, f '; ">
+<DIV class='ans' id="Q7Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+08. Which of the following entire strings match this regex? 
+            /abc|xyz/
+   a) abc
+   b) xyz
+   c) abc|xyz
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q8Area');
+myArea.innerHTML=
+'c; the vertical bar is a metacharacter only inside parentheses.'; ">
+<DIV class='ans' id="Q8Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+09. Which of the following entire strings match this regex?
+          /[a-z]+[\.\?!]/
+   a) battle!
+   b) Hot
+   c) green
+   d) swamping.
+   e) jump up.
+   f) undulate?
+   g) is.?
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q9Area');
+myArea.innerHTML=
+' a, d, f '; ">
+<DIV class='ans' id="Q9Area" STYLE="height: px; background-color:DEE">&nbsp; </DIV>
+10. Which of the following entire strings match this regex?
+            /[a-zA-Z]*[^,]=/
+    a) Butt=
+    b) BotHEr,=
+    c) Ample
+    d) FIdDlE7h=
+    e) Brittle =
+    f) Other.=
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q10Area');
+myArea.innerHTML=
+' a, e, f '; ">
+<DIV class='ans' id="Q10Area" STYLE="height: px; background-color:DEE">&nbsp; </DIV>
+11. Which of the following entire strings match this regex?
+             /[a-z][\.\?!]\s+[A-Z]/
+	  Note:  \s matches any white space character.
+     a) A. B
+     b) c! d
+     c) e f
+     d) g.   H
+     e) i?  J
+     f) k L
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q11Area');
+myArea.innerHTML=
+' d, e '; ">
+<DIV class='ans' id="Q11Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+12. Which of the following entire strings match this regex?
+           /(very )+(fat )?(tall|ugly) cat/
+    a) very fat cat
+    b) fat tall cat
+    c) very very fat ugly cat
+    d) very very very tall cat
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q12Area');
+myArea.innerHTML=
+' c, d '; ">
+<DIV class='ans' id="Q12Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+13. Which of the following entire strings match this regex?
+                /<[^>]+>/
+    a) &lt;an xml tag>
+    b) &lt;opentag> &lt;closetag>
+    c) &lt;/closetag>
+    d) &lt;>
+    e) &lt;with attribute=77>
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q13Area');
+myArea.innerHTML=
+'  a , c, e '; ">
+<DIV class='ans' id="Q13Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+14. In addition to finding patterns, REs are useful for text processing. For 
+    example, write an RE for vim that will take a line that looks like this
+         Spade, Samantha J.
+	  and converts it to this:
+	       Samantha Spade
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q14Area');
+myArea.innerHTML=
+'   :1,$s/\\v^(.*), (.*) (.*)/\\2 \\1/ <br/>\
+    btw: how would you do this in Word on a 1000 line file?  '; ">
+<DIV class='ans' id="Q14Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+15. Write a regex in vim that will preface a single digit number at the
+    beginning of a line with a '0'; i.e., take this:
+      1. Question 1.
+      2. Question 2.
+           ...
+     10. Question 10.
+   and make it look like this:
+     01. Question 1.
+     02. Question 2.
+        ...
+     10. Question 10.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q15Area');
+myArea.innerHTML=
+'  :1,$s/\\v^([0-9])\\./0\\1./ '; ">
+<DIV class='ans' id="Q15Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+16. Write a regex in vim that will delete all empty lines in a file.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q16Area');
+myArea.innerHTML=
+' :g/^$/d '; ">
+<DIV class='ans' id="Q16Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV></pre>
+For the next questions read the <a href="http://pic.dhe.ibm.com/infocenter/zos/v1r12/index.jsp?topic=%2Fcom.ibm.zos.r12.bpxa600%2Fbpxza68010.htm">IBM Tutorial on Lex</a>
+<pre>
+17. The Lex RE (ab|cd+)?(ef)* matches such strings as abefef, efefef, cdef, or
+    cddd, but not abc, abcd, or abcdef. (T/F)
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q17Area');
+myArea.innerHTML=
+' TRUE '; ">
+<DIV class='ans' id="Q17Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+18. The Lex RE [\^A-Za-z][^0-9]* matches what?
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q18Area');
+myArea.innerHTML=
+' strings starting with ^ or any upper or lowercase letter <br/>\
+followed by zero or more of anything except digits '; ">
+<DIV class='ans' id="Q18Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+19. The Lex RE ab?c matches either ac or abc. (T/F)
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q19Area');
+myArea.innerHTML=
+' TRUE '; ">
+<DIV class='ans' id="Q19Area" STYLE="height: px; background-color:DEE">&nbsp; </DIV>
+20. The Lex ERE [abc-f].+(z|\.)$ matches what?
+<input type="button" value="check" onClick="
+  myArea=document.getElementById('Q20Area');
+myArea.innerHTML=
+' all strings starting with a letter a-f followed by at least \
+  one character of anything but \n followed by a period or a z.  '; ">
+<DIV class='ans' id="Q20Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+</pre>
+
+
+</body>
+</html>

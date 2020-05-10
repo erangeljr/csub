@@ -1,0 +1,113 @@
+#9. Consider a language of expressions over lists of integers. List constants
+    have the form: [3,-6,1],[86],[]. General list expressions may be formed 
+    using the binary infix operators +,-,*,and @ (for concatenation), where 
+    * has highest precedence, - and + are next with equal precedence, and @
+    has lowest precedence. @ is right associative and all others left 
+    associative. Parens can override the rules.
+
+    Ex: [1,2,3] + [2,2,3] * [5,-1,0] @ [8,21] evaluates to [11,0,3,8,21].
+
+    BNF grammar: assume <integer> is already defined and list conformity for
+    the arithmetic expressions is handled outside the grammar as a 
+    context-sensitive issue.
+
+ANS:
+    <expr> -> <adder> @ <expr> | <adder>
+    <adder> -> <adder> (+ | -) <term> | <term>
+    <term> -> <term> * <factor>  | <factor>
+    <factor> -> ( <expr> ) | <list>
+    <list> -> [ ] | [ <integer> {,<integer> } ]
+
+
+04. Braces can replace recursion in specifying variable lists and terms.
+
+   Original: <variable list> ::= <variable> | <variable>, <variable list>
+   New:      <variable list> ::= <variable> {, <variable>}
+   
+   Original: <term> ::= <element> | <term> <strong op> <element>
+   New:      <term> ::= <element> { <strong op> <element> } 
+
+05. Specify the syntax of the Roman numerals less than 100 using regular 
+    expressions.
+
+     Roman_numeral < 100  ::= 
+
+     ( e | XX?X? | XL | LX?X?X? | XC )( e | II?I? | IV | VI?I?I? | IX )
+
+   Supporting work:
+
+    digit:   I  II III IV V VI VII VIII IX  
+       RE:   II?I? | IV | VI?I?I? | IX
+    tens:    X  XX XXX XL L LX LXX LXXX XC  
+      RE:    XX?X? | XL | LX?X?X? | XC 
+
+
+06. Construct a derivation tree and an abstract syntax tree for the command:
+
+    if n > 0 then a:= 3 else skip end if
+
+    Derivation Tree:
+
+                        <command> 
+  /       /         /       |         \       \        \   \
+if <boolean expr> then <command seq> else <command seq> end if
+          |                 |                    |
+   <boolean term>       <command>            <command>
+          |             /      \  \              |
+  <boolean element>  <variable> := <expr>       skip
+          |              |           | 
+          |         <identifier>  <int expr>
+          |              |           |
+          |           <letter>    <term>
+          |              |           |
+      <comparison>       a       <element>
+     /       \      \                |
+<int expr> <relation> <int expr>  <variable>
+    |          |          |          |
+  <term>       >       <term>    <identifier>
+    |                     |          |
+ <element>            <element>   <letter>
+    |                     |          |
+ <variable>            <numeral>     3 
+    |                     |
+<identifier>           <digit>
+    |                     | 
+ <letter>                 0
+    |
+    n 
+
+    Abstract Syntax Tree for the same statement:
+    if n > 0 then a:= 3 else skip end if
+
+   Following the rules of 1.18 the abstract tree first derives into this:
+
+                         Command
+              /      /     |      \      \     \   
+            /      /       |       \       \     \      
+           if   Expr      then    Command+  else  Command+
+               /  |  \             / | \           |
+             Expr Op Expr        Id := Expr       skip 
+              |   |  |           |      |               
+              n   >  0           a      3 
+
+
+   It is possible to abstract further by moving the if operator up to the
+   root, moving the appropriate branches under then and else, and eliminating 
+   unnecessary nonterminals:
+ 
+                                   if
+
+                              /     |    \
+                            Exp    then   else
+                           / | \    |      \      
+                          n  >  0   :=     skip
+                                   / \       
+                                  a   3    
+
+
+   The Prolog structure of the abstract tree above is:
+    
+    if(Exp(>,n,0), then([:=(a,3)]), else([skip])).
+
+   where [] follows then and else to denote a possible list of Commands.
+    

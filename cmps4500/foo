@@ -1,0 +1,46 @@
+
+{identifier}    { 
+                  yylval.name = malloc(sizeof(yytext)+10);
+                  char myname[50];
+                  int found = 0;
+                  /* if global scope then insert as new variable */
+                  if (scope==0) {
+                     /* append scope to identifier name */
+                     strncpy(yylval.name,yytext,yyleng);
+                     sprintf(buf,"%d",scope);
+                     strcat(yylval.name,buf);
+                     insert(yylval.name,strlen(yylval.name), yylineno );
+                   if (DEBUG) fprintf(logfd,"scope %d: %s\n",scope,yylval.name);
+                  }
+                  else  if (pflag)
+                  {
+                     myname[0] = '\0';
+                     strncpy(myname,yytext,yyleng+2);
+                     strcat(myname,"1\0");
+                 if (DEBUG) fprintf(logfd,"myname scope %d: %s\n",scope,myname);
+                     strncpy(yylval.name,myname,strlen(myname));
+                     insert(yylval.name,strlen(yylval.name), yylineno );
+                  }
+                  else {
+                     /* check if local first */
+                     myname[0] = '\0';
+                     strncpy(myname,yytext,yyleng+2);
+                     strcat(myname,"1\0");
+                     found = lookup(myname);
+                      /* if we found it - it is a local reference */
+                     if (found != -1) { 
+                        strncpy(yylval.name,myname,strlen(myname));
+                         /* insert lineno */
+                        insert(yylval.name,strlen(yylval.name), yylineno );
+                     }
+                     /* assume it a global variable so insert lineno */
+                     else {
+                        myname[0] = '\0';
+                        strncpy(myname,yytext,yyleng+2);
+                        strcat(myname,"0\0");
+                        strncpy(yylval.name,myname,strlen(myname));
+                        insert(yylval.name,strlen(yylval.name), yylineno );
+                     }
+                  }
+               return IDENT;
+             }

@@ -1,0 +1,339 @@
+<html><body> <style type=text/css> pre { padding: 1px; }
+DIV.ans { margin: 3px 0px 10px 3px; padding: 4px; border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #777;
+ background-color: #DEE; padding-right: 5px; height: 50px; width: 840px;
+} DIV.box { position: relative; float: left; margin: 0px 0px 2px 0px; 
+ padding: 4px; # border: 1px dashed black;
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #19193A;
+ background-color: #eee; padding-right: 0px; width: 450px; height: 60px; }
+h5 { background-color: yellow; width: 300px;}
+BODY { margin: 2% 15% 5% 5%; font-family: helvetica; background-color: white;
+  color: 19193A; font-size: 10pt; font-weight: 500;}
+</STYLE>
+<h3>CMPS 450 Week 08: Ch 5 Syntax Directed Definitions</h3> 
+
+You do not need to submit anything for this homework. The homework is
+ designed for self-evaluation on the reading material. It is   assumed that you know this material as you construct
+ your compiler and before your take-home final exam.
+
+<p>
+<a href="./ch05_notes.html">ch 05 lecture notes</a><pre>
+// Section 5.1  "Syntax-Directed Definitions" *
+ -----------------------
+ Grammar I. Figure 5.1
+ -----------------------
+ Production Rule      Semantic Rule
+ ===================  ======================
+ 1. L -> E \n         L.val = E.val            // final result of the calc
+ 2. E -> E_1 + T      E.val = E_1.val + T.val
+ 3. E -> T            E.val = T.val
+ 4. T -> T_1 * F      T.val = T_1.val * F.val
+ 5. T -> F            T.val = F.val
+ 6. F -> ( E )        F.val = E.val
+ 7. F -> digit        F.val = digit.lexval     // returned by the lexer
+
+ // \n is the ENDLINE marker
+
+01. For each attribute in Grammar I, state whether it is inherited or 
+    synthesized. Is Grammar I L-attributed or S-attributed?
+ <input type="button" value="check" onClick="
+    myArea=document.getElementById('Q1Area');
+   myArea.innerHTML=
+   'All attributes are synthesized; thus the gramar is S-attributed. '; ">
+   <DIV class='ans' id="Q1Area" STYLE="height:30px; background-color:DEE">
+   </DIV>
+02. Using the SDD for Grammar I above, draw the annotated parse tree for
+         9 + 3 * (5 + 4) \n.   
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q2Area'); 
+myArea.innerHTML='<tt>\
+                         (15)         <br/>\
+                      L.val = 36      <br/>\
+                     /          \\    <br/>\
+                   (14)           \\n     <br/>\
+                 E.val=9+27                <br/>\
+                /     |    \\                  <br/>\
+              (3)     +     (13)                <br/>\
+            E.val=9         T.val = 3*9         <br/>\
+              |            /     |     \\         <br/>\
+             (2)          (5)    *     (12)         <br/>\
+             T.val=9      T.val=3       F.val=9       <br/>\
+              |            |          /    |    \\     <br/>\
+             (1)          (4)        (    (11)   )    <br/>\
+             F.val=9      F.val=3       E.val=5+4     <br/>\
+              |            |             /   |   \\    <br/>\
+              9            3           (8)   +    (10)    <br/>\
+                                     E.val=5    T.val=4   <br/>\
+                                        |         |         <br/>\
+                                       (7)       (9)        <br/>\
+                                      T.val=5    F.val=4    <br/>\
+                                        |         |     <br/>\
+                                       (6)        4     <br/>\
+                                      F.val=5            <br/>\
+                                        |            <br/>\
+                                        5      '; ">
+  <DIV class='ans' id="Q2Area" STYLE="height:530px; background-color:DEE"></DIV>
+03. In what type of traversal is the parse tree for an expression in Grammar I 
+    annotated? Note that the leaves of the tree are terminals and the internal
+    nodes are nonterminals. The root of the tree is the starting symbol.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q3Area');
+myArea.innerHTML=
+'Initial values for terminals are set by the scanner. All attributes are <br/>\
+synthesized thus they are percolated up the tree. This is an S-attributed <br/>\
+grammar. The nodes of the parse tree in this type of grammar are decorated<br/>\
+ in a postorder traversal of the tree.  '; ">
+<DIV class='ans' id="Q3Area" STYLE="height:100px; background-color:DEE"> 
+    </DIV>
+04. Is Grammar I left or right associative for + op? To confirm your answer
+    draw a parse tree for input 
+                9 + 3 + 5  \n
+ <input type="button" value="check" onClick="
+    myArea=document.getElementById('Q4Area');
+    myArea.innerHTML='<tt>\
+ LEFT.  9 + 3 + 5  n.                    <br/>\
+                      L.val = 17         <br/>\
+                     /          \\       <br/>\
+                 E.val=12+5      n       <br/>\
+                /     |    \\         <br/>\
+         E.val=9+3    +     T=5        <br/>\
+       /     |    \\                   <br/>\
+   E.val=9   +     T=3                  <br/>\
+      | <br/>\
+      T=9          <- 9+3 is performed first so left associative'; ">
+<DIV class='ans' id="Q4Area" STYLE="height:220px; background-color:DEE">&nbsp;
+</DIV>
+ ------------------------
+ Grammar II.  Figure 5.4
+ ------------------------
+ PRODUCTION         SEMANTIC RULE
+ =================  =================
+ 1. T -> F T'       T'.inh = F.val               // inherited
+                    T.val = T'.syn               // synthesized
+ 2. T' -> * F T'_1  T'_1.inh = T'.inh * F.val    // inherited
+                    T'.syn = T'_1.syn            // synthesized
+ 3. T' -> epsilon   T'.syn = T'.inh              // synthesized
+ 4. F -> digit      F.val = digit.lexval         // intrinsic
+
+05. Give the annotated Parse Tree for 3 * 5 using Grammar II.
+ <input type="button" value="check" onClick="
+    myArea=document.getElementById('Q55Area');
+    myArea.innerHTML='<tt>\
+                    T.val = 15  (synthesized)      <br/>\
+                    /       \\                 <br/>\
+               F.val=3       T`.inh=3    <br/>\
+                  |          T`.syn=15   <br/>\
+                  |        /  |        \\    <br/>\
+          digit.lexval=3  *   F.val=5  T`_1.inh = 15   <br/>\
+                              |        T`_1.syn = 15   <br/>\
+                              |               |              <br/>\
+                      digit.lexval=5        epsilon '; ">
+<DIV class='ans' id="Q55Area" STYLE="height:200px; background-color:DEE"> </DIV>
+
+Grammar II an L-attributed grammar. The * operation is right associative. One 
+possible decoration order for this parse tree is shown below. Assuming that the
+intrinsic attribute digit.lexval is assigned by the lexical scanner, there are
+seven attributes that need to be assigned. This is one possible order: 
+
+                   (7) T.val = T'.syn=15 
+                    /         \
+        (1) F.val=lexval=3    (2) T'.inh=F.val = 3  
+                 |            (6) T'.syn=T'_1.syn=15
+         digit.lexval=3     /        |             \
+                           *  (3)F.val=lexval=5   (4)T'_1.inh=T'.inh*F.val=3*5 
+                                     |            (5)T'_1.syn = T'.inh = 15
+                               digit.lexval=5           |       
+                                                        e  
+
+  Think of the parse tree as a DAG (directed acyclic graph) with 9 vertices, 
+  each vertex representing an attribute and each directed edge denoting the 
+  "happens-before" quality. A correct decoration order such as 1,2,3,4,5,6,7 
+  is then a topological sort of the DAG. Here are the constraints:
+ 
+       1 -> 2 # attribute 1 must be assigned before attribute 2
+       2 -> 4 # attribute 2 must be assigned before attribute 4
+       3 -> 4 # attribute 3 . . . before attribute 4
+       4 -> 5 # attribute 4 . . . before attribute 5
+       5 -> 6 # attribute 5 . . . before attribute 6
+       6 -> 7 # attribute 6 . . . before attribute 7
+
+  Here is the DAG based on the constraints: 
+                      3
+                      | 
+                      v 
+            1 -> 2 -> 4 -> 5 -> 6 -> 7
+
+06. To generate a second acceptable ordering, apply a DFS to the above DAG. The 
+    reverse pop order of the DFS is a possible topological sort. What is it?
+ <input type="button" value="check" onClick="
+    myArea=document.getElementById('Q998Area');
+   myArea.innerHTML='<tt>\
+   Applying a DFS looks like this:<br/>\
+      7        <br/>\
+     666 <br/>\
+    55555 <br/>\
+   4444444 <br/>\
+  2222222222 <br/>\
+ 111111111111_3_  Pop order: 7654213   Reverse pop order: 3124567'; ">
+<DIV class='ans' id="Q998Area" STYLE="height:200px; background-color:DEE">&nbsp;
+</DIV>
+07. Extend Grammar II to include the addition operator +, where + has lower
+    precedence than *, and parentheses (e.g. follow the syntax of Grammar I
+    but use inherited as well as synthesized attributes). Try to add as few
+    new rules as possible.
+
+   Original Grammar II:
+   PRODUCTION       SEMANTIC RULE  
+   ===============  =================
+    T -> F T'       T'.inh = F.val           
+                    T.val = T'.syn            
+    T' -> * F T'_1  T'_1.inh = T'.inh * F.val
+                    T'.syn = T'_1.syn       
+    T' -> epsilon   T'.syn = T'.inh       
+    F -> digit      F.val = digit.lexval      
+
+    What is the new grammar? 
+ <input type="button" value="check" onClick="
+    myArea=document.getElementById('Q1xArea');
+   myArea.innerHTML=' Two new symbols : S starting symbol and E. <br/>\
+ Three new rules labeled 1,2,3.<p/><tt>\
+ PRODUCTION         SEMANTIC RULE  # new grammar  <br/>\
+ =================  =================    <br/>\
+ 1. S -> F E        E.inh = F.val       <br/>\
+                    S.val = E.syn     <br/>\
+ 2. E -> + T E_1    E_1.inh = E.inh + T.val   <br/>\
+                    E.syn = E_1.syn  <br/>\
+    T -> F T`       T`.inh = F.val             <br/>\
+                    T.val = T`.syn             <br/>\
+    T` -> * F T`_1  T`_1.inh = T`.inh * F.val  <br/>\
+                    T`.syn = T`_1.syn        <br/>\
+    T` -> epsilon   T`.syn = T`.inh         <br/>\
+ 3. E -> epsilon    E.syn = E.inh           <br/>\
+    F -> digit      F.val = digit.lexval       '; ">
+<DIV class='ans' id="Q1xArea" STYLE="height:380px; background-color:DEE">&nbsp;
+</DIV>
+08. For your new SDD from question 4, give an annoted parse tree for
+        9+3*5+4  (note that + associates to the right)
+ <input type="button" value="check" onClick="
+    myArea=document.getElementById('Q5Area');
+   myArea.innerHTML='<tt>\
+                 E.val=E`.syn=28       input: 9+3*5+4 <br/>\
+                 /       \\           <br/>\
+             F.val=9   E`.inh = 9   <br/>\
+               |       E`.syn = 9 + 19   <br/>\
+               9      /     |            \\   <br/>\
+                     +  T.val=15           E`.inh = 15 + 4   <br/>\
+                       /      |            E`.syn=4  <br/>\
+                      /       |            |      \\         \\ <br/>\
+                 F.val=3   T`.inh=3        +   T.val=4       E`.inh=4<br/>\
+                   |      T`.syn=3*5            /      \\            |<br/>\
+                   3       /   |      \\        F.val=4  T`.inh=4    e<br/>\
+                          *  F.val=5   T`.inh=5   |    <br/>\
+                                       T`.syn=5   4      <br/>\
+                                       |             <br/>\
+                                       e         '; ">
+<DIV class='ans' id="Q5Area" STYLE="height:300px; background-color:DEE">&nbsp;
+</DIV>
+********************************************
+* Section 5.2 "Evaluation Orders for SDDs" *
+********************************************
+ ----------------------
+ Grammar 3. Figure 5.8 
+ ----------------------
+  PRODUCTION     SEMANTIC RULES
+ 1) D -> TL      L.inh = T.type
+ 2) T -> int     T.type = integer
+ 3) T -> float   T.type = float
+ 4) L -> L_1,id  L_1.inh = L.inh
+                 addType(id.entry,L.inh)
+ 5) L -> id      addType(id.entry,L.inh)
+
+ The above attribute grammar is an SDD for simple type declarations.
+
+09. Following the SDD of Grammar 3, give an annotated parse tree for
+        int a, b, c
+ <input type="button" value="check" onClick="
+    myArea=document.getElementById('Q6Area');
+   myArea.innerHTML='<tt>\
+                          D    <br/>\
+                       /      \\          <br/>\
+              T.type=int       L.inh=int <br/>\
+               |               /       |  \\ <br/>\
+              int           L.inh=int  ,  int addType(c,int) <br/>\
+                            /     | \\       <br/>\
+                        L.inh=int ,  int addType(b,int)      <br/>\
+                         |              <br/>\
+                     int  addType(a,int) '; ">
+<DIV class='ans' id="Q6Area" STYLE="height:190px; background-color:DEE">&nbsp;
+</DIV>
+10. Following the SDD of Grammar 3, provide a dependency graph based on the 
+    parse tree for 
+                    int a, b,c
+
+    First arbitrarily label each attribute with a unique vertex letter. Since 
+    T.type at vertex A is an intrinsic attribute assigned by the scanner before 
+    parsing begins you can omit it from the DAG without a problem.
+ <input type="button" value="check" onClick="
+    myArea=document.getElementById('Q7aArea');
+   myArea.innerHTML='<tt>\
+                          D <br/>\
+                       /      \\ <br/>\
+            (A) T.type=int    (B) L.inh=int       <br/>\
+               |               /       |  \\       <br/>\
+              int        (C) L.inh=int ,  (D) addType(c,int) <br/>\
+                            /     |  \\            <br/>\
+                    (E) L.inh=int ,  (F) addType(b,int) <br/>\
+                         |              <br/>\
+               (G) addType(a,int) '; ">
+<DIV class='ans' id="Q7aArea" STYLE="height:190px; background-color:DEE">&nbsp;
+</DIV>
+11. Next, construct a DAG where each labeled node is a vertex and the edges 
+    denote the happens-before relationship.
+ <input type="button" value="check" onClick="
+    myArea=document.getElementById('Q7Area');
+   myArea.innerHTML=
+' A->B->C->E->G, C->F, B->D '; ">
+<DIV class='ans' id="Q7Area" STYLE="height:30px; background-color:DEE">&nbsp;
+</DIV>
+12. Give all possible topological sorts for the dependency graph in question 7.
+ <input type="button" value="check" onClick="
+    myArea=document.getElementById('Q8Area');
+   myArea.innerHTML='<tt>\
+The path A->B->C->E is fixed. After that, vertices G, F and D can be  <br/>\
+traveled to at any time. There are thus 6 traversals: <br/>\
+       ABCEGFD <br/>\
+       ABCEGDF <br/>\
+       ABCEDGF <br/>\
+       ABCEDFG <br/>\
+       ABCEFDG <br/>\
+       ABCEFGD '; ">
+<DIV class='ans' id="Q8Area" STYLE="height:165px; background-color:DEE">&nbsp;
+</DIV>
+13. Assume some attribute grammar with production A -> BCD, where each 
+    nonterminal has a synthesized attribute s and an inherited attribute i. 
+    For each of the rules below, state whether the rule is consistent with an 
+    S-attributed definition, an L-attributed definition, or neither.
+
+    a) A.s = B.s + C.s
+    b) D.i = C.s + B.s
+    c) D.i = A.s
+    d) C.i = D.s
+
+    To answer this question it helps to see the AG visually as shown here:
+
+                   A.i
+                   A.s
+                 /  |  \
+             B.i   C.i   D.i
+             B.s   C.s   D.s
+ <input type="button" value="check" onClick="
+    myArea=document.getElementById('Q9Area');
+   myArea.innerHTML='<tt>\
+   a) A.s = B.s + C.s   # S-attributed   <br/>\
+   b) D.i = C.s + B.s  # L-attributed  <br/>\
+   c) D.i = A.s  # S-attributed     <br/>\
+   d) C.i = D.s   # neither  - cannot grab from sibling to the right      '; ">
+<DIV class='ans' id="Q9Area" STYLE="height:80px; background-color:DEE">&nbsp;
+</DIV>
+</body>
+</html>

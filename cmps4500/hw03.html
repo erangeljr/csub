@@ -1,0 +1,350 @@
+<html> <head> <style type=text/css> 
+DIV.ans { margin: 3px 0px 10px 3px; padding: 4px; border: 1px dashed black; 
+ font-family: helvetica; font-size: 10pt; font-weight: 500; color: #777;
+ background-color: #DEE; padding-right: 5px; height: 150px; width: 600px; }
+DIV.box { position: relative; float: left; margin: 0px 0px 2px 0px; 
+ padding: 4px; # border: 1px dashed black; font-family: helvetica; 
+ font-size: 10pt; font-weight: 500; color: #19193A; background-color: #eee; 
+ padding-right: 0px; width: 450px; height: 100px; }
+BODY { margin: 2% 15% 5% 5%; font-family: helvetica; background-color: white;
+  color: 19193A; font-size: 10pt; font-weight: 500;}
+h5 {background-color: yellow; width: 200px;}
+</STYLE> </head>
+<body>
+<h2>CMPS 450 - Homework 3</h2>
+
+<h3>Syntax-Directed Translation</h3>
+Resources:<br/>
+<a href="./ch03a_notes.html">Describing Syntax</a> </br>
+<a href="./ch03b_notes.html">Describing Semantics</a> <br/>
+
+<pre>
+   Grammar G 
+  ,--------------------,
+  |  S -> bS | aA | b  |
+  |                    |
+  |  A -> bA | aB      |
+  |                    |
+  |  B -> bB | aS | a  |
+  '--------------------'
+
+Use derivation to show whether or not the following strings are in L(G), where
+L(G) is the language defined by Grammar G.
+
+01. bbaabb
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q1Area');
+myArea.innerHTML=
+'S -> bS         <br/>\
+     -> bbS     <br/>\
+     -> bbaA     <br/>\
+     -> bbaaB     <br/>\
+     -> bbaabB    <br/>\
+     -> bbaab STUCK HERE. <br/> NO, not in L(G).  '; ">
+<DIV class='ans' id="Q1Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+02. babbbabaaaa
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q2Area');
+myArea.innerHTML=
+'S -> bS       <br/>\
+     -> baA    <br/>\
+     -> babA   <br/>\
+     -> babbA   <br/>\
+     -> babbbA   <br/>\
+     -> babbbaB  <br/>\
+     -> babbbabB   <br/>\
+     -> babbbabaS   <br/>\
+     -> babbbabaaA   <br/>\
+     -> babbbabaaaB  <br/>\
+     -> babbbabaaaa   YES, in L(G).  '; ">
+<DIV class='ans' id="Q2Area" STYLE="height:200px; background-color:DEE">&nbsp;
+</DIV>
+03. babbbaaaaaba
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q3Area');
+myArea.innerHTML=
+'  S -> bS   <br/>\
+     -> baA   <br/>\
+     -> babA   <br/>\
+     -> babbA   <br/>\
+     -> babbbA   <br/>\
+     -> babbbaB   <br/>\
+     -> babbbaaS   <br/>\
+     -> babbbaaaA   <br/>\
+     -> babbbaaaaB   <br/>\
+     -> babbbaaaaaS <br/>\
+     -> babbbaaaaabS  STUCK. <br/> NO, not in L(G)  '; ">
+<DIV class='ans' id="Q3Area" STYLE="height:200px; background-color:DEE">&nbsp;
+</DIV>
+04. In English explain why string
+          ababbbbbbbbbb
+    is not in L(G).
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q4Area');
+myArea.innerHTML=
+'G: S -> bS | aA | b       <br/>\
+    A -> bA | aB    <br/>\
+    B -> bB | aS | a    <br/>\
+    <br/>\
+The rules in G, as shown above, prevent any string that starts with `a` <br/>\
+from ending in `b`. The derivation confirms this: <br/>\
+    S -> aA    <br/>\
+      -> abA    <br/>\
+      -> abaB    <br/>\
+      -> ababB    <br/>\
+      .....    <br/>\
+      -> ababbbbbbbbbB  STUCK. <br/> Not in L(G).  '; ">
+<DIV class='ans' id="Q4Area" STYLE="height:220px; background-color:DEE">&nbsp;
+</DIV>
+05. Do each of these grammars describe the same language?
+
+    a) S -> abS | ab            b) S -> SS | ab       
+
+    c) S -> aB                  d) S -> aB | ab
+       B -> bS | b                 B -> bS    
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q5Area');
+myArea.innerHTML=
+'YES. As shown here: <br/>\
+a) S -> abS | ab  L(G) = { ab, abab, ababab, abababab, ... } RE = (ab)+ <br/>\
+b) S -> SS | ab   L(G) = { ab, abab, abababab, ... } RE = (ab)+   <br/>\
+c) S -> aB; B -> bS | b    L(G) = { ab, abab, ababab, abababab, ... }<br/>\
+        RE = (ab)+   <br/>\
+d) S -> aB | ab; B -> bS   L(G) = { ab, abab, ababab, abababab, ... } RE =\
+(ab)+'; ">
+<DIV class='ans' id="Q5Area" STYLE="height: px; background-color:DEE">&nbsp;
+</DIV>
+06. Which of the following grammars is NOT equivalent to this grammar:
+          S -> abS  
+          S -> ab  
+    Two grammars G and G' are equivalent if L(G) = L(G').
+    a)  S -> aB     b)  S -> aB       c)  S -> aB    
+        B -> bS         B -> bS           B -> bS
+        S -> ab         B -> ab           S -> a  
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q6Area');
+myArea.innerHTML=
+'B and C are NOT equivalent to the original grammar. <br/>\
+The original grammar is defined as RE = (ab)+  and looks like this: <br/>\
+L(G) = { ab, abab, ababab, abababab,....}  <p/>\
+The set of the three languages are shown here: <br/>\
+a) S -> aB; B -> bS; S -> ab L(G) ={ ab, abab, ababab, abababab, ...} OK.<br/>\
+b) S -> aB; B -> bS; B -> ab L(G) ={ aab, abaab, ababaab, ... } NOT OK.<br/>\
+c) S -> aB; B -> bS; S -> a  L(G) ={ a, aba, ababa, abababa, ababababa, ...}\
+NOT OK.<p/>\
+Grammar G is responsible for the syntax of L only; i.e., L is the set of <Br/>\
+ all strings in language L that can be generated by applying the <br/>\
+ production rules. This is syntax. Do not conflate syntax with semantics.<br/>\
+The order in which rules are applied matters only when evaluating the <br/>\
+*semantics* (meaning) of the language.<br/> Grammars deal\
+ with syntax only - the end result, L(G), is all that matters. If string <br/>\
+ x can be derived in multiple ways, it does not matter, as long as x is in L';">
+<DIV class='ans' id="Q6Area" STYLE="height:260px; background-color:DEE">&nbsp;
+</DIV>
+07. Are these grammars equivalent? Can the languages defined by these grammars 
+    be defined by an RE? If so, provide the RE.
+
+    a) S -> aB           b) S -> aB
+       B -> bS | b          B -> bS
+                            S -> a
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q7Area');
+myArea.innerHTML=
+'NO - not equivalent as shown here:  <br/>\
+a) S -> aB; B -> bS | b  L(G) = {ab, abab, ababab, abababab, ... } <br/>\
+Yes the rules qualify as a regular grammar. The RE is (ab)+ <p/>\
+b) S -> aB; B -> bS; S -> a L(G) = { a, aba, ababa, abababa, ... } <br/>\
+Yes the rules qualify as a regular grammar. The RE = a(ba)*'; ">
+<DIV class='ans' id="Q7Area" STYLE="height: px; background-color:DEE">
+</DIV>
+08. This grammar G 
+         S -> SS | a | b 
+    is ambiguous. For each of the following strings, state whether the string
+    is in L(G) and whether there is more than one leftmost derivation.
+
+    a) ab
+    b) aba
+    c) aa
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q8Area');
+myArea.innerHTML=
+'String A (ab) is in L(G) and has 1 derivation.<p/>\
+String B (aba) is in L(G) and has two leftmost derivations:<br/>\
+    S -> SS -> aS -> aSS -> abS -> aba <br/>\
+    S -> SS   -> SSS -> aSS  -> abS -> aba<p/>\
+String C is in L(G) and has 1 derivation.'; ">
+<DIV class='ans' id="Q8Area" STYLE="height: px; background-color:DEE"> </DIV>
+09. Assume this grammar G:
+
+      S -> AB
+      A -> 0A1 | 2
+      B -> 1B | 3A
+
+    Which string(s) are in L(G) ?
+
+    a) 21113021   
+    b) 00213021
+    c) 00021132
+    d) 0021131100211
+
+   Can you use REs to define L(G)?
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q9Area');
+myArea.innerHTML=
+'A is the only string in L(G). The language defined by this grammar is all \
+strings <br/> over {0,1,2,3) that begin with an optional 0 followed by 1 \
+or more more 2`s <br/> followed by zero or more 1`s, followed by a single 3.\
+The pattern just described is then duplicated. <p/>This language is NOT a \
+regular language so REs cannot be used to describe it. <p/>\
+Finding patterns make the task of checking if a string is in L easier.<br/>\
+All strings must end in 1. Thus C is not in L(G). The terminal following 3<br/>\
+ must be 0 or 2, thus D is not in L(G). No pattern helps with B so try to derive it:<br/> \
+ 00213021 <br/>\
+ S -> AB  <br/>\
+   -> 0A1B  <br/>\
+   -> 0A1B  <br/>\
+   -> 00A11B  <br/>\
+   -> 00211B     STUCK.  <br/>\
+Try to derive A:<br/>\
+ 211113021 <br/>\
+ S -> AB  <br/>\
+ S -> 2B  <br/>\
+ S -> 21B  <br/>\
+ S -> 211B  <br/>\
+ S -> 2111B  <br/>\
+ S -> 21111B  <br/>\
+ S -> 211113A  <br/>\
+ S -> 2111130A1  <br/>\
+ S -> 211113021     VALID.'; ">
+<DIV class='ans' id="Q9Area" STYLE="height:425px; background-color:DEE">&nbsp;
+</DIV>
+10. This Extended BNF grammar, where brackets describe optional constructs
+              A -> BC[DEFG]HI | BCDE[FGH]I
+   is equivalent to this BNF grammar without brackets. ( TRUE / FALSE )
+   A -> BCXHI | BCDEYI
+   X -> DEFG | &epsilon;
+   Y -> FGH | &epsilon;
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q10Area');
+myArea.innerHTML=
+' TRUE '; ">
+<DIV class='ans' id="Q10Area" STYLE="height:30px; background-color:DEE">&nbsp;
+</DIV>
+11. This Extended BNF grammar, where curly braces describe constructs that can
+     be repeated 0, 1, 2, or any number of times
+          A -> a{BC}b
+    is equivalent to this BNF grammar without curly braces. ( TRUE / FALSE )
+           A -> aXb
+           X -> BCX | &epsilon; 
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q11Area');
+myArea.innerHTML= ' TRUE '; ">
+<DIV class='ans' id="Q11Area" STYLE="height:30px; background-color:DEE">&nbsp;
+</DIV>
+12. Show that the numeric value of all binary strings generated by the grammar 
+    below is divisible by 3. Use structural induction.
+
+    Structural induction is induction over the number of times that the
+    production rules are applied to build L(G).
+
+          {num} -> 11 | 1001 | {num}0 | {num}{num}
+
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q12Area');
+myArea.innerHTML=
+'A proof by structural induction works like this:<br/>\
+Supposing 3 divides all elements in the set SO FAR. Then show that 3 <br/>\
+divides any element added to the set by applying Rule 1 or Rule 2. <br/>\
+<br/>\
+Basis: 11 and 1001, the atomic elements, are both divisable by 3. check. <br/>\
+<br/>\
+Inductive Hypothesis: Suppose 3 divides all elements in the set so far. <br/>\
+<br/>\
+Inductive Step. Show 3 divides elements added by applying both rules.<br/>\
+<br/>\
+Rule 1. {num} -> {num}0 <br/>\
+By IH, {num} = 3k, for some k. Since adding 0 to a binary string is<br/>\
+multiplying that string by 2, {num}0 = 2(3k), Rearrange and we have<br/>\
+3(2k) which is clearly divisable by 3.<br/>\
+<br/>\
+Rule 2. {num} -> {num}{num}.<br/>\
+By IH, use 3k to replace {num} on RHS. Then the value of {num}{num} is <br/>\
+3k+(3k)2^b, where b is the length of the binary string for 3k.  <br/>\
+   3k + (3k)2^b = 3(k + k(2^b)). Clearly divisable by 3. qed. '; ">
+<DIV class='ans' id="Q12Area" STYLE="height:330px; background-color:DEE">&nbsp;
+</DIV>
+
+13. Does the grammar in #12 generate all binary strings with values divisable 
+    by 3? You proved above that the grammar is accurate. This question is 
+    asking whether the grammar is is complete. Explain why or why not.
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q13Area');
+myArea.innerHTML=
+' NO. For example, this grammar does not generate 21, 10101.  '; ">
+<DIV class='ans' id="Q13Area" STYLE="height:50px; background-color:DEE">&nbsp;
+</DIV>
+
+14. In early Fortran character strings were expressed as 
+           {string literal} ::= {number} H {string}
+    where number is a decimal integer >= 1, H is a keyword, and {string} is 
+    a sequence of characters. For example, this is a valid Fortran string
+               10Ha2zwab7b5c
+    but this string is not.
+               7Hhello
+    The static semantics requirement for this string type is that the numeric 
+    value of the number match the string length that follows the H. You cannot
+    know this without a context sensitive grammar; i.e, an attribute grammar. 
+
+    Below is the beginning of an attribute grammar (AG) using synthesized 
+    attributes for the nonterminals in the definition of &lt;string literal>
+    to enforce this constraint. Your job is to complete the AG by adding 
+    attributes, functions and predicates. 
+
+   ,---------------------------------------------------------------------,
+   |  BNF Grammar for Fortran character strings:                         |
+   |  {string literal} ::= {number} H {string}                           |
+   |  {number} ::= {digit} | {digit}{number}                             |
+   |  {digit} = [0-9]                                                    |
+   |  {string} ::= {char} | {char}{string}                               |
+   |  {char} ::= [a-z]                                                   |
+   |                                                                     | 
+   |  Synthesized Attributes:                                            |
+   |  Nonterminal              Attribute                                 |
+   |  {number}                 Val                                       |
+   |  {digit}                  Val                                       |
+   |  {string}                 Size                                      |
+   '---------------------------------------------------------------------'
+
+
+<input type="button" value="check" onClick="
+   myArea=document.getElementById('Q14Area');
+myArea.innerHTML=
+'{string literal} ::= {number} H {string}<br/>\
+    PREDICATE CONDITION: Val({number}) = Size({string})<br/>\
+<br/>\
+    {number} ::= {digit}<br/>\
+    PREDICATE CONDITION: Val({number}) >= 1<br/>\
+Semantic Rule:  Val({number}) <- Val({digit})<br/>\
+<br/>\
+    {number} ::= {digit}{number}[2]<br/>\
+Semantic Rule: Val({number})<-Val({digit})+10*Val({number}[2])<br/>\
+<br/>\
+    {string} ::= {char}<br/>\
+Semantic Rule:  Size({string}) <- 1<br/>\
+    {string} ::= {char}{string}[2]<br/>\
+Semantic Rule: Size({string})<- Size({string}[2]) + 1<br/>\
+<br/>\
+{digit}=0 Val({digit})<-0 | 1 Val({digit})<-1 | 2 Val({digit )<-2 |\
+<br/>\
+ | 3 Val({digit})<-3 | 4 Val({digit})<-4 | 5 Val({digit})<-5 |<br/>\
+   6 Val({digit})<-6 | 7 Val({digit} )<-7 | 8 Val({digit})<-8 |<br/>\
+    9 Val({digit})<-9<br/>\
+{char} ::= a | b  | c | d | e | f | g | h | i | j | k | l | m | n | o | p<br/>\
+      | q | r | s | t | u | v | w | x | y | z '; ">
+<DIV class='ans' id="Q14Area" STYLE="height:360px; background-color:DEE">&nbsp;
+</DIV>
+
+</pre>
+</body>
+</html>
