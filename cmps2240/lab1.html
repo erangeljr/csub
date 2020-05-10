@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<style>
+	body {
+		padding-left: 10px;
+		color: #000;
+	}
+	h2 { font-family:'Arial',sans-serif; font-size:2.0em; color:#999; }
+	h3 {
+		font-family:'Arial',sans-serif; font-size:1.6em;
+		color:#114;
+		margin:2px; padding-top:6px;
+	}
+	.box_border {
+		border:4px solid #abc; width:600px; padding-left:8px;
+	}
+	.thin_border {
+		border:1px solid #abc; width:800px; padding-left:8px;
+	}
+    .console {
+        padding-left:10px;
+        background:#222;
+        color:#afa;
+        border:4px solid #66a;
+        width:600px;
+    }
+	p { width:800px; }
+
+	</style>
+
+<h2>CMPS-cmps2240  Lab 1<br>Introduction to MIPS</h2>
+Eddie Rangel<br>
+Department of Computer and Electrical Engineering and Computer Science<br>
+California State University, Bakersfield<br>
+
+<h3>Introduction</h3>
+<p>
+<pre class="thin_border">
+All of your work for the semester will be kept in specific directories on the odin server.
+To create the area, first log in to odin, then do the commands below.
+<pre class="console">
+
+$ cd
+$ /home/fac/eddie/setup/2240/build_dirs.sh
+
+</pre>Your directory structure is now setup.
+</pre>
+</p>
+
+<p>
+<b>Goals</b>:<br>
+Understand the structure of a MIPS program.<br>
+Understand how to use SPIM.<br>
+Write a MIPS program to sum two integers and display a result.
+</p>
+
+<p>
+<b>Resources</b>:<br>
+<a href="./doc/mips-quick-guide.txt">Quick guide</a><br>
+<a href="./doc/mips_list.html">MIPS reference</a><br>
+<a href="./doc/mips32-instruc-set.pdf">MIPS-32 ISA</a><br>
+<a href="./doc/assemblylanguageprogdoc.pdf">MIPS coder's reference</a><br> 
+Other links from our home page.<br>
+</p>
+
+<p>
+<b>Files Needed</b>:<br>
+Example programs for today's lab: <a href="http://cs.csub.edu/~eddie/cmps2240/code/lab1/">Lab1</a>
+</p>
+
+<p>
+<b>If You Do Not Finish</b>:<br>
+
+</p>
+
+<p>
+Even if you finish during the lab period, your code must be located in the
+correct directory on odin.
+</p>
+
+<p>
+<b>Background:</b>
+We will use a MIPS simulator (SPIM) in this course.  We must use a simulator
+because you are most likely using a machine with an x86-64 microprocessor.
+SPIM is installed on odin but you can also download SPIM for your home
+machine (see Resources above). SPIM is not an assembler; i.e., SPIM does not
+create an executable file in machine code. SPIM translates MIPS line by line,
+similar to how an interpreter runs code. Because of this, SPIM is a good
+learning environment.
+</p>
+
+<p>
+<b>Downloading Files Needed:</b>
+Typically you will be given some files to start the lab. If you're on
+your own machine you can download them from the address above. If you're using
+a UNIX terminal on Sleipner, you can copy files into your local directory
+with the following command:
+</p>
+<p>
+<b>scp -r /home/fac/eddie/public_html/cmps2240/code/lab1/* .</b>
+</p>
+<p>
+which will copy the /lab1/ directory to your current directory.
+Or, if you're in the terminal but on your own machine not on the network:
+</p>
+<p>
+<b>scp -r <i>name</i>@odin.cs.csub.edu:/home/fac/eddie/public_html/cmps2240/code/lab1/* .</b>
+</p>
+<p>
+replace <i>name</i> with your own user name.
+</p>
+
+<hr>
+
+<h3>hello.s</h3>
+You will learn MIPS well in the coming weeks. This lab introduces you to a
+few of the basics. The code below from <a href="http://cs.csub.edu/~eddie/cmps2240/code/lab1/hello.s">hello.s</a> is a good place to start:
+<p>
+<pre class="box_border">
+
+# hello.s
+# a sample MIPS program to demonstrate MIPS basics 
+# Usage: $ spim -f hello.s
+
+        .data                # data segment begins here
+stuff:  .asciiz "Hello World!\n"
+
+        .text                # code segment begins here 
+main:
+        la $a0, stuff
+        li $v0, 4            # 4 is syscall to print a string
+        syscall              # execute the call 
+
+        li $a0, 10           # 10 is ascii value for linefeed
+        li $v0, 11           # 11 is syscall to print char
+        syscall
+
+        li $v0, 10           # 10 is system call to exit
+        syscall              # execute the call 
+
+</pre>
+</p>
+<p>There is no strict convention on the extension of a MIPS source code. You might see .s or .asm or .nasm or something else. We will use .s in this class since s is the first letter of both short and sweet.
+</p>
+<p>
+The source code above has two sections, a data section and a text section.
+Everything is in one section or the other.
+</p>
+<p>
+Comments are prefixed with a hash # everything to the end of the line past the
+hash is ignored by the assembler. The data section holds literals such as the
+"Hello World!" string. The text section contains instructions and assembler
+directives. Instructions are in the form of an opcode (operation code) followed
+by zero, one, two or three arguments for that opcode.  The amount of whitespace
+between opcodes and arguments is irrelevant.  An argument for a MIPS
+instruction is either a register, a literal, or an address. An address is
+marked by a label.  E.g.,stuff.  A literal is a number, e.g. 4, 10 or 11.
+</p>
+
+<p>
+<b>Registers and Memory:</b>
+A register is special storage on the microprocessor.  This is opposed to
+variables stored in memory, which must be defined in the .data section. For
+more on this, read: <a href="http://cnx.org/content/m29470/1.1/">http://cnx.org/content/m29470/1.1/</a>.
+</p>
+<p>
+In short, data is stored in either a register or in memory. Registers are very
+fast but limited in number and restricted to word-length.  Memory is abundant
+for our purposes, is not necessarily restricted to word length, but is slower.
+Additionally, in MIPS, most operations operate on registers. If you want to add
+two values in memory you would need to issue commands to bring them from
+memory, place them in registers, then carry out your operation. In MIPS, a
+register can hold either a value or an address. The meaning of the data in the
+register is determined by its context in the instruction. It is up to you to
+keep track of whether a register holds an address or a value.
+</p>
+
+<p>
+<b>Load Address:</b>
+Some MIPS instructions are not part of the MIPS instruction set architecture
+(the hardware) but are provided by the assembler to make the programmer's life
+a little easier.  These instructions are called pseudo-instructions. Each
+pseudo-instruction is a macro for 2 or more instructions from the ISA.
+Load address, la, is a MIPS instruction that stuffs the address of a label into
+a register; e.g.:
+</p>
+<pre><b>la $a0, format        #load address of label format into $a0
+</b></pre>
+<p>
+The two arguments for la specify the movement of data from memory (the source)
+to a register (the target). The movement is right to left.  Be careful not to
+confuse the two.  The target comes before the source (but only for load
+operations). Thus a LOAD always reads like an assignment statement in a
+high-level language.
+</p>
+<p>
+<b>Store:</b>
+In the coming weeks we will also cover STORE operations. Unlike 80x86 (which
+we will cover in week 8), MIPS is a LOAD/STORE architecture. This means that
+computations cannot be done directly to values in memory. Data must always be
+read from memory into a register (LOAD) or written to memory from a register
+(STORE). This makes instructions simple since the first argument in a load
+instruction is always the target register. The first argument in a store is the
+source register. While the flow of data in a LOAD instruction is logically
+right to left (load the address of "Hello World!\n" into register a0), the flow
+of data in a STORE instructions is logically left to right:
+</p>
+<p>
+sw $a0, $t0      # store value in $a0 to address in $t0
+</p>
+
+<p>
+<b>Load Immediate</b>
+The load immediate, li, is also a pseudo-instruction that loads the numeric
+constant 10 (source) into the target register $v0.
+</p>
+
+<p>
+<b>syscall</b>
+The <i>syscall</i> instruction executes a system call identified by the integer value in register $v0. In this case '10' is the exit call. Different values placed in $v0 will cause different behavior. <i>syscall</i> can print strings, read strings, print integers, exit, etc.
+</p>
+
+<p>
+<h3>Run hello.s</h3>
+Understanding the above concepts will be enough to complete this lab. If you
+desire more details, browse through A-43 through A-81 of appendix-A link on our home page, for a table of syscall codes, assembler directives and a reference of
+MIPS R2000 Assembly Language instructions. Get SPIM if you don't already have
+it and run hello.s. Make sure you understand what each line does in the code.
+You do not need to check this off with the instructor.
+</p>
+
+<p>
+<h3>Modifying the program</h3>
+<b>Add Two Integers: </b>
+Your job is to create an assembly file called <b>sum.s</b> that takes two hard-coded
+integer values (hard-coded means the values are not read in from the keyboard
+but literal constants that you code into the program), adds the two values
+together together and displays the result. The guts of the code (the header and
+the syscall to exit) will resemble hello.s so you can start by modifying the
+program. Before making any changes review hello.s until you understand every
+line of code. You will need code to load the values of two integers into
+registers and sum the two integers together. You will use the li, addu and move
+instructions shown below. Note that source register(s) are the right operands
+and the destination register is the left operand in these instructions:
+</p>
+<pre class="box_border">
+
+li     dest, integer      # load integer into dest register
+addu   dest, src1, src2   # add values in src1 and src2 registers
+                          # and store result in dest register
+move   dest, src          # copy value in src reg to dest reg
+
+You can also use fewer instructions if you want to use the add immediate
+instruction:
+
+addi  dest, src, integer  # store result of value in src + integer
+                          # in dest
+
+</pre>
+<p>
+<b>Which Registers to Use?</b>
+Since all 32 MIPS registers are general purpose, you can generally get away
+with using any registers that you want. However, there are conventions that
+good coders should use. For example, temporary values (such as the integers you
+are adding together) should be loaded into temporary registers $t0 - $t7.
+Function arguments are loaded into $a0 - $a3. The results of computations are
+loaded into the value registers $v0 - $v1. To make sure you have added the
+values correctly you need to display the result. Display it like this (your
+integers should differ from mine):
+</p>
+
+<p>
+<pre class="console">
+
+The sum of 5 and 9 is 14.
+
+</pre>
+</p>
+
+<p>
+Input/Output is provided by the assembler via system calls. In a high-level
+language such as C++ you can sometimes get away with letting the compiler
+figure out what data type you are displaying; e.g.,
+</p>
+<pre>
+int x = 5;
+cout &lt;&lt; x &lt;&lt; endl;
+char stuff[20] = "hello\n";
+cout &lt;&lt; stuff &lt;&lt; endl;
+</pre>
+<p>
+will display an integer first and then a character string next.  In assembly
+you need to specify precisely what type of data you wish the bit string in the
+register to be displayed as. In this lab you will make calls to print strings
+(printable text) and integers. The syscall service you need to print the
+integers is print int. To use this call load the value you want to display into
+$a0. Then load the value 1 into $v0. Then make the print int call.
+</p>
+<p>
+The syscall service you need to print the text strings is the same as noted in
+hello.s. You will need to create strings with labels in the data segment for
+each string you want to print. For example:
+</p>
+<pre class="box_border">
+
+          .data
+str1:     .asciiz "The sum of"
+
+Then make a syscall to print each string in the correct order. For example,
+
+la $a0, string1         # load the address of the string into a0
+li $v0, 4               # 4 is syscall to print a string
+syscall                 # make the call
+
+</pre>
+<p>
+<b>Hint:</b>
+Since you need to print three integers, you may need to use three registers for
+these values. Move each integer as you print it into $a0.
+</p>
+<p>
+<h3>What to turn in</h3>
+<pre>
+Your lab program <i><b>sum.s</b></i> must be located in the correct directory on odin.
+
+directory name: /home/stu/<i><b>yourname</b></i>/224/lab1/
+
+Replace <i>yourname</i> with your own odin username!
+</pre>
+</p>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>	
+</body>
+</html>
+
